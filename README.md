@@ -1,1 +1,1 @@
-# organize-application
+# Aplikacja do organizowania szkoleń - Comarch
