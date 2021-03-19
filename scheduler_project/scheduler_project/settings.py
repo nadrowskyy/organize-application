@@ -25,7 +25,7 @@ SECRET_KEY = 'xc^gh9txa63%ha^o3k^%)q*np=gsx_e@o2@)$*&@4c$gefx441'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]']
 
 
 # Application definition
@@ -76,8 +76,13 @@ WSGI_APPLICATION = 'scheduler_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': 'scheduler_database',
+        'ENGINE': 'mysql.connector.django',
+        'USER': 'root',
+        'HOST': 'localhost',
+        'OPTIONS': {
+          'autocommit': False,
+        },
     }
 }
 
