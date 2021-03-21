@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'scheduler_project.wsgi.application'
 DATABASES = {
     'default': {
         'NAME': 'scheduler_database',
-        'ENGINE': 'mysql.connector.django',
+        'ENGINE': 'django.db.backends.mysql',
         'USER': 'root',
         'HOST': 'localhost',
         'OPTIONS': {
