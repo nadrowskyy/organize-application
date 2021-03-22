@@ -3,9 +3,6 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 
-
-# komentarz
-
 class Event(models.Model):
     STATUS_CHOICES = (
         ('draft', 'Szkic'),
