@@ -3,12 +3,18 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateUserForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import Group
+from django.contrib.auth.decorators import login_required
+from .decorators import unauthenticated_user, allowed_users
 
 
+# @login_required(login_url='login') # nie pozwala na wejscie uzytkownika na strone glowna jesli nie jest zarejestrowany
+@allowed_users(allowed_roles=['admin'])
 def home_page(request):
     return render(request, 'schedule/home.html')
 
 
+@unauthenticated_user
 def login_page(request):
 
     if request.method == 'POST':
@@ -28,21 +34,31 @@ def login_page(request):
 
 
 def logout_user(request):
+    logout(request)
     return redirect('login')
 
 
+@unauthenticated_user
 def register_page(request):
     form = CreateUserForm()
 
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
-            form.save()
-            user = form.cleaned_data.get('username')
-            messages.success(request, f'Account was created for {user}')
+            user = form.save()
+            username = form.cleaned_data.get('username')
+
+            group = Group.objects.get(name='employee')
+            user.groups.add(group)
+
+            messages.success(request, f'Account was created for {username}')
 
             return redirect('login')
 
     context = {'form': form}
     return render(request, 'schedule/register.html', context)
 
+
+def user_page(request):
+    context = {}
+    return render(request, 'schedule/user.html', context)
