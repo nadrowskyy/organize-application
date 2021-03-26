@@ -12,6 +12,7 @@ from .decorators import unauthenticated_user, allowed_users
 def home_page(request):
     return render(request, 'schedule/home.html')
 
+
 # do zakladki logowania moga przejsc tylko niezalogowani uzytkownicy
 @unauthenticated_user
 def login_page(request):
@@ -36,12 +37,24 @@ def login_page(request):
 @allowed_users(allowed_roles=['admin'])
 def create_event(request):
 
+    if request.method == 'POST':
+        subject = request.POST.get('subject')
+        print(subject)
+        description = request.POST.get('description')
+        print(description)
+        organizer = request.POST.get('organizer')
+        start_date = request.POST.get('startdate')
+        print(start_date)
+        duration = request.POST.get('duration')
+        print(duration)
+
     return render(request, 'schedule/create_event.html')
 
 
 def logout_user(request):
     logout(request)
     return redirect('login')
+
 
 # do zakladki rejestracji moga przejsc tylko niezalogowani uzytkownicy
 @unauthenticated_user
