@@ -23,7 +23,7 @@ class Event(models.Model):
     # topics
 
     class Meta:
-        ordering = ('-publish',)
+        ordering = ('planning_date',)
 
     def __str__(self):
         return self.title

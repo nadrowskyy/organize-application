@@ -6,19 +6,10 @@ from django.contrib.auth import authenticate, login, logout
 import calendar
 from calendar import HTMLCalendar
 from datetime import datetime
-from django.contrib.auth.models import Group
-from django.contrib.auth.decorators import login_required
-from .decorators import unauthenticated_user, allowed_users
-from django.http import HttpResponseRedirect
 
-
-# @login_required(login_url='login') # nie pozwala na wejscie uzytkownika na strone glowna jesli nie jest zarejestrowany
 def home_page(request):
-    return render(request, 'schedule/home.html')
+    return render(request, 'schedule/home.html', {})
 
-
-# do zakladki logowania moga przejsc tylko niezalogowani uzytkownicy
-@unauthenticated_user
 def login_page(request):
 
     if request.method == 'POST':
@@ -30,39 +21,24 @@ def login_page(request):
         if user is not None:
             login(request, user)
             return redirect('home')
-        else:
-            messages.info(request, 'Username or password is incorrect')
 
     context = {}
-    return render(request, 'schedule/login.html', context)
+    return render(request, 'schedule/login.html')
 
-
-# do zakladki rejestracji moga przejsc tylko niezalogowani uzytkownicy
-@unauthenticated_user
 def register_page(request):
     form = CreateUserForm()
 
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            username = form.cleaned_data.get('username')
-
-            group = Group.objects.get(name='employee')
-            user.groups.add(group)
-
-            messages.success(request, f'Account was created for {username}')
+            form.save()
+            user = form.cleaned_data.get('username')
+            messages.success(request, f'Account was created for {user}')
 
             return redirect('login')
 
     context = {'form': form}
     return render(request, 'schedule/register.html', context)
-
-
-def logout_user(request):
-    logout(request)
-    return redirect('login')
-
 
 def events_list(request, year=datetime.now().year, month=datetime.now().strftime('%B')):
     month = month.capitalize()
@@ -86,26 +62,3 @@ def events_list(request, year=datetime.now().year, month=datetime.now().strftime
                       "present_month": present_month,
                       "present_time": present_time,
                   })
-
-
-# pozwala wejsc na strone tworzenia eventów tylko adminom
-@allowed_users(allowed_roles=['admin'])
-def create_event(request):
-
-    if request.method == 'POST':
-        subject = request.POST.get('subject')
-        print(subject)
-        description = request.POST.get('description')
-        print(description)
-        organizer = request.POST.get('organizer')
-        start_date = request.POST.get('startdate')
-        print(start_date)
-        duration = request.POST.get('duration')
-        print(duration)
-
-    return render(request, 'schedule/create_event.html')
-
-
-def user_page(request):
-    context = {}
-    return render(request, 'schedule/user.html', context)
