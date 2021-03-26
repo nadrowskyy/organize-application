@@ -8,7 +8,7 @@ from calendar import HTMLCalendar
 from datetime import datetime
 
 def home_page(request):
-    return render(request, 'schedule/home.html')
+    return render(request, 'schedule/home.html', {})
 
 def login_page(request):
 
