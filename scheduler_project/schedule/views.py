@@ -31,8 +31,12 @@ def login_page(request):
     context = {}
     return render(request, 'schedule/login.html', context)
 
-# pozwala wejsc na strone glowna tylko adminom
-# @allowed_users(allowed_roles=['admin'])
+
+# pozwala wejsc na strone tworzenia eventów tylko adminom
+@allowed_users(allowed_roles=['admin'])
+def create_event(request):
+
+    return render(request, 'schedule/create_event.html')
 
 
 def logout_user(request):

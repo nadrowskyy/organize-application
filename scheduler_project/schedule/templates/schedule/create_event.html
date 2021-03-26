@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Event</title>
+</head>
+    <body>
+
+        <form method="POST" action="">
+            {% csrf_token %}
+            <label for="subject">Temat</label>
+            <input type="text" id="subject" name="subject" placeholder="Temat" required>
+
+            <label for="description">Krótki Opis</label>
+            <input type="text" id="description" name="description" placeholder="Krótki opis" required>
+
+            <label for="organizer">Organizator</label>
+            <input type="text" id="organizer" name="organizer" placeholder="Organizator" required>
+
+            <label for="startdate">Data i godzina rozpoczęcia</label>
+            <input type="datetime-local" id="startdate" name="startdate" min="{% now 'Y-m-d' %}" value="{% now 'Y-m-d' %}" required>
+
+            <label for="duration">Czas trwania (min.)</label>
+            <input type="number" id="duration" name="duration" placeholder="1"  min="1" required>
+
+            <input type="submit">
+        </form>
+
+    </body>
+</html>

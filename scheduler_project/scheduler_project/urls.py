@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from schedule.views import register_page, login_page, home_page, logout_user, user_page
+from schedule.views import register_page, login_page, home_page, logout_user, user_page, create_event
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,4 +24,5 @@ urlpatterns = [
     path('login/', login_page, name='login'),
     path('logout/', logout_user, name='logout'),
     path('user/', user_page, name='user_page'),
+    path('create-event/', create_event, name='create_event'),
 ]
