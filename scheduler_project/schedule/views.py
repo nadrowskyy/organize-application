@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 import calendar
 from calendar import HTMLCalendar
 from datetime import datetime
+from .models import Event
 
 def home_page(request):
     return render(request, 'schedule/home.html', {})
@@ -52,6 +53,8 @@ def events_list(request, year=datetime.now().year, month=datetime.now().strftime
     present_month = present.month
     present_time = present.strftime('%H:%M:%S')
 
+    all_events_list = Event.objects.all()
+
     return render(request, 'schedule/events_list.html',
                   {
                       "year": year,
@@ -61,4 +64,5 @@ def events_list(request, year=datetime.now().year, month=datetime.now().strftime
                       "present_year": present_year,
                       "present_month": present_month,
                       "present_time": present_time,
+                      'all_events_list': all_events_list,
                   })
