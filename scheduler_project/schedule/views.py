@@ -9,6 +9,7 @@ from datetime import datetime
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users
+from django.http import HttpResponseRedirect
 
 
 # @login_required(login_url='login') # nie pozwala na wejscie uzytkownika na strone glowna jesli nie jest zarejestrowany
@@ -34,6 +35,7 @@ def login_page(request):
 
     context = {}
     return render(request, 'schedule/login.html', context)
+
 
 # do zakladki rejestracji moga przejsc tylko niezalogowani uzytkownicy
 @unauthenticated_user
