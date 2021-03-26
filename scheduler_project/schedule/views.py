@@ -9,11 +9,10 @@ from .decorators import unauthenticated_user, allowed_users
 
 
 # @login_required(login_url='login') # nie pozwala na wejscie uzytkownika na strone glowna jesli nie jest zarejestrowany
-@allowed_users(allowed_roles=['admin'])
 def home_page(request):
     return render(request, 'schedule/home.html')
 
-
+# do zakladki logowania moga przejsc tylko niezalogowani uzytkownicy
 @unauthenticated_user
 def login_page(request):
 
@@ -32,12 +31,15 @@ def login_page(request):
     context = {}
     return render(request, 'schedule/login.html', context)
 
+# pozwala wejsc na strone glowna tylko adminom
+# @allowed_users(allowed_roles=['admin'])
+
 
 def logout_user(request):
     logout(request)
     return redirect('login')
 
-
+# do zakladki rejestracji moga przejsc tylko niezalogowani uzytkownicy
 @unauthenticated_user
 def register_page(request):
     form = CreateUserForm()
