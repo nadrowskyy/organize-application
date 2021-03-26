@@ -3,9 +3,13 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateUserForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+import calendar
+from calendar import HTMLCalendar
+from datetime import datetime
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users
+from django.http import HttpResponseRedirect
 
 
 # @login_required(login_url='login') # nie pozwala na wejscie uzytkownika na strone glowna jesli nie jest zarejestrowany
@@ -33,29 +37,6 @@ def login_page(request):
     return render(request, 'schedule/login.html', context)
 
 
-# pozwala wejsc na strone tworzenia eventów tylko adminom
-@allowed_users(allowed_roles=['admin'])
-def create_event(request):
-
-    if request.method == 'POST':
-        subject = request.POST.get('subject')
-        print(subject)
-        description = request.POST.get('description')
-        print(description)
-        organizer = request.POST.get('organizer')
-        start_date = request.POST.get('startdate')
-        print(start_date)
-        duration = request.POST.get('duration')
-        print(duration)
-
-    return render(request, 'schedule/create_event.html')
-
-
-def logout_user(request):
-    logout(request)
-    return redirect('login')
-
-
 # do zakladki rejestracji moga przejsc tylko niezalogowani uzytkownicy
 @unauthenticated_user
 def register_page(request):
@@ -76,6 +57,53 @@ def register_page(request):
 
     context = {'form': form}
     return render(request, 'schedule/register.html', context)
+
+
+def logout_user(request):
+    logout(request)
+    return redirect('login')
+
+
+def events_list(request, year=datetime.now().year, month=datetime.now().strftime('%B')):
+    month = month.capitalize()
+    month_number = list(calendar.month_name).index(month)
+    month_number = int(month_number)
+
+    cal = HTMLCalendar().formatmonth(year, month_number)
+
+    present = datetime.now()
+    present_year = present.year
+    present_month = present.month
+    present_time = present.strftime('%H:%M:%S')
+
+    return render(request, 'schedule/events_list.html',
+                  {
+                      "year": year,
+                      "month": month,
+                      "month_number": month_number,
+                      "cal": cal,
+                      "present_year": present_year,
+                      "present_month": present_month,
+                      "present_time": present_time,
+                  })
+
+
+# pozwala wejsc na strone tworzenia eventów tylko adminom
+@allowed_users(allowed_roles=['admin'])
+def create_event(request):
+
+    if request.method == 'POST':
+        subject = request.POST.get('subject')
+        print(subject)
+        description = request.POST.get('description')
+        print(description)
+        organizer = request.POST.get('organizer')
+        start_date = request.POST.get('startdate')
+        print(start_date)
+        duration = request.POST.get('duration')
+        print(duration)
+
+    return render(request, 'schedule/create_event.html')
 
 
 def user_page(request):
