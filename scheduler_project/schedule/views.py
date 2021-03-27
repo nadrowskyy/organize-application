@@ -101,6 +101,7 @@ def create_event(request):
         description = request.POST.get('description')
         print(description)
         organizer = request.POST.get('organizer')
+        print(organizer)
         start_date = request.POST.get('startdate')
         print(start_date)
         duration = request.POST.get('duration')

@@ -14,21 +14,21 @@
     <body>
 <center>
 <div class="center_form">
-       <form>
+       <form method="POST" action="">
            {% csrf_token %}
             <div class="form-group">
                 <label for="subject">Temat spotkania</label>
-                <input type="text" class="form-control" id="subject" placeholder="Wpisz temat spotkania" required>
+                <input type="text" class="form-control" id="subject" name="subject" placeholder="Wpisz temat spotkania" required>
             </div>
 
             <div class="form-group">
                 <label for="description">Krótki opis</label>
-                <textarea class="form-control" id="description" rows="3" placeholder="Opisz krótko spotkanie" required></textarea>
+                <textarea class="form-control" id="description" name="description" rows="3" placeholder="Opisz krótko spotkanie" required></textarea>
             </div>
 
             <div class="form-group">
-                <label for="subject">Organizator</label>
-                <input type="text" class="form-control" id="subject" placeholder="Organizator" required>
+                <label for="organizer">Organizator</label>
+                <input type="text" class="form-control" id="organizer" name="organizer" placeholder="Organizator" required>
             </div>
 
            <div class="form-group">
