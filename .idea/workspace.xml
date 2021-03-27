@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="...">
-      <change beforePath="$PROJECT_DIR$/scheduler_project/static/images/sample_meetinghall.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/static/images/sample_meetinghall.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/static/images/sample_piwo.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/static/images/sample_piwo.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/static/images/sample_programming.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/static/images/sample_programming.jpeg" afterDir="false" />
-    </list>
+    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="display events in numeric date format" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -119,7 +115,14 @@
       <option name="project" value="LOCAL" />
       <updated>1616843960182</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="display events in numeric date format">
+      <created>1616872183881</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1616872183881</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -158,6 +161,7 @@
     <MESSAGE value="Dobry merge - wszystkie podstrony, ta sama ramówka (niekompletny navbar)" />
     <MESSAGE value="..." />
     <MESSAGE value="Aktualizacja plików" />
-    <option name="LAST_COMMIT_MESSAGE" value="Aktualizacja plików" />
+    <MESSAGE value="display events in numeric date format" />
+    <option name="LAST_COMMIT_MESSAGE" value="display events in numeric date format" />
   </component>
 </project>

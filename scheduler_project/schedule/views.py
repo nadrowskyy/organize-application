@@ -79,7 +79,7 @@ def events_list(request, year=datetime.now().year, month=datetime.now().strftime
     return render(request, 'schedule/events_list.html',
                   {
                       "year": year,
-                      "month": month_number,
+                      "month": year,
                       "month_number": month_number,
                       "cal": cal,
                       "present_year": present_year,
