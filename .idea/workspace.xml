@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="...">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/manage.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,7 +19,7 @@
     </option>
   </component>
   <component name="Git.Rebase.Settings">
-    <option name="NEW_BASE" value="homepage+tweaks" />
+    <option name="NEW_BASE" value="main" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -133,7 +133,21 @@
       <option name="project" value="LOCAL" />
       <updated>1616855275397</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Aktualizacja - rejestracja w stylu logowania">
+      <created>1616857062436</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1616857062436</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Przycisk &quot;zaproponuj szkolenie&quot; dla userów z grupy employee">
+      <created>1616859264231</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1616859264231</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -174,6 +188,8 @@
     <MESSAGE value="Aktualizacja plików" />
     <MESSAGE value="Homepage update v1.1" />
     <MESSAGE value="Aktualizacja - skalowanie karuzeli na 60% wysokości okna" />
-    <option name="LAST_COMMIT_MESSAGE" value="Aktualizacja - skalowanie karuzeli na 60% wysokości okna" />
+    <MESSAGE value="Aktualizacja - rejestracja w stylu logowania" />
+    <MESSAGE value="Przycisk &quot;zaproponuj szkolenie&quot; dla userów z grupy employee" />
+    <option name="LAST_COMMIT_MESSAGE" value="Przycisk &quot;zaproponuj szkolenie&quot; dla userów z grupy employee" />
   </component>
 </project>

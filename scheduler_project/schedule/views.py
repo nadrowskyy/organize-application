@@ -111,6 +111,9 @@ def create_event(request):
 
     return render(request, 'schedule/create_event.html')
 
+def suggest_event(request):
+    return render(request, 'schedule/suggest_event.html')
+
 
 def logout_user(request):
     logout(request)
@@ -125,4 +128,6 @@ def about(request):
 def user_page(request):
     context = {}
     return render(request, 'schedule/user.html', context)
+
+
 
