@@ -1,3 +1,5 @@
+from .forms import CreateUserForm
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateUserForm
@@ -12,19 +14,9 @@ from .decorators import unauthenticated_user, allowed_users
 from django.http import HttpResponseRedirect
 from .models import Event
 
-# from django.shortcuts import render, redirect
-# from django.contrib.auth.forms import UserCreationForm
-# from .forms import CreateUserForm
-# from django.contrib import messages
-# from django.contrib.auth import authenticate, login, logout
-# import calendar
-# from calendar import HTMLCalendar
-# from datetime import datetime
-# from .models import Event
 
+# @login_required(login_url='login') # nie pozwala na wejscie uzytkownika na strone glowna jesli nie jest zarejestrowany
 def home_page(request):
-
-
     all_events_list = Event.objects.all()
 
     return render(request, 'schedule/home.html',
@@ -32,6 +24,8 @@ def home_page(request):
                       'all_events_list': all_events_list,
                   })
 
+
+@unauthenticated_user
 def login_page(request):
 
     if request.method == 'POST':
@@ -43,24 +37,34 @@ def login_page(request):
         if user is not None:
             login(request, user)
             return redirect('home')
+        else:
+            messages.info(request, 'Username or password is incorrect')
 
     context = {}
-    return render(request, 'schedule/login.html')
+    return render(request, 'schedule/login.html', context)
 
+
+# do zakladki rejestracji moga przejsc tylko niezalogowani uzytkownicy
+@unauthenticated_user
 def register_page(request):
     form = CreateUserForm()
 
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
-            form.save()
-            user = form.cleaned_data.get('username')
-            messages.success(request, f'Account was created for {user}')
+            user = form.save()
+            username = form.cleaned_data.get('username')
+
+            group = Group.objects.get(name='employee')
+            user.groups.add(group)
+
+            messages.success(request, f'Account was created for {username}')
 
             return redirect('login')
 
     context = {'form': form}
     return render(request, 'schedule/register.html', context)
+
 
 def events_list(request, year=datetime.now().year, month=datetime.now().strftime('%B')):
     month = month.capitalize()
@@ -88,10 +92,8 @@ def events_list(request, year=datetime.now().year, month=datetime.now().strftime
                       'all_events_list': all_events_list,
                   })
 
-def logout_user(request):
-    logout(request)
-    return redirect('home')
 
+# pozwala wejsc na strone tworzenia eventów tylko adminom
 @allowed_users(allowed_roles=['admin'])
 def create_event(request):
 
@@ -109,6 +111,18 @@ def create_event(request):
 
     return render(request, 'schedule/create_event.html')
 
+
+def logout_user(request):
+    logout(request)
+    return redirect('home')
+
+
 def about(request):
 
     return render(request, 'schedule/about.html')
+
+
+def user_page(request):
+    context = {}
+    return render(request, 'schedule/user.html', context)
+
