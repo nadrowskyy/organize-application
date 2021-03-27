@@ -81,3 +81,4 @@ def register_page(request):
 def user_page(request):
     context = {}
     return render(request, 'schedule/user.html', context)
+
