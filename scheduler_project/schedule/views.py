@@ -120,9 +120,6 @@ def logout_user(request):
     return redirect('home')
 
 
-def suggest_event(request):
-    return render(request, 'schedule/suggest_event.html')
-
 def about(request):
 
     return render(request, 'schedule/about.html')
