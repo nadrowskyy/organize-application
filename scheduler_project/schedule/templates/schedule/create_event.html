@@ -8,29 +8,43 @@
 <head>
     <meta charset="UTF-8">
     <title>Create Event</title>
+
 </head>
+
     <body>
+<center>
+<div class="center_form">
+       <form>
+           {% csrf_token %}
+            <div class="form-group">
+                <label for="subject">Temat spotkania</label>
+                <input type="text" class="form-control" id="subject" placeholder="Wpisz temat spotkania" required>
+            </div>
 
-        <form method="POST" action="">
-            {% csrf_token %}
-            <label for="subject">Temat</label>
-            <input type="text" id="subject" name="subject" placeholder="Temat" required>
+            <div class="form-group">
+                <label for="description">Krótki opis</label>
+                <textarea class="form-control" id="description" rows="3" placeholder="Opisz krótko spotkanie" required></textarea>
+            </div>
 
-            <label for="description">Krótki Opis</label>
-            <input type="text" id="description" name="description" placeholder="Krótki opis" required>
+            <div class="form-group">
+                <label for="subject">Organizator</label>
+                <input type="text" class="form-control" id="subject" placeholder="Organizator" required>
+            </div>
 
-            <label for="organizer">Organizator</label>
-            <input type="text" id="organizer" name="organizer" placeholder="Organizator" required>
+           <div class="form-group">
+                <label for="startdate">Data i godzina rozpoczęcia</label>
+                <input type="datetime-local" id="startdate" name="startdate" min="{% now 'Y-m-d' %}" value="{% now 'Y-m-d' %}" required>
+           </div>
 
-            <label for="startdate">Data i godzina rozpoczęcia</label>
-            <input type="datetime-local" id="startdate" name="startdate" min="{% now 'Y-m-d' %}" value="{% now 'Y-m-d' %}" required>
-
-            <label for="duration">Czas trwania (min.)</label>
-            <input type="number" id="duration" name="duration" placeholder="1"  min="1" required>
+           <div class="form-group">
+                <label for="duration">Czas trwania (min.)</label>
+                <input type="number" id="duration" name="duration" placeholder="1"  min="1" required>
+            </div>
 
             <input type="submit">
-        </form>
-
+</form>
+</div>
+</center>
     </body>
 </html>
 
