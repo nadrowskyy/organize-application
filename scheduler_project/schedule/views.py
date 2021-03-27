@@ -23,7 +23,14 @@ from .models import Event
 # from .models import Event
 
 def home_page(request):
-    return render(request, 'schedule/home.html', {})
+
+
+    all_events_list = Event.objects.all()
+
+    return render(request, 'schedule/home.html',
+                  {
+                      'all_events_list': all_events_list,
+                  })
 
 def login_page(request):
 
@@ -83,7 +90,7 @@ def events_list(request, year=datetime.now().year, month=datetime.now().strftime
 
 def logout_user(request):
     logout(request)
-    return redirect('login')
+    return redirect('home')
 
 @allowed_users(allowed_roles=['admin'])
 def create_event(request):
@@ -94,9 +101,14 @@ def create_event(request):
         description = request.POST.get('description')
         print(description)
         organizer = request.POST.get('organizer')
+        print(organizer)
         start_date = request.POST.get('startdate')
         print(start_date)
         duration = request.POST.get('duration')
         print(duration)
 
     return render(request, 'schedule/create_event.html')
+
+def about(request):
+
+    return render(request, 'schedule/about.html')

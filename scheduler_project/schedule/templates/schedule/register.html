@@ -1,33 +1,82 @@
-{% extends 'schedule/base.html' %}
+
+{% load static %}
 
 {% block content %}
 
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Register Page</title>
-</head>
-<body>
-    <h3>Register</h3>
-    <form method="POST" action="">
-        {% csrf_token %}
-        {{ form.username.label }}
-        {{ form.username }}
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>Logowanie</title>
 
-        {{ form.email.label }}
-        {{ form.email }}
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
 
-        {{ form.password1.label }}
-        {{ form.password1 }}
 
-        {{ form.password2.label }}
-        {{ form.password2 }}
 
-        {{ form.errors }}
-        <input type="submit" name="Create User">
-    </form>
+    <!-- Bootstrap core CSS -->
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/signin.css' %}" rel="stylesheet">
+  </head>
+
+  <body class="text-center">
+
+
+<main class="form-signin">
+  <form method="POST" action="">
+      {% csrf_token %}
+    <img class="mb-4" src="{% static 'images/logo-light2.png' %}" alt="">
+    <h1 class="h3 mb-3 fw-normal">Zarejestruj się</h1>
+
+    <div class="form-floating">
+      <input type="text" class="form-control" id="username" name="username" placeholder="Login">
+      <label for="username">Login</label>
+    </div>
+      <br>
+    <div class="form-floating">
+      <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+      <label for="email">Email</label>
+    </div>
+      <br>
+    <div class="form-floating">
+      <input type="password" class="form-control" id="password1" name="password1" placeholder="Hasło">
+      <label for="password1">Hasło</label>
+    </div>
+      <br>
+    <div class="form-floating">
+      <input type="password" class="form-control" id="password2" name="password2" placeholder="Powtórz hasło">
+      <label for="password2">Powtórz hasło</label>
+    </div>
+    <br>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Zarejestruj</button>
+      {% for message in messages %}
+        <p>{{ message }}</p>
+      {% endfor %}
+
+    <p class="mt-5 mb-3 text-muted">&copy; SchedulerApp 2021</p>
+  </form>
+</main>
 </body>
 </html>
 

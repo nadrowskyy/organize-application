@@ -1,28 +1,63 @@
+<!DOCTYPE html>
+<html>
 {% load auth_extras %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'home' %}">ScheduleApp</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'events_list' %}">Lista Eventów</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'login' %}">Zaloguj się</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'register' %}">Zarejestruj się</a>
-        </li>
-        <!-- jeśli jestem adminem to widzę ten link !-->
-        {% if request.user|has_group:"admin" %}
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'create_event' %}">Stwórz wydarzenie</a>
-        </li>
-        {% endif %}
-      </ul>
-    </div>
-  </div>
+{% load static %}
+
+{% block content %}
+
+<head>
+	<title>FFT - Food For Thought</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+</head>
+
+
+<nav class="navbar navbar-toggleable-md bg-faded sticky-top">
+	<div class="container">
+		<a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'images/logo-light2.png' %}" id="logo"></a>
+		  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+		  </button>
+		<div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+
+				<ul class="navbar-nav navbar-default">
+					<li class="nav-item active">
+						<a class="nav-link" href="{% url 'home' %}">Strona główna</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'events_list' %}">Szkolenia</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'about' %}">O aplikacji</a>
+					</li>
+				</ul>
+
+                {% if request.user|has_group:"admin" %}
+				<button class="btn navbar-btn"><a href="{% url 'create_event' %}"><span>Utwórz spotkanie</span></a></button>
+                {% endif %}
+
+                {% if not user.is_authenticated %}
+                <button class="btn navbar-btn"><a href="{% url 'login' %}"><span>Logowanie</span></a></button>
+                <button class="btn navbar-btn"><a href="{% url 'register' %}"><span>Rejestracja</span></a></button>
+                {% else %}
+                <button class="btn navbar-btn"><a href="{% url 'logout' %}"><span>Wyloguj</span></a></button>
+                {% endif %}
+
+
+		</div>
+
+
+
+
+	</div>
+
+
 </nav>
+
+{% endblock %}
