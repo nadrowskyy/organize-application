@@ -1,0 +1,23 @@
+{% extends 'schedule/base.html' %}
+{% load auth_extras %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+</head>
+<body>
+    <h4>Hello {{request.user}}</h4>
+    <p><a href="{% url 'logout' %}">Logout</a></p>
+
+    <!-- jeśli użytkownik należy do grupy admin to zobaczy poniższą wiadomość, później będzie można dodać
+    funkcjonalności, które będą dostępne tylko dla admina !-->
+    {% if request.user|has_group:"admin" %}
+        <p>Należysz do grupy admin</p>
+    {% endif %}
+</body>
+</html>
+
+{% endblock %}

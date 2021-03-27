@@ -1,0 +1,37 @@
+{% extends 'schedule/base.html' %}
+
+{% block content %}
+    <center>
+        <h1>KALENDARZ</h1>
+        <br/>
+        {{ cal|safe }}
+        <br/>
+    </center>
+
+    <br/><br/>
+
+    <center>
+    <h2>LISTA EVENTÓW</h2>
+    </center>
+    <br/>
+
+    {% for i in all_events_list %}
+
+        <div class="card text-center">
+          <div class="card-header">
+              <h5>{{i.title}}</h5>
+          </div>
+          <div class="card-body">
+            <h6 class="card-title">Data: {{ i.planning_date }}</h6>
+            <p class="card-text">Czas trwania: {{ i.duration }} minut</p>
+            <a href="#" class="btn btn-primary">LINK</a>
+          </div>
+          <div class="card-footer text-muted">
+            Prowadzi: {{ i.organizer }}
+          </div>
+            <br/><br/>
+        </div>
+
+    {% endfor %}
+
+{% endblock %}
