@@ -2,17 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="...">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/organize-application.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/organize-application.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scheduler_project/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/manage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/create_event.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/create_event.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/navbar.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/navbar.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/static/images/sample_meetinghall.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/static/images/sample_meetinghall.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/static/images/sample_piwo.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/static/images/sample_piwo.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/static/images/sample_programming.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/static/images/sample_programming.jpeg" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +31,14 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectId" id="1q7k8mPjvbPxBNtwAQCnnJpkMIo" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -112,7 +115,14 @@
       <option name="project" value="LOCAL" />
       <updated>1616818636477</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Aktualizacja plików">
+      <created>1616843960182</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1616843960182</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -150,6 +160,7 @@
     <MESSAGE value="Strona główna, navbar i wejście na stronę events_list.html (na niej kalendarz)" />
     <MESSAGE value="Dobry merge - wszystkie podstrony, ta sama ramówka (niekompletny navbar)" />
     <MESSAGE value="..." />
-    <option name="LAST_COMMIT_MESSAGE" value="..." />
+    <MESSAGE value="Aktualizacja plików" />
+    <option name="LAST_COMMIT_MESSAGE" value="Aktualizacja plików" />
   </component>
 </project>
