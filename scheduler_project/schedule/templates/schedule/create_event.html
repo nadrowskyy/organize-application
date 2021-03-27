@@ -33,13 +33,13 @@
 
            <div class="form-group">
                 <label for="startdate">Data i godzina rozpoczęcia</label>
-                <input type="datetime-local" id="startdate" name="startdate" min="{% now 'Y-m-d' %}" value="{% now 'Y-m-d' %}" required>
+                <input type="datetime-local" id="startdate" name="startdate" min="{% now 'Y-m-d\TH:i' %}" value="{% now 'Y-m-d' %}" required>
            </div>
 
            <div class="form-group">
                 <label for="duration">Czas trwania (min.)</label>
                 <input type="number" id="duration" name="duration" placeholder="1"  min="1" required>
-            </div>
+           </div>
 
             <input type="submit">
 </form>
