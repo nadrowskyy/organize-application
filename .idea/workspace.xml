@@ -5,9 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scheduler_project/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/manage.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/static/images/sample_meetinghall.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/static/images/sample_meetinghall.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/static/images/sample_piwo.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/static/images/sample_piwo.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/static/images/sample_programming.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/static/images/sample_programming.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/static/styles/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/static/styles/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +120,14 @@
       <option name="project" value="LOCAL" />
       <updated>1616843960182</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Homepage update v1.1">
+      <created>1616851850920</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1616851850920</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -161,6 +166,7 @@
     <MESSAGE value="Dobry merge - wszystkie podstrony, ta sama ramówka (niekompletny navbar)" />
     <MESSAGE value="..." />
     <MESSAGE value="Aktualizacja plików" />
-    <option name="LAST_COMMIT_MESSAGE" value="Aktualizacja plików" />
+    <MESSAGE value="Homepage update v1.1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Homepage update v1.1" />
   </component>
 </project>

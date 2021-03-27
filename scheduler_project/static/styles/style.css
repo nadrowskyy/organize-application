@@ -44,6 +44,11 @@
 	padding: 25px;
 }
 
+.carousel_resize {
+    width:100%;
+    height: 60vh;
+}
+
 #archive {
 	padding: 25px;
 }
@@ -202,6 +207,12 @@ p.topic {
 .btn:hover span:after {
   opacity: 1;
   right: 0;
+}
+
+#carousel_size {
+  height: auto;
+  width: auto;
+  overflow: hidden;
 }
 
 .navbar-btn {
