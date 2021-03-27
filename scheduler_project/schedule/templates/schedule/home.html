@@ -44,7 +44,7 @@
                 <div class="carousel-caption d-none d-md-block">
 					<h1><a href="#">{{i.title}}</a></h1>
                  	<p>{{i.description}}</p>
-					<p>{{i.planning_date}} • Prowadzi: {{i.organizer}}</p>
+					<p>{{i.planning_date|date:"d-m-Y"}} • Prowadzi: {{i.organizer}}</p>
 			    </div>
 		    </div>
           {% endif %}
@@ -54,7 +54,7 @@
 				<div class="carousel-caption d-none d-md-block">
 					<h1><a href="#">{{i.title}}</a></h1>
                   	<p>{{i.description}}</p>
-					<p>{{i.planning_date}} • Prowadzi: {{i.organizer}}</p>
+					<p>{{i.planning_date|date:"d-m-Y"}} • Prowadzi: {{i.organizer}}</p>
 			    </div>
 		    </div>
             {% endif %}
@@ -64,7 +64,7 @@
 				<div class="carousel-caption d-none d-md-block">
 					<h1> <a href="#">{{i.title}}</a></h1>
                   	<p>{{i.description}}</p>
-					<p>{{i.planning_date}} • Prowadzi: {{i.organizer}}</p>
+					<p>{{i.planning_date|date:"d-m-Y"}} • Prowadzi: {{i.organizer}}</p>
 			    </div>
 		    </div>
 
@@ -94,7 +94,7 @@
             <img class="rounded-circle" src="{% static 'images/icons/sample_coffee.jpg' %}" alt="Generic placeholder image" width="140" height="140">
             <h2>{{i.title}}</h2>
             <p>{{i.description}}</p>
-            <h6>{{i.planning_date}} • Prowadzi: {{i.organizer}}</h6>
+            <h6>{{i.planning_date|date:"d-m-Y"}} • Prowadzi: {{i.organizer}}</h6>
             <p><a class="btn btn-secondary" href="#" role="button">Szczegóły »</a></p>
           </div>
         {% endif %}
@@ -104,7 +104,7 @@
             <img class="rounded-circle" src="{% static 'images/icons/sample_bardo.jpg' %}" alt="Generic placeholder image" width="140" height="140">
             <h2>{{i.title}}</h2>
             <p>{{i.description}}</p>
-            <h6>{{i.planning_date}} • Prowadzi: {{i.organizer}}</h6>
+            <h6>{{i.planning_date|date:"d-m-Y"}} • Prowadzi: {{i.organizer}}</h6>
             <p><a class="btn btn-secondary" href="#" role="button">Szczegóły »</a></p>
           </div>
 
@@ -115,7 +115,7 @@
             <img class="rounded-circle" src="{% static 'images/icons/sample_sport.jpg' %}" alt="Generic placeholder image" width="140" height="140">
             <h2>{{i.title}}</h2>
             <p>{{i.description}}</p>
-            <h6>{{i.planning_date}} • Prowadzi: {{i.organizer}}</h6>
+            <h6>{{i.planning_date|date:"d-m-Y"}} • Prowadzi: {{i.organizer}}</h6>
             <p><a class="btn btn-secondary" href="#" role="button">Szczegóły »</a></p>
           </div>
 
