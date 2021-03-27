@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="...">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/manage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scheduler_project/static/images/sample_meetinghall.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/static/images/sample_meetinghall.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scheduler_project/static/images/sample_piwo.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/static/images/sample_piwo.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scheduler_project/static/images/sample_programming.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/static/images/sample_programming.jpeg" afterDir="false" />
@@ -27,7 +24,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="events_list" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
