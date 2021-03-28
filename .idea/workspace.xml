@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="...">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/manage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/views.py" afterDir="false" />
-    </list>
+    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="display events in numeric date format" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,12 +15,12 @@
     </option>
   </component>
   <component name="Git.Rebase.Settings">
-    <option name="NEW_BASE" value="main" />
+    <option name="NEW_BASE" value="homepage+tweaks" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="events_list" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -119,35 +115,14 @@
       <option name="project" value="LOCAL" />
       <updated>1616843960182</updated>
     </task>
-    <task id="LOCAL-00008" summary="Homepage update v1.1">
-      <created>1616851850920</created>
+    <task id="LOCAL-00008" summary="display events in numeric date format">
+      <created>1616872183881</created>
       <option name="number" value="00008" />
       <option name="presentableId" value="LOCAL-00008" />
       <option name="project" value="LOCAL" />
-      <updated>1616851850920</updated>
+      <updated>1616872183881</updated>
     </task>
-    <task id="LOCAL-00009" summary="Aktualizacja - skalowanie karuzeli na 60% wysokości okna">
-      <created>1616855275397</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1616855275397</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Aktualizacja - rejestracja w stylu logowania">
-      <created>1616857062436</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1616857062436</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Przycisk &quot;zaproponuj szkolenie&quot; dla userów z grupy employee">
-      <created>1616859264231</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1616859264231</updated>
-    </task>
-    <option name="localTasksCounter" value="12" />
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -186,10 +161,7 @@
     <MESSAGE value="Dobry merge - wszystkie podstrony, ta sama ramówka (niekompletny navbar)" />
     <MESSAGE value="..." />
     <MESSAGE value="Aktualizacja plików" />
-    <MESSAGE value="Homepage update v1.1" />
-    <MESSAGE value="Aktualizacja - skalowanie karuzeli na 60% wysokości okna" />
-    <MESSAGE value="Aktualizacja - rejestracja w stylu logowania" />
-    <MESSAGE value="Przycisk &quot;zaproponuj szkolenie&quot; dla userów z grupy employee" />
-    <option name="LAST_COMMIT_MESSAGE" value="Przycisk &quot;zaproponuj szkolenie&quot; dla userów z grupy employee" />
+    <MESSAGE value="display events in numeric date format" />
+    <option name="LAST_COMMIT_MESSAGE" value="display events in numeric date format" />
   </component>
 </project>

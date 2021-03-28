@@ -22,7 +22,7 @@
               <h5>{{i.title}}</h5>
           </div>
           <div class="card-body">
-            <h6 class="card-title">Data: {{ i.planning_date }}</h6>
+            <h6 class="card-title">Data: {{ i.planning_date|date:"d-m-Y"}}</h6>
             <p class="card-text">Czas trwania: {{ i.duration }} minut</p>
             <a href="#" class="btn btn-primary">LINK</a>
           </div>

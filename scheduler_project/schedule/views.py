@@ -72,7 +72,6 @@ def events_list(request, year=datetime.now().year, month=datetime.now().strftime
     month_number = int(month_number)
 
     cal = HTMLCalendar().formatmonth(year, month_number)
-
     present = datetime.now()
     present_year = present.year
     present_month = present.month
