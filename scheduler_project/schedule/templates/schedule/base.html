@@ -17,18 +17,15 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 </head>
   <body>
-
   {% include 'schedule/navbar.html' %}
 
   <!-- belka z nazwą zalogowanego użytkownika -->
   {% if user.is_authenticated %}
-    <div class="header">
-        <p>Zalogowany jako <b>{{request.user}}</b></p>
-    </div>
-  {% endif %}
 
+    <div class="header"> <p>Zalogowany jako <b>{{request.user}}</b></p> </div>
+
+  {% endif %}
     {% block content %}
     {% endblock %}
-
   </body>
 </html>
