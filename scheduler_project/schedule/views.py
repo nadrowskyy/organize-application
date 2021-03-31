@@ -17,11 +17,12 @@ from .models import Event
 
 # @login_required(login_url='login') # nie pozwala na wejscie uzytkownika na strone glowna jesli nie jest zarejestrowany
 def home_page(request):
-    all_events_list = Event.objects.all()
+    today = datetime.today()
+    upcoming_events_list = Event.objects.filter(planning_date__gte=today)
 
     return render(request, 'schedule/home.html',
                   {
-                      'all_events_list': all_events_list,
+                      'upcoming_events_list': upcoming_events_list,
                   })
 
 
