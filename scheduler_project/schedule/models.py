@@ -28,8 +28,3 @@ class Event(models.Model):
 
     def __str__(self):
         return self.title
-
-
-@property
-def is_past_due(self):
-    return date.today() > self.date
