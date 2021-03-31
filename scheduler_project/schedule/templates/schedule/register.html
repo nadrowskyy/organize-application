@@ -1,4 +1,3 @@
-
 {% load static %}
 
 {% block content %}
@@ -10,9 +9,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <title>Logowanie</title>
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
+    <title>Rejestracja</title>
+    <link rel="icon" href="{% static 'images/icons/favicon.ico' %}">
 
 
 
@@ -38,41 +36,57 @@
 
     <!-- Custom styles for this template -->
     <link href="{% static 'css/signin.css' %}" rel="stylesheet">
+     <link href="{% static 'styles/style.css' %}" rel="stylesheet">
   </head>
 
   <body class="text-center">
 
-
 <main class="form-signin">
   <form method="POST" action="">
       {% csrf_token %}
-    <img class="mb-4" src="{% static 'images/logo-light2.png' %}" alt="">
+    <a href="{% url 'home' %}"><img class="mb-4" src="{% static 'images/logo-light2.png' %}" href="{% url 'home' %}" alt=""></a>
     <h1 class="h3 mb-3 fw-normal">Zarejestruj się</h1>
 
     <div class="form-floating">
-      <input type="text" class="form-control" id="username" name="username" placeholder="Login">
+      <input type="text" class="form-control" id="username" name="username" placeholder="Login" required>
       <label for="username">Login</label>
+        <errormsg>{{ form.username.errors }}</errormsg>
+    </div>
+      <br>
+          <div class="form-floating">
+      <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Imię" required>
+      <label for="username">Imię</label>
+        <errormsg>{{ form.first_name.errors }}</errormsg>
+    </div>
+      <br>
+          <div class="form-floating">
+      <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Nazwisko" required>
+      <label for="username">Nazwisko</label>
+        <errormsg>{{ form.last_name.errors }}</errormsg>
     </div>
       <br>
     <div class="form-floating">
-      <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+      <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
       <label for="email">Email</label>
+        <errormsg>{{ form.email.errors }}</errormsg>
+        {% for message in messages %}
+        <errormsg>{{ message }}</errormsg>
+        {% endfor %}
     </div>
       <br>
     <div class="form-floating">
-      <input type="password" class="form-control" id="password1" name="password1" placeholder="Hasło">
+      <input type="password" class="form-control" id="password1" name="password1" placeholder="Hasło" required>
       <label for="password1">Hasło</label>
+        <errormsg>{{ form.password1.errors }}</errormsg>
     </div>
       <br>
     <div class="form-floating">
-      <input type="password" class="form-control" id="password2" name="password2" placeholder="Powtórz hasło">
+      <input type="password" class="form-control" id="password2" name="password2" placeholder="Powtórz hasło" required>
       <label for="password2">Powtórz hasło</label>
+        <errormsg>{{ form.password2.errors }}</errormsg>
     </div>
     <br>
     <button class="w-100 btn btn-lg btn-primary" type="submit">Zarejestruj</button>
-      {% for message in messages %}
-        <p>{{ message }}</p>
-      {% endfor %}
 
     <p class="mt-5 mb-3 text-muted">&copy; SchedulerApp 2021</p>
   </form>

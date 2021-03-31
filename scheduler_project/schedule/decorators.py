@@ -29,6 +29,6 @@ def allowed_users(allowed_roles=[]):
                 return view_func(request, *args, **kwargs)
             # jeśli nie jest przypisany do podanej wcześniej grupy to dostaje poniższy komunikat
             else:
-                return HttpResponse('You are not authorized to view this page')
+                return HttpResponse('Nie masz uprawnień do wyświetlenia tej strony')
         return wrapper_func
     return decorator
