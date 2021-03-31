@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from datetime import date
 
 
 class Event(models.Model):
@@ -27,3 +28,8 @@ class Event(models.Model):
 
     def __str__(self):
         return self.title
+
+
+@property
+def is_past_due(self):
+    return date.today() > self.date
