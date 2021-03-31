@@ -1,8 +1,6 @@
 
 {% load static %}
-
 {% block content %}
-
 
 <!doctype html>
 <html lang="en">
@@ -11,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <title>Logowanie</title>
-
+    <link rel="icon" href="{% static 'images/icons/favicon.ico' %}">
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
 
 
@@ -46,7 +44,7 @@
 <main class="form-signin">
   <form method="POST" action="">
       {% csrf_token %}
-    <img class="mb-4" src="{% static 'images/logo-light2.png' %}" alt="">
+    <a href="{% url 'home' %}"><img class="mb-4" src="{% static 'images/logo-light2.png' %}" alt=""></a>
     <h1 class="h3 mb-3 fw-normal">Zaloguj się do aplikacji</h1>
 
     <div class="form-floating">
