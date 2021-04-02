@@ -29,7 +29,7 @@
 
 <div class="row">
     {% for i in list %}
-        {% if i.planning_date > today_date %}
+        {% if i in upcoming_events %}
             <div class="col-lg-2">
                 <p style="text-align:center;"><img class="square" src="{% static 'images/icons/sample_meeting.png' %}" alt="Generic placeholder image" width="140" height="140"></p>
                 <center>

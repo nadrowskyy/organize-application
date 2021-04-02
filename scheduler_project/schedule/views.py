@@ -110,9 +110,10 @@ def events_list(request):
     except EmptyPage:
         page =p.page(1)
 
-    today_date = datetime.today()
+    today = datetime.today()
+    upcoming_events_list = Event.objects.filter(planning_date__gte=today)
 
-    context = {'list': page, 'today_date': today_date}
+    context = {'list': page, 'upcoming_events': upcoming_events_list}
 
     return render(request, 'schedule/events_list.html', context)
 
