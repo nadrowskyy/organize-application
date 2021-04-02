@@ -44,6 +44,12 @@
 <main class="form-signin">
   <form method="POST" action="">
       {% csrf_token %}
+
+    #Odczytywanie wartości next z requesta
+    {% if request.GET.next %}
+      <input type="hidden" name="next" value="{{ request.GET.next }}">
+    {% endif %}
+
     <a href="{% url 'home' %}"><img class="mb-4" src="{% static 'images/logo-light2.png' %}" alt=""></a>
     <h1 class="h3 mb-3 fw-normal">Zaloguj się do aplikacji</h1>
 

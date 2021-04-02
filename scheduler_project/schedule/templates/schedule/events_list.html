@@ -1,37 +1,87 @@
 {% extends 'schedule/base.html' %}
+{% load static %}
+
 
 {% block content %}
     <center>
-        <h1>KALENDARZ</h1>
-        <br/>
-        {{ cal|safe }}
-        <br/>
-    </center>
-
-    <br/><br/>
-
-    <center>
     <h2>LISTA EVENTÓW</h2>
     </center>
-    <br/>
+    <br/><br/>
 
-    {% for i in all_events_list %}
+<!--    {% for i in all_events_list %}-->
 
-        <div class="card text-center">
-          <div class="card-header">
-              <h5>{{i.title}}</h5>
-          </div>
-          <div class="card-body">
-            <h6 class="card-title">Data: {{ i.planning_date|date:"d-m-Y"}}</h6>
-            <p class="card-text">Czas trwania: {{ i.duration }} minut</p>
-            <a href="#" class="btn btn-primary">LINK</a>
-          </div>
-          <div class="card-footer text-muted">
-            Prowadzi: {{ i.organizer }}
-          </div>
-            <br/><br/>
-        </div>
+<!--        <div class="card text-center">-->
+<!--          <div class="card-header">-->
+<!--              <h5>{{i.title}}</h5>-->
+<!--          </div>-->
+<!--          <div class="card-body">-->
+<!--            <h6 class="card-title">Data: {{ i.planning_date|date:"d-m-Y"}}</h6>-->
+<!--            <p class="card-text">Czas trwania: {{ i.duration }} minut</p>-->
+<!--            <a href="#" class="btn btn-primary">LINK</a>-->
+<!--          </div>-->
+<!--          <div class="card-footer text-muted">-->
+<!--            Prowadzi: {{ i.organizer }}-->
+<!--          </div>-->
+<!--            <br/><br/>-->
+<!--        </div>-->
+<!--    {% endfor %}-->
 
+
+<div class="row">
+    {% for i in list %}
+        {% if i.planning_date > today_date %}
+            <div class="col-lg-2">
+                <p style="text-align:center;"><img class="square" src="{% static 'images/icons/sample_meeting.png' %}" alt="Generic placeholder image" width="140" height="140"></p>
+                <center>
+                    <h5><p style="color:#630578">{{i.title}}</p></h5>
+                    <h6>{{i.planning_date|date:"d.m.Y H:i"}} ({{i.planning_date|date:"l"}})</h6>
+                    <h6>Prowadzi: {{i.organizer.first_name}} {{i.organizer.last_name}}</h6>
+                     <p style="text-align:center;"><a class="btn btn-secondary" href="#" role="button">Szczegóły »</a></p>
+                </center>
+            </div>
+        {% else %}
+            <div class="col-lg-2">
+                <p style="text-align:center;"><img class="square" src="{% static 'images/icons/sample_coffee.jpg' %}" alt="Generic placeholder image" width="140" height="140"></p>
+                <center>
+                    <h5><p style="color:#630578">{{i.title}}</p></h5>
+                    <h6>{{i.planning_date|date:"d.m.Y H:i"}} ({{i.planning_date|date:"l"}})</h6>
+                    <h6>Prowadzi: {{i.organizer.first_name}} {{i.organizer.last_name}}</h6>
+                     <p style="text-align:center;"><a class="btn btn-secondary" href="#" role="button">Szczegóły »</a></p>
+                </center>
+            </div>
+        {% endif %}
     {% endfor %}
+</div>
+
+<!--<center>-->
+<!--    <div class="row">-->
+<!--        {% for i in list %}-->
+<!--              <div class="col-3">-->
+<!--                <div class="card>-->
+<!--                  <img src="{% static 'images/icons/sample_meeting.png' %}" class="card-img-top" alt="...">-->
+<!--                  <div class="card-body">-->
+<!--                    <h5 class="card-title">{{ i.title }}</h5>-->
+<!--                    <p class="card-text">{{i.planning_date|date:"d.m.Y H:i"}}</p>-->
+<!--                      <p class="card-text">{{ i.planning_date|date:"l" }}</p>-->
+<!--                      <div class="card-footer">-->
+<!--                        <small class="text-muted">{{ i.organizer.first_name }} {{ i.organizer.last_name }}</small>-->
+<!--                      </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+<!--</center>-->
+
+<center>
+{% if list.has_previous %}
+    <a href="{% url 'events_list' %}?page={{list.previous_page_number}}">Poprzednia strona</a>
+{% endif %}
+
+{% if list.has_next %}
+    <a href="{% url 'events_list' %}?page={{list.next_page_number}}">Następna strona</a>
+{% endif %}
+</center>
+
 
 {% endblock %}
