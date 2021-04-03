@@ -1,8 +1,9 @@
-from .forms import CreateUserForm
+from .forms import CreateUserForm, UserFullnameChoiceField
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateUserForm
+from .forms import CreateEvent
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, get_user_model
 import calendar
@@ -13,6 +14,8 @@ from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users
 from django.http import HttpResponseRedirect
 from .models import Event
+from django.core.files.storage import FileSystemStorage
+
 
 
 # @login_required(login_url='login') # nie pozwala na wejscie uzytkownika na strone glowna jesli nie jest zarejestrowany
@@ -20,10 +23,9 @@ def home_page(request):
     today = datetime.today()
     upcoming_events_list = Event.objects.filter(planning_date__gte=today)
 
-    return render(request, 'schedule/home.html',
-                  {
-                      'upcoming_events_list': upcoming_events_list,
-                  })
+    context = {'upcoming_events_list': upcoming_events_list}
+
+    return render(request, 'schedule/home.html', context)
 
 
 @unauthenticated_user
@@ -119,19 +121,22 @@ def events_list(request, year=datetime.now().year, month=datetime.now().strftime
 @allowed_users(allowed_roles=['admin'])
 def create_event(request):
 
-    if request.method == 'POST':
-        subject = request.POST.get('subject')
-        print(subject)
-        description = request.POST.get('description')
-        print(description)
-        organizer = request.POST.get('organizer')
-        print(organizer)
-        start_date = request.POST.get('startdate')
-        print(start_date)
-        duration = request.POST.get('duration')
-        print(duration)
+    User = get_user_model()
+    fullnames = User.objects.all()
 
-    return render(request, 'schedule/create_event.html')
+    if request.method == 'POST':
+        form = CreateEvent(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            return redirect('events_list')
+    else:
+        form = CreateEvent()
+
+    context = {'form': form, 'fullnames': fullnames}
+
+    return render(request, 'schedule/create_event.html', context)
+
 
 def suggest_event(request):
     return render(request, 'schedule/suggest_event.html')
