@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
-from datetime import date
+from django.utils.text import slugify
+
 
 
 class Event(models.Model):
@@ -19,8 +20,14 @@ class Event(models.Model):
     organizer = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=15,
                               choices=STATUS_CHOICES,
-                              default='draft')
+                              default='publish')
     duration = models.IntegerField()
+    icon = models.FileField(upload_to='static/images/icons/',default='static/images/icons/default.jpg')
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Event, self).save(*args, **kwargs)
+
     # topics
 
     class Meta:

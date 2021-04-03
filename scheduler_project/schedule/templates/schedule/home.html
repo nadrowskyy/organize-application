@@ -71,7 +71,7 @@
         {% for i in upcoming_events_list %}
             {% if forloop.counter <= 3 %}
               <div class="col-lg-4">
-                  <p style="text-align:center;"><img class="rounded-circle" src="{% static 'images/icons/sample_coffee.jpg' %}" alt="Generic placeholder image" width="140" height="140"></p>
+                  <p style="text-align:center;"><img class="rounded-circle" src="{{i.icon}}" alt="" width="140" height="140"></p>
                 <h3>{{i.title}}</h3>
                 <p>{{i.description}}</p>
                 <h6>{{i.planning_date|date:"d.m.Y h:i"}} • Prowadzi: {{i.organizer.first_name}} {{i.organizer.last_name}}</h6>
