@@ -4,48 +4,78 @@
 {% block content %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>Create Event</title>
+    <title>Utwórz spotkanie</title>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'css/select2.min.css' %}" rel="stylesheet">
+
+    <script src="{% static 'js/select2.min.js' %}"></script>
+
 
 </head>
 
-    <body>
+<body>
 <center>
 <div class="center_form">
-       <form method="POST" action="">
-           {% csrf_token %}
-            <div class="form-group">
-                <label for="subject">Temat spotkania</label>
-                <input type="text" class="form-control" id="subject" name="subject" placeholder="Wpisz temat spotkania" required>
-            </div>
 
-            <div class="form-group">
-                <label for="description">Krótki opis</label>
-                <textarea class="form-control" id="description" name="description" rows="3" placeholder="Opisz krótko spotkanie" required></textarea>
-            </div>
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="title">Temat spotkania</label>
+        <input class="form-control" id="title" name="title" placeholder="Wpisz temat spotkania" required type="text">
+    </div>
 
-            <div class="form-group">
-                <label for="organizer">Organizator</label>
-                <input type="text" class="form-control" id="organizer" name="organizer" placeholder="Organizator" required>
-            </div>
+    <div class="form-group">
+        <label for="description">Opis spotkania</label>
+        <textarea class="form-control" name="description" placeholder="Opisz spotkanie" required rows="4"></textarea>
+    </div>
 
-           <div class="form-group">
-                <label for="startdate">Data i godzina rozpoczęcia</label>
-                <input type="datetime-local" id="startdate" name="startdate" min="{% now 'Y-m-d\TH:i' %}" value="{% now 'Y-m-d' %}" required>
-           </div>
+    <div class="form-group">
 
-           <div class="form-group">
-                <label for="duration">Czas trwania (min.)</label>
-                <input type="number" id="duration" name="duration" placeholder="1"  min="1" required>
-           </div>
+        <label for="organizer">Organizator</label><br>
+            <select class="selectOrganizer" id=organizer name="organizer" style="width: 100%;">
+                {% for i in fullnames %}
+                <option value="{{i.id}}">{{i.first_name}} {{i.last_name}} ({{i.username}})</option>
+                {% endfor %}
+            </select>
+    </div>
 
-            <input type="submit">
+      <div class="row">
+    <div class="col">
+      <label for="startdate">Data i godzina rozpoczęcia</label>
+        <input class="form-control" id="planning_date" min="{% now 'Y-m-d\TH:i' %}" name="planning_date" required type="datetime-local"
+               value="{% now 'Y-m-d\TH:i' %}">
+    </div>
+    <div class="col">
+     <label for="duration">Czas trwania (min.)</label>
+        <input class="form-control" id="duration" min="1" name="duration" placeholder="1" required type="number">
+    </div>
+  </div>
+
+    <div class="form-group">
+        <label for="icon">Wybierz ikonę</label>
+        <input type="file" class="form-control" id="id_icon" name="icon">
+    </div>
+
+    <br>
+    <button class="btn btn-secondary" style="max-width:20%;font-family: 'Oswald', sans-serif;" type="submit">Utwórz</button>
+
+
+
+
 </form>
 </div>
 </center>
-    </body>
+
+
+<script>
+    $(document).ready(function() {
+    $('.selectOrganizer').select2();
+    });
+    </script>
+</body>
 </html>
 
 {% endblock %}

@@ -7,6 +7,10 @@
 	width: 50%;
 }
 
+.form-group{
+    border-radius:4px;
+}
+
 #about {
 	background-color: #eceeef;
 	justify-content: center;
@@ -140,7 +144,6 @@ ul {
   outline: 0;
 }
 
-
 p.topic {
 	margin-top: 10px;
 	padding-right: 5px;
@@ -227,13 +230,14 @@ p.topic {
 .header {
   text-align: center;
   background: #1abc9c;
+  font-family: 'Oswald', sans-serif;
   color: white;
   font-size: 20px;
 }
 
 .center_form {
     text-align: center;
-    max-width: 50%;
+    max-width: 40%;
 }
 
 
