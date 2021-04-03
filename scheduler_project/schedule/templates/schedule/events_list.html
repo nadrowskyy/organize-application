@@ -31,9 +31,9 @@
     {% for i in list %}
         {% if i in upcoming_events %}
             <div class="col-lg-2">
-                <p style="text-align:center;"><img class="square" src="{% static 'images/icons/sample_meeting.png' %}" alt="Generic placeholder image" width="140" height="140"></p>
+                <p style="text-align:center;"><img class="square" src="{{ i.icon }}" alt="Generic placeholder image" width="140" height="140"></p>
                 <center>
-                    <h5><p style="color:#630578">{{i.title}}</p></h5>
+                    <h5><p style="color:#c3a26d">{{i.title}}</p></h5>
                     <h6>{{i.planning_date|date:"d.m.Y H:i"}} ({{i.planning_date|date:"l"}})</h6>
                     <h6>Prowadzi: {{i.organizer.first_name}} {{i.organizer.last_name}}</h6>
                      <p style="text-align:center;"><a class="btn btn-secondary" href="#" role="button">Szczegóły »</a></p>
@@ -41,9 +41,9 @@
             </div>
         {% else %}
             <div class="col-lg-2">
-                <p style="text-align:center;"><img class="square" src="{% static 'images/icons/sample_coffee.jpg' %}" alt="Generic placeholder image" width="140" height="140"></p>
+                <p style="text-align:center;"><img class="square" src="{{ i.icon }}" alt="Generic placeholder image" width="140" height="140"></p>
                 <center>
-                    <h5><p style="color:#630578">{{i.title}}</p></h5>
+                    <h5><p style="color:black">[{{i.title}}]</p></h5>
                     <h6>{{i.planning_date|date:"d.m.Y H:i"}} ({{i.planning_date|date:"l"}})</h6>
                     <h6>Prowadzi: {{i.organizer.first_name}} {{i.organizer.last_name}}</h6>
                      <p style="text-align:center;"><a class="btn btn-secondary" href="#" role="button">Szczegóły »</a></p>
