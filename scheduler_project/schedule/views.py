@@ -15,13 +15,16 @@ from .decorators import unauthenticated_user, allowed_users
 from django.http import HttpResponseRedirect
 from .models import Event
 from django.core.files.storage import FileSystemStorage
+from django.utils import timezone
+import pytz
 
 
 
 # @login_required(login_url='login') # nie pozwala na wejscie uzytkownika na strone glowna jesli nie jest zarejestrowany
 def home_page(request):
-    today = datetime.today()
-    upcoming_events_list = Event.objects.filter(planning_date__gte=today)
+    now = timezone.now()
+    print(now)
+    upcoming_events_list = Event.objects.filter(planning_date__gte=now)
 
     context = {'upcoming_events_list': upcoming_events_list}
 
