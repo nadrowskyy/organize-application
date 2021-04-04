@@ -36,3 +36,11 @@ class Event(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Subject(models.Model):
+    proposer_id = models.ForeignKey(User)
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=200, unique_for_date='created', default=None)
+    description = models.TextField(verbose_name='opis tematu')
+    created = models.DateTimeField(auto_now_add=True)
