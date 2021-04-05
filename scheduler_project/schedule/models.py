@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.utils.text import slugify
-
+from vote.models import VoteModel, Vote
 
 
 class Event(models.Model):
@@ -38,9 +38,12 @@ class Event(models.Model):
         return self.title
 
 
-class Subject(models.Model):
-    proposer_id = models.ForeignKey(User)
+class Subject(VoteModel, models.Model):
+    proposer = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique_for_date='created', default=None)
     description = models.TextField(verbose_name='opis tematu')
     created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
