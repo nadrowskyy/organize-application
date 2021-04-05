@@ -23,6 +23,8 @@ class CreateEvent(ModelForm):
     organizer = UserFullnameChoiceField(queryset=User.objects.all())
     planning_date = forms.DateTimeField(initial=datetime.date.today)
     icon = forms.FileField()
+    attachment = forms.FileField()
+
     class Meta:
         model = Event
-        fields = ('title', 'description', 'organizer', 'planning_date', 'duration', 'icon')
+        fields = ('title', 'description', 'organizer', 'planning_date', 'duration', 'icon', 'attachment')

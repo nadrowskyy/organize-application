@@ -22,7 +22,8 @@ class Event(models.Model):
                               choices=STATUS_CHOICES,
                               default='publish')
     duration = models.IntegerField()
-    icon = models.FileField(upload_to='static/images/icons/',default='static/images/icons/default.jpg')
+    icon = models.FileField(upload_to='icons/', default='media/icons/default.jpg')
+    attachment = models.FileField(upload_to='attachments/', blank=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)

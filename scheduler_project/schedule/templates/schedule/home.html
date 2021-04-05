@@ -1,5 +1,6 @@
 {% extends 'schedule/base.html' %}
 {% load static %}
+
 {% block content %}
 
 <!DOCTYPE html>
@@ -71,10 +72,10 @@
         {% for i in upcoming_events_list %}
             {% if forloop.counter <= 3 %}
               <div class="col-lg-4">
-                  <p style="text-align:center;"><img class="rounded-circle" src="{{i.icon}}" alt="" width="140" height="140"></p>
+                  <p style="text-align:center;"><img class="rounded-circle" src="media/{{i.icon}}" alt="" width="140" height="140"></p>
                 <h3>{{i.title}}</h3>
                 <p>{{i.description}}</p>
-                <h6>{{i.planning_date|date:"d.m.Y h:i"}} • Prowadzi: {{i.organizer.first_name}} {{i.organizer.last_name}}</h6>
+                <h6>{{i.planning_date|date:"d.m.Y H:i"}} • Prowadzi: {{i.organizer.first_name}} {{i.organizer.last_name}}</h6>
                 <p style="text-align:center;"><a class="btn btn-secondary" href="#" role="button">Szczegóły »</a></p>
               </div>
             {% endif %}

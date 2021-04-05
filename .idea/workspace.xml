@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="" />
+    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="display events in numeric date format">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/create_event.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/create_event.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/scheduler_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/scheduler_project/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/static/css/style.css" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,7 +31,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="events_list" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -52,6 +63,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="run.code.analysis.last.selected.profile" value="aDefault" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -59,11 +71,11 @@
       <recent name="C:\Users\Dell Inspiron 7567\Desktop\organize-application\scheduler_project\schedule\templates\schedule" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\dinek\PycharmProjects\organize-application\scheduler_project\static\css" />
       <recent name="C:\Users\dinek\PycharmProjects\organize-application\scheduler_project\static\images\icons" />
       <recent name="C:\Users\dinek\PycharmProjects\organize-application\scheduler_project" />
       <recent name="C:\Users\dinek\PycharmProjects\organize-application\scheduler_project\schedule" />
       <recent name="C:\Users\dinek\PycharmProjects\organize-application\scheduler_project\static" />
-      <recent name="C:\Users\dinek\PycharmProjects\organize-application\scheduler_project\static\images" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -152,14 +164,21 @@
       <option name="project" value="LOCAL" />
       <updated>1617210840108</updated>
     </task>
-    <task id="LOCAL-00012" summary="-tylko zalogowani mogą przeglądać eventy&#10;-stronnicowanie eventów&#10;-ładna (w miarę) lista eventów&#10;--nie działa walidacja daty eventu :(">
-      <created>1617391993283</created>
+    <task id="LOCAL-00012" summary="Update 1.4.1 - poprawki wizualne">
+      <created>1617210864068</created>
       <option name="number" value="00012" />
       <option name="presentableId" value="LOCAL-00012" />
       <option name="project" value="LOCAL" />
-      <updated>1617391993283</updated>
+      <updated>1617210864068</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Update 1.5 - ZROBIĆ MIGRACJE - admin może dodawać eventy, dodawać customowe ikony, wybierać organizatora z listy; na homepage wyświetlają się dodane ręcznie ikony lub defaultowa jeśli nie ma; nowe pliki css i js do obsługi nowych ficzerów; kosmetyczne poprawki">
+      <created>1617413518896</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1617413518896</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -191,7 +210,7 @@
     <MESSAGE value="Aktualizacja rejestracji + ikona + kosmetyczne poprawki" />
     <MESSAGE value="Zmieniony homepage - karuzela z instrukcją, wyświetlanie trzech najbliższch eventów z datą, godziną, imieniem i nazwiskiem; miejsce na kolejne dodatki" />
     <MESSAGE value="Update 1.4.1 - poprawki wizualne" />
-    <MESSAGE value="-tylko zalogowani mogą przeglądać eventy&#10;-stronnicowanie eventów&#10;-ładna (w miarę) lista eventów&#10;--nie działa walidacja daty eventu :(" />
-    <option name="LAST_COMMIT_MESSAGE" value="-tylko zalogowani mogą przeglądać eventy&#10;-stronnicowanie eventów&#10;-ładna (w miarę) lista eventów&#10;--nie działa walidacja daty eventu :(" />
+    <MESSAGE value="Update 1.5 - ZROBIĆ MIGRACJE - admin może dodawać eventy, dodawać customowe ikony, wybierać organizatora z listy; na homepage wyświetlają się dodane ręcznie ikony lub defaultowa jeśli nie ma; nowe pliki css i js do obsługi nowych ficzerów; kosmetyczne poprawki" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update 1.5 - ZROBIĆ MIGRACJE - admin może dodawać eventy, dodawać customowe ikony, wybierać organizatora z listy; na homepage wyświetlają się dodane ręcznie ikony lub defaultowa jeśli nie ma; nowe pliki css i js do obsługi nowych ficzerów; kosmetyczne poprawki" />
   </component>
 </project>
