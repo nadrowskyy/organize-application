@@ -30,9 +30,10 @@ class CreateEvent(ModelForm):
         fields = ('title', 'description', 'organizer', 'planning_date', 'duration', 'icon', 'attachment')
 
 
-class AnnounceSubject(ModelForm):
-    if_lead = forms.CheckboxInput()
+class SubjectForm(ModelForm):
+    #if_lead = forms.CheckboxInput()
+    planning_date = forms.DateTimeField(initial=datetime.date.today)
 
     class Meta:
         model = Subject
-        fields = ('title', 'description', 'if_lead')
+        fields = ('title', 'description', 'planning_date', 'duration')

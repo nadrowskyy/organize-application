@@ -42,8 +42,15 @@ class Subject(VoteModel, models.Model):
     proposer = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique_for_date='created', default=None)
-    description = models.TextField(verbose_name='opis tematu')
+    description = models.TextField(verbose_name='opis tematu', max_length=400)
+    planning_date = models.DateTimeField()
+    duration = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
+
+
+class Lead(models.Model):
+    vote = models.OneToOneField('vote.vote', on_delete=models.CASCADE)
+    if_lead = models.BooleanField(default=False)

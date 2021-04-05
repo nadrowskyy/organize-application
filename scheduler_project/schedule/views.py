@@ -2,8 +2,7 @@ from .forms import CreateUserForm, UserFullnameChoiceField
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
-from .forms import CreateUserForm
-from .forms import CreateEvent
+from .forms import CreateUserForm, CreateEvent, SubjectForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, get_user_model
 import calendar
@@ -129,7 +128,6 @@ def create_event(request):
 
     if request.method == 'POST':
         form = CreateEvent(request.POST, request.FILES)
-
         if form.is_valid():
             form.save()
             return redirect('events_list')
@@ -142,7 +140,25 @@ def create_event(request):
 
 
 def suggest_event(request):
-    return render(request, 'schedule/suggest_event.html')
+
+    User = get_user_model()
+
+    if request.method == 'POST':
+        form = SubjectForm(request.POST)
+        if form.is_valid():
+            print(request.POST.get('if_lead'))
+            print('valid form')
+            tit = form.cleaned_data.get('title')
+            print(tit)
+            #form.save()
+            return redirect('home')
+    else:
+        print('gettt')
+        form = SubjectForm()
+
+    context = {'form': form}
+
+    return render(request, 'schedule/suggest_event.html', context)
 
 
 def logout_user(request):
