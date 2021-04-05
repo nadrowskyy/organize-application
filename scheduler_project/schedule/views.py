@@ -107,13 +107,13 @@ def events_list(request):
 
     all_events_list = Event.objects.all()
 
-    p = Paginator(all_events_list, 4)
+    pa = Paginator(all_events_list, 12)
 
     page_num = request.GET.get('page', 1)
     try:
-        page = p.page(page_num)
+        page = pa.page(page_num)
     except EmptyPage:
-        page =p.page(1)
+        page =pa.page(1)
 
     today = datetime.today()
     upcoming_events_list = Event.objects.filter(planning_date__gte=today)
