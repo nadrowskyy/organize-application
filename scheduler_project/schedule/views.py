@@ -12,7 +12,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users
 from django.http import HttpResponseRedirect
-from .models import Event, Subject
+from .models import Event, Subject, Lead
 from django.core.files.storage import FileSystemStorage
 from django.utils import timezone
 import pytz
@@ -152,11 +152,16 @@ def suggest_event(request):
             subject.save()
 
             if request.POST.get('if_lead') != None:
+                sub = ''
                 try:
                     sub = Subject.objects.latest('id')
-                    print(sub)
                 except:
                     pass
+
+                # tworzenie glosu jesli nie ma go juz w tabeli
+                if not Lead.objects.filter(leader=me, subject=sub, if_lead=True):
+                    print('hereee')
+                    Lead.objects.create(leader=me, subject=sub, if_lead=True, created=timezone.now())
 
 
             return redirect('home')

@@ -43,7 +43,7 @@
                 {% endif %}
 
 				{% if request.user|has_group:"employee" %}
-				<button class="btn navbar-btn"><a href="{% url 'suggest_event' %}"><span>Zaproponuj spotkanie</span></a></button>
+				<button class="btn navbar-btn"><a href="{% url 'suggest_event' %}"><span>Zgłoś temat</span></a></button>
                 {% endif %}
 
                 {% if not user.is_authenticated %}
