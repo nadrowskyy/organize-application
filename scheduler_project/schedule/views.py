@@ -12,7 +12,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users
 from django.http import HttpResponseRedirect
-from .models import Event
+from .models import Event, Subject
 from django.core.files.storage import FileSystemStorage
 from django.utils import timezone
 import pytz
@@ -145,17 +145,28 @@ def suggest_event(request):
     if request.method == 'POST':
         form = SubjectForm(request.POST)
         if form.is_valid():
-            current_user = request.user
-            print(request.POST.get('if_lead'))
-            #form.save()
+            user = get_user_model()
+            me = user.objects.get(username=request.user)
+            subject = form.save(commit=False)
+            subject.proposer_id = me.id
+            subject.save()
+
+            if request.POST.get('if_lead') != None:
+                try:
+                    sub = Subject.objects.latest('id')
+                    print(sub)
+                except:
+                    pass
+
+
             return redirect('home')
     else:
-        print('gettt')
         form = SubjectForm()
 
     context = {'form': form}
 
     return render(request, 'schedule/suggest_event.html', context)
+
 
 @login_required(login_url='login')
 def logout_user(request):
