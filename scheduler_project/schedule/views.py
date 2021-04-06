@@ -2,8 +2,7 @@ from .forms import CreateUserForm, UserFullnameChoiceField
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
-from .forms import CreateUserForm
-from .forms import CreateEvent
+from .forms import CreateUserForm, CreateEvent, SubjectForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, get_user_model
 import calendar
@@ -13,7 +12,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users
 from django.http import HttpResponseRedirect
-from .models import Event
+from .models import Event, Subject, Lead
 from django.core.files.storage import FileSystemStorage
 from django.utils import timezone
 import pytz
@@ -128,7 +127,6 @@ def create_event(request):
 
     if request.method == 'POST':
         form = CreateEvent(request.POST, request.FILES)
-
         if form.is_valid():
             form.save()
             return redirect('events_list')
@@ -140,10 +138,41 @@ def create_event(request):
     return render(request, 'schedule/create_event.html', context)
 
 
+@login_required(login_url='login')
 def suggest_event(request):
-    return render(request, 'schedule/suggest_event.html')
+
+    if request.method == 'POST':
+        form = SubjectForm(request.POST)
+        if form.is_valid():
+            user = get_user_model()
+            me = user.objects.get(username=request.user)
+            subject = form.save(commit=False)
+            subject.proposer_id = me.id
+            subject.save()
+
+            if request.POST.get('if_lead') != None:
+                sub = ''
+                try:
+                    sub = Subject.objects.latest('id')
+                except:
+                    pass
+
+                # tworzenie glosu jesli nie ma go juz w tabeli
+                if not Lead.objects.filter(leader=me, subject=sub, if_lead=True):
+                    print('hereee')
+                    Lead.objects.create(leader=me, subject=sub, if_lead=True, created=timezone.now())
 
 
+            return redirect('home')
+    else:
+        form = SubjectForm()
+
+    context = {'form': form}
+
+    return render(request, 'schedule/suggest_event.html', context)
+
+
+@login_required(login_url='login')
 def logout_user(request):
     logout(request)
     return redirect('home')

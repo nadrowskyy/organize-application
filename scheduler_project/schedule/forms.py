@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
 from django.db import models
-from .models import Event
+from .models import Event, Subject
 import datetime
 
 
@@ -28,3 +28,12 @@ class CreateEvent(ModelForm):
     class Meta:
         model = Event
         fields = ('title', 'description', 'organizer', 'planning_date', 'duration', 'icon', 'attachment')
+
+
+class SubjectForm(ModelForm):
+    #if_lead = forms.CheckboxInput()
+    planning_date = forms.DateTimeField(initial=datetime.date.today)
+
+    class Meta:
+        model = Subject
+        fields = ('title', 'description', 'planning_date', 'duration')

@@ -7,18 +7,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Zaproponuj temat</title>
+    <title>Zgłoś temat</title>
 
 </head>
 
     <body>
 <center>
+
+    <div class="help-text">
+
+        <p>
+            Zaproponuj temat kolejnego szkolenia. Jeśli okaże się interesujące dla innych pracowników
+            z chęcią o nim usłyszą :)
+        </p>
+
+
+    </div>
+
+
+
 <div class="center_form">
        <form method="POST" action="">
            {% csrf_token %}
             <div class="form-group">
-                <label for="subject">Temat spotkania</label>
-                <input type="text" class="form-control" id="subject" name="subject" placeholder="Wpisz temat spotkania" required>
+                <label for="title">Temat spotkania</label>
+                <input type="text" class="form-control" id="title" name="title" placeholder="Wpisz temat spotkania" required>
             </div>
 
             <div class="form-group">
@@ -26,19 +39,20 @@
                 <textarea class="form-control" id="description" name="description" rows="3" placeholder="Opisz krótko spotkanie" required></textarea>
             </div>
 
-            <div class="form-group">
-                <label for="organizer">Organizator</label>
-                <input type="text" class="form-control" id="organizer" name="organizer" placeholder="Organizator" required>
-            </div>
-
            <div class="form-group">
-                <label for="startdate">Data i godzina rozpoczęcia</label>
-                <input type="datetime-local" id="startdate" name="startdate" min="{% now 'Y-m-d\TH:i' %}" value="{% now 'Y-m-d' %}" required>
+                <label for="planning_date">Data i godzina rozpoczęcia</label>
+                <input type="datetime-local" id="planning_date" name="planning_date" min="{% now 'Y-m-d\TH:i' %}" value="{% now 'Y-m-d' %}" required>
            </div>
 
            <div class="form-group">
                 <label for="duration">Czas trwania (min.)</label>
                 <input type="number" id="duration" name="duration" placeholder="1"  min="1" required>
+           </div>
+
+
+           <div class="form-group">
+                <label for="if_lead">Chcę poprowadzić to szkolenie</label>
+                <input type="checkbox" id="if_lead" name="if_lead">
            </div>
 
             <input type="submit">
