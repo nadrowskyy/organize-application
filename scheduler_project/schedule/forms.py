@@ -22,8 +22,8 @@ class CreateUserForm(UserCreationForm):
 class CreateEvent(ModelForm):
     organizer = UserFullnameChoiceField(queryset=User.objects.all())
     planning_date = forms.DateTimeField(initial=datetime.date.today)
-    icon = forms.FileField()
-    attachment = forms.FileField()
+    icon = forms.FileField(required=False)
+    attachment = forms.FileField(required=False)
 
     class Meta:
         model = Event
