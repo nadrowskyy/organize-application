@@ -27,4 +27,5 @@ class VoteAdmin(admin.ModelAdmin):
 
 @admin.register(Lead)
 class LeadAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('leader', 'subject', 'if_lead', 'created', 'updated')
+    list_filter = ('leader', 'subject', 'if_lead')

@@ -63,6 +63,7 @@ class Lead(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     if_lead = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'{self.leader.username} {self.if_lead}'
+        return f'{self.leader.username} {self.if_lead} {self.subject.title}'
