@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Event, Subject, Vote
+from .models import Event, Subject, Vote, Lead
 
 
 @admin.register(Event)
@@ -16,8 +16,15 @@ class EventAdmin(admin.ModelAdmin):
 @admin.register(Subject)
 class SubjectAdmin(admin.ModelAdmin):
     list_display = ('title', 'proposer_id', 'created', 'vote_score')
+    prepopulated_fields = {'slug': ('title',)}
+    raw_id_fields = ('proposer',)
 
 
 @admin.register(Vote)
 class VoteAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Lead)
+class LeadAdmin(admin.ModelAdmin):
     pass

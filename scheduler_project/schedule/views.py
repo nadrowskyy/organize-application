@@ -139,17 +139,14 @@ def create_event(request):
     return render(request, 'schedule/create_event.html', context)
 
 
+@login_required(login_url='login')
 def suggest_event(request):
-
-    User = get_user_model()
 
     if request.method == 'POST':
         form = SubjectForm(request.POST)
         if form.is_valid():
+            current_user = request.user
             print(request.POST.get('if_lead'))
-            print('valid form')
-            tit = form.cleaned_data.get('title')
-            print(tit)
             #form.save()
             return redirect('home')
     else:
@@ -160,7 +157,7 @@ def suggest_event(request):
 
     return render(request, 'schedule/suggest_event.html', context)
 
-
+@login_required(login_url='login')
 def logout_user(request):
     logout(request)
     return redirect('home')

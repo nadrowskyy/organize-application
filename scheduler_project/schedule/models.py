@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.utils.text import slugify
 from vote.models import VoteModel, Vote
+from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from django.contrib.contenttypes.models import ContentType
 
 
 class Event(models.Model):
@@ -46,11 +48,22 @@ class Subject(VoteModel, models.Model):
     planning_date = models.DateTimeField()
     duration = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
+    leader = GenericRelation('Lead')
 
     def __str__(self):
         return self.title
 
 
 class Lead(models.Model):
-    vote = models.OneToOneField('vote.vote', on_delete=models.CASCADE)
+    #vote = models.OneToOneField('vote.vote', on_delete=models.CASCADE, default=None)
+    leader = models.ForeignKey(User, on_delete=models.CASCADE)
     if_lead = models.BooleanField(default=False)
+
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveBigIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
+
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.leader.username} {self.if_lead}'
