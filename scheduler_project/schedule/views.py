@@ -23,7 +23,6 @@ import pytz
 # @login_required(login_url='login') # nie pozwala na wejscie uzytkownika na strone glowna jesli nie jest zarejestrowany
 def home_page(request):
     now = timezone.now()
-    print(now)
     upcoming_events_list = Event.objects.filter(planning_date__gte=now)
 
     context = {'upcoming_events_list': upcoming_events_list}
