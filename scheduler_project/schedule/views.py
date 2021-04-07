@@ -142,10 +142,12 @@ def create_event(request):
 
 @login_required(login_url='login')
 def suggest_event(request):
-
+    print('hereeee')
     if request.method == 'POST':
+        print('ererer')
         form = SubjectForm(request.POST)
         if form.is_valid():
+            print('validdddd')
             user = get_user_model()
             me = user.objects.get(username=request.user)
             subject = form.save(commit=False)
@@ -165,6 +167,7 @@ def suggest_event(request):
 
             return redirect('home')
     else:
+        print('not valid')
         form = SubjectForm()
 
     context = {'form': form}

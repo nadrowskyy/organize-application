@@ -31,8 +31,6 @@ class CreateEvent(ModelForm):
 
 
 class SubjectForm(ModelForm):
-    #if_lead = forms.CheckboxInput()
-    planning_date = forms.DateTimeField(initial=datetime.date.today)
 
     class Meta:
         model = Subject
