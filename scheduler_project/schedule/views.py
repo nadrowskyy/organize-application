@@ -161,9 +161,7 @@ def suggest_event(request):
 
                 # tworzenie glosu jesli nie ma go juz w tabeli
                 if not Lead.objects.filter(leader=me, subject=sub, if_lead=True):
-                    print('hereee')
                     Lead.objects.create(leader=me, subject=sub, if_lead=True, created=timezone.now())
-
 
             return redirect('home')
     else:
@@ -188,6 +186,3 @@ def about(request):
 def user_page(request):
     context = {}
     return render(request, 'schedule/user.html', context)
-
-
-

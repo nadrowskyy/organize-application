@@ -45,8 +45,6 @@ class Subject(VoteModel, models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique_for_date='created', default=None)
     description = models.TextField(verbose_name='opis tematu', max_length=400)
-    planning_date = models.DateTimeField()
-    duration = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):

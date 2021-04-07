@@ -36,4 +36,4 @@ class SubjectForm(ModelForm):
 
     class Meta:
         model = Subject
-        fields = ('title', 'description', 'planning_date', 'duration')
+        fields = ('title', 'description')
