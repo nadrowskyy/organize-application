@@ -15,7 +15,7 @@ class EventAdmin(admin.ModelAdmin):
 
 @admin.register(Subject)
 class SubjectAdmin(admin.ModelAdmin):
-    list_display = ('title', 'proposer', 'planning_date', 'created', 'vote_score')
+    list_display = ('title', 'proposer', 'created', 'vote_score')
     prepopulated_fields = {'slug': ('title',)}
     raw_id_fields = ('proposer',)
 
