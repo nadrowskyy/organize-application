@@ -189,3 +189,12 @@ def about(request):
 def user_page(request):
     context = {}
     return render(request, 'schedule/user.html', context)
+
+def subjects_list(request):
+
+    all_subjects_list = Subject.objects.all()
+
+    # def num_want_to_hear():
+
+
+    return render(request, 'schedule/subjects_list.html', {"all_subjects_list": all_subjects_list})
