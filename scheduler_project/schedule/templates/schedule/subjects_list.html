@@ -1,0 +1,37 @@
+
+{% extends 'schedule/base.html' %}
+
+{% block content %}
+
+
+<center>
+<h1>LISTA TEMATÓW</h1>
+</center>
+<br/>
+
+
+
+
+{% for i in all_subjects_list %}
+
+    <div class="card-text">
+      <div class="card-header">
+          <h5>{{i.title}}</h5>
+      </div>
+      <div class="card-text">
+            <h6 class="card-title">Opis: {{ i.description }}</h6>
+        <a href="#" class="btn btn-primary" style="background-color: #3CB371">Podoba mi się (+1)</a>
+          <a href="#" class="btn btn-primary" style="background-color: #808080">Chcę poprowadzić to szkolenie</a>
+      </div>
+    <div>
+        <br/><br/>
+    </div>
+<!--          <div class="card-footer text-muted">-->
+<!--            Zaproponował: {{ i.proposer }}-->
+<!--          </div>-->
+<!--            <br/><br/>-->
+<!--        </div>-->
+    </div>
+{% endfor %}
+
+{% endblock %}
