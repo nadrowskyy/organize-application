@@ -16,12 +16,30 @@
 
     <div class="card-text">
       <div class="card-header">
-          <h5>{{i.title}}</h5>
+          <h5>{{i.title}} </h5>
+          <h6><span class="" id="like_count">Chce wziąć udział: {{i.like_count}}</span></h6>
+
+
       </div>
       <div class="card-text">
             <h6 class="card-title">Opis: {{ i.description }}</h6>
-        <a href="#" class="btn btn-primary" style="background-color: #3CB371">Podoba mi się (+1)</a>
-          <a href="#" class="btn btn-primary" style="background-color: #808080">Chcę poprowadzić to szkolenie</a>
+
+        <form action="{% url 'like'%}" method="POST" class="ui form">
+            {% csrf_token %}
+        <input type="hidden" name="subject_id" value="{{i.id}}" />
+        <button class="btn btn-primary" style="background-color: #3CB371" value = {{i.id}}>
+            Podoba mi się (+1)
+        </button>
+        </form>
+          <div>
+          <form action="{% url 'want_to_lead'%}" method="POST" class="ui form">
+            {% csrf_token %}
+              <input type="hidden" name="leader_id" value="{{i.id}}" />
+          <button class="btn btn-primary" style="background-color: #808080" value = {{i.id}} >
+              Chcę poprowadzić to szkolenie
+          </button>
+              <p>Zgłoszonych osób: {{i.lead_count}}</p></form></div>
+          </form>
       </div>
     <div>
         <br/><br/>

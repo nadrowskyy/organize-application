@@ -16,6 +16,8 @@ from .models import Event, Subject, Lead
 from django.core.files.storage import FileSystemStorage
 from django.utils import timezone
 import pytz
+from django.shortcuts import get_object_or_404
+
 
 
 
@@ -194,7 +196,43 @@ def subjects_list(request):
 
     all_subjects_list = Subject.objects.all()
 
-    # def num_want_to_hear():
+    # if request.method == 'POST':
+    #     user = request.POST.get('')
+    #
+    #
+
+
 
 
     return render(request, 'schedule/subjects_list.html', {"all_subjects_list": all_subjects_list})
+
+@login_required(login_url='login')
+def like(request):
+    if request.method == 'POST':
+        id2 = (request.POST.get('subject_id'))
+        subject = get_object_or_404(Subject, id=id2)
+        if subject.likes.filter(id=request.user.id).exists():
+            subject.likes.remove(request.user)
+            subject.like_count -= 1
+            subject.save()
+        else:
+            subject.likes.add(request.user)
+            subject.like_count += 1
+            subject.save()
+
+        return redirect('subjects_list')
+
+@login_required(login_url='login')
+def want_to_lead(request):
+    if request.method == 'POST':
+        leader = get_object_or_404(Subject, id=(request.POST.get('leader_id')))
+        if leader.want_to_lead.filter(id=request.user.id).exists():
+            messages.info(request, "Już zgłosiłeś się do prowadzenia tego tematu")
+        else:
+            leader.want_to_lead.add(request.user)
+            leader.lead_count += 1
+            leader.save()
+
+        return redirect('subjects_list')
+
+
