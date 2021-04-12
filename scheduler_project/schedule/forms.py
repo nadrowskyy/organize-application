@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
 from django.db import models
-from .models import Event
+from .models import Event, Subject
 import datetime
 
 
@@ -22,9 +22,16 @@ class CreateUserForm(UserCreationForm):
 class CreateEvent(ModelForm):
     organizer = UserFullnameChoiceField(queryset=User.objects.all())
     planning_date = forms.DateTimeField(initial=datetime.date.today)
-    icon = forms.FileField()
-    attachment = forms.FileField()
+    icon = forms.FileField(required=False)
+    attachment = forms.FileField(required=False)
 
     class Meta:
         model = Event
         fields = ('title', 'description', 'organizer', 'planning_date', 'duration', 'icon', 'attachment')
+
+
+class SubjectForm(ModelForm):
+
+    class Meta:
+        model = Subject
+        fields = ('title', 'description')

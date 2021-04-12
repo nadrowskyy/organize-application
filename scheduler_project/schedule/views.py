@@ -8,14 +8,12 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, get_user_model
 import calendar
 from calendar import HTMLCalendar
-from datetime import datetime, date
+from datetime import datetime
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users
-from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from .models import Event
-from django.core.paginator import Paginator, EmptyPage
 from django.core.files.storage import FileSystemStorage
 from django.utils import timezone
 import pytz
@@ -42,14 +40,9 @@ def login_page(request):
 
         user = authenticate(request, username=username, password=password)
 
-        #Sprawdzanie parametru next, by móc przekierować niezalogowanego użytkownika
-        #w miejsce do którego chciał się dostać po poprawnym logowaniu
         if user is not None:
             login(request, user)
-            if 'next' in request.POST:
-                return redirect(request.POST.get('next'))
-            else:
-                return redirect('home')
+            return redirect('home')
         else:
             messages.info(request, 'Username or password is incorrect')
 
@@ -100,32 +93,31 @@ def register_page(request):
     context = {'form': form}
     return render(request, 'schedule/register.html', context)
 
-#Tylko zalogowany użytkownik może wejśc w listę eventów. Niezalogowany zostanie przeniesiony
-#do strony odpowiedzialnej za logowanie
-@login_required(login_url="/login")
-def events_list(request):
+
+def events_list(request, year=datetime.now().year, month=datetime.now().strftime('%B')):
+    month = month.capitalize()
+    month_number = list(calendar.month_name).index(month)
+    month_number = int(month_number)
+
+    cal = HTMLCalendar().formatmonth(year, month_number)
+    present = datetime.now()
+    present_year = present.year
+    present_month = present.month
+    present_time = present.strftime('%H:%M:%S')
 
     all_events_list = Event.objects.all()
 
-    pa = Paginator(all_events_list, 12)
-
-    page_num = request.GET.get('page', 1)
-    try:
-        page = pa.page(page_num)
-    except EmptyPage:
-        page =pa.page(1)
-
-    today = datetime.today()
-    upcoming_events_list = Event.objects.filter(planning_date__gte=today)
-
-    context = {'list': page, 'upcoming_events': upcoming_events_list}
-
-    return render(request, 'schedule/events_list.html', context)
-
-    # return render(request, 'schedule/events_list.html',
-    #               {
-    #                   'all_events_list': all_events_list,
-    #               })
+    return render(request, 'schedule/events_list.html',
+                  {
+                      "year": year,
+                      "month": month,
+                      "month_number": month_number,
+                      "cal": cal,
+                      "present_year": present_year,
+                      "present_month": present_month,
+                      "present_time": present_time,
+                      'all_events_list': all_events_list,
+                  })
 
 
 # pozwala wejsc na strone tworzenia eventów tylko adminom
