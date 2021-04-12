@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from .models import Event
+from .models import Event, Subject, Lead
 from django.core.paginator import Paginator, EmptyPage
 from django.core.files.storage import FileSystemStorage
 from django.utils import timezone
