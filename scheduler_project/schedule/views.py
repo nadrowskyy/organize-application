@@ -17,6 +17,7 @@ from django.core.files.storage import FileSystemStorage
 from django.utils import timezone
 import pytz
 from django.shortcuts import get_object_or_404
+from django.core.paginator import Paginator, EmptyPage
 
 
 
