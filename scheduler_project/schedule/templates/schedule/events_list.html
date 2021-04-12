@@ -2,29 +2,34 @@
 {% load static %}
 
 {% block content %}
-    <center>
-    <h2>LISTA EVENTÓW</h2>
-    </center>
+
+    <h2 style="text-align:center;">LISTA EVENTÓW</h2>
+
     <br/><br/>
+
+<div class="container">
 
 <div class="row">
     {% for i in list %}
         {% if i in upcoming_events %}
-            <div class="col-lg-2">
-                    <p style="text-align:center;"><img class="squared" src="/media/{{i.icon}}" alt="" width="140" height="140"></p>
+            <div class="col-lg-3 col-md-4 col-sm-5">
+                    <p style="text-align:center;"><img class="rounded-circle" src="/media/{{i.icon}}" alt="" width="140" height="140"></p>
                 <center>
-                    <h5><p style="color:#c3a26d">{{i.title}}</p></h5>
-                    <h6>{{i.planning_date|date:"d.m.Y H:i"}} ({{i.planning_date|date:"l"}})</h6>
+                    <h3>{{i.title}}</h3>
+                    <h7>{{i.planning_date|date:"d.m.Y H:i"}} ({{i.planning_date|date:"l"}})</h7>
+                    <br>
                     <h6>Prowadzi: {{i.organizer.first_name}} {{i.organizer.last_name}}</h6>
                      <p style="text-align:center;"><a class="btn btn-secondary" href="#" role="button">Szczegóły »</a></p>
+                    <br>
                 </center>
             </div>
         {% else %}
-            <div class="col-lg-2">
-                <p style="text-align:center;"><img class="squared" src="/media/{{i.icon}}" alt="" width="140" height="140"></p>
+            <div class="col-lg-3 col-md-4 col-sm-5">
+                <p style="text-align:center;"><img class="rounded-circle" src="/media/{{i.icon}}" alt="" width="140" height="140"></p>
                 <center>
-                    <h5><p style="color:black">[{{i.title}}]</p></h5>
-                    <h6>{{i.planning_date|date:"d.m.Y H:i"}} ({{i.planning_date|date:"l"}})</h6>
+                    <h3>{{i.title}}</h3>
+                    <h7>{{i.planning_date|date:"d.m.Y H:i"}} ({{i.planning_date|date:"l"}})</h7>
+                    <br>
                     <h6>Prowadzi: {{i.organizer.first_name}} {{i.organizer.last_name}}</h6>
                      <p style="text-align:center;"><a class="btn btn-secondary" href="#" role="button">Szczegóły »</a></p>
                 </center>
@@ -32,10 +37,37 @@
         {% endif %}
     {% endfor %}
 </div>
+</div>
+
+
+<br>
+<br>
+<div class="d-flex justify-content-center">
+  <ul class="pagination">
+      {% if list.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="{% url 'events_list' %}?page={{list.previous_page_number}}">Poprzednia strona</a>
+    </li>
+      <li class="page-item"><a class="page-link" href="{% url 'events_list' %}?page={{list.previous_page_number}}">{{list.previous_page_number}}</a></li>
+      {% endif %}
+    <li class="page-item active">
+      <a class="page-link disabled" href="#">{{list.number}} <span class="sr-only">{{list.number}}</span></a>
+    </li>
+      {% if list.has_next %}
+    <li class="page-item"><a class="page-link" href="{% url 'events_list' %}?page={{list.next_page_number}}">{{list.next_page_number}}</a></li>
+    <li class="page-item">
+      <a class="page-link" href="{% url 'events_list' %}?page={{list.next_page_number}}">Następna strona</a>
+    </li>
+      {% endif %}
+  </ul>
+</div>
 
 
 
-<center>
+
+
+
+<!--
 {% if list.has_previous %}
     <a href="{% url 'events_list' %}?page={{list.previous_page_number}}">Poprzednia strona</a>
 {% endif %}
@@ -43,6 +75,12 @@
 {% if list.has_next %}
     <a href="{% url 'events_list' %}?page={{list.next_page_number}}">Następna strona</a>
 {% endif %}
-</center>
+-->
+
+
+
+
+
+
 
 {% endblock %}

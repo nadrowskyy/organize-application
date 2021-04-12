@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateUserForm
 from .forms import CreateEvent
+from .forms import SubjectForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, get_user_model
 import calendar
@@ -41,6 +42,7 @@ def login_page(request):
     if request.method == 'POST':
         username = request.POST.get('username')  # html name="username"
         password = request.POST.get('password')
+        remember_me = request.POST.get('remember_me')
 
         user = authenticate(request, username=username, password=password)
 
@@ -49,11 +51,15 @@ def login_page(request):
         if user is not None:
             login(request, user)
             if 'next' in request.POST:
+
+                if not remember_me:
+                    request.session.set_expiry(0)
+
                 return redirect(request.POST.get('next'))
             else:
                 return redirect('home')
         else:
-            messages.info(request, 'Username or password is incorrect')
+            messages.info(request, 'Nazwa użytkownika lub hasło są nieprawidłowe')
 
     context = {}
     return render(request, 'schedule/login.html', context)
@@ -151,10 +157,38 @@ def create_event(request):
     return render(request, 'schedule/create_event.html', context)
 
 
+@login_required(login_url='login')
 def suggest_event(request):
-    return render(request, 'schedule/suggest_event.html')
+    print('hereeee')
+    if request.method == 'POST':
+        form = SubjectForm(request.POST)
+        if form.is_valid():
+            user = get_user_model()
+            me = user.objects.get(username=request.user)
+            subject = form.save(commit=False)
+            subject.proposer_id = me.id
+            subject.save()
 
+            if request.POST.get('if_lead') != None:
+                sub = ''
+                try:
+                    sub = Subject.objects.latest('id')
+                except:
+                    pass
 
+                # tworzenie glosu jesli nie ma go juz w tabeli
+                if not Lead.objects.filter(leader=me, subject=sub, if_lead=True):
+                    Lead.objects.create(leader=me, subject=sub, if_lead=True, created=timezone.now())
+
+            return redirect('home')
+    else:
+        form = SubjectForm()
+
+    context = {'form': form}
+
+    return render(request, 'schedule/suggest_event.html', context)
+
+@login_required(login_url='login')
 def logout_user(request):
     logout(request)
     return redirect('home')
@@ -168,6 +202,40 @@ def about(request):
 def user_page(request):
     context = {}
     return render(request, 'schedule/user.html', context)
+
+def subjects_list(request):
+
+    all_subjects_list = Subject.objects.all()
+    return render(request, 'schedule/subjects_list.html', {"all_subjects_list": all_subjects_list})
+
+@login_required(login_url='login')
+def like(request):
+    if request.method == 'POST':
+        id2 = (request.POST.get('subject_id'))
+        subject = get_object_or_404(Subject, id=id2)
+        if subject.likes.filter(id=request.user.id).exists():
+            subject.likes.remove(request.user)
+            subject.like_count -= 1
+            subject.save()
+        else:
+            subject.likes.add(request.user)
+            subject.like_count += 1
+            subject.save()
+
+        return redirect('subjects_list')
+
+@login_required(login_url='login')
+def want_to_lead(request):
+    if request.method == 'POST':
+        leader = get_object_or_404(Subject, id=(request.POST.get('leader_id')))
+        if leader.want_to_lead.filter(id=request.user.id).exists():
+            messages.info(request, "Już zgłosiłeś się do prowadzenia tego tematu")
+        else:
+            leader.want_to_lead.add(request.user)
+            leader.lead_count += 1
+            leader.save()
+
+        return redirect('subjects_list')
 
 
 

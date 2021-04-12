@@ -4,17 +4,17 @@
 {% block content %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
 	<title>FFT - Strona główna</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     </head>
 <body>
 
-<main role="main">
+
 
     <!-- KARUZELA -->
-
+<div class="container"
 	<div class="col-md-12">
 		<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
 		  <ol class="carousel-indicators">
@@ -60,18 +60,19 @@
 		  </a>
 		</div>
     </div>
-
+</div>
     <!-- KONIEC KARUZELI -->
 
     <br><br>
+
     <h1 style="text-align:center">Nadchodzące szkolenia</h1>
     <hr>
-    <div class="container marketing">
+    <div class="container">
         <div class="row">
 
         {% for i in upcoming_events_list %}
             {% if forloop.counter <= 3 %}
-              <div class="col-lg-4">
+              <div class="col-lg-4 col-md-4">
                   <p style="text-align:center;"><img class="rounded-circle" src="media/{{i.icon}}" alt="" width="140" height="140"></p>
                 <h3>{{i.title}}</h3>
                 <p style="text-align:justify;">{{i.description}}</p>
@@ -144,7 +145,7 @@
         <p class="float-right"><a href="{% url 'home' %}">Wróć do góry</a></p>
         <p>© SchedulerApp 2021</p>
       </footer>
-    </main>
+
 </body>
 </html>
 

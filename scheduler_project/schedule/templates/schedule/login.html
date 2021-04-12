@@ -46,7 +46,7 @@
   <form method="POST" action="">
       {% csrf_token %}
 
-    #Odczytywanie wartości next z requesta
+
     {% if request.GET.next %}
       <input type="hidden" name="next" value="{{ request.GET.next }}">
     {% endif %}
@@ -66,12 +66,14 @@
 
     <div class="checkbox mb-3">
       <label>
-        <input type="checkbox" value="remember-me"> Zapamiętaj mnie
+        <input type="checkbox" id="remember_me" name="remember_me" value="remember_me"> Zapamiętaj mnie
       </label>
     </div>
     <button class="w-100 btn btn-lg btn-primary" type="submit">Zaloguj</button>
+    <br>
+    <br>
       {% for message in messages %}
-        <p>{{ message }}</p>
+        <errormsg>{{ message }}</errormsg>
       {% endfor %}
 
     <p class="mt-5 mb-3 text-muted">&copy; SchedulerApp 2021</p>
