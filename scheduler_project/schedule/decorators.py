@@ -32,3 +32,5 @@ def allowed_users(allowed_roles=[]):
                 return HttpResponse('Nie masz uprawnień do wyświetlenia tej strony')
         return wrapper_func
     return decorator
+
+

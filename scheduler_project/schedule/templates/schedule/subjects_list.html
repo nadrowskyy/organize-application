@@ -1,0 +1,58 @@
+
+{% extends 'schedule/base.html' %}
+
+{% block content %}
+
+
+<center>
+<h1>LISTA TEMATÓW</h1>
+</center>
+<br/>
+
+
+
+
+{% for i in all_subjects_list %}
+
+    <div class="card-text">
+      <div class="card-header">
+          <h5>{{i.title}} </h5>
+          <h6><span class="" id="like_count">Chce wziąć udział: {{i.like_count}}</span></h6>
+
+
+      </div>
+      <div class="card-text">
+            <h6 class="card-title">Opis: {{ i.description }}</h6>
+
+        <form action="{% url 'like'%}" method="POST" class="ui form">
+            {% csrf_token %}
+        <input type="hidden" name="subject_id" value="{{i.id}}" />
+        <button class="btn btn-primary" style="background-color: #3CB371" value = {{i.id}}>
+            Podoba mi się (+1)
+        </button>
+        </form>
+          <div>
+          <form action="{% url 'want_to_lead'%}" method="POST" class="ui form">
+            {% csrf_token %}
+              <input type="hidden" name="leader_id" value="{{i.id}}" />
+          <button class="btn btn-primary" style="background-color: #808080" value = {{i.id}} >
+              Chcę poprowadzić to szkolenie
+          </button>
+              <p>Zgłoszonych prowadzących: {{i.lead_count}}</p></form></div>
+                {% for message in messages %}
+                     <p>{{ message }}</p>
+                {% endfor %}
+          </form>
+      </div>
+    <div>
+        <br/><br/>
+    </div>
+<!--          <div class="card-footer text-muted">-->
+<!--            Zaproponował: {{ i.proposer }}-->
+<!--          </div>-->
+<!--            <br/><br/>-->
+<!--        </div>-->
+    </div>
+{% endfor %}
+
+{% endblock %}
