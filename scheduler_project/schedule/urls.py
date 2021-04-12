@@ -14,4 +14,7 @@ urlpatterns = [
     path('create_event/', views.create_event, name='create_event'),
     path('suggest_event/', views.suggest_event, name='suggest_event'),
     path('about/', views.about, name='about'),
+    path('like/', views.like, name='like'),
+    path('want_to_lead/', views.want_to_lead, name='want_to_lead'),
+    path('subjects_list/', views.subjects_list, name='subjects_list'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

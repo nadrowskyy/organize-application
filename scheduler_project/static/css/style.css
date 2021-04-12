@@ -175,6 +175,8 @@ ul {
 	height: 250px;
 }
 
+
+
 .card-text {
 	padding-left: 10px;
 	padding-right: 10px;
@@ -255,6 +257,7 @@ p.topic {
 	cursor: pointer;
 	margin: 5px 5px 0px 0px;
 }
+
 
 .btn span {
 	cursor: pointer;

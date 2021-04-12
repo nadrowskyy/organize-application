@@ -46,6 +46,11 @@ class Subject(VoteModel, models.Model):
     slug = models.SlugField(max_length=200, unique_for_date='created', default=None)
     description = models.TextField(verbose_name='opis tematu', max_length=400)
     created = models.DateTimeField(auto_now_add=True)
+    likes = models.ManyToManyField(User, related_name='like', default=None, blank=True)
+    like_count = models.IntegerField(default='0')
+    want_to_lead = models.ManyToManyField(User, related_name='want_to_lead', default=None, blank=True)
+    lead_count = models.IntegerField(default='0')
+
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
@@ -62,6 +67,11 @@ class Lead(models.Model):
     if_lead = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+
+    # def save(self, *args, **kwargs):
+    #     self.slug = slugify(self.title)
+    #     super(Lead, self).save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.leader.username} {self.if_lead} {self.subject.title}'
