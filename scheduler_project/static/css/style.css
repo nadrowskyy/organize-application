@@ -53,9 +53,98 @@
     height: 40vh;
 }
 
+.like_btn {
+  display: inline-block;
+  font-family: 'Oswald', sans-serif;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+      touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #c3a26d;
+  border-color: #c3a26d;
+}
+.like_btn:focus,
+.like_btn.focus {
+  color: #fff;
+  background-color: green;
+  border-color: #122b40;
+}
+.like_btn:hover {
+  color: #fff;
+  background-color: green;
+  border-color: #204d74;
+}
+.like_btn .badge {
+  color: #337ab7;
+  background-color: #fff;
+
+}
+
+
+
+.lead_btn {
+  display: inline-block;
+  font-family: 'Oswald', sans-serif;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+      touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #c3a26d;
+  border-color: #c3a26d;
+}
+.lead_btn:focus,
+.lead_btn.focus {
+  color: #fff;
+  background-color: green;
+  border-color: #122b40;
+}
+.lead_btn:hover {
+  color: #fff;
+  background-color: green;
+  border-color: #204d74;
+}
+.lead_btn .badge {
+  color: #337ab7;
+  background-color: #fff;
+
+}
+
 errormsg {
     color: #de1802;
+    display: block;
     font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+    text-align: center !important;
 }
 
 #archive {
@@ -217,26 +306,11 @@ p.topic {
 	height: 120px;
 }
 
-.navbar {
-	background-color: #fff;
-	height: 90px;
-	border-bottom: 0.5px solid rgb(195,162,109);
-	padding-bottom: 10px;
-}
+
 
 .navbar-nav a {
     color: #743152;
     font-size: 18px;
-}
-
-.navbar-nav .nav-item > a:hover,
-.navbar-nav > a:hover
-{
-    /* border-color: #743152;
-    border-style: solid;
-    border-width: 2px;
-    margin: -2px; */
-    color: #c3a26d;
 }
 
 .navbar-btn a {

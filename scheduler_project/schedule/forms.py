@@ -31,7 +31,6 @@ class CreateEvent(ModelForm):
 
 
 class SubjectForm(ModelForm):
-
     class Meta:
         model = Subject
         fields = ('title', 'description')
