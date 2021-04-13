@@ -92,9 +92,11 @@ def register_page(request):
 
             if suffix == 'gmail.com' or suffix == 'comarch.pl' or suffix == 'comarch.com':
                 if is_unique:
-                    form.save()
+                    user = form.save()
                     username = form.cleaned_data.get('username')
                     raw_password = form.cleaned_data.get('password1')
+                    group = Group.objects.get(name='employee')
+                    user.groups.add(group)
                     user = authenticate(username=username, password=raw_password)
                     login(request, user)
                     return redirect('home')
