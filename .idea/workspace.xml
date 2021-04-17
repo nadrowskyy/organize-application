@@ -2,27 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="Poprawione obrazki na liście eventów">
-      <change afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/user_details.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/user_edit.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/users_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/subject_edit.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scheduler_project/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/manage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/create_event.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/create_event.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/events_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/events_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/navbar.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/navbar.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/register.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/subjects_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/subjects_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/suggest_event.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/suggest_event.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/user_details.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/user_details.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/user_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/user_edit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/users_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/users_list.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/static/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/static/css/bootstrap.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/static/css/bootstrap_old.css" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/static/css/bootstrap_old.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/static/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/static/images/icons/default.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/static/js/bootstrap.min.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +31,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="sprint-2-fixes" />
+        <entry key="$PROJECT_DIR$" value="admin-user-show-and-edit" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -203,7 +192,14 @@
       <option name="project" value="LOCAL" />
       <updated>1618272813877</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="users list (admin view) with edit(to do) and delete(ok) options, user's details (admin view), dropdown button with nickname and group-based options, some visual fixes">
+      <created>1618632396164</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1618632396164</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -238,6 +234,7 @@
     <MESSAGE value="Update 1.5 - ZROBIĆ MIGRACJE - admin może dodawać eventy, dodawać customowe ikony, wybierać organizatora z listy; na homepage wyświetlają się dodane ręcznie ikony lub defaultowa jeśli nie ma; nowe pliki css i js do obsługi nowych ficzerów; kosmetyczne poprawki" />
     <MESSAGE value="Poprawki wizualne - formularze, navbar, listy eventow i tematow." />
     <MESSAGE value="Brakujące pliki" />
-    <option name="LAST_COMMIT_MESSAGE" value="Brakujące pliki" />
+    <MESSAGE value="users list (admin view) with edit(to do) and delete(ok) options, user's details (admin view), dropdown button with nickname and group-based options, some visual fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="users list (admin view) with edit(to do) and delete(ok) options, user's details (admin view), dropdown button with nickname and group-based options, some visual fixes" />
   </component>
 </project>

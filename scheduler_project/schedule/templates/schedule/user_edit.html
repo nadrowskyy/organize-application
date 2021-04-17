@@ -6,9 +6,72 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Edycja danych użytkownika</title>
+
+
 </head>
 <body>
+
+<div class="container" style="max-width:1000px">
+<form METHOD="POST">
+	{% csrf_token %}
+    <br>
+    <h2 style="text-align:center;">EDYCJA UŻYTKOWNIKA</h2>
+    <br>
+    {% for i in selected_user %}
+<div class="row gutters" >
+<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+<div class="card h-500" style="text-align:center;">
+	<div class="card-body">
+		<div class="row gutters">
+			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="form-group">
+					<label for="first_name">Imię:</label>
+                    <input class="form-control" id="first_name" name="first_name" placeholder="Imię" required type="text" value="{{i.first_name}}" >
+				</div>
+			</div>
+			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="form-group">
+					<label for="last_name">Nazwisko:</label>
+                    <input class="form-control" id="last_name" name="last_name" placeholder="Nazwisko" required type="text" value="{{i.last_name}}" >
+				</div>
+			</div>
+			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="form-group">
+					<label for="email">E-mail:</label>
+                    <input class="form-control" id="email" name="email" placeholder="E-mail" required type="email" value="{{i.email}}" >
+				</div>
+			</div>
+			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="form-group">
+					<label for="username">Nazwa użytkownika:</label>
+                    <input class="form-control" id="username" name="username" placeholder="Nazwa użytkownika" required type="text" value="{{i.username}}" >
+				</div>
+			</div>
+
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<div class="form-group">
+                    <input  id="if_admin" name="if_admin" type="checkbox" {% if i.groups.all.0.name == "admin" %} checked {% endif %}>
+					<label  for="if_admin">&nbsp;&nbsp;Administrator</label>
+				</div>
+			</div>
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<div class="form-group">
+					<button class="btn btn-secondary" style="width:40%;font-family: 'Oswald', sans-serif;" type="submit">Zapisz</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<br>
+	<br>
+</div>
+		{% endfor %}
+</form>
+
+
+</div>
 
 </body>
 </html>

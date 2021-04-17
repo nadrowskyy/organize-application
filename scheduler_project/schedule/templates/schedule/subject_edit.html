@@ -1,0 +1,62 @@
+{% extends 'schedule/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edycja tematu</title>
+</head>
+<body>
+<center>
+
+<br>
+<h2 style="text-align:center;">EDYCJA TEMATU</h2>
+<br>
+
+<div class="container" style="max-width:800px">
+    {% for i in subject %}
+<form method="POST">
+    {% csrf_token %}
+<div class="row gutters">
+<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+<div class="card h-500" style="text-align:center;">
+	<div class="card-body">
+		<div class="row gutters">
+
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<div class="form-group">
+					<label for="title">Temat spotkania:</label>
+                    <input class="form-control" id="title" name="title" placeholder="Tytuł spotkania" required type="text" value="{{i.title}}" >
+				</div>
+			</div>
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<div class="form-group">
+					<label for="description">Krótki opis:</label>
+                    <textarea class="form-control" rows="3" name="description" placeholder="Krótki opis" required type="text">{{i.description}}</textarea>
+				</div>
+			</div>
+
+
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<div class="form-group">
+					<button class="btn btn-secondary" style="width:40%;font-family: 'Oswald', sans-serif;" type="submit">Zapisz</button>
+				</div>
+			</div>
+            </form>
+		</div>
+	</div>
+	<br>
+	<br>
+</div>
+		{% endfor %}
+</form>
+
+
+</div>
+</body>
+</html>
+
+{% endblock %}

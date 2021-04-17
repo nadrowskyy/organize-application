@@ -1,5 +1,6 @@
 {% extends 'schedule/base.html' %}
 {% load static %}
+
 {% block content %}
 
 <!DOCTYPE html>
@@ -34,12 +35,9 @@
             </th>
             <th class="th-sm">Tematy
             </th>
-            <th class="th-sm">Profil
+            <th class="th-sm">Zarządzanie
             </th>
-            <th class="th-sm">Edytuj
-            </th>
-            <th class="th-sm">Usuń
-            </th>
+
 
         </tr>
         </thead>
@@ -69,14 +67,13 @@
             {% endif %}
             {% endfor %}
 
-            <td><center><a href="{% url 'user_details' i.id %}"><img src="{% static 'images/icons/details.png' %}" style="width:30px; height:30px;"></a></center></td>
-                &nbsp;&nbsp;&nbsp;
-            <td><center><a href="{% url 'user_edit' i.id %}"><img src="{% static 'images/icons/edit.png' %}" style="width:30px; height:30px;"></a></center></td>
-
-            <td><center><form>
-                {% csrf_token %}
-            <a href="{% url 'delete_user' i.id %}" id="delete" value="{{i.id}}" type="submit"> <img src="{% static 'images/icons/delete.png' %}"onclick="return confirm('Czy na pewno chcesz usunąć użytkowknika {{i.first_name}} {{i.last_name}}? Operacji nie będzie można cofnąć!')" style="width:30px; height:30px;"></a></td></center>
-            </form></center></td>
+            <td><center>
+                <a href="{% url 'user_details' i.id %}"><img src="{% static 'images/icons/details.png' %}" style="width:30px; height:30px;"></a>
+                &nbsp;&nbsp;
+                <a href="{% url 'user_edit' i.id %}"><img src="{% static 'images/icons/edit.png' %}" style="width:30px; height:30px;"></a>
+                &nbsp;&nbsp;
+                <a href="{% url 'delete_user' i.id %}"> <img src="{% static 'images/icons/delete.png' %}"onclick="return confirm('Czy na pewno chcesz usunąć użytkowknika {{i.first_name}} {{i.last_name}}? Operacji nie będzie można cofnąć!')" style="width:30px; height:30px;"></a>
+            </center></td>
 
         </tr>
         {% endfor %}

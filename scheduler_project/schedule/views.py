@@ -268,26 +268,91 @@ def user_details(request, index):
         subjects = Subject.objects.filter(proposer=index)
         events = Event.objects.filter(organizer=index)
 
-        context = {'selected_user': selected_user, 'subjects': subjects, 'events': events}
+        subjects_cnt = subjects.count()
+        events_cnt = events.count()
+
+        context = {'selected_user': selected_user, 'subjects': subjects, 'events': events, 'subjects_cnt': subjects_cnt, 'events_cnt': events_cnt}
         return render(request, 'schedule/user_details.html', context)
 
 
 @allowed_users(allowed_roles=['admin'])
 def user_edit(request, index):
-    context = {}
+
+
+    if request.method == 'GET':
+        user = get_user_model()
+        selected_user = user.objects.filter(id=index)
+        context = {'selected_user': selected_user}
+
+    if request.method == 'POST':
+        user = get_user_model()
+        selected_user = user.objects.filter(id=index)
+
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        if_admin = request.POST.get('if_admin')
+
+        if if_admin:
+            employee_group = Group.objects.get(name='employee')
+            admin_group = Group.objects.get(name='admin')
+            employee_group.user_set.remove(index)
+            admin_group.user_set.add(index)
+        else:
+            employee_group = Group.objects.get(name='employee')
+            admin_group = Group.objects.get(name='admin')
+            admin_group.user_set.remove(index)
+            employee_group.user_set.add(index)
+
+        update_user = user.objects.filter(id=index).update(first_name=first_name, last_name=last_name, username=username, email=email)
+
+        return redirect('users_list')
 
     return render(request, 'schedule/user_edit.html', context)
 
-
+@allowed_users(allowed_roles=['admin'])
 def delete_user(request, index):
     try:
         user = get_user_model()
         selected_user = user.objects.filter(id=index)
         selected_user.delete()
-        messages.success(request, "Użytkownik został usunięty")
         return redirect('users_list')
 
     except:
         return redirect('users_list')
 
     return render(request, 'schedule/users_list.html')
+
+@allowed_users(allowed_roles=['admin'])
+def subject_edit(request, index):
+
+    if request.method == 'GET':
+        subject = Subject.objects.filter(id=index)
+        context = {'subject': subject}
+        return render(request, 'schedule/subject_edit.html', context)
+
+    if request.method == 'POST':
+
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+
+        update_subject = Subject.objects.filter(id=index).update(title=title, description=description)
+
+        return redirect('subjects_list')
+
+    return render(request, 'schedule/subject_edit.html', context)
+
+@allowed_users(allowed_roles=['admin'])
+def delete_subject(request, index):
+    try:
+        selected_subject = Subject.objects.filter(id=index)
+        selected_subject.delete()
+
+        return redirect('subjects_list')
+
+    except:
+        return redirect('subjects_list')
+
+
+    return render(request, 'schedule/subjects_list.html')
