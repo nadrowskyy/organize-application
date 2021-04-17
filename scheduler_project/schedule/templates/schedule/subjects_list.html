@@ -8,11 +8,11 @@
     <title>Lista tematów</title>
 
 
-
 </head>
 
 
 <body>
+<br>
 <h2 style="text-align:center;">LISTA TEMATÓW</h2>
 
 <br>
@@ -29,7 +29,6 @@
     <h4 class="card-header">{{i.title}}</h4>
     <br>
         <h5 class="card-text" id="like_count">Opis: {{ i.description }}</h5>
-<!--        <h7 class="card-text">Chce wziąć udział: {{i.like_count}}</h7>-->
 
     <div class="container" style="max-width:500px;">
     <div class="row">
@@ -37,9 +36,18 @@
         <form action="{% url 'like'%}" method="POST" class="ui form">
             {% csrf_token %}
         <input type="hidden" name="subject_id" value="{{i.id}}" />
-        <button class="like_btn" value = {{i.id}}>
-            Podoba mi się!&nbsp;&nbsp;&nbsp;<span class="badge">{{i.like_count}}</span>
+        <div style="font-family: 'Oswald', sans-serif;">
+        <button class="btn like_btn" value = {{i.id}}>
+            <div style="font-family: 'Oswald', sans-serif;">Podoba mi się!&nbsp;&nbsp;&nbsp;<span>{{i.like_count}}</span>
         </button>
+
+<!--    OPCJA WYSZARZONA / NIEAKTYWNA
+
+        <button class="btn like_btn disabled" value = {{i.id}} disabled>
+            <div style="font-family: 'Oswald', sans-serif;">Podoba mi się!&nbsp;&nbsp;&nbsp;<span>{{i.like_count}}</span>
+        </button>-->
+
+        </div>
 
         </form>
         </div>
@@ -48,18 +56,16 @@
 
             {% csrf_token %}
               <input type="hidden" name="leader_id" value="{{i.id}}" />
-          <button class="lead_btn" value = {{i.id}}>
-              Chcę poprowadzić to szkolenie&nbsp;&nbsp;&nbsp;<span class="badge">{{i.lead_count}}</span>
+          <button class="btn lead_btn" value = {{i.id}}>
+              Chcę poprowadzić to szkolenie&nbsp;&nbsp;&nbsp;<span>{{i.lead_count}}</span>
           </button>
           <br><br>
 
+<!--      OPCJA WYSZARZONA / NIEAKTYWNA
 
-<!--      A tutaj zrobimy walidacje, czy user już czasem się nie zgłosił i wtedy wyświetli się zablokowany przycisk czy cos
-
-          <button class="lead_btn" value = {{i.id}} disabled>
-              Zgłosiłeś się do prowadzenia tego szkolenia
+          <button class="btn lead_btn disabled" value = {{i.id}} disabled>
+              Zgłoszono do prowadzenia tego szkolenia
           </button>-->
-
 
           </div>
           </form>

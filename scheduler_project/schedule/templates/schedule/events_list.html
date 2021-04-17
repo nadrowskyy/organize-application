@@ -3,11 +3,13 @@
 
 {% block content %}
 
-    <h2 style="text-align:center;">LISTA EVENTÓW</h2>
 
-    <br/><br/>
 
 <div class="container">
+
+    <br>
+    <center><h2>LISTA SZKOLEŃ</h2></center>
+    <br>
 
 <div class="row">
     {% for i in list %}
@@ -32,6 +34,7 @@
                     <br>
                     <h6>Prowadzi: {{i.organizer.first_name}} {{i.organizer.last_name}}</h6>
                      <p style="text-align:center;"><a class="btn btn-secondary" href="#" role="button">Szczegóły »</a></p>
+                    <br>
                 </center>
             </div>
         {% endif %}

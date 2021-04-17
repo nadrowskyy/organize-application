@@ -8,6 +8,7 @@ from django.contrib.contenttypes.models import ContentType
 
 
 class Event(models.Model):
+
     STATUS_CHOICES = (
         ('draft', 'Szkic'),
         ('publish', 'Opublikowano')
@@ -24,7 +25,7 @@ class Event(models.Model):
                               choices=STATUS_CHOICES,
                               default='publish')
     duration = models.IntegerField()
-    icon = models.FileField(upload_to='icons/', default='icons/default.jpg')
+    icon = models.FileField(upload_to='icons/', default='icons/default.png')
     attachment = models.FileField(upload_to='attachments/', blank=True)
 
     def save(self, *args, **kwargs):
