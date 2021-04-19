@@ -1,5 +1,4 @@
 from .forms import CreateUserForm, UserFullnameChoiceField
-from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateUserForm
@@ -7,21 +6,17 @@ from .forms import CreateEvent
 from .forms import SubjectForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, get_user_model
-import calendar
-from calendar import HTMLCalendar
 from datetime import datetime, date
 from django.contrib.auth.models import Group
-from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from .models import Event, Subject, Lead, User
-from django.core.paginator import Paginator, EmptyPage
-from django.core.files.storage import FileSystemStorage
 from django.utils import timezone
 import pytz
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage
+from .tasks import sent_event_notification
 
 
 # @login_required(login_url='login') # nie pozwala na wejscie uzytkownika na strone glowna jesli nie jest zarejestrowany
@@ -356,3 +351,27 @@ def delete_subject(request, index):
 
 
     return render(request, 'schedule/subjects_list.html')
+
+
+@allowed_users(allowed_roles=['admin'])
+def email_settings(request):
+
+    '''
+    Do wysłania maila potrzeba:
+        - host,
+        - port,
+        - username,
+        - password,
+        - user_tls(bool)
+    '''
+
+    m_host = ''
+    m_port = 0
+    m_username = ''
+    m_password = ''
+    m_use_tls = True
+
+
+
+
+    return render(request, 'schedule/email_settings.html')
