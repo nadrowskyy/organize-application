@@ -70,10 +70,10 @@
 
 					  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 
-						  <a class="dropdown-item" href="#">Profil</a>
+						  <a class="dropdown-item" href="{% url 'my_profile' %}">Profil</a>
 
 						  {% if request.user|has_group:"admin" %}
-							<a class="dropdown-item" href="#">...</a>
+
 
 
 						  {% endif %}

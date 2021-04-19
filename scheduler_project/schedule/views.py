@@ -408,3 +408,16 @@ def delete_event(request, index):
 
     except:
         return redirect('events_list')
+
+
+def my_profile(request):
+
+    my_events = Event.objects.filter(organizer=request.user)
+    my_subjects = Subject.objects.filter(proposer=request.user)
+
+    events_cnt = my_events.count()
+    subjects_cnt = my_subjects.count()
+
+    context = {'my_events': my_events, 'my_subjects': my_subjects, 'events_cnt': events_cnt, 'subjects_cnt': subjects_cnt }
+
+    return render(request, 'schedule/my_profile.html', context)
