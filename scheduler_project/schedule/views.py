@@ -16,7 +16,6 @@ from django.utils import timezone
 import pytz
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage
-from .tasks import sent_event_notification
 
 
 # @login_required(login_url='login') # nie pozwala na wejscie uzytkownika na strone glowna jesli nie jest zarejestrowany
