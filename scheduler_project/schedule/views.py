@@ -384,9 +384,8 @@ def email_client(request):
 def email_notification(request):
 
     if request.method == 'GET':
-        settings = EmailSet.objects.filter(id=1)[0]
         module_dir = os.path.dirname(__file__)
-        file_path = os.path.join(module_dir, 'C:/Users/Ja/organize-application/scheduler_project/schedule/templates/schedule/email_template.html')
+        file_path = os.path.join(module_dir, 'templates\schedule\email_template.html')
         data_file = open(file_path, 'r', encoding='utf-8')
         data = data_file.read()
 
@@ -395,25 +394,11 @@ def email_notification(request):
     if request.method == 'POST':
 
         notification = request.POST.get('notification')
-        #print(notification)
-        settings = EmailSet.objects.filter(id=1)[0]
         module_dir = os.path.dirname(__file__)
-        file_path = os.path.join(module_dir,
-                                 'C:/Users/Ja/organize-application/scheduler_project/schedule/templates/schedule/email_template.html')
+        file_path = os.path.join(module_dir, 'templates\schedule\email_template.html')
+        with open(file_path, 'w', encoding='utf-8') as output:
+            for line in notification.splitlines()[:-1]:
+                output.write(line)
+                output.write('\n')
 
-        out = open(file_path, 'w', encoding='utf-8')
-        for line in notification.splitlines()[:-1]:
-            print(line)
-            out.write(line)
-            out.write('\n')
-        out.close()
-
-
-        #noti = "".join(notification.splitlines())
-        # with open(file_path, 'w', encoding='utf-8') as output:
-            # output.writelines(notification.splitlines())
-
-
-        # noti_list = noti.splitlines()
-        # print(noti_list)
         return redirect('email_notification')
