@@ -11,11 +11,13 @@ from django.contrib.auth.models import Group
 from .decorators import unauthenticated_user, allowed_users
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from .models import Event, Subject, Lead, User
+from .models import Event, Subject, Lead, User, EmailSet
 from django.utils import timezone
 import pytz
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage
+from django.template.loader import get_template
+import os
 
 
 # @login_required(login_url='login') # nie pozwala na wejscie uzytkownika na strone glowna jesli nie jest zarejestrowany
@@ -353,24 +355,56 @@ def delete_subject(request, index):
 
 
 @allowed_users(allowed_roles=['admin'])
-def email_settings(request):
+def email_client(request):
 
-    '''
-    Do wysłania maila potrzeba:
-        - host,
-        - port,
-        - username,
-        - password,
-        - user_tls(bool)
-    '''
+    if request.method == 'GET':
+        settings = EmailSet.objects.filter(id=1)[0]
+        context = {'settings': settings}
 
-    m_host = ''
-    m_port = 0
-    m_username = ''
-    m_password = ''
-    m_use_tls = True
+        return render(request, 'schedule/email_settings.html', context=context)
+
+    if request.method == 'POST':
+
+        email_host = request.POST.get('email_host')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        port = request.POST.get('port')
+        if_tls = request.POST.get('if_tls')
+        delay_leader = request.POST.get('delay_leader')
+        delay_all = request.POST.get('delay_all')
+
+        EmailSet.objects.filter(id=1).update(delay_leader=delay_leader, delay_all=delay_all, EMAIL_HOST=email_host,
+                                             EMAIL_PORT=port, EMAIL_HOST_USER=username, EMAIL_HOST_PASSWORD=password,
+                                             EMAIL_USE_TLS=if_tls, DEFAULT_FROM_EMAIL=username)
+
+        return redirect('email_client')
 
 
+@allowed_users(allowed_roles=['admin'])
+def email_notification(request):
 
+    if request.method == 'GET':
+        settings = EmailSet.objects.filter(id=1)[0]
+        module_dir = os.path.dirname(__file__)
+        file_path = os.path.join(module_dir, 'C:/Users/Ja/organize-application/scheduler_project/schedule/templates/schedule/email_template.html')
+        data_file = open(file_path, 'r', encoding='utf-8')
+        data = data_file.read()
 
-    return render(request, 'schedule/email_settings.html')
+        return render(request, 'schedule/email_notification.html', context={'notification': data})
+
+    if request.method == 'POST':
+
+        notification = request.POST.get('notification')
+        print(notification)
+        settings = EmailSet.objects.filter(id=1)[0]
+        module_dir = os.path.dirname(__file__)
+        file_path = os.path.join(module_dir,
+                                 'C:/Users/Ja/organize-application/scheduler_project/schedule/templates/schedule/email_template.html')
+
+        #noti = "".join(notification.splitlines())
+        with open(file_path, 'w', encoding='utf-8') as output:
+            output.writelines(notification.splitlines(keepends=True))
+
+        # noti_list = noti.splitlines()
+        # print(noti_list)
+        return redirect('email_notification')

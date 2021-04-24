@@ -83,8 +83,6 @@ class Lead(models.Model):
 
 
 class EmailSet(models.Model):
-    title = models.CharField(max_length=200, default='Tytuł')
-    body = models.TextField(default='Informacje o wydarzeniu')
     delay_leader = models.IntegerField(default=3)
     delay_all = models.IntegerField(default=2)
     # USTAWIENIA SERWERA POCZTY

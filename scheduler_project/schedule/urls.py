@@ -23,5 +23,6 @@ urlpatterns = [
     path('delete_user/<int:index>', views.delete_user, name='delete_user'),
     path('subject_edit/<int:index>', views.subject_edit, name='subject_edit'),
     path('delete_subject/<int:index>', views.delete_subject, name='delete_subject'),
-    path('email_settings', views.email_settings, name='email_settings'),
+    path('email_client', views.email_client, name='email_client'),
+    path('email_notification', views.email_notification, name='email_notification'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
