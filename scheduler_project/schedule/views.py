@@ -361,7 +361,7 @@ def email_client(request):
         settings = EmailSet.objects.filter(id=1)[0]
         context = {'settings': settings}
 
-        return render(request, 'schedule/email_settings.html', context=context)
+        return render(request, 'schedule/email_client.html', context=context)
 
     if request.method == 'POST':
 
