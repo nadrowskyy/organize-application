@@ -109,7 +109,7 @@ def register_page(request):
 
 # Tylko zalogowany użytkownik może wejśc w listę eventów. Niezalogowany zostanie przeniesiony
 # do strony odpowiedzialnej za logowanie
-@login_required(login_url="/login")
+#@login_required(login_url="/login")
 def events_list(request):
     all_events_list = Event.objects.all()
 
@@ -359,7 +359,7 @@ def delete_subject(request, index):
 
 
 
-@allowed_users(allowed_roles=['admin'])
+#@allowed_users(allowed_roles=['admin','organizer'])
 def event_edit(request, index):
 
     if request.method == 'GET':

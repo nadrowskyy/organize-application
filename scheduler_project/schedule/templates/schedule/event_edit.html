@@ -1,6 +1,6 @@
 {% extends 'schedule/base.html' %}
 {% load static %}
-
+{% load auth_extras %}
 {% block content %}
 
 <!DOCTYPE html>
@@ -22,16 +22,19 @@
 
     {% for i in event %}
 
+    {% if request.user|has_group:"admin" %}
     <div class="form-group">
         <label for="title">Temat spotkania</label>
         <input class="form-control" id="title" name="title" placeholder="Wpisz temat spotkania" required type="text" value="{{i.title}}">
     </div>
+    {% endif %}
 
     <div class="form-group">
         <label for="description">Opis spotkania</label>
         <textarea class="form-control" name="description" placeholder="Opisz spotkanie" required rows="4">{{i.description}}</textarea>
     </div>
 
+    {% if request.user|has_group:"admin" %}
     <div class="form-group">
 
         <label for="organizer">Organizator</label><br>
@@ -45,6 +48,7 @@
                 {% endfor %}
             </select>
     </div>
+    {% endif %}
 
     <div class="row">
     <div class="col-md-12 col-lg-6">
