@@ -24,6 +24,7 @@ class Event(models.Model):
     planning_date = models.DateTimeField()
     publish = models.DateTimeField(default=timezone.now)
     organizer = models.ForeignKey(User, on_delete=models.CASCADE)
+    want_to_listen = models.ManyToManyField(User, related_name='want_to_listen', default=None, blank=True)
     status = models.CharField(max_length=15,
                               choices=STATUS_CHOICES,
                               default='publish')
@@ -81,15 +82,22 @@ class Lead(models.Model):
         return f'{self.leader.username} {self.if_lead} {self.subject.title}'
 
 
-@receiver(post_migrate)
-def populate_models(sender, **kwargs):
-    group, created = Group.objects.get_or_create(name='admin')
-    group.save()
-    group, created = Group.objects.get_or_create(name='employee')
-    group.save()
+class EmailSet(models.Model):
+    delay_leader = models.IntegerField(default=3)
+    delay_all = models.IntegerField(default=2)
+    # USTAWIENIA SERWERA POCZTY
+    EMAIL_BACKEND = models.CharField(default='django.core.mail.backends.smtp.EmailBackend', max_length=50)
+    EMAIL_HOST = models.CharField(default='smtp.gmail.com', max_length=30)
+    EMAIL_PORT = models.IntegerField(default=587)
+    EMAIL_HOST_USER = models.CharField(default='carnetdjango@gmail.com', max_length=50)
+    EMAIL_HOST_PASSWORD = models.CharField(default='ozebijqmlwhlahqw', max_length=100)
+    EMAIL_USE_TLS = models.BooleanField(default=True)
+    DEFAULT_FROM_EMAIL = models.CharField(default='carnetdjango@gmail.com', max_length=50)
 
-    User = get_user_model()
-    if not User.objects.filter(username='superuser').exists():
-        User.objects.create_superuser(username='superuser',
-                                      email='super@email.com',
-                                      password='super')
+
+class EventNotification(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    leader = models.ForeignKey(User, on_delete=models.CASCADE)
+    if_sent_leader = models.BooleanField(default=False)
+    if_sent_all = models.BooleanField(default=False)
+    settings = models.ForeignKey(EmailSet, on_delete=models.CASCADE, default=1)
