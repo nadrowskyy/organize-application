@@ -1,54 +1,64 @@
 {% extends 'schedule/base.html' %}
 {% load static %}
-
+{% load auth_extras %}
 {% block content %}
 
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Utwórz spotkanie</title>
+    <title>Edycja spotkania</title>
 </head>
-
 <body>
 
 <br>
-<h2 style="text-align:center;">UTWÓRZ SPOTKANIE</h2>
+<h2 style="text-align:center;">EDYCJA SPOTKANIA</h2>
 <br>
 
 <div class="container" style="max-width:800px;">
 
 <form action="" enctype="multipart/form-data" method="POST">
     {% csrf_token %}
+
+    {% for i in event %}
+
+    {% if request.user|has_group:"admin" %}
     <div class="form-group">
         <label for="title">Temat spotkania</label>
-        <input class="form-control" id="title" name="title" placeholder="Wpisz temat spotkania" required type="text">
+        <input class="form-control" id="title" name="title" placeholder="Wpisz temat spotkania" required type="text" value="{{i.title}}">
     </div>
+    {% endif %}
 
     <div class="form-group">
         <label for="description">Opis spotkania</label>
-        <textarea class="form-control" name="description" placeholder="Opisz spotkanie" required rows="4"></textarea>
+        <textarea class="form-control" name="description" placeholder="Opisz spotkanie" required rows="4">{{i.description}}</textarea>
     </div>
 
+    {% if request.user|has_group:"admin" %}
     <div class="form-group">
 
         <label for="organizer">Organizator</label><br>
-            <select class="selectOrganizer" id="organizer" name="organizer" style="width: 100%;">
-                {% for i in fullnames %}
-                <option value="{{i.id}}">{{i.first_name}} {{i.last_name}} ({{i.username}})</option>
+            <select class="selectOrganizer" id="organizer" name="organizer" style="width: 100%;" value="{{i.organizer}}">
+
+                <option value="{{i.organizer.id}}">{{i.organizer.first_name}} {{i.organizer.last_name}} ({{i.organizer.username}})</option>
+                {% for j in users %}
+                    {% if not j.id == i.organizer.id %}
+                        <option value="{{j.id}}">{{j.first_name}} {{j.last_name}} ({{j.username}})</option>
+                    {% endif %}
                 {% endfor %}
             </select>
     </div>
+    {% endif %}
 
     <div class="row">
     <div class="col-md-12 col-lg-6">
       <label for="planning_date">Data i godzina rozpoczęcia</label>
         <input class="form-control" id="planning_date" min="{% now 'Y-m-d\TH:i' %}" name="planning_date" required type="datetime-local"
-               value="{% now 'Y-m-d\TH:i' %}">
+               value="{{i.planning_date|date:'Y-m-d\TH:i'}}">
     </div>
     <div class="col-md-12 col-lg-6">
      <label for="duration">Czas trwania (min.)</label>
-        <input class="form-control" id="duration" min="1" name="duration" placeholder="1" required type="number">
+        <input class="form-control" id="duration" min="1" name="duration" placeholder="1" required type="number" value="{{i.duration}}">
     </div>
   </div>
 <br>
@@ -56,7 +66,7 @@
     <div class="col-md-12 col-lg-6">
     <div class="form-group">
         <div class="form-group files">
-            <label>Prześlij ikonę</label>
+            <label>Zaktualizuj ikonę (opcjonalnie)</label>
             <input accept="image/*" id="id_icon" name="icon" type="file">
         </div>
     </div>
@@ -65,19 +75,18 @@
     <div class="col-md-12 col-lg-6">
     <div class="form-group">
               <div class="form-group files">
-                <label>Prześlij załącznik</label>
+                <label>Zaktualizuj załącznik (opcjonalnie)</label>
                 <input accept="application/pdf" id="id_attachment" name="attachment" type="file">
               </div>
     </div>
     </div>
     </div>
-    <center><button class="btn btn-secondary" style="width:20%;font-family: 'Oswald', sans-serif;" type="submit">Utwórz</button></center>
-
+    <center><button class="btn btn-secondary" style="width:20%;font-family: 'Oswald', sans-serif;" type="submit">Zapisz</button></center>
+    {% endfor %}
 </form>
+    <br>
+    <br>
 </div>
-
-
-
 
     <script src="{% static 'js/jquery-3.2.1.slim.min.js' %}"></script>
     <script src="{% static 'js/popper.min.js' %}"></script>

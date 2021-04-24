@@ -105,7 +105,7 @@ def register_page(request):
 
 # Tylko zalogowany użytkownik może wejśc w listę eventów. Niezalogowany zostanie przeniesiony
 # do strony odpowiedzialnej za logowanie
-@login_required(login_url="/login")
+#@login_required(login_url="/login")
 def events_list(request):
     all_events_list = Event.objects.all()
 
@@ -307,6 +307,7 @@ def user_edit(request, index):
 
     return render(request, 'schedule/user_edit.html', context)
 
+
 @allowed_users(allowed_roles=['admin'])
 def delete_user(request, index):
     try:
@@ -319,6 +320,7 @@ def delete_user(request, index):
         return redirect('users_list')
 
     return render(request, 'schedule/users_list.html')
+
 
 @allowed_users(allowed_roles=['admin'])
 def subject_edit(request, index):
@@ -339,6 +341,7 @@ def subject_edit(request, index):
 
     return render(request, 'schedule/subject_edit.html', context)
 
+
 @allowed_users(allowed_roles=['admin'])
 def delete_subject(request, index):
     try:
@@ -349,7 +352,6 @@ def delete_subject(request, index):
 
     except:
         return redirect('subjects_list')
-
 
     return render(request, 'schedule/subjects_list.html')
 
@@ -402,3 +404,66 @@ def email_notification(request):
                 output.write('\n')
 
         return redirect('email_notification')
+
+#@allowed_users(allowed_roles=['admin','organizer'])
+def event_edit(request, index):
+
+    if request.method == 'GET':
+        event = Event.objects.filter(id=index)
+        user = get_user_model()
+        users = user.objects.all()
+
+        context = {'event': event, 'users': users}
+        return render(request, 'schedule/event_edit.html', context)
+
+    if request.method == 'POST':
+
+        selected_event = Event.objects.get(id=index)
+
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        organizer = request.POST.get('organizer')
+        planning_date = request.POST.get('planning_date')
+        duration = request.POST.get('duration')
+
+        update_event = Event.objects.filter(id=index).update(title=title, description=description, organizer=organizer, planning_date=planning_date, duration=duration)
+
+        new_icon = request.FILES.get('icon')
+        new_attachment = request.FILES.get('attachment')
+
+        if new_icon:
+            selected_event.icon = new_icon
+            selected_event.save()
+
+        if new_attachment:
+            selected_event.attachment = new_attachment
+            selected_event.save()
+
+        return redirect('events_list')
+
+    return render(request, 'schedule/event_edit.html', context)
+
+
+@allowed_users(allowed_roles=['admin'])
+def delete_event(request, index):
+    try:
+        selected_event = Event.objects.filter(id=index)
+        selected_event.delete()
+
+        return redirect('events_list')
+
+    except:
+        return redirect('events_list')
+
+
+def my_profile(request):
+
+    my_events = Event.objects.filter(organizer=request.user)
+    my_subjects = Subject.objects.filter(proposer=request.user)
+
+    events_cnt = my_events.count()
+    subjects_cnt = my_subjects.count()
+
+    context = {'my_events': my_events, 'my_subjects': my_subjects, 'events_cnt': events_cnt, 'subjects_cnt': subjects_cnt }
+
+    return render(request, 'schedule/my_profile.html', context)
