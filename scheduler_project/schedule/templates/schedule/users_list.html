@@ -1,0 +1,103 @@
+{% extends 'schedule/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista użytkowników</title>
+
+
+</head>
+<body>
+
+<div class="container">
+    <br>
+    <center><h2>LISTA UŻYTKOWNIKÓW</h2></center>
+    <br>
+
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+        <tr>
+            <th class="th-sm">ID
+            </th>
+            <th class="th-sm">Nick
+            </th>
+            <th class="th-sm">Imię
+            </th>
+            <th class="th-sm">Nazwisko
+            </th>
+            <th class="th-sm">Email
+            </th>
+            <th class="th-sm">Szkolenia
+            </th>
+            <th class="th-sm">Tematy
+            </th>
+            <th class="th-sm">Zarządzanie
+            </th>
+
+
+        </tr>
+        </thead>
+
+
+        <tbody>
+
+        {% for i in users %}
+
+
+        <tr>
+            <td>{{i.id}}</td>
+            <td>{{i.username}}</td>
+            <td>{{i.first_name}}</td>
+            <td>{{i.last_name}}</td>
+            <td>{{i.email}}</td>
+
+            {% for leads in lead_cnt %}
+            {% if forloop.counter == forloop.parentloop.counter %}
+            <td>{{leads}}</td>
+            {% endif %}
+            {% endfor %}
+
+            {% for subjects in subjects_cnt %}
+            {% if forloop.counter == forloop.parentloop.counter %}
+            <td>{{subjects}}</td>
+            {% endif %}
+            {% endfor %}
+
+            <td><center>
+                <a href="{% url 'user_details' i.id %}"><img src="{% static 'images/icons/details.png' %}" style="width:30px; height:30px;"></a>
+                &nbsp;&nbsp;
+                <a href="{% url 'user_edit' i.id %}"><img src="{% static 'images/icons/edit.png' %}" style="width:30px; height:30px;"></a>
+                &nbsp;&nbsp;
+                <a href="{% url 'delete_user' i.id %}"> <img src="{% static 'images/icons/delete.png' %}"onclick="return confirm('Czy na pewno chcesz usunąć użytkowknika {{i.first_name}} {{i.last_name}}? Operacji nie będzie można cofnąć!')" style="width:30px; height:30px;"></a>
+            </center></td>
+
+        </tr>
+        {% endfor %}
+
+        </tbody>
+
+
+    </table>
+
+</div>
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/jquery.datatables.min.js' %}"></script>
+<script src="{% static 'js/datatables.bootstrap4.min.js' %}"></script>
+
+
+<script>
+$(document).ready(function () {
+            $('#dataTable').DataTable();
+        });
+</script>
+
+
+</body>
+</html>
+
+{% endblock %}

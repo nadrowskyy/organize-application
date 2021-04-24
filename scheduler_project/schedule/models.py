@@ -1,13 +1,17 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.utils import timezone
 from django.utils.text import slugify
 from vote.models import VoteModel, Vote
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
+from django.dispatch import receiver
+from django.db.models.signals import post_migrate
+from django.contrib.auth import get_user_model
 
 
 class Event(models.Model):
+
     STATUS_CHOICES = (
         ('draft', 'Szkic'),
         ('publish', 'Opublikowano')
@@ -24,7 +28,7 @@ class Event(models.Model):
                               choices=STATUS_CHOICES,
                               default='publish')
     duration = models.IntegerField()
-    icon = models.FileField(upload_to='icons/', default='icons/default.jpg')
+    icon = models.FileField(upload_to='icons/', default='icons/default.png')
     attachment = models.FileField(upload_to='attachments/', blank=True)
 
     def save(self, *args, **kwargs):
@@ -75,3 +79,17 @@ class Lead(models.Model):
 
     def __str__(self):
         return f'{self.leader.username} {self.if_lead} {self.subject.title}'
+
+
+@receiver(post_migrate)
+def populate_models(sender, **kwargs):
+    group, created = Group.objects.get_or_create(name='admin')
+    group.save()
+    group, created = Group.objects.get_or_create(name='employee')
+    group.save()
+
+    User = get_user_model()
+    if not User.objects.filter(username='superuser').exists():
+        User.objects.create_superuser(username='superuser',
+                                      email='super@email.com',
+                                      password='super')

@@ -52,8 +52,8 @@
     {% endif %}
 
     <a href="{% url 'home' %}"><img class="mb-4" src="{% static 'images/logo-light2.png' %}" alt=""></a>
-    <h1 class="h3 mb-3 fw-normal">Zaloguj się do aplikacji</h1>
-
+    <h2>Zaloguj się</h2>
+    <br>
     <div class="form-floating">
       <input type="text" class="form-control" id="username" name="username" placeholder="Login">
       <label for="username">Login</label>
@@ -69,7 +69,7 @@
         <input type="checkbox" id="remember_me" name="remember_me" value="remember_me"> Zapamiętaj mnie
       </label>
     </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Zaloguj</button>
+    <button class="w-100 btn btn-lg btn-primary" style="font-family: 'Oswald', sans-serif;" type="submit">Zaloguj</button>
     <br>
     <br>
       {% for message in messages %}

@@ -1,0 +1,117 @@
+{% extends 'schedule/base.html' %}
+{% load static %}
+{% block content %}
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mój profil</title>
+</head>
+<body>
+
+<div class="container" style="max-width:1000px">
+
+
+	{% csrf_token %}
+
+    <br>
+    <h2 style="text-align:center;">PROFIL UŻYTKOWNIKA</h2>
+    <br>
+
+<div class="row gutters" >
+<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+<div class="card h-200" style="text-align:center;">
+	<div class="card-body">
+		<div class="row gutters">
+			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="form-group">
+					<label for="full_name">Imię i nazwisko:</label>
+                    <h4 id="full_name">{{request.user.first_name}} {{request.user.last_name}}</h4>
+				</div>
+			</div>
+			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="form-group">
+					<label for="group">Grupa:</label>
+					{% if request.user.groups.all.0.name == "admin" %}
+                    <h4 id="group">Administrator</h4>
+					{% elif request.user.groups.all.0.name == "employee"  %}
+					<h4 id="group">Pracownik</h4>
+					{% else %}
+					<h4 id="group">{{request.user.groups.all.0.name}}</h4>
+					{% endif %}
+
+				</div>
+			</div>
+			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="form-group">
+					<label for="email">E-mail:</label>
+                    <h4 id="email">{{request.user.email}}</h4>
+				</div>
+			</div>
+			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="form-group">
+					<label for="username">Nazwa użytkownika:</label>
+                    <h4 id="username">{{request.user.username}}</h4>
+				</div>
+			</div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="form-group">
+					<label for="date_joined">Data i czas rejestracji:</label>
+                    <h4 id="date_joined">{{request.user.date_joined}}</h4>
+				</div>
+			</div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="form-group">
+					<label for="last_login">Data i czas ostaniego logowania:</label>
+                    <h4 id="last_login">{{request.user.last_login}}</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+		<br><br>
+
+    <h2 style="text-align:center;">PROWADZONE SPOTKANIA ({{events_cnt}})</h2>
+    <br>
+
+    {% for i in my_events %}
+<div class="row gutters" >
+	<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+		<div class="card">
+    		<h4 class="card-header"><img class="rounded-circle" src="/media/{{i.icon}}" alt="" width="50" height="50">&nbsp;&nbsp;{{i.title}} </h4>
+    		<br>
+       		 <h5 class="card-text" id="like_count">Opis: {{ i.description }}</h5><br>
+			<div class="card-footer text-muted" style="text-align:center;">
+				{{i.planning_date}}
+			</div>
+		</div>
+	</div>
+</div>
+		<br><br>
+	{% endfor %}
+
+	    <h2 style="text-align:center;">ZGŁOSZONE TEMATY ({{subjects_cnt}})</h2>
+    <br>
+    {% for i in my_subjects %}
+<div class="row gutters" >
+	<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+		<div class="card">
+    		<h4 class="card-header">{{i.title}}</h4>
+    		<br>
+       		 <h5 class="card-text" id="like_count">Opis: {{ i.description }}</h5><br>
+		</div>
+	</div>
+</div>
+		<br>
+	{% endfor %}
+
+		<br><br>
+
+
+</body>
+</html>
+
+{% endblock %}

@@ -1,6 +1,7 @@
 
 {% extends 'schedule/base.html' %}
 {% load static %}
+{% load auth_extras %}
 {% block content %}
 
 <head>
@@ -8,11 +9,11 @@
     <title>Lista tematów</title>
 
 
-
 </head>
 
 
 <body>
+<br>
 <h2 style="text-align:center;">LISTA TEMATÓW</h2>
 
 <br>
@@ -26,40 +27,54 @@
 
 {% for i in all_subjects_list %}
 <div class="card">
-    <h4 class="card-header">{{i.title}}</h4>
+    <h4 class="card-header">{{i.title}}
+    {% if request.user|has_group:"admin" %}
+    &nbsp;
+    <a href="{% url 'subject_edit' i.id %}"><img src="{% static 'images/icons/edit.png' %}" style="text-align:right; width:25px; height:25px;"></a>
+    &nbsp;
+    <a href="{% url 'delete_subject' i.id %}" onclick="return confirm('Czy na pewno chcesz usunąć temat {{i.title}}? Operacji nie będzie można cofnąć!');"><img src="{% static 'images/icons/delete.png' %}" style="text-align:right; width:25px; height:25px;"></a>
+    {% endif %}
+    </h4>
+
     <br>
         <h5 class="card-text" id="like_count">Opis: {{ i.description }}</h5>
-<!--        <h7 class="card-text">Chce wziąć udział: {{i.like_count}}</h7>-->
 
     <div class="container" style="max-width:500px;">
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6 col-sm-6">
         <form action="{% url 'like'%}" method="POST" class="ui form">
             {% csrf_token %}
         <input type="hidden" name="subject_id" value="{{i.id}}" />
-        <button class="like_btn" value = {{i.id}}>
-            Podoba mi się!&nbsp;&nbsp;&nbsp;<span class="badge">{{i.like_count}}</span>
+        <div style="font-family: 'Oswald', sans-serif;">
+        <button class="btn like_btn" value = {{i.id}}>
+            <div style="font-family: 'Oswald', sans-serif;">Podoba mi się!&nbsp;&nbsp;&nbsp;<span>{{i.like_count}}</span>
         </button>
+
+<!--    OPCJA WYSZARZONA / NIEAKTYWNA
+
+        <button class="btn like_btn disabled" value = {{i.id}} disabled>
+            <div style="font-family: 'Oswald', sans-serif;">Podoba mi się!&nbsp;&nbsp;&nbsp;<span>{{i.like_count}}</span>
+        </button>-->
+
+        </div>
 
         </form>
         </div>
-          <div class="col-lg-6">
+          <div class="col-lg-6 col-md-6 col-sm-6">
           <form action="{% url 'want_to_lead'%}" method="POST" class="ui form">
 
             {% csrf_token %}
               <input type="hidden" name="leader_id" value="{{i.id}}" />
-          <button class="lead_btn" value = {{i.id}}>
-              Chcę poprowadzić to szkolenie&nbsp;&nbsp;&nbsp;<span class="badge">{{i.lead_count}}</span>
+          <button class="btn lead_btn" value = {{i.id}}>
+              Chcę poprowadzić to szkolenie&nbsp;&nbsp;&nbsp;<span>{{i.lead_count}}</span>
           </button>
           <br><br>
 
+<!--      OPCJA WYSZARZONA / NIEAKTYWNA
 
-<!--      A tutaj zrobimy walidacje, czy user już czasem się nie zgłosił i wtedy wyświetli się zablokowany przycisk czy cos
-
-          <button class="lead_btn" value = {{i.id}} disabled>
-              Zgłosiłeś się do prowadzenia tego szkolenia
+          <button class="btn lead_btn disabled" value = {{i.id}} disabled>
+              Zgłoszono do prowadzenia tego szkolenia
           </button>-->
-
 
           </div>
           </form>

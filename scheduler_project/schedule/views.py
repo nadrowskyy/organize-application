@@ -15,7 +15,7 @@ from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from .models import Event, Subject, Lead
+from .models import Event, Subject, Lead, User
 from django.core.paginator import Paginator, EmptyPage
 from django.core.files.storage import FileSystemStorage
 from django.utils import timezone
@@ -24,11 +24,9 @@ from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage
 
 
-
 # @login_required(login_url='login') # nie pozwala na wejscie uzytkownika na strone glowna jesli nie jest zarejestrowany
 def home_page(request):
     now = timezone.now()
-    print(now)
     upcoming_events_list = Event.objects.filter(planning_date__gte=now)
 
     context = {'upcoming_events_list': upcoming_events_list}
@@ -38,7 +36,6 @@ def home_page(request):
 
 @unauthenticated_user
 def login_page(request):
-
     if request.method == 'POST':
         username = request.POST.get('username')  # html name="username"
         password = request.POST.get('password')
@@ -46,8 +43,8 @@ def login_page(request):
 
         user = authenticate(request, username=username, password=password)
 
-        #Sprawdzanie parametru next, by móc przekierować niezalogowanego użytkownika
-        #w miejsce do którego chciał się dostać po poprawnym logowaniu
+        # Sprawdzanie parametru next, by móc przekierować niezalogowanego użytkownika
+        # w miejsce do którego chciał się dostać po poprawnym logowaniu
         if user is not None:
             login(request, user)
             if 'next' in request.POST:
@@ -68,12 +65,11 @@ def login_page(request):
 # do zakladki rejestracji moga przejsc tylko niezalogowani uzytkownicy
 @unauthenticated_user
 def register_page(request):
-
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
 
-# sprawdzanie prefixu i suffixu maila
+            # sprawdzanie prefixu i suffixu maila
             email = form.cleaned_data.get('email')
             suffix = (email.rsplit('@'))[1]
             prefix = (email.split('@'))[0]
@@ -110,11 +106,11 @@ def register_page(request):
     context = {'form': form}
     return render(request, 'schedule/register.html', context)
 
-#Tylko zalogowany użytkownik może wejśc w listę eventów. Niezalogowany zostanie przeniesiony
-#do strony odpowiedzialnej za logowanie
+
+# Tylko zalogowany użytkownik może wejśc w listę eventów. Niezalogowany zostanie przeniesiony
+# do strony odpowiedzialnej za logowanie
 @login_required(login_url="/login")
 def events_list(request):
-
     all_events_list = Event.objects.all()
 
     pa = Paginator(all_events_list, 12)
@@ -123,7 +119,7 @@ def events_list(request):
     try:
         page = pa.page(page_num)
     except EmptyPage:
-        page =pa.page(1)
+        page = pa.page(1)
 
     today = datetime.today()
     upcoming_events_list = Event.objects.filter(planning_date__gte=today)
@@ -141,7 +137,6 @@ def events_list(request):
 # pozwala wejsc na strone tworzenia eventów tylko adminom
 @allowed_users(allowed_roles=['admin'])
 def create_event(request):
-
     User = get_user_model()
     fullnames = User.objects.all()
 
@@ -161,7 +156,6 @@ def create_event(request):
 
 @login_required(login_url='login')
 def suggest_event(request):
-    print('hereeee')
     if request.method == 'POST':
         form = SubjectForm(request.POST)
         if form.is_valid():
@@ -190,6 +184,7 @@ def suggest_event(request):
 
     return render(request, 'schedule/suggest_event.html', context)
 
+
 @login_required(login_url='login')
 def logout_user(request):
     logout(request)
@@ -197,7 +192,6 @@ def logout_user(request):
 
 
 def about(request):
-
     return render(request, 'schedule/about.html')
 
 
@@ -205,10 +199,11 @@ def user_page(request):
     context = {}
     return render(request, 'schedule/user.html', context)
 
-def subjects_list(request):
 
+def subjects_list(request):
     all_subjects_list = Subject.objects.all()
     return render(request, 'schedule/subjects_list.html', {"all_subjects_list": all_subjects_list})
+
 
 @login_required(login_url='login')
 def like(request):
@@ -226,6 +221,7 @@ def like(request):
 
         return redirect('subjects_list')
 
+
 @login_required(login_url='login')
 def want_to_lead(request):
     if request.method == 'POST':
@@ -240,4 +236,188 @@ def want_to_lead(request):
         return redirect('subjects_list')
 
 
+@allowed_users(allowed_roles=['admin'])
+def users_list(request):
+    if request.method == 'POST':
+        delete_id = request.POST.get('delete')
+        user = get_user_model()
+        selected_user = user.objects.filter(id=delete_id)
+        selected_user.delete()
 
+    user = get_user_model()
+    users = user.objects.all()
+
+    lead_cnt = []
+    subjects_cnt = []
+
+    for i in users:
+        lead_cnt.append(Event.objects.filter(organizer=i.id).count())
+        subjects_cnt.append(Subject.objects.filter(proposer=i.id).count())
+
+    context = {'users': users, 'lead_cnt': lead_cnt, 'subjects_cnt': subjects_cnt}
+
+    return render(request, 'schedule/users_list.html', context)
+
+
+@allowed_users(allowed_roles=['admin'])
+def user_details(request, index):
+    if request.method == 'GET':
+        user = get_user_model()
+        selected_user = user.objects.filter(id=index)
+
+        subjects = Subject.objects.filter(proposer=index)
+        events = Event.objects.filter(organizer=index)
+
+        subjects_cnt = subjects.count()
+        events_cnt = events.count()
+
+        context = {'selected_user': selected_user, 'subjects': subjects, 'events': events, 'subjects_cnt': subjects_cnt, 'events_cnt': events_cnt}
+        return render(request, 'schedule/user_details.html', context)
+
+
+@allowed_users(allowed_roles=['admin'])
+def user_edit(request, index):
+
+
+    if request.method == 'GET':
+        user = get_user_model()
+        selected_user = user.objects.filter(id=index)
+        context = {'selected_user': selected_user}
+
+    if request.method == 'POST':
+        user = get_user_model()
+        selected_user = user.objects.filter(id=index)
+
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        if_admin = request.POST.get('if_admin')
+
+        if if_admin:
+            employee_group = Group.objects.get(name='employee')
+            admin_group = Group.objects.get(name='admin')
+            employee_group.user_set.remove(index)
+            admin_group.user_set.add(index)
+        else:
+            employee_group = Group.objects.get(name='employee')
+            admin_group = Group.objects.get(name='admin')
+            admin_group.user_set.remove(index)
+            employee_group.user_set.add(index)
+
+        update_user = user.objects.filter(id=index).update(first_name=first_name, last_name=last_name, username=username, email=email)
+
+        return redirect('users_list')
+
+    return render(request, 'schedule/user_edit.html', context)
+
+
+@allowed_users(allowed_roles=['admin'])
+def delete_user(request, index):
+    try:
+        user = get_user_model()
+        selected_user = user.objects.filter(id=index)
+        selected_user.delete()
+        return redirect('users_list')
+
+    except:
+        return redirect('users_list')
+
+    return render(request, 'schedule/users_list.html')
+
+
+@allowed_users(allowed_roles=['admin'])
+def subject_edit(request, index):
+
+    if request.method == 'GET':
+        subject = Subject.objects.filter(id=index)
+        context = {'subject': subject}
+        return render(request, 'schedule/subject_edit.html', context)
+
+    if request.method == 'POST':
+
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+
+        update_subject = Subject.objects.filter(id=index).update(title=title, description=description)
+
+        return redirect('subjects_list')
+
+    return render(request, 'schedule/subject_edit.html', context)
+
+
+@allowed_users(allowed_roles=['admin'])
+def delete_subject(request, index):
+    try:
+        selected_subject = Subject.objects.filter(id=index)
+        selected_subject.delete()
+
+        return redirect('subjects_list')
+
+    except:
+        return redirect('subjects_list')
+
+
+
+@allowed_users(allowed_roles=['admin'])
+def event_edit(request, index):
+
+    if request.method == 'GET':
+        event = Event.objects.filter(id=index)
+        user = get_user_model()
+        users = user.objects.all()
+
+        context = {'event': event, 'users': users}
+        return render(request, 'schedule/event_edit.html', context)
+
+    if request.method == 'POST':
+
+        selected_event = Event.objects.get(id=index)
+
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        organizer = request.POST.get('organizer')
+        planning_date = request.POST.get('planning_date')
+        duration = request.POST.get('duration')
+
+        update_event = Event.objects.filter(id=index).update(title=title, description=description, organizer=organizer, planning_date=planning_date, duration=duration)
+
+        new_icon = request.FILES.get('icon')
+        new_attachment = request.FILES.get('attachment')
+
+        if new_icon:
+            selected_event.icon = new_icon
+            selected_event.save()
+
+        if new_attachment:
+            selected_event.attachment = new_attachment
+            selected_event.save()
+
+        return redirect('events_list')
+
+    return render(request, 'schedule/event_edit.html', context)
+
+
+@allowed_users(allowed_roles=['admin'])
+def delete_event(request, index):
+    try:
+        selected_event = Event.objects.filter(id=index)
+        selected_event.delete()
+
+        return redirect('events_list')
+
+    except:
+        return redirect('events_list')
+
+
+def my_profile(request):
+
+    my_events = Event.objects.filter(organizer=request.user)
+    my_subjects = Subject.objects.filter(proposer=request.user)
+
+    events_cnt = my_events.count()
+    subjects_cnt = my_subjects.count()
+
+    context = {'my_events': my_events, 'my_subjects': my_subjects, 'events_cnt': events_cnt, 'subjects_cnt': subjects_cnt }
+
+    return render(request, 'schedule/my_profile.html', context)

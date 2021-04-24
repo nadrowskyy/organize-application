@@ -2,22 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="Poprawione obrazki na liście eventów">
+      <change afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/my_profile.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scheduler_project/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/manage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/about.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/create_event.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/create_event.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/events_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/events_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/navbar.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/navbar.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/subjects_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/subjects_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/suggest_event.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/suggest_event.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/static/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/static/css/bootstrap.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/static/css/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +17,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Python Script" />
         <option value="HTML File" />
       </list>
     </option>
@@ -37,7 +28,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="event-edit-and-delete" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -77,11 +68,11 @@
       <recent name="C:\Users\Dell Inspiron 7567\Desktop\organize-application\scheduler_project\schedule\templates\schedule" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\dinek\PycharmProjects\organize-application\scheduler_project" />
+      <recent name="C:\Users\dinek\PycharmProjects\organize-application\scheduler_project\scheduler_project" />
+      <recent name="C:\Users\dinek\PycharmProjects\organize-application\scheduler_project\schedule" />
       <recent name="C:\Users\dinek\PycharmProjects\organize-application\scheduler_project\static\css" />
       <recent name="C:\Users\dinek\PycharmProjects\organize-application\scheduler_project\static\images\icons" />
-      <recent name="C:\Users\dinek\PycharmProjects\organize-application\scheduler_project" />
-      <recent name="C:\Users\dinek\PycharmProjects\organize-application\scheduler_project\schedule" />
-      <recent name="C:\Users\dinek\PycharmProjects\organize-application\scheduler_project\static" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -184,7 +175,42 @@
       <option name="project" value="LOCAL" />
       <updated>1617413518896</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Poprawki wizualne - formularze, navbar, listy eventow i tematow.">
+      <created>1618271644788</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1618271644788</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Brakujące pliki">
+      <created>1618272813877</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1618272813877</updated>
+    </task>
+    <task id="LOCAL-00016" summary="users list (admin view) with edit(to do) and delete(ok) options, user's details (admin view), dropdown button with nickname and group-based options, some visual fixes">
+      <created>1618632396164</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1618632396164</updated>
+    </task>
+    <task id="LOCAL-00017" summary="admin view: users list with options: show profile, edit, delete. subjects list with options: edit, delete">
+      <created>1618683439616</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1618683439616</updated>
+    </task>
+    <task id="LOCAL-00018" summary="&quot;edit event&quot; and &quot;delete event&quot; buttons visible on events list (admin view); django 3.2 compatibilty fixes">
+      <created>1618824649309</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1618824649309</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -217,16 +243,11 @@
     <MESSAGE value="Zmieniony homepage - karuzela z instrukcją, wyświetlanie trzech najbliższch eventów z datą, godziną, imieniem i nazwiskiem; miejsce na kolejne dodatki" />
     <MESSAGE value="Update 1.4.1 - poprawki wizualne" />
     <MESSAGE value="Update 1.5 - ZROBIĆ MIGRACJE - admin może dodawać eventy, dodawać customowe ikony, wybierać organizatora z listy; na homepage wyświetlają się dodane ręcznie ikony lub defaultowa jeśli nie ma; nowe pliki css i js do obsługi nowych ficzerów; kosmetyczne poprawki" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update 1.5 - ZROBIĆ MIGRACJE - admin może dodawać eventy, dodawać customowe ikony, wybierać organizatora z listy; na homepage wyświetlają się dodane ręcznie ikony lub defaultowa jeśli nie ma; nowe pliki css i js do obsługi nowych ficzerów; kosmetyczne poprawki" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/scheduler_project/schedule/views.py</url>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Poprawki wizualne - formularze, navbar, listy eventow i tematow." />
+    <MESSAGE value="Brakujące pliki" />
+    <MESSAGE value="users list (admin view) with edit(to do) and delete(ok) options, user's details (admin view), dropdown button with nickname and group-based options, some visual fixes" />
+    <MESSAGE value="admin view: users list with options: show profile, edit, delete. subjects list with options: edit, delete" />
+    <MESSAGE value="&quot;edit event&quot; and &quot;delete event&quot; buttons visible on events list (admin view); django 3.2 compatibilty fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;edit event&quot; and &quot;delete event&quot; buttons visible on events list (admin view); django 3.2 compatibilty fixes" />
   </component>
 </project>

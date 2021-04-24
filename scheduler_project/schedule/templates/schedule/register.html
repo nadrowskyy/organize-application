@@ -11,11 +11,11 @@
     <meta name="description" content="">
     <title>Rejestracja</title>
     <link rel="icon" href="{% static 'images/icons/favicon.ico' %}">
-
-
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/signin.css' %}" rel="stylesheet">
 
     <!-- Bootstrap core CSS -->
-<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
 
     <style>
       .bd-placeholder-img {
@@ -45,8 +45,8 @@
   <form method="POST" action="">
       {% csrf_token %}
     <a href="{% url 'home' %}"><img class="mb-4" src="{% static 'images/logo-light2.png' %}" href="{% url 'home' %}" alt=""></a>
-    <h1 class="h3 mb-3 fw-normal">Zarejestruj się</h1>
-
+    <h2>Zarejestruj się</h2>
+    <br>
     <div class="form-floating">
       <input type="text" class="form-control" id="username" name="username" placeholder="Login" required>
       <label for="username">Login</label>
@@ -86,7 +86,7 @@
         <errormsg>{{ form.password2.errors }}</errormsg>
     </div>
     <br>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Zarejestruj</button>
+    <button class="w-100 btn btn-lg btn-primary" style="font-family: 'Oswald', sans-serif;" type="submit">Zarejestruj</button>
 
     <p class="mt-5 mb-3 text-muted">&copy; SchedulerApp 2021</p>
   </form>
