@@ -12,11 +12,13 @@ from .decorators import unauthenticated_user, allowed_users
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from .models import Event, Subject, Lead, User, EmailSet
+from django.core.mail import send_mail, get_connection, send_mass_mail
+from django.core.mail import EmailMessage
 from django.utils import timezone
 import pytz
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage
-from django.template.loader import get_template
+from django.template.loader import get_template, render_to_string
 import os
 
 
@@ -374,10 +376,44 @@ def email_client(request):
         if_tls = request.POST.get('if_tls')
         delay_leader = request.POST.get('delay_leader')
         delay_all = request.POST.get('delay_all')
+        from_email = request.POST.get('from_email')
+
+        email_body = render_to_string('schedule/email_test_template.html')
+
+        try:
+
+            with get_connection(host=email_host, port=port, username=username, password=password, use_tls=if_tls) as conn:
+                msg = EmailMessage(subject='FFT - Wiadomość testowa', from_email=from_email, body=email_body,
+                                   to=[request.user.email], connection=conn)
+                msg.send(fail_silently=True)
+
+        except Exception as e:
+
+            e = str(e)
+
+            if "535" in e:
+                error = 'Login i/lub hasło są nieprawidłowe'
+
+            elif "10060" in e:
+                error = 'Port jest nieprawidłowy'
+
+            elif "11001" in e:
+                error = 'Nazwa serwera jest nieprawidłowa'
+
+            elif "Invalid address; only" in e:
+                error = 'Błędna nazwa nadawcy. Powinna być w formie: nazwa <mail@serwer.domena> lub sama nazwa'
+
+            else:
+                error = e
+
+            settings = EmailSet.objects.filter(id=1)[0]
+            context = {'settings': settings, 'error': error}
+
+            return render(request, 'schedule/email_client.html', context)
 
         EmailSet.objects.filter(id=1).update(delay_leader=delay_leader, delay_all=delay_all, EMAIL_HOST=email_host,
                                              EMAIL_PORT=port, EMAIL_HOST_USER=username, EMAIL_HOST_PASSWORD=password,
-                                             EMAIL_USE_TLS=if_tls, DEFAULT_FROM_EMAIL=username)
+                                             EMAIL_USE_TLS=if_tls, EMAIL_HEADER=from_email)
 
         return redirect('email_client')
 

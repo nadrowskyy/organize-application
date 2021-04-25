@@ -31,7 +31,7 @@
 		<div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
 
 				<ul class="navbar-nav navbar-default">
-					<li class="nav-item active">
+					<li class="nav-item">
 						<a class="nav-link" href="{% url 'home' %}">Strona główna</a>
 					</li>
 					<li class="nav-item">
@@ -74,7 +74,7 @@
 
 						  {% if request.user|has_group:"admin" %}
 
-
+						  <a class="dropdown-item" href="{% url 'email_client' %}">Ustawienia</a>
 
 						  {% endif %}
 						  <hr style="margin:5px;">
@@ -93,7 +93,19 @@
 	</div>
 
 
+
+
 </nav>
+
+<script type="text/javascript">
+		$(document).ready(function () {
+        var url = window.location;
+        $('li.nav-item a[href="'+ url +'"]').parent().addClass('active');
+        $('li.nav-item a').filter(function() {
+             return this.href == url;
+        }).parent().addClass('active');
+    });
+</script>
 
 
 

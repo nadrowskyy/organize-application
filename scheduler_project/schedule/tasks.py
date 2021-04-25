@@ -41,9 +41,10 @@ def send_notification_all():
         password = mail_settings.EMAIL_HOST_PASSWORD
         use_tls = bool(mail_settings.EMAIL_USE_TLS)
         email_body = render_to_string('schedule/email_template.html', context={'events': events_list})
+        from_email = mail_settings.EMAIL_HEADER
 
         with get_connection(host=host, port=port, username=username, password=password, use_tls=use_tls) as conn:
-            msg = EmailMessage(subject='Sprawdź nadchodzące szkolenia!', body=email_body, from_email=username,
+            msg = EmailMessage(subject='Sprawdź nadchodzące szkolenia!', body=email_body, from_email=from_email,
                                to=mailing_list_all, connection=conn)
             msg.send(fail_silently=True)
 
@@ -99,9 +100,10 @@ def send_notification_organizer():
             password = mail_settings.EMAIL_HOST_PASSWORD
             use_tls = bool(mail_settings.EMAIL_USE_TLS)
             email_body = render_to_string('schedule/email_template.html', context={'user': user, 'events': events})
+            from_email = mail_settings.EMAIL_HEADER
 
             with get_connection(host=host, port=port, username=username, password=password, use_tls=use_tls) as conn:
-                msg = EmailMessage(subject='Twoje nadchodzące szkolenia!', body=email_body, from_email=username,
+                msg = EmailMessage(subject='Twoje nadchodzące szkolenia!', body=email_body, from_email=from_email,
                                    to=[user.email], connection=conn)
                 msg.send(fail_silently=True)
 
@@ -111,3 +113,4 @@ def send_notification_organizer():
                 tmp_not.save()
 
     return None
+
