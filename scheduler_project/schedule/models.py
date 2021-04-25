@@ -93,6 +93,7 @@ class EmailSet(models.Model):
     EMAIL_HOST_PASSWORD = models.CharField(default='ozebijqmlwhlahqw', max_length=100)
     EMAIL_USE_TLS = models.BooleanField(default=True)
     DEFAULT_FROM_EMAIL = models.CharField(default='carnetdjango@gmail.com', max_length=50)
+    EMAIL_HEADER = models.CharField(default='"FFT - Food For Thought" <fft@comarch.pl>', max_length=50)
 
 
 class EventNotification(models.Model):
