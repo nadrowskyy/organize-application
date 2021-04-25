@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from .models import Event, Subject
 import datetime
+from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
 
 
 class UserFullnameChoiceField(forms.ModelChoiceField):
@@ -34,3 +35,21 @@ class SubjectForm(ModelForm):
     class Meta:
         model = Subject
         fields = ('title', 'description')
+
+
+class ChangePassword(PasswordChangeForm):
+    error_messages = dict(PasswordChangeForm.error_messages, **{
+        'passwords_match': ("Nowe hasło jest takie same jak poprzednie hasło."
+                             "Wprowadź jeszcze raz"),
+    })
+
+
+    def clean_new_password1(self):
+        old_pass = self.cleaned_data.get('old_password')
+        new_pass = self.cleaned_data.get('new_password1')
+        if old_pass and new_pass:
+            if old_pass == new_pass:
+                raise forms.ValidationError(
+                    self.error_messages['passwords_match'], code='passwords_match'
+                )
+        return new_pass
