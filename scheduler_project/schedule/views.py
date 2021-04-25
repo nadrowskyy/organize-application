@@ -18,7 +18,7 @@ from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage
 from django.template.loader import get_template
 import os
-
+from .forms import ChangePassword
 
 # @login_required(login_url='login') # nie pozwala na wejscie uzytkownika na strone glowna jesli nie jest zarejestrowany
 def home_page(request):
@@ -464,6 +464,53 @@ def my_profile(request):
     events_cnt = my_events.count()
     subjects_cnt = my_subjects.count()
 
-    context = {'my_events': my_events, 'my_subjects': my_subjects, 'events_cnt': events_cnt, 'subjects_cnt': subjects_cnt }
+    if request.method == 'POST':
+        form = ChangePassword(user=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            login(request, request.user)
+            messages.success(request, 'Hasło zostało zmienione.')
+            return redirect('my_profile')
+    else:
+        form = ChangePassword(user=request.user)
+
+    for field in form.fields.values():
+        field.help_text = None
+
+    context = {'my_events': my_events, 'my_subjects': my_subjects, 'events_cnt': events_cnt, 'subjects_cnt': subjects_cnt, 'form': form }
 
     return render(request, 'schedule/my_profile.html', context)
+
+
+# @login_required(login_url='login')
+# def change_password(request):
+#     if request.method == 'POST':
+#         form = PasswordChangeForm(user=request.user, data=request.POST)
+#         if form.is_valid():
+#             form.save()
+#             login(request, request.user)
+#             messages.success(request, _('Password successfully changed.'))
+#             return redirect('my_profile')
+#     else:
+#         form = PasswordChangeForm(user=request.user)
+#
+#     for field in form.fields.values():
+#         field.help_text = None
+#
+#     context = {'form': form}
+#
+#     return render(request, 'schedule/my_profile.html', context)
+
+def event_details(request, index):
+
+    if request.method == 'GET':
+        selected_event = Event.objects.filter(id=index)
+        context = {'selected_event': selected_event}
+
+        return render(request, 'schedule/event_details.html', context)
+
+    else:
+        return redirect('events_list')
+
+
+

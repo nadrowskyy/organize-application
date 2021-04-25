@@ -1,0 +1,59 @@
+{% extends 'schedule/base.html' %}
+{% load static %}
+{% load auth_extras %}
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Szczegóły szkolenia</title>
+
+</head>
+<body>
+
+<div class="container" style="max-width:1000px">
+
+
+	{% csrf_token %}
+
+    <br>
+    <h2 style="text-align:center;">Szczegóły szkolenia</h2>
+    <br>
+<div class="container">
+    {% for i in selected_event %}
+
+            <div class="badge-light">
+                    <p style="text-align:center;"><img class="rounded-circle" src="/media/{{i.icon}}" alt="" width="140" height="140"></p>
+                <center>
+                    <div class="baige_background">
+                        <br>
+                    <h1>{{i.title}}</h1>
+                    <h3>{{i.planning_date|date:"d.m.Y H:i"}} ({{i.planning_date|date:"l"}})</h3>
+                    <br>
+                    <h6>Prowadzi: {{i.organizer.first_name}} {{i.organizer.last_name}}</h6>
+                    <br>
+                    </div>
+                    <div>
+                        <br>
+                        <h5>Opis:</h5>
+                        <h6>{{i.description}}</h6>
+                    </div>
+                    <div>
+                        <br>
+                         -
+                        <br>
+                    </div>
+                    <div>
+                        <p>Spotkanie będzie trwało {{i.duration}} minut.</p>
+                    </div>
+                    <div>
+                        <p>Utworzono {{i.created}}</p>
+                    </div>
+                </center>
+            </div>
+    {% endfor %}
+</div>
+</div>
+
+
+{% endblock %}
