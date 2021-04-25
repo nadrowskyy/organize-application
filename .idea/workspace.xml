@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="Poprawione obrazki na liście eventów" />
+    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="Poprawione obrazki na liście eventów">
+      <change afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/event_details.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/organize-application.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/organize-application.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/events_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/events_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/my_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/my_profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/static/css/style.css" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,7 +33,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="events_list" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -52,6 +64,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="run.code.analysis.last.selected.profile" value="aDefault" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -76,6 +89,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616437858332</updated>
+      <workItem from="1619361094288" duration="20394000" />
     </task>
     <task id="LOCAL-00001" summary="Test kom Bartka K">
       <created>1616441609819</created>
@@ -212,6 +226,9 @@
     </task>
     <option name="localTasksCounter" value="20" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
