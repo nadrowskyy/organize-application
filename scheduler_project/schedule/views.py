@@ -429,7 +429,7 @@ def email_notification(request):
         module_dir = os.path.dirname(__file__)
         file_path = os.path.join(module_dir, 'templates\schedule\email_template.html')
         with open(file_path, 'w', encoding='utf-8') as output:
-            for line in notification.splitlines()[:-1]:
+            for line in notification.splitlines():
                 output.write(line)
                 output.write('\n')
 
