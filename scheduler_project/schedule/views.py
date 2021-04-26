@@ -162,17 +162,11 @@ def suggest_event(request):
             subject = form.save(commit=False)
             subject.proposer_id = me.id
             subject.save()
-
-            if request.POST.get('if_lead') != None:
-                sub = ''
-                try:
-                    sub = Subject.objects.latest('id')
-                except:
-                    pass
-
-                # tworzenie glosu jesli nie ma go juz w tabeli
-                if not Lead.objects.filter(leader=me, subject=sub, if_lead=True):
-                    Lead.objects.create(leader=me, subject=sub, if_lead=True, created=timezone.now())
+            if request.POST.get('if_lead') is not None:
+                leader = Subject.objects.filter(proposer=me).last()
+                leader.want_to_lead.add(me)
+                leader.lead_count += 1
+                leader.save()
 
             return redirect('home')
     else:
@@ -435,7 +429,7 @@ def email_notification(request):
         module_dir = os.path.dirname(__file__)
         file_path = os.path.join(module_dir, 'templates\schedule\email_template.html')
         with open(file_path, 'w', encoding='utf-8') as output:
-            for line in notification.splitlines()[:-1]:
+            for line in notification.splitlines():
                 output.write(line)
                 output.write('\n')
 
