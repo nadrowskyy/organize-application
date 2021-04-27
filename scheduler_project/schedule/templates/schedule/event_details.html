@@ -40,7 +40,10 @@
                     </div>
                     <div>
                         <br>
-                         -
+                        {% if i.attachment %}
+                        <a href="/media/{{i.attachment}}">Pobierz załącznik</a>
+                        <br>
+                        {% endif %}
                         <br>
                     </div>
                     <div>
