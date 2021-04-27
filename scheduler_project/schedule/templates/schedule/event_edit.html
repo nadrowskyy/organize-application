@@ -17,6 +17,12 @@
 
 <div class="container" style="max-width:800px;">
 
+    {% if not_permitted %}
+
+    <errormsg>Nie masz uprawnień do edycji tego wydarzenia!</errormsg>
+
+    {% else %}
+
 <form action="" enctype="multipart/form-data" method="POST">
     {% csrf_token %}
 
@@ -86,6 +92,7 @@
 </form>
     <br>
     <br>
+    {% endif %}
 </div>
 
     <script src="{% static 'js/jquery-3.2.1.slim.min.js' %}"></script>

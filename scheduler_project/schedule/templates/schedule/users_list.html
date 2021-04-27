@@ -72,7 +72,7 @@
                 &nbsp;&nbsp;
                 <a href="{% url 'user_edit' i.id %}"><img src="{% static 'images/icons/edit.png' %}" style="width:30px; height:30px;"></a>
                 &nbsp;&nbsp;
-                <a href="{% url 'delete_user' i.id %}"> <img src="{% static 'images/icons/delete.png' %}"onclick="return confirm('Czy na pewno chcesz usunąć użytkowknika {{i.first_name}} {{i.last_name}}? Operacji nie będzie można cofnąć!')" style="width:30px; height:30px;"></a>
+                <a href="{% url 'delete_user' i.id %}"> <img src="{% static 'images/icons/delete.png' %}"onclick="return confirm('Czy na pewno chcesz usunąć użytkowknika {{i.first_name}} {{i.last_name}}? \n\nOperacji nie będzie można cofnąć!')" style="width:30px; height:30px;"></a>
             </center></td>
 
         </tr>
