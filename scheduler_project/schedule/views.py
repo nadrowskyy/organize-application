@@ -435,43 +435,90 @@ def email_notification(request):
 
         return redirect('email_notification')
 
-#@allowed_users(allowed_roles=['admin','organizer'])
+
+@allowed_users(allowed_roles=['admin', 'employee'])
 def event_edit(request, index):
 
-    if request.method == 'GET':
-        event = Event.objects.filter(id=index)
-        user = get_user_model()
-        users = user.objects.all()
+    if request.user.groups.all()[0].name == 'admin':
 
-        context = {'event': event, 'users': users}
+        if request.method == 'GET':
+            event = Event.objects.filter(id=index)
+            user = get_user_model()
+            users = user.objects.all()
+
+            context = {'event': event, 'users': users, 'permitted': True}
+            return render(request, 'schedule/event_edit.html', context)
+
+        if request.method == 'POST':
+
+            selected_event = Event.objects.get(id=index)
+
+            title = request.POST.get('title')
+            description = request.POST.get('description')
+            organizer = request.POST.get('organizer')
+            planning_date = request.POST.get('planning_date')
+            duration = request.POST.get('duration')
+
+            update_event = Event.objects.filter(id=index).update(title=title, description=description, organizer=organizer, planning_date=planning_date, duration=duration)
+
+            new_icon = request.FILES.get('icon')
+            new_attachment = request.FILES.get('attachment')
+
+            if new_icon:
+                selected_event.icon = new_icon
+                selected_event.save()
+
+            if new_attachment:
+                selected_event.attachment = new_attachment
+                selected_event.save()
+
+            return redirect('events_list')
+
         return render(request, 'schedule/event_edit.html', context)
 
-    if request.method == 'POST':
+    elif request.user.groups.all()[0].name == 'employee':
 
-        selected_event = Event.objects.get(id=index)
+        try:
+            event = Event.objects.filter(id=index)
+        except:
+            context = {'not_permitted': True}
+            return render(request, 'schedule/event_edit.html', context)
 
-        title = request.POST.get('title')
-        description = request.POST.get('description')
-        organizer = request.POST.get('organizer')
-        planning_date = request.POST.get('planning_date')
-        duration = request.POST.get('duration')
+        for i in event:
 
-        update_event = Event.objects.filter(id=index).update(title=title, description=description, organizer=organizer, planning_date=planning_date, duration=duration)
+            if i.organizer == request.user:
 
-        new_icon = request.FILES.get('icon')
-        new_attachment = request.FILES.get('attachment')
+                if request.method == 'GET':
 
-        if new_icon:
-            selected_event.icon = new_icon
-            selected_event.save()
+                    context = {'event': event}
+                    return render(request, 'schedule/event_edit.html', context)
 
-        if new_attachment:
-            selected_event.attachment = new_attachment
-            selected_event.save()
+                if request.method == 'POST':
 
-        return redirect('events_list')
+                    selected_event = Event.objects.get(id=index)
 
-    return render(request, 'schedule/event_edit.html', context)
+                    description = request.POST.get('description')
+                    planning_date = request.POST.get('planning_date')
+                    duration = request.POST.get('duration')
+
+                    update_event = Event.objects.filter(id=index).update(description=description, planning_date=planning_date, duration=duration)
+
+                    new_icon = request.FILES.get('icon')
+                    new_attachment = request.FILES.get('attachment')
+
+                    if new_icon:
+                        selected_event.icon = new_icon
+                        selected_event.save()
+
+                    if new_attachment:
+                        selected_event.attachment = new_attachment
+                        selected_event.save()
+
+                    return redirect('events_list')
+
+            else:
+                context = {'not_permitted': True}
+                return render(request, 'schedule/event_edit.html', context)
 
 
 @allowed_users(allowed_roles=['admin'])
