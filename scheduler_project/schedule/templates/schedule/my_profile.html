@@ -1,5 +1,6 @@
 {% extends 'schedule/base.html' %}
 {% load static %}
+{% load auth_extras %}
 {% block content %}
 
 
@@ -127,6 +128,9 @@
 			<h4 class="card-header"><img class="rounded-circle" src="/media/{{i.icon}}" alt="" width="50" height="50">&nbsp;&nbsp;<a href="{% url 'event_details' i.id %}">{{i.title}}</a>
 				&nbsp;
 			<a href="{% url 'event_edit' i.id %}"><img src="{% static 'images/icons/edit.png' %}" style="text-align:right; width:25px; height:25px;"></a>
+				{% if request.user|has_group:"admin" %}
+				<a href="{% url 'delete_event' i.id %}" onclick="return confirm('Czy na pewno chcesz usunąć spotkanie {{i.title}}? \n\nOperacji nie będzie można cofnąć!');"><img src="{% static 'images/icons/delete.png' %}" style="text-align:right; width:25px; height:25px;"></a>
+				{% endif %}
 			</h4>
     		<br>
        		 <h5 class="card-text" id="like_count">Opis: {{ i.description }}</h5><br>
