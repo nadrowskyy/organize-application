@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Event, Subject, Vote, Lead
+from .models import Event, Subject
 
 
 @admin.register(Event)
@@ -15,17 +15,6 @@ class EventAdmin(admin.ModelAdmin):
 
 @admin.register(Subject)
 class SubjectAdmin(admin.ModelAdmin):
-    list_display = ('title', 'proposer', 'created', 'vote_score')
+    list_display = ('title', 'proposer', 'created', 'like_count', 'lead_count')
     prepopulated_fields = {'slug': ('title',)}
     raw_id_fields = ('proposer',)
-
-
-@admin.register(Vote)
-class VoteAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(Lead)
-class LeadAdmin(admin.ModelAdmin):
-    list_display = ('leader', 'subject', 'if_lead', 'created', 'updated')
-    list_filter = ('leader', 'subject', 'if_lead')

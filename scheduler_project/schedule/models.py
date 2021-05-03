@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User, Group
 from django.utils import timezone
 from django.utils.text import slugify
-from vote.models import VoteModel, Vote
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.dispatch import receiver
@@ -45,7 +44,7 @@ class Event(models.Model):
         return self.title
 
 
-class Subject(VoteModel, models.Model):
+class Subject(models.Model):
     proposer = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique_for_date='created', default=None)
@@ -63,23 +62,6 @@ class Subject(VoteModel, models.Model):
 
     def __str__(self):
         return self.title
-
-
-class Lead(models.Model):
-    #vote = models.OneToOneField('vote.vote', on_delete=models.CASCADE, default=None)
-    leader = models.ForeignKey(User, on_delete=models.CASCADE)
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    if_lead = models.BooleanField(default=False)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-
-
-    # def save(self, *args, **kwargs):
-    #     self.slug = slugify(self.title)
-    #     super(Lead, self).save(*args, **kwargs)
-
-    def __str__(self):
-        return f'{self.leader.username} {self.if_lead} {self.subject.title}'
 
 
 class EmailSet(models.Model):

@@ -11,7 +11,7 @@ from django.contrib.auth.models import Group
 from .decorators import unauthenticated_user, allowed_users
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from .models import Event, Subject, Lead, User, EmailSet
+from .models import Event, Subject, User, EmailSet
 from django.core.mail import send_mail, get_connection, send_mass_mail
 from django.core.mail import EmailMessage
 from django.utils import timezone
@@ -21,6 +21,9 @@ from django.core.paginator import Paginator, EmptyPage
 from django.template.loader import get_template, render_to_string
 import os
 from .forms import ChangePassword
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+
 
 # @login_required(login_url='login') # nie pozwala na wejscie uzytkownika na strone glowna jesli nie jest zarejestrowany
 def home_page(request):
@@ -194,7 +197,9 @@ def user_page(request):
 
 def subjects_list(request):
     all_subjects_list = Subject.objects.all()
-    return render(request, 'schedule/subjects_list.html', {"all_subjects_list": all_subjects_list})
+    first_sub = all_subjects_list[0]
+    print(first_sub.likes.all())
+    return render(request, 'schedule/subjects_list_ajax.html', {"all_subjects_list": all_subjects_list})
 
 
 @login_required(login_url='login')
@@ -212,6 +217,58 @@ def like(request):
             subject.save()
 
         return redirect('subjects_list')
+
+@login_required(login_url='login')
+@require_POST
+def ajax_like(request):
+    print('------+++++-----')
+    subject_id = request.POST.get('id')
+    print(subject_id)
+    action = request.POST.get('action')
+    print(action)
+    if subject_id and action:
+        try:
+            subject = get_object_or_404(Subject, id=subject_id)
+            if action == 'like':
+                print('HERE --------------')
+                subject.likes.add(request.user)
+                subject.like_count += 1
+                subject.save()
+            else:
+                subject.likes.remove(request.user)
+                subject.like_count -= 1
+                subject.save()
+        except:
+            pass
+    return JsonResponse({'status': 'ok'})
+
+
+@login_required(login_url='login')
+@require_POST
+def ajax_lead(request):
+    print('------+++++-----')
+    subject_id = request.POST.get('id')
+    print(subject_id)
+    action = request.POST.get('action')
+    print(action)
+    if subject_id and action:
+        print('**********')
+        try:
+            leader = get_object_or_404(Subject, id=subject_id)
+            print(leader)
+            if action == 'like':
+                if leader.want_to_lead.filter(id=request.user.id).exists():
+                    leader.want_to_lead.remove(request.user)
+                    leader.lead_count -= 1
+                    leader.save()
+                else:
+                    print('HERE --------------')
+                    leader.want_to_lead.add(request.user)
+                    leader.lead_count += 1
+                    leader.save()
+        except:
+            pass
+    return JsonResponse({'status': 'ok'})
 
 
 @login_required(login_url='login')
