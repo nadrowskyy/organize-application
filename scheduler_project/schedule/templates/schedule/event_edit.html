@@ -59,12 +59,13 @@
     <div class="row">
     <div class="col-md-12 col-lg-6">
       <label for="planning_date">Data i godzina rozpoczęcia</label>
+
         <input class="form-control" id="planning_date" min="{% now 'Y-m-d\TH:i' %}" name="planning_date" required type="datetime-local"
-               value="{{i.planning_date|date:'Y-m-d\TH:i'}}">
+               value="{{i.planning_date|date:'Y-m-d\TH:i'}}" {% if past %} readonly="True" {% endif %}>
     </div>
     <div class="col-md-12 col-lg-6">
      <label for="duration">Czas trwania (min.)</label>
-        <input class="form-control" id="duration" min="1" name="duration" placeholder="1" required type="number" value="{{i.duration}}">
+        <input class="form-control" id="duration" min="1" name="duration" placeholder="1" required type="number" value="{{i.duration}}" {% if past %} readonly="True" {% endif %}>
     </div>
   </div>
 <br>

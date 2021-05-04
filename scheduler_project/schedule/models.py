@@ -84,3 +84,12 @@ class EventNotification(models.Model):
     if_sent_leader = models.BooleanField(default=False)
     if_sent_all = models.BooleanField(default=False)
     settings = models.ForeignKey(EmailSet, on_delete=models.CASCADE, default=1)
+
+
+class Comment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    content = models.TextField(max_length=1000)
+    if_edited = models.BooleanField(default=False)
+    if_deleted = models.BooleanField(default=False)

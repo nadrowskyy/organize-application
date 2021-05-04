@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateUserForm
 from .forms import CreateEvent
-from .forms import SubjectForm
+from .forms import SubjectForm, AddComment
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from datetime import datetime, date
@@ -11,7 +11,7 @@ from django.contrib.auth.models import Group
 from .decorators import unauthenticated_user, allowed_users
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from .models import Event, Subject, User, EmailSet
+from .models import Event, Subject, User, EmailSet, Comment
 from django.core.mail import send_mail, get_connection, send_mass_mail
 from django.core.mail import EmailMessage
 from django.utils import timezone
@@ -473,7 +473,12 @@ def event_edit(request, index):
             user = get_user_model()
             users = user.objects.all()
 
-            context = {'event': event, 'users': users, 'permitted': True}
+            if event[0].planning_date < datetime.today():
+                past = True
+            else:
+                past = False
+
+            context = {'event': event, 'users': users, 'permitted': True, 'past': past}
             return render(request, 'schedule/event_edit.html', context)
 
         if request.method == 'POST':
@@ -568,7 +573,19 @@ def my_profile(request):
     events_cnt = my_events.count()
     subjects_cnt = my_subjects.count()
 
-    if request.method == 'POST':
+    if request.method == 'POST' and request.POST.get('change_profile') == '1':
+
+        user = get_user_model()
+
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+
+        update_user = user.objects.filter(id=request.user.id).update(first_name=first_name, last_name=last_name, email=email)
+
+        return redirect('my_profile')
+
+    elif request.method == 'POST':
         form = ChangePassword(user=request.user, data=request.POST)
         if form.is_valid():
             form.save()
@@ -609,12 +626,72 @@ def event_details(request, index):
 
     if request.method == 'GET':
         selected_event = Event.objects.filter(id=index)
-        context = {'selected_event': selected_event}
+        comments = Comment.objects.filter(event=index)
+        comments_cnt = comments.count()
+        form = AddComment()
+        context = {'selected_event': selected_event, 'comments': comments, 'form': form, 'comments_cnt': comments_cnt}
 
         return render(request, 'schedule/event_details.html', context)
 
+    if request.method == 'POST' and request.POST.get('new_content'):
+
+        comment_id = request.POST.get('comment_id')
+        new_content = request.POST.get('new_content')
+        form = AddComment()
+        update_comment = Comment.objects.filter(id=comment_id).update(content=new_content, if_edited=True)
+        selected_event = Event.objects.filter(id=index)
+        comments = Comment.objects.filter(event=index)
+        comments_cnt = comments.count()
+
+        context = {'selected_event': selected_event, 'comments': comments, 'form': form, 'myid': comment_id,
+                   'comments_cnt': comments_cnt}
+
+        return render(request, 'schedule/event_details.html', context)
+
+    if request.method == 'POST' and request.POST.get('delete'):
+
+        comment_id = request.POST.get('comment_id')
+
+        delete_comment = Comment.objects.filter(id=comment_id).update(if_deleted=True)
+
+        form = AddComment()
+        selected_event = Event.objects.filter(id=index)
+        comments = Comment.objects.filter(event=index)
+        comments_cnt = comments.count()
+
+        context = {'selected_event': selected_event, 'comments': comments, 'form': form, 'myid': comment_id,
+                   'comments_cnt': comments_cnt}
+
+        return render(request, 'schedule/event_details.html', context)
+
+
+    if request.method == 'POST' and not request.POST.get('new_content') and request.POST.get('delete') != True:
+
+        author = request.user
+        event = Event.objects.filter(id=index)[0]
+        created = datetime.now()
+        content = request.POST.get('content')
+
+        form = Comment(author=author, event=event, created=created, content=content)
+        form.save()
+
+        selected_event = Event.objects.filter(id=index)
+        comments = Comment.objects.filter(event=index)
+        comments_cnt = comments.count()
+        mycmt = Comment.objects.filter(event=index).order_by('-id')[0]
+        myid = mycmt.id
+
+        context = {'selected_event': selected_event, 'comments': comments, 'form': form, 'myid': myid, 'comments_cnt': comments_cnt}
+
+        return render(request, 'schedule/event_details.html', context)
+
+
+
+
+
+
+
     else:
         return redirect('events_list')
-
 
 
