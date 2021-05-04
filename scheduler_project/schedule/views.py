@@ -546,7 +546,19 @@ def my_profile(request):
     events_cnt = my_events.count()
     subjects_cnt = my_subjects.count()
 
-    if request.method == 'POST':
+    if request.method == 'POST' and request.POST.get('change_profile') == '1':
+
+        user = get_user_model()
+
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+
+        update_user = user.objects.filter(id=request.user.id).update(first_name=first_name, last_name=last_name, email=email)
+
+        return redirect('my_profile')
+
+    elif request.method == 'POST':
         form = ChangePassword(user=request.user, data=request.POST)
         if form.is_valid():
             form.save()
