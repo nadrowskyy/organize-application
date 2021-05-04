@@ -65,7 +65,7 @@
     </div>
     <div class="col-md-12 col-lg-6">
      <label for="duration">Czas trwania (min.)</label>
-        <input class="form-control" id="duration" min="1" name="duration" placeholder="1" required type="number" value="{{i.duration}}">
+        <input class="form-control" id="duration" min="1" name="duration" placeholder="1" required type="number" value="{{i.duration}}" {% if past %} readonly="True" {% endif %}>
     </div>
   </div>
 <br>
