@@ -23,15 +23,26 @@
     {% for i in selected_event %}
 
             <div class="badge-light">
+                <br>
                     <p style="text-align:center;"><img class="rounded-circle" src="/media/{{i.icon}}" alt="" width="140" height="140"></p>
                 <center>
                     <div class="baige_background">
                         <br>
-                    <h1>{{i.title}}</h1>
+                    <h1>{{i.title}}
+                   <!-- <a href="{% url 'event_edit' i.id %}"><img src="{% static 'images/icons/edit.png' %}" style="text-align:right; width:25px; height:25px;"></a>
+                    <a href="{% url 'delete_event' i.id %}" onclick="return confirm('Czy na pewno chcesz usunąć spotkanie {{i.title}}? \n\nOperacji nie będzie można cofnąć!');"><img src="{% static 'images/icons/delete.png' %}" style="text-align:right; width:25px; height:25px;"></a>
+                    --></h1>
                     <h3>{{i.planning_date|date:"d.m.Y H:i"}} ({{i.planning_date|date:"l"}})</h3>
                     <br>
+
+                    {% if request.user|has_group:"admin" %}
+
+                    <h6>Prowadzi: <a class="h6" href="{% url 'user_details' i.organizer.id %}"> {{i.organizer.first_name}} {{i.organizer.last_name}}</h6></a>
+                    <br>
+                    {% else %}
                     <h6>Prowadzi: {{i.organizer.first_name}} {{i.organizer.last_name}}</h6>
                     <br>
+                    {% endif %}
                     </div>
                     <div>
                         <br>
@@ -57,6 +68,128 @@
     {% endfor %}
 </div>
 </div>
+
+
+    <br>
+    <h2 style="text-align:center;" id="comments">Komentarze ({{comments_cnt}})</h2>
+<div class="container mt-5 mb-5">
+    <div class="row height d-flex justify-content-center align-items-center">
+        {% if myid %}
+        <a href="#commentid{{myid}}" id="scroll" hidden></a>
+        {% endif %}
+        <div class="col-md-9">
+            <div class="card">
+                <form action="" method="POST">
+                {% csrf_token %}
+                <div class="mt3 d-flex flex-row align-items-center p-4 form-color">
+                <img src="{% static 'images/icons/comment.png' %}" width="40px" class="rounded-square mr-3">
+                <input type="text" id="content" name="content" class="form-control" placeholder="Dodaj komentarz..." minlength="10" required>
+                <input class="btn btn-secondary mr-2" style="font-family: 'Oswald', sans-serif; margin-top: 0px; margin-left: 10px" name="add_submit" type="submit" value="Dodaj">
+                </div>
+                </form>
+                </div>
+            <div class="card">
+                {% for comment in comments %}
+                    <div class="mt-2">
+                    <div class="d-flex flex-row p-3"> <img src="{% static 'images/icons/bulb_icon.png' %}" width="40" height="40" class="rounded-circle mr-3">
+                        <div class="w-100">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex flex-row align-items-center"> <span class="mr-2 font-weight-bold">{{comment.author.first_name}} {{comment.author.last_name}}</span> {% if comment.if_edited and not comment.if_deleted %}<small class="c-badge font-italic" style="color: lightgray;"> edytowany</small>{% endif %} </div> <small style="color: gray;">{{comment.created}}</small>
+                            </div>
+                            {% if comment.if_deleted %}
+                            <p class="text-justify comment-text mb-0 font-italic" style="color: lightgray;" id="commentid{{comment.id}}">Komentarz usunięty</p>
+                            {% else %}
+                            <p class="text-justify comment-text mb-0" id="commentid{{comment.id}}">{{comment.content}}</p>
+                            {% endif %}
+                        </div>
+                        {% if comment.author == request.user and not comment.if_deleted %}
+                        <a type="button" data-toggle="modal" data-target="#exampleModal" data-content="{{comment.content}}" data-commentid="{{comment.id}}"><img src="{% static 'images/icons/edit.png' %}" style="text-align:right; width:25px; height:25px;"></a>
+
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <input type="text" name="delete" value="1" hidden>
+                            <input type="text" name="comment_id" value="{{comment.id}}" hidden>
+                            <button class="astext" type="submit" onclick="return confirm('Czy na pewno chcesz usunąć komentarz? \nOperacji nie będzie można cofnąć!')"><img src="{% static 'images/icons/delete.png' %}" style="text-align:right; width:25px; height:25px;"></button>
+                        </form>
+                        {% endif %}
+                        {% if request.user|has_group:"admin" and not comment.author == request.user and not comment.if_deleted %}
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <input type="text" name="delete" value="1" hidden>
+                            <input type="text" name="comment_id" value="{{comment.id}}" hidden>
+                            <button class="astext" type="submit" onclick="return confirm('Czy na pewno chcesz usunąć komentarz? \nOperacji nie będzie można cofnąć!')"><img src="{% static 'images/icons/delete.png' %}" style="text-align:right; width:25px; height:25px;"></button>
+                        </form>
+                        {% endif %}
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="POST">
+            {% csrf_token %}
+          <div class="form-group">
+            <label for="new_content" class="col-form-label">Treść:</label>
+            <input type="text" class="form-control" id="new_content" name="new_content">
+          </div>
+            <div class="form-group">
+            <input type="text" class="form-control" id="comment_id" name="comment_id" hidden>
+          </div>
+
+      </div>
+      <div class="modal-footer">
+          <a class="btn btn-secondary mr-2" style="font-family: 'Oswald', sans-serif; margin-top: 0px; margin-left: 10px" data-dismiss="modal">Anuluj</a>
+        <input class="btn btn-secondary mr-2" style="font-family: 'Oswald', sans-serif; margin-top: 0px; margin-left: 10px" name="edit_submit" type="submit" value="Zapisz">
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+                    </div>
+                {% endfor %}
+                        </div>
+                {% if not comments %}
+                        <br>
+                        <center><a> Brak komentarzy dla tego wydarzenia </a></center>
+
+                {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+    <center><a href="#" class="btn btn-secondary">Wróć na górę</a></center>
+<br>
+
+
+<script>document.getElementById("scroll").click()</script>
+
+<script>
+    $('#exampleModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var content = button.data('content') // Extract info from data-* attributes
+  var comment_id = button.data('commentid')
+  var modal = $(this)
+  modal.find('.modal-title').text('Edytuj swój komentarz')
+  modal.find('.modal-body #new_content').val(content)
+  modal.find('.modal-body #comment_id').val(comment_id)
+})
+</script>
+
+</body>
 
 
 {% endblock %}

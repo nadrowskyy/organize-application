@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
 from django.db import models
-from .models import Event, Subject
+from .models import Event, Subject, Comment
 import datetime
 from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
 
@@ -39,8 +39,7 @@ class SubjectForm(ModelForm):
 
 class ChangePassword(PasswordChangeForm):
     error_messages = dict(PasswordChangeForm.error_messages, **{
-        'passwords_match': ("Nowe hasło jest takie same jak poprzednie hasło."
-                             "Wprowadź jeszcze raz"),
+        'passwords_match': ("Nowe hasło nie może być takie samo jak poprzednie"),
     })
 
 
@@ -53,3 +52,9 @@ class ChangePassword(PasswordChangeForm):
                     self.error_messages['passwords_match'], code='passwords_match'
                 )
         return new_pass
+
+
+class AddComment(ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('author','event','content','if_edited','if_deleted')

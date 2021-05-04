@@ -15,14 +15,18 @@
 
 	{% csrf_token %}
 
-    <br>
-    <h2 style="text-align:center;">PROFIL UŻYTKOWNIKA</h2>
-    <br>
+
     {% for i in selected_user %}
+
+	    <br>
+    <h2 style="text-align:center;">PROFIL UŻYTKOWNIKA &nbsp;<a href="{% url 'user_edit' i.id %}"><img src="{% static 'images/icons/edit.png' %}" style="width:30px; height:40px; padding-bottom: 10px"></a>
+    <br></h2>
+
 <div class="row gutters" >
 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 <div class="card h-200" style="text-align:center;">
 	<div class="card-body">
+		<br>
 		<div class="row gutters">
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
@@ -67,9 +71,13 @@
                     <h4 id="last_login">{{i.last_login}}</h4>
 				</div>
 			</div>
+<!--			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">-->
+<!--					<button class="btn btn-secondary">Edytuj</button>-->
+<!--			</div>-->
 		</div>
 	</div>
 </div>
+
 		{% endfor %}
 
 
@@ -82,7 +90,7 @@
 <div class="row gutters" >
 	<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 		<div class="card">
-			<h4 class="card-header"><img class="rounded-circle" src="/media/{{i.icon}}" alt="" width="50" height="50">&nbsp;&nbsp;<a href="{% url 'event_details' i.id %}">{{i.title}}</a>
+			<h4 class="card-header"><img class="rounded-circle" src="/media/{{i.icon}}" alt="" width="50" height="50">&nbsp;&nbsp;<a class="h4" href="{% url 'event_details' i.id %}">{{i.title}}</a>
 				&nbsp;
 			<a href="{% url 'event_edit' i.id %}"><img src="{% static 'images/icons/edit.png' %}" style="text-align:right; width:25px; height:25px;"></a>
 				&nbsp;
