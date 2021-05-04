@@ -203,23 +203,6 @@ def subjects_list(request):
 
 
 @login_required(login_url='login')
-def like(request):
-    if request.method == 'POST':
-        id2 = (request.POST.get('subject_id'))
-        subject = get_object_or_404(Subject, id=id2)
-        if subject.likes.filter(id=request.user.id).exists():
-            subject.likes.remove(request.user)
-            subject.like_count -= 1
-            subject.save()
-        else:
-            subject.likes.add(request.user)
-            subject.like_count += 1
-            subject.save()
-
-        return redirect('subjects_list')
-
-
-@login_required(login_url='login')
 @require_POST
 def ajax_like(request):
     subject_id = request.POST.get('postid')
@@ -270,20 +253,6 @@ def ajax_lead(request):
         lead_count = leader.lead_count
 
         return JsonResponse({'lead_count': lead_count, 'action': action, 'status': 'ok'})
-
-
-@login_required(login_url='login')
-def want_to_lead(request):
-    if request.method == 'POST':
-        leader = get_object_or_404(Subject, id=(request.POST.get('leader_id')))
-        if leader.want_to_lead.filter(id=request.user.id).exists():
-            messages.info(request, "Już zgłosiłeś się do prowadzenia tego tematu")
-        else:
-            leader.want_to_lead.add(request.user)
-            leader.lead_count += 1
-            leader.save()
-
-        return redirect('subjects_list')
 
 
 @allowed_users(allowed_roles=['admin'])
