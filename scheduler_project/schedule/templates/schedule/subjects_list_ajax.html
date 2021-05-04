@@ -1,0 +1,172 @@
+
+{% extends 'schedule/base.html' %}
+{% load static %}
+{% load auth_extras %}
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lista tematów</title>
+
+
+</head>
+
+
+<body>
+<br>
+<h2 style="text-align:center;">LISTA TEMATÓW</h2>
+
+<br>
+
+{% for message in messages %}
+    <errormsg style="text-align:center;">{{ message }}</errormsg><br><br>
+{% endfor %}
+
+<div class="container" style="max-width:1000px;">
+
+
+{% for i in all_subjects_list %}
+<div class="card">
+    <h4 class="card-header">{{i.title}}
+    {% if request.user|has_group:"admin" %}
+    &nbsp;
+    <a href="{% url 'subject_edit' i.id %}"><img src="{% static 'images/icons/edit.png' %}" style="text-align:right; width:25px; height:25px;"></a>
+    &nbsp;
+    <a href="{% url 'delete_subject' i.id %}" onclick="return confirm('Czy na pewno chcesz usunąć temat {{i.title}}? Operacji nie będzie można cofnąć!');"><img src="{% static 'images/icons/delete.png' %}" style="text-align:right; width:25px; height:25px;"></a>
+    {% endif %}
+    </h4>
+
+    <br>
+        <h5 class="card-text" id="">Opis: {{ i.description }}</h5>
+
+    <div class="container" style="max-width:500px;">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6">
+
+        <div style="font-family: 'Oswald', sans-serif;">
+        <button class="like btn like_btn" data-id={{i.id}} data-action="{% if request.user in i.likes.all %}un{% endif %}like">
+            <span class="like_text">{% if request.user not in i.likes.all %}
+            Podoba mi się
+            {% else %}
+            Nie podoba mi się
+            {% endif %}&nbsp;&nbsp;&nbsp;</span>
+            <span class="like_count">{{i.like_count}}</span>
+        </button>
+
+<!--    OPCJA WYSZARZONA / NIEAKTYWNA
+
+        <button class="btn like_btn disabled" value = {{i.id}} disabled>
+            <div style="font-family: 'Oswald', sans-serif;">Podoba mi się!&nbsp;&nbsp;&nbsp;<span>{{i.like_count}}</span>
+        </button>-->
+
+        </div>
+
+        </div>
+          <div class="col-lg-6 col-md-6 col-sm-6">
+
+          <button class="lead btn lead_btn" data-id={{i.id}} data-action="{% if request.user in i.likes.all %}un{% endif %}lead">
+              <span class="lead_text">{% if request.user not in i.want_to_lead.all %}
+              Chcę poprowadzić
+              {% else %}
+              Nie chcę prowadzić
+              {% endif %}&nbsp;&nbsp;&nbsp;</span>
+              <span class="lead_count">{{i.lead_count}}</span>
+          </button>
+          <br><br>
+
+<!--      OPCJA WYSZARZONA / NIEAKTYWNA
+
+          <button class="btn lead_btn disabled" value = {{i.id}} disabled>
+              Zgłoszono do prowadzenia tego szkolenia
+          </button>-->
+
+          </div>
+    </div>
+      </div>
+    </div>
+
+        <br>
+
+
+<!--          <div class="card-footer text-muted">-->
+<!--            Zaproponował: {{ i.proposer }}-->
+<!--          </div>-->
+<!--            <br/><br/>-->
+<!--        </div>-->
+
+
+{% endfor %}
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/jquery.datatables.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2.2.1/src/js.cookie.min.js"></script>
+  <script>
+    var csrftoken = Cookies.get('csrftoken');
+    function csrfSafeMethod(method) {
+      // these HTTP methods do not require CSRF protection
+      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+      beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+          xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+      }
+    });
+
+    $(document).ready(function(){
+        $('button.like').click(function (e) {
+            var postid = $(this).attr('data-id');
+            var action = $(this).attr('data-action');
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '{% url "ajax_like" %}',
+                data: {
+                    postid: postid,
+                    action: action,
+                },
+                context: this,
+                success: function(json) {
+                    $(this).find('.like_count').get(0).innerHTML = json['like_count']
+                    $(this).attr('data-action',json['action'])
+                    if (json['action'] === 'unlike') {
+                        $(this).find('.like_text').get(0).innerHTML = 'Podoba mi się'
+                    }
+                    else {
+                        $(this).find('.like_text').get(0).innerHTML = 'Nie podoba mi się'
+                    }
+                },
+                error: function(xhr, errmsg, err) {}
+            });
+        });
+
+        $('button.lead').click(function (e) {
+            var postid = $(this).attr('data-id');
+            var action = $(this).attr('data-action');
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '{% url "ajax_lead" %}',
+                data: {
+                    postid: postid,
+                    action: action,
+                },
+                context: this,
+                success: function(json) {
+                    $(this).find('.lead_count').get(0).innerHTML = json['lead_count']
+                    $(this).attr('data-action',json['action'])
+                    if (json['action'] === 'unlead') {
+                        $(this).find('.lead_text').get(0).innerHTML = 'Chcę poprowadzić'
+                    }
+                    else {
+                        $(this).find('.lead_text').get(0).innerHTML = 'Nie chcę prowadzić'
+                    }
+                },
+                error: function(xhr, errmsg, err) {}
+            });
+        });
+    });
+  </script>
+
+{% endblock %}
+</body>

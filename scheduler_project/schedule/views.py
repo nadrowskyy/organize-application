@@ -11,7 +11,7 @@ from django.contrib.auth.models import Group
 from .decorators import unauthenticated_user, allowed_users
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from .models import Event, Subject, Lead, User, EmailSet, Comment
+from .models import Event, Subject, User, EmailSet, Comment
 from django.core.mail import send_mail, get_connection, send_mass_mail
 from django.core.mail import EmailMessage
 from django.utils import timezone
@@ -21,6 +21,9 @@ from django.core.paginator import Paginator, EmptyPage
 from django.template.loader import get_template, render_to_string
 import os
 from .forms import ChangePassword
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+
 
 # @login_required(login_url='login') # nie pozwala na wejscie uzytkownika na strone glowna jesli nie jest zarejestrowany
 def home_page(request):
@@ -194,38 +197,62 @@ def user_page(request):
 
 def subjects_list(request):
     all_subjects_list = Subject.objects.all()
-    return render(request, 'schedule/subjects_list.html', {"all_subjects_list": all_subjects_list})
+    first_sub = all_subjects_list[0]
+    print(first_sub.likes.all())
+    return render(request, 'schedule/subjects_list_ajax.html', {"all_subjects_list": all_subjects_list})
 
 
 @login_required(login_url='login')
-def like(request):
-    if request.method == 'POST':
-        id2 = (request.POST.get('subject_id'))
-        subject = get_object_or_404(Subject, id=id2)
+@require_POST
+def ajax_like(request):
+    subject_id = request.POST.get('postid')
+    action = request.POST.get('action')
+
+    if subject_id and action:
+
+        subject = get_object_or_404(Subject, id=subject_id)
         if subject.likes.filter(id=request.user.id).exists():
             subject.likes.remove(request.user)
             subject.like_count -= 1
             subject.save()
+            action = 'unlike'
         else:
             subject.likes.add(request.user)
             subject.like_count += 1
             subject.save()
+            action = 'like'
 
-        return redirect('subjects_list')
+        subject.refresh_from_db()
+        like_count = subject.like_count
+
+        return JsonResponse({'like_count': like_count, 'action': action, 'status': 'ok'})
 
 
 @login_required(login_url='login')
-def want_to_lead(request):
-    if request.method == 'POST':
-        leader = get_object_or_404(Subject, id=(request.POST.get('leader_id')))
+@require_POST
+def ajax_lead(request):
+
+    subject_id = request.POST.get('postid')
+    action = request.POST.get('action')
+
+    if subject_id and action:
+
+        leader = get_object_or_404(Subject, id=subject_id)
         if leader.want_to_lead.filter(id=request.user.id).exists():
-            messages.info(request, "Już zgłosiłeś się do prowadzenia tego tematu")
+            leader.want_to_lead.remove(request.user)
+            leader.lead_count -= 1
+            leader.save()
+            action = 'unlead'
         else:
             leader.want_to_lead.add(request.user)
             leader.lead_count += 1
             leader.save()
+            action = 'lead'
 
-        return redirect('subjects_list')
+        leader.refresh_from_db()
+        lead_count = leader.lead_count
+
+        return JsonResponse({'lead_count': lead_count, 'action': action, 'status': 'ok'})
 
 
 @allowed_users(allowed_roles=['admin'])
