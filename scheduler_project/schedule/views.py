@@ -218,57 +218,58 @@ def like(request):
 
         return redirect('subjects_list')
 
+
 @login_required(login_url='login')
 @require_POST
 def ajax_like(request):
-    print('------+++++-----')
-    subject_id = request.POST.get('id')
-    print(subject_id)
+    subject_id = request.POST.get('postid')
     action = request.POST.get('action')
-    print(action)
+
     if subject_id and action:
-        try:
-            subject = get_object_or_404(Subject, id=subject_id)
-            if action == 'like':
-                print('HERE --------------')
-                subject.likes.add(request.user)
-                subject.like_count += 1
-                subject.save()
-            else:
-                subject.likes.remove(request.user)
-                subject.like_count -= 1
-                subject.save()
-        except:
-            pass
-    return JsonResponse({'status': 'ok'})
+
+        subject = get_object_or_404(Subject, id=subject_id)
+        if subject.likes.filter(id=request.user.id).exists():
+            subject.likes.remove(request.user)
+            subject.like_count -= 1
+            subject.save()
+            action = 'unlike'
+        else:
+            subject.likes.add(request.user)
+            subject.like_count += 1
+            subject.save()
+            action = 'like'
+
+        subject.refresh_from_db()
+        like_count = subject.like_count
+
+        return JsonResponse({'like_count': like_count, 'action': action, 'status': 'ok'})
 
 
 @login_required(login_url='login')
 @require_POST
 def ajax_lead(request):
-    print('------+++++-----')
-    subject_id = request.POST.get('id')
-    print(subject_id)
+
+    subject_id = request.POST.get('postid')
     action = request.POST.get('action')
-    print(action)
+
     if subject_id and action:
-        print('**********')
-        try:
-            leader = get_object_or_404(Subject, id=subject_id)
-            print(leader)
-            if action == 'like':
-                if leader.want_to_lead.filter(id=request.user.id).exists():
-                    leader.want_to_lead.remove(request.user)
-                    leader.lead_count -= 1
-                    leader.save()
-                else:
-                    print('HERE --------------')
-                    leader.want_to_lead.add(request.user)
-                    leader.lead_count += 1
-                    leader.save()
-        except:
-            pass
-    return JsonResponse({'status': 'ok'})
+
+        leader = get_object_or_404(Subject, id=subject_id)
+        if leader.want_to_lead.filter(id=request.user.id).exists():
+            leader.want_to_lead.remove(request.user)
+            leader.lead_count -= 1
+            leader.save()
+            action = 'unlead'
+        else:
+            leader.want_to_lead.add(request.user)
+            leader.lead_count += 1
+            leader.save()
+            action = 'lead'
+
+        leader.refresh_from_db()
+        lead_count = leader.lead_count
+
+        return JsonResponse({'lead_count': lead_count, 'action': action, 'status': 'ok'})
 
 
 @login_required(login_url='login')

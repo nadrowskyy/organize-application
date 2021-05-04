@@ -1,3 +1,4 @@
+
 {% extends 'schedule/base.html' %}
 {% load static %}
 {% load auth_extras %}
@@ -36,64 +37,68 @@
     </h4>
 
     <br>
-        <h5 class="card-text" id="description">Opis: {{ i.description }}</h5>
+        <h5 class="card-text" id="">Opis: {{ i.description }}</h5>
 
     <div class="container" style="max-width:500px;">
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-6">
 
-        <span class="count">
-            <span class="total">{{ i.like_count }}</span>
-        </span>
-            <p>{{ request.user }}</p>
-            <p>{{ i.likes.all }}</p>
-            <p>ID {{ i.id }}</p>
-        <a href="#" data-id="{{ i.id }}" data-action="{% if request.user in i.likes.all %}un{% endif %}like"
-           class="like button">
-        {% if request.user not in i.likes.all %}
+        <div style="font-family: 'Oswald', sans-serif;">
+        <button class="like btn like_btn" data-id={{i.id}} data-action="{% if request.user in i.likes.all %}un{% endif %}like">
+            <span class="like_text">{% if request.user not in i.likes.all %}
             Podoba mi się
-        {% else %}
+            {% else %}
             Nie podoba mi się
-        {% endif %}
-        </a>
+            {% endif %}&nbsp;&nbsp;&nbsp;</span>
+            <span class="like_count">{{i.like_count}}</span>
+        </button>
 
+<!--    OPCJA WYSZARZONA / NIEAKTYWNA
 
-        <span class="lead_count">
-            <span class="lead_total">{{ i.lead_count }}</span>
-        </span>
-            <p>{{ request.user }}</p>
-            <p>{{ i.want_to_lead.all }}</p>
-            <p>ID {{ i.id }}</p>
-        <a href="#" data-id="{{ i.id }}" data-action="{% if request.user in i.want_to_lead.all %}un{% endif %}like"
-           class="lead button">
-        {% if request.user not in i.want_to_lead.all %}
-            Chcę poprowadzić
-        {% else %}
-            Nie chcę prowadzić
-        {% endif %}
-        </a>
-
+        <button class="btn like_btn disabled" value = {{i.id}} disabled>
+            <div style="font-family: 'Oswald', sans-serif;">Podoba mi się!&nbsp;&nbsp;&nbsp;<span>{{i.like_count}}</span>
+        </button>-->
 
         </div>
 
+        </div>
+          <div class="col-lg-6 col-md-6 col-sm-6">
+
+          <button class="lead btn lead_btn" data-id={{i.id}} data-action="{% if request.user in i.likes.all %}un{% endif %}lead">
+              <span class="lead_text">{% if request.user not in i.want_to_lead.all %}
+              Chcę poprowadzić
+              {% else %}
+              Nie chcę prowadzić
+              {% endif %}&nbsp;&nbsp;&nbsp;</span>
+              <span class="lead_count">{{i.lead_count}}</span>
+          </button>
+          <br><br>
+
+<!--      OPCJA WYSZARZONA / NIEAKTYWNA
+
+          <button class="btn lead_btn disabled" value = {{i.id}} disabled>
+              Zgłoszono do prowadzenia tego szkolenia
+          </button>-->
+
+          </div>
+    </div>
       </div>
     </div>
 
         <br>
 
 
+<!--          <div class="card-footer text-muted">-->
+<!--            Zaproponował: {{ i.proposer }}-->
+<!--          </div>-->
+<!--            <br/><br/>-->
+<!--        </div>-->
+
+
 {% endfor %}
-    <script src="{% static 'js/select2.min.js' %}"></script>
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/jquery.datatables.min.js' %}"></script>
-    <script src="{% static 'js/datatables.bootstrap4.min.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2.2.1/src/js.cookie.min.js"></script>
-<script>
-$(document).ready(function () {
-            $('#dataTable').DataTable();
-        });
-</script>
-
   <script>
     var csrftoken = Cookies.get('csrftoken');
     function csrfSafeMethod(method) {
@@ -109,64 +114,59 @@ $(document).ready(function () {
     });
 
     $(document).ready(function(){
-        $('a.like').click(function(e){
-    e.preventDefault();
-    $.post('{% url "ajax_like" %}',
-      {
-        id: $(this).data('id'),
-        action: $(this).data('action')
-      },
-      function(data){
-        if (data['status'] == 'ok')
-        {
-          var previous_action = $('a.like').data('action');
+        $('button.like').click(function (e) {
+            var postid = $(this).attr('data-id');
+            var action = $(this).attr('data-action');
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '{% url "ajax_like" %}',
+                data: {
+                    postid: postid,
+                    action: action,
+                },
+                context: this,
+                success: function(json) {
+                    $(this).find('.like_count').get(0).innerHTML = json['like_count']
+                    $(this).attr('data-action',json['action'])
+                    if (json['action'] === 'unlike') {
+                        $(this).find('.like_text').get(0).innerHTML = 'Podoba mi się'
+                    }
+                    else {
+                        $(this).find('.like_text').get(0).innerHTML = 'Nie podoba mi się'
+                    }
+                },
+                error: function(xhr, errmsg, err) {}
+            });
+        });
 
-          // toggle data-action
-          $('a.like').data('action', previous_action == 'like' ?
-          'unlike' : 'like');
-          // toggle link text
-          $('a.like').text(previous_action == 'like' ? 'Nie podoba mi się' :
-          'Podoba mi się');
-
-          // update total likes
-          var previous_likes = parseInt($('span.count .total').text());
-          $('span.count .total').text(previous_action == 'like' ?
-          previous_likes + 1 : previous_likes - 1);
-        }
-      }
-    );
-  });
-
-  $('a.lead').click(function(e){
-    e.preventDefault();
-    $.post('{% url "ajax_lead" %}',
-      {
-        id: $(this).data('id'),
-        action: $(this).data('action')
-      },
-      function(data){
-        if (data['status'] == 'ok')
-        {
-          var previous_action = $('a.lead').data('action');
-
-          // toggle data-action
-          $('a.lead').data('action', previous_action == 'like' ?
-          'unlike' : 'like');
-          // toggle link text
-          $('a.lead').text(previous_action == 'like' ? 'Chcę poprowadzić' :
-          'Nie chcę prowadzić');
-
-          // update total likes
-          var previous_likes = parseInt($('span.lead_count .lead_total').text());
-          $('span.lead_count .lead_total').text(previous_action == 'like' ?
-          previous_likes + 1 : previous_likes - 1);
-        }
-      }
-    );
-  });
-
+        $('button.lead').click(function (e) {
+            var postid = $(this).attr('data-id');
+            var action = $(this).attr('data-action');
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '{% url "ajax_lead" %}',
+                data: {
+                    postid: postid,
+                    action: action,
+                },
+                context: this,
+                success: function(json) {
+                    $(this).find('.lead_count').get(0).innerHTML = json['lead_count']
+                    $(this).attr('data-action',json['action'])
+                    if (json['action'] === 'unlead') {
+                        $(this).find('.lead_text').get(0).innerHTML = 'Chcę poprowadzić'
+                    }
+                    else {
+                        $(this).find('.lead_text').get(0).innerHTML = 'Nie chcę prowadzić'
+                    }
+                },
+                error: function(xhr, errmsg, err) {}
+            });
+        });
     });
   </script>
-{% endblock %}
 
+{% endblock %}
 </body>
