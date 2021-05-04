@@ -446,7 +446,12 @@ def event_edit(request, index):
             user = get_user_model()
             users = user.objects.all()
 
-            context = {'event': event, 'users': users, 'permitted': True}
+            if event[0].planning_date < datetime.today():
+                past = True
+            else:
+                past = False
+
+            context = {'event': event, 'users': users, 'permitted': True, 'past': past}
             return render(request, 'schedule/event_edit.html', context)
 
         if request.method == 'POST':
