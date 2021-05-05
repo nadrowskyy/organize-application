@@ -23,6 +23,14 @@ import os
 from .forms import ChangePassword
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+from django.contrib.auth.forms import PasswordResetForm
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
+from django.contrib.auth.tokens import default_token_generator
+from django.conf import settings
+from django.http import HttpResponse
+from django.db.models import Q
+from django.core.mail import BadHeaderError, send_mail
 
 
 # @login_required(login_url='login') # nie pozwala na wejscie uzytkownika na strone glowna jesli nie jest zarejestrowany
@@ -685,13 +693,58 @@ def event_details(request, index):
 
         return render(request, 'schedule/event_details.html', context)
 
-
-
-
-
-
-
     else:
         return redirect('events_list')
 
 
+def password_reset_request(request):
+    print('------------------------------------------------')
+    if request.method == "POST":
+        print('POSTTTTTT')
+        domain = request.headers['Host']
+        password_reset_form = PasswordResetForm(request.POST)
+        if password_reset_form.is_valid():
+            data = password_reset_form.cleaned_data['email']
+            associated_users = User.objects.filter(Q(email=data))
+            # You can use more than one way like this for resetting the password.
+            # ...filter(Q(email=data) | Q(username=data))
+            # but with this you may need to change the password_reset form as well.
+            if associated_users.exists():
+                for user in associated_users:
+                    subject = "Password Reset Requested"
+                    email_template_name = "schedule/password_reset_email.txt"
+                    c = {
+                        "email": user.email,
+                        'domain': domain,
+                        'site_name': 'Interface',
+                        "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                        "user": user,
+                        'token': default_token_generator.make_token(user),
+                        'protocol': 'http',
+                    }
+                    email = render_to_string(email_template_name, c)
+                    try:
+                        mail_settings = EmailSet.objects.filter(pk=1)[0]
+                        host = mail_settings.EMAIL_HOST
+                        port = mail_settings.EMAIL_PORT
+                        username = mail_settings.EMAIL_HOST_USER
+                        password = mail_settings.EMAIL_HOST_PASSWORD
+                        use_tls = bool(mail_settings.EMAIL_USE_TLS)
+                        from_email = mail_settings.EMAIL_HEADER
+                        print('EMAILLLLLLLLLLL')
+                        with get_connection(host=host, port=port, username=username, password=password,
+                                            use_tls=use_tls) as conn:
+                            msg = EmailMessage(subject=subject, body=email,
+                                               from_email=from_email,
+                                               to=[user.email], connection=conn)
+                            msg.send(fail_silently=True)
+
+                        #send_mail(subject, email, settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
+                    except BadHeaderError:
+                        return HttpResponse('Invalid header found.')
+                    return redirect("password_reset_done")
+    password_reset_form = PasswordResetForm()
+    print('sdsdaddad')
+    print(password_reset_form)
+    return render(request=request, template_name="schedule/password_reset_form.html",
+                  context={"password_reset_form": password_reset_form})

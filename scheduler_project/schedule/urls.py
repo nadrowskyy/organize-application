@@ -1,8 +1,11 @@
+import django.contrib.auth.views
 from django.contrib import admin
 from django.urls import path
 from . import views
 from django.conf.urls.static import static
 from django.conf import settings
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, \
+    PasswordResetCompleteView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -17,6 +20,14 @@ urlpatterns = [
     # AJAX
     path('ajax_like/', views.ajax_like, name='ajax_like'),
     path('ajax_lead/', views.ajax_lead, name='ajax_lead'),
+    # PASSWORD RESET
+    path('password_reset/', views.password_reset_request, name='password_reset'),
+    path('password_reset/done/', PasswordResetDoneView.as_view(template_name=
+        'schedule/password_reset_done.html'), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(template_name=
+        'schedule/password_reset_confirm.html'), name='password_reset_confirm'),
+    path('reset/done/', PasswordResetCompleteView.as_view(template_name=
+        'schedule/password_reset_complete.html'), name='password_reset_complete'),
 
     path('subjects_list/', views.subjects_list, name='subjects_list'),
     path('users_list/', views.users_list, name='users_list'),
