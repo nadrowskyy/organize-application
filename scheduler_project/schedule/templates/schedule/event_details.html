@@ -72,11 +72,9 @@
 
     <br>
     <h2 style="text-align:center;" id="comments">Komentarze ({{comments_cnt}})</h2>
-<div class="container mt-5 mb-5">
+<div class="container mt-5 mb-5" id="cmt_container">
     <div class="row height d-flex justify-content-center align-items-center">
-        {% if myid %}
-        <a href="#commentid{{myid}}" id="scroll" hidden></a>
-        {% endif %}
+
         <div class="col-md-9">
             <div class="card">
                 <form action="" method="POST">
@@ -122,7 +120,7 @@
                         {% endif %}
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">New message</h5>
@@ -189,6 +187,18 @@
 })
 </script>
 
+<script>
+
+            document.addEventListener("DOMContentLoaded", function(event) {
+            var scrollpos = localStorage.getItem('scrollpos');
+            if (scrollpos) window.scrollTo(0, scrollpos);
+        });
+
+        window.onbeforeunload = function(e) {
+            localStorage.setItem('scrollpos', window.scrollY);
+        };
+
+</script>
 </body>
 
 

@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="Poprawione obrazki na liście eventów">
+    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="User can edit his own profile (name, surname, email)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/my_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/my_profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/event_details.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/event_details.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/subjects_list_ajax.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/subjects_list_ajax.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/static/css/bootstrap_old.css" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/static/css/bootstrap_old.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +41,7 @@
     </favorite-branches>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="comments" />
+        <entry key="$PROJECT_DIR$" value="edit-own-profile-2" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -103,6 +106,7 @@
       <workItem from="1620058190975" duration="17641000" />
       <workItem from="1620130146364" duration="280000" />
       <workItem from="1620130717844" duration="1419000" />
+      <workItem from="1620288093811" duration="14136000" />
     </task>
     <task id="LOCAL-00001" summary="Test kom Bartka K">
       <created>1616441609819</created>
@@ -244,7 +248,14 @@
       <option name="project" value="LOCAL" />
       <updated>1620131951611</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="User can edit his own profile (name, surname, email)">
+      <created>1620162135246</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1620162135246</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -288,6 +299,7 @@
     <MESSAGE value="&quot;edit event&quot; and &quot;delete event&quot; buttons visible on events list (admin view); django 3.2 compatibilty fixes" />
     <MESSAGE value="-Ograniczona edycja dla organizatora eventu&#10;-Wszyscy mogą przeglądać listę szkoleń" />
     <MESSAGE value="Disallow changing datetime for past events" />
-    <option name="LAST_COMMIT_MESSAGE" value="Disallow changing datetime for past events" />
+    <MESSAGE value="User can edit his own profile (name, surname, email)" />
+    <option name="LAST_COMMIT_MESSAGE" value="User can edit his own profile (name, surname, email)" />
   </component>
 </project>

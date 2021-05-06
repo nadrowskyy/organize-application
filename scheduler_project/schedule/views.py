@@ -204,10 +204,39 @@ def user_page(request):
 
 
 def subjects_list(request):
+
     all_subjects_list = Subject.objects.all()
-    first_sub = all_subjects_list[0]
-    print(first_sub.likes.all())
-    return render(request, 'schedule/subjects_list_ajax.html', {"all_subjects_list": all_subjects_list})
+
+    cnt = []
+
+    for i in all_subjects_list:
+        for j in i.want_to_lead.all():
+
+            e = Event.objects.filter(organizer=j).count()
+            s = Subject.objects.filter(proposer=j).count()
+
+            temp = {
+                'user': j,
+                'events': e,
+                'subjects': s
+            }
+            cnt.append(temp)
+
+    print(cnt)
+
+    # user = get_user_model()
+    # users = user.objects.all()
+    #
+    # events_cnt = []
+    # subjects_cnt = []
+    #
+    # for i in users:
+    #     events_cnt.append(Event.objects.filter(organizer=i.id).count())
+    #     subjects_cnt.append(Subject.objects.filter(proposer=i.id).count())
+
+    context = {"all_subjects_list": all_subjects_list, "cnt": cnt}
+
+    return render(request, 'schedule/subjects_list_ajax.html', context)
 
 
 @login_required(login_url='login')
@@ -636,7 +665,7 @@ def event_details(request, index):
         context = {'selected_event': selected_event, 'comments': comments, 'form': form, 'myid': comment_id,
                    'comments_cnt': comments_cnt}
 
-        return render(request, 'schedule/event_details.html', context)
+        return redirect('event_details', index)
 
     if request.method == 'POST' and request.POST.get('delete'):
 
