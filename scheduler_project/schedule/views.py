@@ -573,6 +573,7 @@ def delete_event(request, index):
         return redirect('events_list')
 
 
+@allowed_users(allowed_roles=['admin', 'employee'])
 def my_profile(request):
 
     my_events = Event.objects.filter(organizer=request.user)
@@ -611,25 +612,7 @@ def my_profile(request):
     return render(request, 'schedule/my_profile.html', context)
 
 
-# @login_required(login_url='login')
-# def change_password(request):
-#     if request.method == 'POST':
-#         form = PasswordChangeForm(user=request.user, data=request.POST)
-#         if form.is_valid():
-#             form.save()
-#             login(request, request.user)
-#             messages.success(request, _('Password successfully changed.'))
-#             return redirect('my_profile')
-#     else:
-#         form = PasswordChangeForm(user=request.user)
-#
-#     for field in form.fields.values():
-#         field.help_text = None
-#
-#     context = {'form': form}
-#
-#     return render(request, 'schedule/my_profile.html', context)
-
+@allowed_users(allowed_roles=['admin', 'employee'])
 def event_details(request, index):
 
     if request.method == 'GET':
