@@ -43,6 +43,7 @@
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-6">
 
+        {% if user.is_authenticated %}
         <div style="font-family: 'Oswald', sans-serif;">
         <button class="like btn like_btn" data-id={{i.id}} data-action="{% if request.user in i.likes.all %}un{% endif %}like">
             <span class="like_text">{% if request.user not in i.likes.all %}
@@ -72,6 +73,7 @@
               {% endif %}&nbsp;&nbsp;&nbsp;</span>
               <span class="lead_count">{{i.lead_count}}</span>
           </button>
+          {% endif %}
           <br><br>
 
 <!--      OPCJA WYSZARZONA / NIEAKTYWNA

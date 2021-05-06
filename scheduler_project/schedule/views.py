@@ -217,7 +217,6 @@ def ajax_like(request):
     action = request.POST.get('action')
 
     if subject_id and action:
-
         subject = get_object_or_404(Subject, id=subject_id)
         if subject.likes.filter(id=request.user.id).exists():
             subject.likes.remove(request.user)
