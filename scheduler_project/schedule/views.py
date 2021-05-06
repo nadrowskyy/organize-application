@@ -120,7 +120,20 @@ def register_page(request):
 # do strony odpowiedzialnej za logowanie
 #@login_required(login_url="/login")
 def events_list(request):
-    all_events_list = Event.objects.all()
+
+    sort_by = request.GET.get('sort_by')
+
+    if sort_by == 'latest':
+        all_events_list = Event.objects.order_by('planning_date')
+
+    elif sort_by == 'oldest':
+        all_events_list = Event.objects.order_by('-planning_date')
+
+    elif sort_by == 'alphabetical':
+        all_events_list = Event.objects.order_by('title')
+
+    else:
+        all_events_list = Event.objects.all()
 
     pa = Paginator(all_events_list, 12)
 
@@ -131,6 +144,7 @@ def events_list(request):
         page = pa.page(1)
 
     today = datetime.today()
+
     upcoming_events_list = Event.objects.filter(planning_date__gte=today)
 
     context = {'list': page, 'upcoming_events': upcoming_events_list}

@@ -3,6 +3,29 @@
 {% load auth_extras %}
 {% block content %}
 
+<head>
+
+    <script>
+    if (typeof location.search.split("sort_by=")[1] != "undefined") {
+        var last_sorting_order = location.search.split('sort_by=')[1];
+        sessionStorage.setItem("sort_by", last_sorting_order);
+        document.getElementById("sort_by").enterKeyHint = sessionStorage.getItem("sort_by");
+        document.getElementById("current_sorting").value = sessionStorage.getItem("sort_by");
+    }
+    else {
+        var url = window.location.href;
+        if (url.indexOf('?') > -1) {
+            url += '&sort_by=' + sessionStorage.getItem("sort_by")
+        } else {
+            url += '?sort_by=' + sessionStorage.getItem("sort_by")
+        }
+        window.location.href = url;
+    }
+  </script>
+
+
+
+</head>
 
 
 <div class="container">
@@ -10,8 +33,32 @@
     <br>
     <center><h2>LISTA SZKOLEŃ</h2></center>
     <hr>
-    tekst
+    <div class="container">
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" style="max-width:40%;font-family: 'Oswald', sans-serif;" id="sortowanie" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sortowanie</button>
+    <div class="dropdown-menu" aria-labelledby="sortowanie">
+    <form method="GET" action="">
+        <button class="dropdown-item" type="submit" name="sort_by" id="sort_latest" value="latest">Od najbliższych</button>
+        <button class="dropdown-item" type="submit" name="sort_by" id="sort_oldest" value="oldest">Od najdalszych</button>
+        <button class="dropdown-item" type="submit" name="sort_by" id="sort_alphabetical" value="alphabetical">Alfabetycznie</button>
+    </form>
+</div>
+
+
+    <button class="btn btn-secondary" data-toggle="collapse" style="max-width:40%;font-family: 'Oswald', sans-serif;" data-target="#filters">Filtrowanie</button>
+    </div>
+        </div>
+
+<!-- FILTRTY TUTAJ CHYBA BĘDĄ ALBO I NIE -->
+
+
+    <div id="filters" class="collapse">
+        <hr>
+        MIEJSCE NA FILTRY??
+    </div>
     <hr>
+
+
 
 <div class="row">
     {% for i in list %}
@@ -85,7 +132,7 @@
       {% if list.has_next %}
     <li class="page-item"><a class="page-link" href="{% url 'events_list' %}?page={{list.next_page_number}}">{{list.next_page_number}}</a></li>
     <li class="page-item">
-      <a class="page-link" href="{% url 'events_list' %}?page={{list.next_page_number}}">Następna strona</a>
+      <a class="page-link" href="{% url 'events_list' %}?page={{list.next_page_number}}" type="submit" id="next_page">Następna strona</a>
     </li>
       {% endif %}
   </ul>
@@ -93,18 +140,28 @@
 
 
 
+<script>
+
+    if (typeof location.search.split("sort_by=")[1] != "undefined") {
+
+        var current = sessionStorage.getItem("sort_by")
+
+        if (current === "latest")
+        {
+            $("#sort_latest").addClass("active");
+        }
+        else if (current === "oldest")
+        {
+            $("#sort_oldest").addClass("active");
+        }
+        else if (current === "alphabetical")
+        {
+            $("#sort_alphabetical").addClass("active");
+        }
 
 
-
-<!--
-{% if list.has_previous %}
-    <a href="{% url 'events_list' %}?page={{list.previous_page_number}}">Poprzednia strona</a>
-{% endif %}
-
-{% if list.has_next %}
-    <a href="{% url 'events_list' %}?page={{list.next_page_number}}">Następna strona</a>
-{% endif %}
--->
+    }
+</script>
 
 
 

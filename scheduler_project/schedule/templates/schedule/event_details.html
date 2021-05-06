@@ -92,7 +92,7 @@
                     <div class="d-flex flex-row p-3"> <img src="{% static 'images/icons/bulb_icon.png' %}" width="40" height="40" class="rounded-circle mr-3">
                         <div class="w-100">
                             <div class="d-flex justify-content-between align-items-center">
-                                <div class="d-flex flex-row align-items-center"> <span class="mr-2 font-weight-bold">{{comment.author.first_name}} {{comment.author.last_name}}</span> {% if comment.if_edited and not comment.if_deleted %}<small class="c-badge font-italic" style="color: lightgray;"> edytowany</small>{% endif %} </div> <small style="color: gray;">{{comment.created}}</small>
+                                <div class="d-flex flex-row align-items-center"> <span class="mr-2 font-weight-bold">{{comment.author.first_name}} {{comment.author.last_name}}{% if comment.if_edited and not comment.if_deleted %}<small class="c-badge font-italic" style="color: lightgray;">&nbsp;&nbsp;edytowany</small>{% endif %}</span>  </div> <small style="color: gray;">{{comment.created}}</small>
                             </div>
                             {% if comment.if_deleted %}
                             <p class="text-justify comment-text mb-0 font-italic" style="color: lightgray;" id="commentid{{comment.id}}">Komentarz usunięty</p>

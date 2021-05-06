@@ -374,7 +374,7 @@ p.topic {
 	color: #fff;
 }
 
-.active{
+.navbar .active{
 	font-weight: bold;
 }
 
@@ -633,7 +633,6 @@ p.topic {
 
 @media (max-width: 990px) {
 	.navbar-collapse {
-		background: #743952;
 		text-align: center;
 		padding: 20px;
 	}
