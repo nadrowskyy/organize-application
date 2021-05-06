@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="User can edit his own profile (name, surname, email)">
+    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="Admin can view list of leaders who decalred their participation for specified subject">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/event_details.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/event_details.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/subjects_list_ajax.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/subjects_list_ajax.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/static/css/bootstrap_old.css" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/static/css/bootstrap_old.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +37,7 @@
     </favorite-branches>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="edit-own-profile-2" />
+        <entry key="$PROJECT_DIR$" value="sort-events" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -106,7 +102,7 @@
       <workItem from="1620058190975" duration="17641000" />
       <workItem from="1620130146364" duration="280000" />
       <workItem from="1620130717844" duration="1419000" />
-      <workItem from="1620288093811" duration="14136000" />
+      <workItem from="1620288093811" duration="15484000" />
     </task>
     <task id="LOCAL-00001" summary="Test kom Bartka K">
       <created>1616441609819</created>
@@ -255,7 +251,14 @@
       <option name="project" value="LOCAL" />
       <updated>1620162135246</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Admin can view list of leaders who decalred their participation for specified subject">
+      <created>1620307964109</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1620307964109</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -300,6 +303,7 @@
     <MESSAGE value="-Ograniczona edycja dla organizatora eventu&#10;-Wszyscy mogą przeglądać listę szkoleń" />
     <MESSAGE value="Disallow changing datetime for past events" />
     <MESSAGE value="User can edit his own profile (name, surname, email)" />
-    <option name="LAST_COMMIT_MESSAGE" value="User can edit his own profile (name, surname, email)" />
+    <MESSAGE value="Admin can view list of leaders who decalred their participation for specified subject" />
+    <option name="LAST_COMMIT_MESSAGE" value="Admin can view list of leaders who decalred their participation for specified subject" />
   </component>
 </project>
