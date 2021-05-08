@@ -121,6 +121,9 @@ def register_page(request):
 #@login_required(login_url="/login")
 def events_list(request):
 
+    User = get_user_model()
+    fullnames = User.objects.all()
+
     sort_by = request.GET.get('sort_by')
 
     if sort_by == 'latest':
@@ -147,7 +150,7 @@ def events_list(request):
 
     upcoming_events_list = Event.objects.filter(planning_date__gte=today)
 
-    context = {'list': page, 'upcoming_events': upcoming_events_list}
+    context = {'list': page, 'upcoming_events': upcoming_events_list, 'fullnames': fullnames}
 
     return render(request, 'schedule/events_list.html', context)
 

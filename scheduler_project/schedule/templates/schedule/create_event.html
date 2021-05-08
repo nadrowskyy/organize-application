@@ -35,7 +35,7 @@
         <label for="organizer">Organizator</label><br>
             <select class="selectOrganizer" id="organizer" name="organizer" style="width: 100%;">
                 {% for i in fullnames %}
-                <option value="{{i.id}}">{{i.first_name}} {{i.last_name}} ({{i.username}})</option>
+                <option value="{{i.id}}">{{i.first_name}} {{i.last_name}} ({{i.email}})</option>
                 {% endfor %}
             </select>
     </div>

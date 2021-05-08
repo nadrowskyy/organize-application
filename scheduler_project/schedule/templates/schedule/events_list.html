@@ -6,21 +6,32 @@
 <head>
 
     <script>
-    if (typeof location.search.split("sort_by=")[1] != "undefined") {
-        var last_sorting_order = location.search.split('sort_by=')[1];
+
+    let params = new URLSearchParams(document.location.search.substring(1));
+
+    if (params.has('sort_by') && params.get('sort_by') !== sessionStorage.getItem("sort_by")) {
+        var last_sorting_order = params.get('sort_by');
         sessionStorage.setItem("sort_by", last_sorting_order);
-        document.getElementById("sort_by").enterKeyHint = sessionStorage.getItem("sort_by");
-        document.getElementById("current_sorting").value = sessionStorage.getItem("sort_by");
     }
-    else {
-        var url = window.location.href;
-        if (url.indexOf('?') > -1) {
-            url += '&sort_by=' + sessionStorage.getItem("sort_by")
-        } else {
-            url += '?sort_by=' + sessionStorage.getItem("sort_by")
+    else if (!params.has('sort_by') && sessionStorage.getItem("sort_by") != null) {
+
+        if (params.get('sort_by') !== sessionStorage.getItem("sort_by")) {
+
+            var url = window.location.href;
+
+            if (url.indexOf('?') > -1) {
+                    url += '&sort_by=' + sessionStorage.getItem("sort_by")
+            }
+            else {
+                    url += '?sort_by=' + sessionStorage.getItem("sort_by")
+            }
+            window.location.href = url;
         }
-        window.location.href = url;
     }
+    else if (!params.has('sort_by')) {
+
+    }
+
   </script>
 
 
@@ -54,7 +65,64 @@
 
     <div id="filters" class="collapse">
         <hr>
-        MIEJSCE NA FILTRY??
+<div class="container">
+
+    <form method="GET" action="">
+
+    <div class="row">
+    <div class="col-lg-3 col-md-3 col-sm-4 col-12">
+        <p class="font-weight-bold">Wyświetlaj</p>
+        <div class="form-check">
+            <input type="checkbox" id="option"><label for="option">&nbsp;Wszystkie</label>
+        </div>
+        <div class="form-check">
+                &nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" class="subOption" name="show_historical" value="1"> Historyczne</label>
+        </div>
+        <div class="form-check">
+                &nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" class="subOption" name="show_upcoming" value="1"> Nadchodzące</label>
+        </div>
+
+</div>
+    <div class="col-lg-3 col-md-3 col-sm-4 col-12">
+        <p class="font-weight-bold">Tylko moje szkolenia</p>
+        <div class="form-check">
+            <label><input type="checkbox" name="only_mine" value="1"> Tak</label>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-3 col-sm-4 col-12">
+        <p class="font-weight-bold">Wyszukaj po tytule</p>
+            <input type="text" class="form-control" name="title" placeholder="Wpisz tytuł" style="max-width: 90%">
+    </div>
+
+    <div class="col-lg-3 col-md-3 col-sm-4 col-12">
+        <p class="font-weight-bold">Wyszukaj po prowadzącym</p>
+        <div class="container">
+            <select class="selectOrganizer" id="organizer" name="organizer" >
+                <option value="" disabled selected>Wybierz z listy</option>
+                {% for i in fullnames %}
+                <option value="{{i.id}}">{{i.first_name}} {{i.last_name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <br><br>
+        <div class="container text-right">
+            <button type="submit" class="btn btn-secondary" style="font-family: Oswald;">Resetuj</button>
+            <button type="submit" class="btn btn-secondary" style="font-family: Oswald;">Filtruj</button>
+        </div>
+
+    </div>
+    </div>
+
+
+        <div class="row">
+
+        </div>
+
+        </form>
+</div>
+
     </div>
     <hr>
 
@@ -142,7 +210,9 @@
 
 <script>
 
-    if (typeof location.search.split("sort_by=")[1] != "undefined") {
+    // OZNACZANIE TRYBU SORTOWANIA
+
+    if (params.has('sort_by')) {
 
         var current = sessionStorage.getItem("sort_by")
 
@@ -158,10 +228,47 @@
         {
             $("#sort_alphabetical").addClass("active");
         }
-
-
     }
+    else {
+        $("#sort_latest").addClass("active");
+    }
+
+    // AUTOMATYCZNE ZAZNACZANIE ZAGNIEŻDŻONYCH CHECKBOXÓW
+
+    var checkboxes = document.querySelectorAll('input.subOption'),
+    checkall = document.getElementById('option');
+
+    for(var i=0; i<checkboxes.length; i++) {
+      checkboxes[i].onclick = function() {
+        var checkedCount = document.querySelectorAll('input.subOption:checked').length;
+
+        checkall.checked = checkedCount > 0;
+        checkall.indeterminate = checkedCount > 0 && checkedCount < checkboxes.length;
+      }
+    }
+
+    checkall.onclick = function() {
+      for(var i=0; i<checkboxes.length; i++) {
+        checkboxes[i].checked = this.checked;
+      }
+    }
+
 </script>
+
+<script src="{% static 'js/select2.min.js' %}"></script>
+
+<script>
+
+    $(document).ready(function() {
+    $('.selectOrganizer').select2();
+    });
+
+    $(document).ready(function() {
+    $('.selectTitle').select2();
+    });
+
+</script>
+
 
 
 
