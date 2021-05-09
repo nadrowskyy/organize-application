@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="Filter frontend (almost done)">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="Filtering events on events_list">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/migrations/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/events_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/events_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/navbar.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/navbar.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +106,7 @@
       <workItem from="1620461617550" duration="10081000" />
       <workItem from="1620479248538" duration="16647000" />
       <workItem from="1620520356211" duration="17000" />
-      <workItem from="1620555935197" duration="7419000" />
+      <workItem from="1620555935197" duration="7755000" />
     </task>
     <task id="LOCAL-00001" summary="Test kom Bartka K">
       <created>1616441609819</created>
@@ -287,7 +283,14 @@
       <option name="project" value="LOCAL" />
       <updated>1620497810983</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Filtering events on events_list">
+      <created>1620563470892</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1620563470892</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -336,6 +339,7 @@
     <MESSAGE value="Leaders list fix" />
     <MESSAGE value="Sorting events on events list" />
     <MESSAGE value="Filter frontend (almost done)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Filter frontend (almost done)" />
+    <MESSAGE value="Filtering events on events_list" />
+    <option name="LAST_COMMIT_MESSAGE" value="Filtering events on events_list" />
   </component>
 </project>

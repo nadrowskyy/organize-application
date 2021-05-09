@@ -99,7 +99,7 @@
 
 <script type="text/javascript">
 		$(document).ready(function () {
-        var url = window.location;
+        var url = window.location.href.split('?')[0];
         $('li.nav-item a[href="'+ url +'"]').parent().addClass('active');
         $('li.nav-item a').filter(function() {
              return this.href == url;
