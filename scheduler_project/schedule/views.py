@@ -121,22 +121,61 @@ def register_page(request):
 #@login_required(login_url="/login")
 def events_list(request):
 
+    today = datetime.today()
+
     User = get_user_model()
     fullnames = User.objects.all()
 
+    all_events_list = Event.objects
+
     sort_by = request.GET.get('sort_by')
 
+    show_upcoming = request.GET.get('show_upcoming')
+    show_historical = request.GET.get('show_historical')
+    only_mine = request.GET.get('only_mine')
+
+    organizer = request.GET.get('organizer')
+    title = request.GET.get('title')
+
+
+    if show_historical and not show_upcoming:
+        all_events_list = all_events_list.filter(planning_date__lte=today)
+
+    elif not show_historical and show_upcoming:
+        all_events_list = all_events_list.filter(planning_date__gte=today)
+
+
+    if organizer:
+        all_events_list = all_events_list.filter(organizer=organizer)
+
+    if only_mine:
+        all_events_list = all_events_list.filter(organizer=request.user)
+
+
+    if title and title != '':
+        all_events_list = all_events_list.filter(title__icontains=title)
+
+    # SORTOWANIE
+
     if sort_by == 'latest':
-        all_events_list = Event.objects.order_by('planning_date')
+        all_events_list = all_events_list.order_by('planning_date')
 
     elif sort_by == 'oldest':
-        all_events_list = Event.objects.order_by('-planning_date')
+        all_events_list = all_events_list.order_by('-planning_date')
 
     elif sort_by == 'alphabetical':
-        all_events_list = Event.objects.order_by('title')
+        all_events_list = all_events_list.order_by('title')
 
     else:
-        all_events_list = Event.objects.all()
+        all_events_list = all_events_list.all()
+
+    # FILTROWANIE
+
+
+
+
+
+
 
     pa = Paginator(all_events_list, 12)
 
@@ -146,11 +185,7 @@ def events_list(request):
     except EmptyPage:
         page = pa.page(1)
 
-    today = datetime.today()
-
-    upcoming_events_list = Event.objects.filter(planning_date__gte=today)
-
-    context = {'list': page, 'upcoming_events': upcoming_events_list, 'fullnames': fullnames}
+    context = {'list': page, 'fullnames': fullnames}
 
     return render(request, 'schedule/events_list.html', context)
 
