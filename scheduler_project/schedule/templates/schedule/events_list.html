@@ -174,12 +174,17 @@
         </div>
 
 </div>
+
+        {% if request.user.is_authenticated %}
+
     <div class="col-lg-3 col-md-3 col-sm-4 col-12">
         <p class="font-weight-bold">Tylko moje szkolenia</p>
         <div class="form-check">
             <label><input type="checkbox" name="only_mine" id="only_mine" value="1" onclick="setflag()"> Tak</label>
         </div>
     </div>
+
+        {% endif %}
 
     <div class="col-lg-3 col-md-3 col-sm-4 col-12">
         <p class="font-weight-bold">Wyszukaj po tytule</p>
