@@ -43,6 +43,8 @@
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-6 col-6">
 
+        {% if user.is_authenticated %}
+
         <div style="font-family: 'Oswald', sans-serif;">
         <button class="like btn like_btn " data-id={{i.id}} data-action="{% if request.user in i.likes.all %}un{% endif %}like">
             <span class="like_text">{% if request.user not in i.likes.all %}
@@ -67,9 +69,12 @@
               <span class="lead_count">{{i.lead_count}}</span>
           </button>
 
+          {% endif %}
+
 
 {% if request.user|has_group:"admin" and i.lead_count > 0 %}
 <a data-toggle="modal" data-target="#exampleModalLong{{forloop.counter}}"><img src="{% static 'images/icons/details.png' %}" style="width:25px; height:auto; padding-top: 5px;"></a>
+
 
 
 
