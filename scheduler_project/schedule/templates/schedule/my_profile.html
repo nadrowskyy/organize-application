@@ -213,17 +213,23 @@
 		<br><br>
 
 
+<script src="{% static 'js/jquery.min.js' %}"></script>
+	<script>
+	$(document).ready(function(){
+
+
+	$('#new_password1, #new_password2').on('keyup', function () {
+	 if ($('#new_password1').val() === $('#new_password2').val()) {
+		 $('#message').html('Matching').css('color', 'green');
+	 } else
+		 $('#message').html('Not Matching').css('color', 'red');
+	 });
+
+	});
+</script>
 </body>
 </html>
 
 {% endblock %}
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
-	$('#new_password1, #new_password2').on('keyup', function () {
-	 if ($('#new_password1').val() == $('#new_password2').val()) {
-		 $('#message').html('Matching').css('color', 'green');
-	 } else
-		 $('#message').html('Not Matching').css('color', 'red');
-	 });
-</script>
