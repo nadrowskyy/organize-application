@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'schedule.apps.ScheduleConfig',
     'vote',
     'django_celery_beat',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [

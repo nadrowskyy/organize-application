@@ -23,6 +23,14 @@ import os
 from .forms import ChangePassword
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+from django.contrib.auth.forms import PasswordResetForm
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
+from django.contrib.auth.tokens import default_token_generator
+from django.conf import settings
+from django.http import HttpResponse
+from django.db.models import Q
+from django.core.mail import BadHeaderError, send_mail
 
 
 # @login_required(login_url='login') # nie pozwala na wejscie uzytkownika na strone glowna jesli nie jest zarejestrowany
@@ -112,7 +120,62 @@ def register_page(request):
 # do strony odpowiedzialnej za logowanie
 #@login_required(login_url="/login")
 def events_list(request):
-    all_events_list = Event.objects.all()
+
+    today = datetime.today()
+
+    User = get_user_model()
+    fullnames = User.objects.all()
+
+    all_events_list = Event.objects
+
+    sort_by = request.GET.get('sort_by')
+
+    show_upcoming = request.GET.get('show_upcoming')
+    show_historical = request.GET.get('show_historical')
+    only_mine = request.GET.get('only_mine')
+
+    organizer = request.GET.get('organizer')
+    title = request.GET.get('title')
+
+
+    if show_historical and not show_upcoming:
+        all_events_list = all_events_list.filter(planning_date__lte=today)
+
+    elif not show_historical and show_upcoming:
+        all_events_list = all_events_list.filter(planning_date__gte=today)
+
+
+    if organizer:
+        all_events_list = all_events_list.filter(organizer=organizer)
+
+    if only_mine:
+        all_events_list = all_events_list.filter(organizer=request.user)
+
+
+    if title and title != '':
+        all_events_list = all_events_list.filter(title__icontains=title)
+
+    # SORTOWANIE
+
+    if sort_by == 'latest':
+        all_events_list = all_events_list.order_by('planning_date')
+
+    elif sort_by == 'oldest':
+        all_events_list = all_events_list.order_by('-planning_date')
+
+    elif sort_by == 'alphabetical':
+        all_events_list = all_events_list.order_by('title')
+
+    else:
+        all_events_list = all_events_list.all()
+
+    # FILTROWANIE
+
+
+
+
+
+
 
     pa = Paginator(all_events_list, 12)
 
@@ -122,10 +185,7 @@ def events_list(request):
     except EmptyPage:
         page = pa.page(1)
 
-    today = datetime.today()
-    upcoming_events_list = Event.objects.filter(planning_date__gte=today)
-
-    context = {'list': page, 'upcoming_events': upcoming_events_list}
+    context = {'list': page, 'fullnames': fullnames}
 
     return render(request, 'schedule/events_list.html', context)
 
@@ -196,10 +256,39 @@ def user_page(request):
 
 
 def subjects_list(request):
+
     all_subjects_list = Subject.objects.all()
-    first_sub = all_subjects_list[0]
-    print(first_sub.likes.all())
-    return render(request, 'schedule/subjects_list_ajax.html', {"all_subjects_list": all_subjects_list})
+
+    cnt = []
+
+    for i in all_subjects_list:
+        for j in i.want_to_lead.all():
+
+            e = Event.objects.filter(organizer=j).count()
+            s = Subject.objects.filter(proposer=j).count()
+
+            temp = {
+                'user': j,
+                'events': e,
+                'subjects': s
+            }
+            cnt.append(temp)
+
+    print(cnt)
+
+    # user = get_user_model()
+    # users = user.objects.all()
+    #
+    # events_cnt = []
+    # subjects_cnt = []
+    #
+    # for i in users:
+    #     events_cnt.append(Event.objects.filter(organizer=i.id).count())
+    #     subjects_cnt.append(Subject.objects.filter(proposer=i.id).count())
+
+    context = {"all_subjects_list": all_subjects_list, "cnt": cnt}
+
+    return render(request, 'schedule/subjects_list_ajax.html', context)
 
 
 @login_required(login_url='login')
@@ -209,7 +298,6 @@ def ajax_like(request):
     action = request.POST.get('action')
 
     if subject_id and action:
-
         subject = get_object_or_404(Subject, id=subject_id)
         if subject.likes.filter(id=request.user.id).exists():
             subject.likes.remove(request.user)
@@ -565,6 +653,7 @@ def delete_event(request, index):
         return redirect('events_list')
 
 
+@allowed_users(allowed_roles=['admin', 'employee'])
 def my_profile(request):
 
     my_events = Event.objects.filter(organizer=request.user)
@@ -603,25 +692,7 @@ def my_profile(request):
     return render(request, 'schedule/my_profile.html', context)
 
 
-# @login_required(login_url='login')
-# def change_password(request):
-#     if request.method == 'POST':
-#         form = PasswordChangeForm(user=request.user, data=request.POST)
-#         if form.is_valid():
-#             form.save()
-#             login(request, request.user)
-#             messages.success(request, _('Password successfully changed.'))
-#             return redirect('my_profile')
-#     else:
-#         form = PasswordChangeForm(user=request.user)
-#
-#     for field in form.fields.values():
-#         field.help_text = None
-#
-#     context = {'form': form}
-#
-#     return render(request, 'schedule/my_profile.html', context)
-
+@allowed_users(allowed_roles=['admin', 'employee'])
 def event_details(request, index):
 
     if request.method == 'GET':
@@ -646,7 +717,7 @@ def event_details(request, index):
         context = {'selected_event': selected_event, 'comments': comments, 'form': form, 'myid': comment_id,
                    'comments_cnt': comments_cnt}
 
-        return render(request, 'schedule/event_details.html', context)
+        return redirect('event_details', index)
 
     if request.method == 'POST' and request.POST.get('delete'):
 
@@ -685,13 +756,50 @@ def event_details(request, index):
 
         return render(request, 'schedule/event_details.html', context)
 
-
-
-
-
-
-
     else:
         return redirect('events_list')
 
 
+def password_reset_request(request):
+    if request.method == "POST":
+        domain = request.headers['Host']
+        password_reset_form = PasswordResetForm(request.POST)
+        if password_reset_form.is_valid():
+            data = password_reset_form.cleaned_data['email']
+            associated_users = User.objects.filter(Q(email=data))
+            if associated_users.exists():
+                for user in associated_users:
+                    subject = "Password Reset Requested"
+                    email_template_name = "schedule/password_reset_email.txt"
+                    c = {
+                        "email": user.email,
+                        'domain': domain,
+                        'site_name': 'Interface',
+                        "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                        "user": user,
+                        'token': default_token_generator.make_token(user),
+                        'protocol': 'http',
+                    }
+                    email = render_to_string(email_template_name, c)
+                    try:
+                        mail_settings = EmailSet.objects.filter(pk=1)[0]
+                        host = mail_settings.EMAIL_HOST
+                        port = mail_settings.EMAIL_PORT
+                        username = mail_settings.EMAIL_HOST_USER
+                        password = mail_settings.EMAIL_HOST_PASSWORD
+                        use_tls = bool(mail_settings.EMAIL_USE_TLS)
+                        from_email = mail_settings.EMAIL_HEADER
+                        with get_connection(host=host, port=port, username=username, password=password,
+                                            use_tls=use_tls) as conn:
+                            msg = EmailMessage(subject=subject, body=email,
+                                               from_email=from_email,
+                                               to=[user.email], connection=conn)
+                            msg.send(fail_silently=True)
+
+                        #send_mail(subject, email, settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
+                    except BadHeaderError:
+                        return HttpResponse('Invalid header found.')
+                    return redirect("password_reset_done")
+    password_reset_form = PasswordResetForm()
+    return render(request=request, template_name="schedule/password_reset_form.html",
+                  context={"password_reset_form": password_reset_form})

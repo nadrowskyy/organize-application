@@ -41,53 +41,94 @@
 
     <div class="container" style="max-width:500px;">
     <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
 
         {% if user.is_authenticated %}
 
         <div style="font-family: 'Oswald', sans-serif;">
-        <button class="like btn like_btn" data-id={{i.id}} data-action="{% if request.user in i.likes.all %}un{% endif %}like">
+        <button class="like btn like_btn " data-id={{i.id}} data-action="{% if request.user in i.likes.all %}un{% endif %}like">
             <span class="like_text">{% if request.user not in i.likes.all %}
             Podoba mi się
             {% else %}
             Nie podoba mi się
-                {% endif %}</span><span>&nbsp;&nbsp;&nbsp;</span>
+            {% endif %}&nbsp;&nbsp;&nbsp;</span>
             <span class="like_count">{{i.like_count}}</span>
         </button>
 
         </div>
 
         </div>
-          <div class="col-lg-6 col-md-6 col-sm-6">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-6">
 
           <button class="lead btn lead_btn" data-id={{i.id}} data-action="{% if request.user in i.likes.all %}un{% endif %}lead">
               <span class="lead_text">{% if request.user not in i.want_to_lead.all %}
               Chcę poprowadzić
               {% else %}
               Nie chcę prowadzić
-              {% endif %}</span><span>&nbsp;&nbsp;&nbsp;</span>
+              {% endif %}&nbsp;&nbsp;&nbsp;</span>
               <span class="lead_count">{{i.lead_count}}</span>
           </button>
-          <br><br>
 
           {% endif %}
 
-          </div>
-    </div>
+
+{% if request.user|has_group:"admin" and i.lead_count > 0 %}
+<a data-toggle="modal" data-target="#exampleModalLong{{forloop.counter}}"><img src="{% static 'images/icons/details.png' %}" style="width:25px; height:auto; padding-top: 5px;"></a>
+
+
+
+
+
+<div class="modal fade" id="exampleModalLong{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Lista chętnych ({{i.lead_count}})</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <br>
+        {% for j in i.want_to_lead.all %}
+        {% for k in cnt %}
+        {% if k.user == i.proposer %}
+          <a class="h6" href="{% url 'user_details' j.id %}"> {{ j.first_name }} {{ j.last_name }} ({{ j.email }})</a> <br>
+
+          <p class="font-italic" style="color: gray;">
+              &emsp; Zaproponowanych tematów: {{ k.subjects }} <br>
+              &emsp; Prowadzonych szkolen: {{ k.events }}
+          </p>
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width:20%;font-family: 'Oswald', sans-serif;">Zamknij</button>
       </div>
     </div>
+  </div>
+</div>
 
+
+
+
+
+{% endif %}
+
+          <br><br>
+
+          </div>
+
+    </div>
+
+      </div>
+
+    </div>
         <br>
 
-
-<!--          <div class="card-footer text-muted">-->
-<!--            Zaproponował: {{ i.proposer }}-->
-<!--          </div>-->
-<!--            <br/><br/>-->
-<!--        </div>-->
-
-
 {% endfor %}
+
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/jquery.datatables.min.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2.2.1/src/js.cookie.min.js"></script>

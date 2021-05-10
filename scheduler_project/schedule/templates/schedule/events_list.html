@@ -3,6 +3,132 @@
 {% load auth_extras %}
 {% block content %}
 
+<head>
+
+    <script>
+
+    let params = new URLSearchParams(document.location.search.substring(1));
+    url = window.location.href;
+
+    if (!params.has('show_historical') && !params.has('show_upcoming') && sessionStorage.getItem('show_historical') === null && !sessionStorage.getItem('show_upcoming')) {
+        var initial_show = "1";
+        sessionStorage.setItem("show_upcoming", initial_show);
+    }
+
+
+    if (params.has('sort_by') && params.get('sort_by') !== sessionStorage.getItem("sort_by")) {
+        var last_sorting_order = params.get('sort_by');
+        sessionStorage.setItem("sort_by", last_sorting_order);
+    }
+    else if (!params.has('sort_by') && sessionStorage.getItem("sort_by") != null) {
+
+        if (params.get('sort_by') !== sessionStorage.getItem("sort_by")) {
+
+            if (url.indexOf('?') > -1) {
+                    url += '&sort_by=' + sessionStorage.getItem("sort_by")
+            }
+            else {
+                    url += '?sort_by=' + sessionStorage.getItem("sort_by")
+            }
+        }
+    }
+
+    if (params.has('organizer') && params.get('organizer') !== sessionStorage.getItem("organizer")) {
+        var last_organizer = params.get('organizer');
+        sessionStorage.setItem("organizer", last_organizer);
+    } else if (!params.has('organizer') && sessionStorage.getItem("organizer") != null) {
+
+        if (params.get('organizer') !== sessionStorage.getItem("organizer")) {
+
+            if (url.indexOf('?') > -1) {
+                    url += '&organizer=' + sessionStorage.getItem("organizer")
+            }
+            else {
+                    url += '?organizer=' + sessionStorage.getItem("organizer")
+            }
+        }
+    }
+
+    if (params.has('title') && params.get('title') !== sessionStorage.getItem("title")) {
+        var last_title = params.get('title');
+        sessionStorage.setItem("title", last_title);
+    } else if (!params.has('title') && sessionStorage.getItem("title") != null) {
+
+        if (params.get('title') !== sessionStorage.getItem("title")) {
+
+            if (url.indexOf('?') > -1) {
+                    url += '&title=' + sessionStorage.getItem("title")
+            }
+            else {
+                    url += '?title=' + sessionStorage.getItem("title")
+            }
+        }
+    }
+
+    if (params.has('only_mine') && params.get('only_mine') !== sessionStorage.getItem("only_mine")) {
+        var last_only_mine = params.get('only_mine');
+        sessionStorage.setItem("only_mine", last_only_mine);
+    } else if (!params.has('only_mine') && sessionStorage.getItem("only_mine") != null) {
+
+        if (params.get('only_mine') !== sessionStorage.getItem("only_mine")) {
+
+            if (url.indexOf('?') > -1) {
+                    url += '&only_mine=' + sessionStorage.getItem("only_mine")
+            }
+            else {
+                    url += '?only_mine=' + sessionStorage.getItem("only_mine")
+            }
+
+        }
+    }
+
+    if (params.has('show_upcoming') && params.get('show_upcoming') !== sessionStorage.getItem("show_upcoming")) {
+        var last_show_upcoming = params.get('show_upcoming');
+        sessionStorage.setItem("show_upcoming", last_show_upcoming);
+
+    } else if (!params.has('show_upcoming') && sessionStorage.getItem("show_upcoming") != null) {
+
+        if (params.get('show_upcoming') !== sessionStorage.getItem("show_upcoming") && !params.has('show_historical')) {
+
+            if (url.indexOf('?') > -1) {
+                    url += '&show_upcoming=' + sessionStorage.getItem("show_upcoming")
+            }
+            else {
+                    url += '?show_upcoming=' + sessionStorage.getItem("show_upcoming")
+            }
+        }
+    }
+
+
+    if (params.has('show_historical') && params.get('show_historical') !== sessionStorage.getItem("show_historical")) {
+        var last_show_historical = params.get('show_historical');
+        sessionStorage.setItem("show_historical", last_show_historical);
+    } else if (!params.has('show_historical') && sessionStorage.getItem("show_historical") != null) {
+
+        if (params.get('show_historical') !== sessionStorage.getItem("show_historical")) {
+
+            if (url.indexOf('?') > -1) {
+                    url += '&show_historical=' + sessionStorage.getItem("show_historical")
+            }
+            else {
+                    url += '?show_historical=' + sessionStorage.getItem("show_historical")
+            }
+
+        }
+
+    }
+
+    if ( url !== window.location.href ) {
+        window.location.href = url;
+    }
+
+
+
+  </script>
+
+
+
+</head>
 
 
 <div class="container">
@@ -10,14 +136,97 @@
     <br>
     <center><h2>LISTA SZKOLEŃ</h2></center>
     <hr>
-    tekst
+    <div class="container">
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" style="max-width:40%;font-family: 'Oswald', sans-serif;" id="sortowanie" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sortowanie</button>
+    <div class="dropdown-menu" aria-labelledby="sortowanie">
+    <form method="GET" action="">
+        <button class="dropdown-item" type="submit" name="sort_by" id="sort_latest" value="latest">Od najbliższych</button>
+        <button class="dropdown-item" type="submit" name="sort_by" id="sort_oldest" value="oldest">Od najdalszych</button>
+        <button class="dropdown-item" type="submit" name="sort_by" id="sort_alphabetical" value="alphabetical">Alfabetycznie</button>
+    </form>
+</div>
+
+
+    <button class="btn btn-secondary" data-toggle="collapse" style="max-width:40%;font-family: 'Oswald', sans-serif;" data-target="#filters">Filtrowanie</button>
+    </div>
+        </div>
+
+
+
+    <div id="filters" class="collapse">
+        <hr>
+<div class="container">
+
+    <form method="GET" action="">
+
+    <div class="row">
+    <div class="col-lg-3 col-md-3 col-sm-4 col-12">
+        <p class="font-weight-bold">Wyświetlaj</p>
+        <div class="form-check">
+            <input type="checkbox" id="option"><label for="option">&nbsp;Wszystkie</label>
+        </div>
+        <div class="form-check">
+                &nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" class="subOption" name="show_historical" id="show_historical" value="1"> Historyczne</label>
+        </div>
+        <div class="form-check">
+                &nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" class="subOption" name="show_upcoming" id="show_upcoming" value="1"> Nadchodzące</label>
+        </div>
+
+</div>
+
+        {% if request.user.is_authenticated %}
+
+    <div class="col-lg-3 col-md-3 col-sm-4 col-12">
+        <p class="font-weight-bold">Tylko moje szkolenia</p>
+        <div class="form-check">
+            <label><input type="checkbox" name="only_mine" id="only_mine" value="1" onclick="setflag()"> Tak</label>
+        </div>
+    </div>
+
+        {% endif %}
+
+    <div class="col-lg-3 col-md-3 col-sm-4 col-12">
+        <p class="font-weight-bold">Wyszukaj po tytule</p>
+            <input type="text" class="form-control" name="title" id="title" placeholder="Wpisz tytuł" style="max-width: 90%">
+    </div>
+
+    <div class="col-lg-3 col-md-3 col-sm-4 col-12">
+        <p class="font-weight-bold">Wyszukaj po prowadzącym</p>
+        <div class="container">
+            <select class="selectOrganizer" id="organizer" name="organizer" >
+                <option value="" disabled selected>Wybierz z listy</option>
+                {% for i in fullnames %}
+                <option value="{{i.id}}">{{i.first_name}} {{i.last_name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <br><br>
+        <div class="container text-right">
+            <a class="btn btn-secondary" style="font-family: Oswald;" onclick="flush()">Resetuj</a>
+            <button type="submit" class="btn btn-secondary" style="font-family: Oswald;">Filtruj</button>
+        </div>
+
+    </div>
+    </div>
+
+
+        <div class="row">
+
+        </div>
+
+        </form>
+</div>
+
+    </div>
     <hr>
+
+
 
 <div class="row">
     {% for i in list %}
-        {% if i in upcoming_events %}
 
-        <!-- EVENTY NADCHODZĄCE /NIEODBYTE/ -->
 
             <div class="col-lg-3 col-md-4 col-sm-5">
                     <p style="text-align:center;"><img class="rounded-circle" src="/media/{{i.icon}}" alt="" width="140" height="140"></p>
@@ -39,31 +248,6 @@
                     <br>
                 </center>
             </div>
-        {% else %}
-
-        <!-- EVENTY ODBYTE  -->
-
-            <div class="col-lg-3 col-md-4 col-sm-5">
-                <p style="text-align:center;"><img class="rounded-circle" src="/media/{{i.icon}}" alt="" width="140" height="140"></p>
-                <center>
-                    <h3>{{i.title}}</h3>
-                    <h7>{{i.planning_date|date:"d.m.Y H:i"}} ({{i.planning_date|date:"l"}})</h7>
-                    <br>
-                    <h6>Prowadzi: {{i.organizer.first_name}} {{i.organizer.last_name}}</h6>
-                     <p style="text-align:center;"><a class="btn btn-secondary" href="{% url 'event_details' i.id %}" role="button">Szczegóły »</a>
-                         {% if not request.user|has_group:"admin" %}
-                            {% if request.user == i.organizer %}
-                                <a href="{% url 'event_edit' i.id %}"><img src="{% static 'images/icons/edit.png' %}" style="text-align:right; width:25px; height:25px;"></a>
-                            {% endif %}
-                         {% else %}
-                            <a href="{% url 'event_edit' i.id %}"><img src="{% static 'images/icons/edit.png' %}" style="text-align:right; width:25px; height:25px;"></a>
-
-                            <a href="{% url 'delete_event' i.id %}" onclick="return confirm('Czy na pewno chcesz usunąć spotkanie {{i.title}}? \nOperacji nie będzie można cofnąć!');"><img src="{% static 'images/icons/delete.png' %}" style="text-align:right; width:25px; height:25px;"></a>
-                         {% endif %}
-                    <br>
-                </center>
-            </div>
-        {% endif %}
     {% endfor %}
 </div>
 </div>
@@ -85,7 +269,7 @@
       {% if list.has_next %}
     <li class="page-item"><a class="page-link" href="{% url 'events_list' %}?page={{list.next_page_number}}">{{list.next_page_number}}</a></li>
     <li class="page-item">
-      <a class="page-link" href="{% url 'events_list' %}?page={{list.next_page_number}}">Następna strona</a>
+      <a class="page-link" href="{% url 'events_list' %}?page={{list.next_page_number}}" type="submit" id="next_page">Następna strona</a>
     </li>
       {% endif %}
   </ul>
@@ -93,19 +277,153 @@
 
 
 
+<script>
+
+    // OZNACZANIE TRYBU SORTOWANIA
+
+    if (params.has('sort_by')) {
+
+        var current = sessionStorage.getItem("sort_by")
+
+        if (current === "latest")
+        {
+            $("#sort_latest").addClass("active");
+        }
+        else if (current === "oldest")
+        {
+            $("#sort_oldest").addClass("active");
+        }
+        else if (current === "alphabetical")
+        {
+            $("#sort_alphabetical").addClass("active");
+        }
+    }
+    else {
+        $("#sort_latest").addClass("active");
+    }
+
+    // AUTOMATYCZNE ZAZNACZANIE ZAGNIEŻDŻONYCH CHECKBOXÓW
+
+    var checkboxes = document.querySelectorAll('input.subOption'),
+    checkall = document.getElementById('option');
+
+    for(var i=0; i<checkboxes.length; i++) {
+      checkboxes[i].onclick = function() {
+        var checkedCount = document.querySelectorAll('input.subOption:checked').length;
+
+        checkall.checked = checkedCount > 0;
+        checkall.indeterminate = checkedCount > 0 && checkedCount < checkboxes.length;
+      }
+    }
+
+    checkall.onclick = function() {
+      for(var i=0; i<checkboxes.length; i++) {
+        checkboxes[i].checked = this.checked;
+      }
+    };
+</script>
+<script>
+
+    $( document ).ready(function () {
+        if (params.has('organizer')) {
+            let element = document.getElementById('organizer');
+            element.value = params.get('organizer')
+        }
+
+        if (params.has('title')) {
+            let element = document.getElementById('title');
+            element.value = params.get('title')
+        }
+
+        if (params.has('only_mine') && params.get('only_mine') === "1") {
+            let element = document.getElementById('only_mine');
+            element.checked = true;
+        }
+
+        if (params.has('show_historical') && params.get('show_historical') === "1" && !params.has('show_upcoming')) {
+            let element = document.getElementById('show_historical');
+            element.checked = true;
+            element = document.getElementById('option');
+            element.indeterminate = true;
+        }
+
+        if (params.has('show_upcoming') && params.get('show_upcoming') === "1" && !params.has('show_historical')) {
+            let element = document.getElementById('show_upcoming');
+            element.checked = true;
+            element = document.getElementById('option');
+            element.indeterminate = true;
+        }
+
+        if (params.has('show_historical') && params.get('show_historical') === "1" && params.has('show_upcoming') && params.get('show_upcoming') === "1") {
+            let element = document.getElementById('show_historical');
+            element.checked = true;
+            element = document.getElementById('show_upcoming');
+            element.checked = true;
+            element = document.getElementById('option');
+            element.checked = true;
+        }
+    });
 
 
 
-<!--
-{% if list.has_previous %}
-    <a href="{% url 'events_list' %}?page={{list.previous_page_number}}">Poprzednia strona</a>
-{% endif %}
+</script>
 
-{% if list.has_next %}
-    <a href="{% url 'events_list' %}?page={{list.next_page_number}}">Następna strona</a>
-{% endif %}
--->
+<script src="{% static 'js/select2.min.js' %}"></script>
 
+<script>
+
+    $(document).ready(function() {
+    $('.selectOrganizer').select2();
+    });
+
+    $(document).ready(function() {
+    $('.selectTitle').select2();
+    });
+
+
+    if ( params.has('show_historical') && !params.has('show_upcoming') )
+    {
+        sessionStorage.removeItem('show_upcoming')
+    }
+
+    if ( !params.has('show_historical') && params.has('show_upcoming') )
+    {
+        sessionStorage.removeItem('show_historical')
+    }
+
+    function setflag() {
+        if (!document.getElementById('only_mine').checked) {
+            sessionStorage.removeItem('only_mine')
+        }
+    }
+
+
+    function flush() {
+    sessionStorage.clear();
+
+    let title = document.getElementById('title');
+    title.value = null;
+
+    $('select').val('').trigger('change.select2');
+
+    let organizer = document.getElementById('organizer');
+    organizer.value = null;
+
+    let show_upcoming = document.getElementById('show_upcoming');
+    show_upcoming.checked = true;
+
+    let show_historical = document.getElementById('show_historical');
+    show_historical.checked = false;
+
+    let only_mine = document.getElementById('only_mine');
+    only_mine.checked = false;
+
+    let option = document.getElementById('option');
+    option.indeterminate = true;
+
+    }
+
+</script>
 
 
 
