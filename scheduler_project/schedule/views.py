@@ -286,7 +286,15 @@ def subjects_list(request):
     #     events_cnt.append(Event.objects.filter(organizer=i.id).count())
     #     subjects_cnt.append(Subject.objects.filter(proposer=i.id).count())
 
-    context = {"all_subjects_list": all_subjects_list, "cnt": cnt}
+    pa2 = Paginator(all_subjects_list, 12)
+
+    page_num = request.GET.get('page', 1)
+    try:
+        page = pa2.page(page_num)
+    except EmptyPage:
+        page = pa2.page(1)
+
+    context = {"all_subjects_list": all_subjects_list, "cnt": cnt, 'list': page}
 
     return render(request, 'schedule/subjects_list_ajax.html', context)
 
