@@ -33,6 +33,10 @@
         <label for="title">Temat spotkania</label>
         <input class="form-control" id="title" name="title" placeholder="Wpisz temat spotkania" required type="text" value="{{i.title}}">
     </div>
+    {% else %}
+    <div class="form-group">
+        <label for="title">Temat spotkania: {{i.title}}</label>
+    </div>
     {% endif %}
 
     <div class="form-group">
@@ -53,6 +57,10 @@
                     {% endif %}
                 {% endfor %}
             </select>
+    </div>
+    {% else %}
+    <div class="form-group">
+        <label for="title">Organizator: {{i.organizer.first_name}} {{ i.organizer.last_name }}</label>
     </div>
     {% endif %}
 

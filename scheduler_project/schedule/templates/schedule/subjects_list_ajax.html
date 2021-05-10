@@ -25,7 +25,7 @@
 <div class="container" style="max-width:1000px;">
 
 
-{% for i in all_subjects_list %}
+{% for i in list %}
 <div class="card">
     <h4 class="card-header">{{i.title}}
     {% if request.user|has_group:"admin" %}
@@ -128,6 +128,26 @@
         <br>
 
 {% endfor %}
+
+    <div class="d-flex justify-content-center">
+      <ul class="pagination">
+          {% if list.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="{% url 'subjects_list' %}?page={{list.previous_page_number}}">Poprzednia strona</a>
+        </li>
+          <li class="page-item"><a class="page-link" href="{% url 'subjects_list' %}?page={{list.previous_page_number}}">{{list.previous_page_number}}</a></li>
+          {% endif %}
+        <li class="page-item active">
+          <a class="page-link disabled" href="#">{{list.number}} <span class="sr-only">{{list.number}}</span></a>
+        </li>
+          {% if list.has_next %}
+        <li class="page-item"><a class="page-link" href="{% url 'subjects_list' %}?page={{list.next_page_number}}">{{list.next_page_number}}</a></li>
+        <li class="page-item">
+          <a class="page-link" href="{% url 'subjects_list' %}?page={{list.next_page_number}}" type="submit" id="next_page">Następna strona</a>
+        </li>
+          {% endif %}
+      </ul>
+    </div>
 
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/jquery.datatables.min.js' %}"></script>
