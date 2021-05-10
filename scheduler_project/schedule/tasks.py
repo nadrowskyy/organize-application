@@ -1,4 +1,5 @@
 from celery import shared_task
+from scheduler_project.celery import app
 from django.core.mail import send_mail, get_connection, send_mass_mail
 from django.core.mail import EmailMessage
 from .models import EmailSet, Event, EventNotification
@@ -114,3 +115,22 @@ def send_notification_organizer():
 
     return None
 
+
+@app.task
+def send_mail_register(email):
+    user = User.objects.filter(email=email)[0]
+    mail_settings = EmailSet.objects.filter(pk=1)[0]
+    host = mail_settings.EMAIL_HOST
+    port = mail_settings.EMAIL_PORT
+    username = mail_settings.EMAIL_HOST_USER
+    password = mail_settings.EMAIL_HOST_PASSWORD
+    use_tls = bool(mail_settings.EMAIL_USE_TLS)
+    from_email = mail_settings.EMAIL_HEADER
+    email_body = render_to_string('schedule/register_message.html', context={'user': user})
+
+    with get_connection(host=host, port=port, username=username, password=password, use_tls=use_tls) as conn:
+        msg = EmailMessage(subject='Witaj w serwisie FFT!', body=email_body, from_email=from_email,
+                           to=[email], connection=conn)
+        msg.send(fail_silently=True)
+
+    return None
