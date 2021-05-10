@@ -13,11 +13,11 @@ app.conf.timezone = 'Europe/Warsaw'
 app.conf.beat_schedule = {
     'send-email-notifications-for-all': {
         'task': 'schedule.tasks.send_notification_all',
-        'schedule': 10
+        'schedule': crontab(minute=30)
     },
     'send-email-notifications-for-organizer': {
         'task': 'schedule.tasks.send_notification_organizer',
-        'schedule': 10
+        'schedule': crontab(minute=30)
     }
 }
 app.autodiscover_tasks()

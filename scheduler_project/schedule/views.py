@@ -31,6 +31,7 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.db.models import Q
 from django.core.mail import BadHeaderError, send_mail
+from .tasks import send_mail_register
 
 
 # @login_required(login_url='login') # nie pozwala na wejscie uzytkownika na strone glowna jesli nie jest zarejestrowany
@@ -104,6 +105,7 @@ def register_page(request):
                     user.groups.add(group)
                     user = authenticate(username=username, password=raw_password)
                     login(request, user)
+                    send_mail_register.delay(email)
                     return redirect('home')
                 else:
                     messages.error(request, "Błąd: adres e-mail znajduje się już w bazie")
