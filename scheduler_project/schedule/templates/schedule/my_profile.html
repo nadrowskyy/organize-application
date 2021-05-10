@@ -154,9 +154,10 @@
 				<errormsg style="text-align: center;">{{ field.errors }}</errormsg>
 			{% endif %}
  			{% endfor %}
+			<span id="message"></span>
 			</div>
 				<div id="pointer_not">
-			    <center><button id="password_ch" class="btn btn-secondary" style="width:20%;font-family: 'Oswald', sans-serif;" type="submit">Zmień hasło</button></center>
+			<center><button id="password_ch" class="btn btn-secondary" style="width:20%;font-family: 'Oswald', sans-serif;" type="submit">Zmień hasło</button></center>
 				</div>
 		</form>
 	</div>
@@ -223,12 +224,18 @@
 
 	console.log('Blabla')
 	$('#id_new_password1, #id_new_password2').on('keyup', function () {
+	 // var text = $('#message').text();
 	 if ($('#id_new_password1').val() === $('#id_new_password2').val()) {
 		 $('#password_ch').css("pointer-events", "");
 		 $('#pointer_not').css("cursor", "pointer");
+		 $('#message').html('Hasła są takie same').css('color', 'green');
+		 // if ( text === 'Hasła nie są takie same'){
+		 // 	$('#message').html('Hasła są takie same').css('color', 'green');
+		 // }
 	 } else
 		 $('#password_ch').css("pointer-events", "none");
 	 	 $('#pointer_not').css("cursor", "not-allowed");
+	 	 // $('#message').html('Hasła nie są takie same').css('color', 'red');
 	 });
 
 	});

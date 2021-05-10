@@ -72,6 +72,7 @@
         {% for message in messages %}
         <errormsg>{{ message }}</errormsg>
         {% endfor %}
+      <span id="message2"></span>
     </div>
       <br>
     <div class="form-floating">
@@ -85,12 +86,56 @@
       <label for="password2">Powtórz hasło</label>
         <errormsg>{{ form.password2.errors }}</errormsg>
     </div>
+    <span id="message"></span>
     <br>
-    <button class="w-100 btn btn-lg btn-primary" style="font-family: 'Oswald', sans-serif;" type="submit">Zarejestruj</button>
+    <div id="pointer_not">
+    <button id="submit" class="w-100 btn btn-lg btn-primary" style="font-family: 'Oswald', sans-serif;" type="submit">Zarejestruj</button>
+    </div>
+
 
     <p class="mt-5 mb-3 text-muted">&copy; SchedulerApp 2021</p>
   </form>
 </main>
+
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+	<script>
+	$(document).ready(function(){
+
+	console.log('Blabla')
+	$('#password1, #password2').on('keyup', function () {
+	 // var text = $('#message').text();
+	 if ($('#password1').val() === $('#password2').val()) {
+		 $('#submit').css("pointer-events", "");
+		 $('#pointer_not').css("cursor", "pointer");
+		 // $('#message').html('Hasła są takie same').css('color', 'green');
+		 // if ( text === 'Hasła nie są takie same'){
+		 // 	$('#message').html('Hasła są takie same').css('color', 'green');
+		 // }
+	 } else
+		 $('#submit').css("pointer-events", "none");
+	 	 $('#pointer_not').css("cursor", "not-allowed");
+	 	 // $('#message').html('Hasła nie są takie same').css('color', 'red');
+
+	 });
+
+	});
+</script>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script>
+  $(document).ready(function(){
+    $('#submit').click(function() {
+    var emailReg = /.+@(gmail|comarch)\.com$/;
+    var hasError = false;
+    if(!emailReg.test($('#email').val())) {
+       $('#message2').html('Wprowadź adres z domeny gmail lub comarch').css('color', 'red');
+       hasError = true;
+    } else
+       $('#submit').css("pointer-events", "");
+       $('#pointer_not').css("cursor", "pointer");
+       	 });
+    if(hasError === true) { return false; }
+	});
+</script>
 </body>
 </html>
 

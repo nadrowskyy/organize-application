@@ -4,7 +4,7 @@
     <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="-dodana funkcjonalność zmiany hasła&#10;-dodana walidacja, czy hasło stare i nowe nie są takie same &#10;-dodany widok szczegółów szkolenia">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/my_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/my_profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/register.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +108,8 @@
       <workItem from="1620479248538" duration="16647000" />
       <workItem from="1620520356211" duration="17000" />
       <workItem from="1620555935197" duration="7755000" />
-      <workItem from="1620672168906" duration="3566000" />
+      <workItem from="1620672168906" duration="11043000" />
+      <workItem from="1620684706142" duration="3370000" />
     </task>
     <task id="LOCAL-00001" summary="Test kom Bartka K">
       <created>1616441609819</created>
@@ -292,7 +293,14 @@
       <option name="project" value="LOCAL" />
       <updated>1620563470892</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="-dodana funkcjonalność zmiany hasła&#10;-dodana walidacja, czy hasło stare i nowe nie są takie same &#10;-dodany widok szczegółów szkolenia">
+      <created>1620676630594</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1620676630594</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -342,6 +350,7 @@
     <MESSAGE value="Sorting events on events list" />
     <MESSAGE value="Filter frontend (almost done)" />
     <MESSAGE value="Filtering events on events_list" />
-    <option name="LAST_COMMIT_MESSAGE" value="Filtering events on events_list" />
+    <MESSAGE value="-dodana funkcjonalność zmiany hasła&#10;-dodana walidacja, czy hasło stare i nowe nie są takie same &#10;-dodany widok szczegółów szkolenia" />
+    <option name="LAST_COMMIT_MESSAGE" value="-dodana funkcjonalność zmiany hasła&#10;-dodana walidacja, czy hasło stare i nowe nie są takie same &#10;-dodany widok szczegółów szkolenia" />
   </component>
 </project>
