@@ -152,7 +152,9 @@
 			{% endif %}
  			{% endfor %}
 			</div>
-			    <center><button class="btn btn-secondary" style="width:20%;font-family: 'Oswald', sans-serif;" type="submit">Zmień hasło</button></center>
+			<div id="pointer_not">
+			    <center><button id="password_ch" class="btn btn-secondary" style="width:20%;font-family: 'Oswald', sans-serif;" type="submit">Zmień hasło</button></center>
+			</div>
 		</form>
 	</div>
 	{% for message in messages %}
@@ -211,6 +213,26 @@
 
 		<br><br>
 
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+
+
+	<script>
+
+	$(document).ready(function(){
+
+	$('#id_new_password1, #id_new_password2').on('keyup', function () {
+	 // var text = $('#message').text();
+	 if ($('#id_new_password1').val() === $('#id_new_password2').val()) {
+		 $('#password_ch').css("pointer-events", "");
+		 $('#pointer_not').css("cursor", "pointer");
+
+	 } else
+		 $('#password_ch').css("pointer-events", "none");
+	 	 $('#pointer_not').css("cursor", "not-allowed");
+	 });
+
+	});
+</script>
 
 </body>
 </html>
