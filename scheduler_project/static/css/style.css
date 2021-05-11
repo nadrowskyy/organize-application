@@ -315,7 +315,10 @@ ul {
 	height: auto;
 }
 
-
+.btn-primary.disabled, .btn-primary:disabled
+{
+    background-color: gray;
+}
 
 .card-text {
 	padding-left: 10px;

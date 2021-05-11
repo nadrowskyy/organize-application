@@ -66,7 +66,10 @@
     </div>
       <br>
     <div class="form-floating">
-      <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+      <input type="email" class="form-control" id="email" name="email" placeholder="Email" onfocusout="validateEmail()" required>
+          <div id="validationServer03Feedback" class="invalid-feedback">
+      Wprowadź poprawny adres e-mail, zawierający suffix comarch.pl lub comarch.com
+    </div>
       <label for="email">Email</label>
         <errormsg>{{ form.email.errors }}</errormsg>
         {% for message in messages %}
@@ -81,16 +84,55 @@
     </div>
       <br>
     <div class="form-floating">
-      <input type="password" class="form-control" id="password2" name="password2" placeholder="Powtórz hasło" required>
+      <input type="password" class="form-control" id="password2" name="password2" placeholder="Powtórz hasło" onfocusout="matchPassword()" required>
       <label for="password2">Powtórz hasło</label>
+      <div id="validationServer04Feedback" class="invalid-feedback">
+      Wprowadzone hasła nie są takie same
+    </div>
         <errormsg>{{ form.password2.errors }}</errormsg>
     </div>
     <br>
-    <button class="w-100 btn btn-lg btn-primary" style="font-family: 'Oswald', sans-serif;" type="submit">Zarejestruj</button>
+    <button class="w-100 btn btn-lg btn-primary" style="font-family: 'Oswald', sans-serif;" type="submit" id="submitButton">Zarejestruj</button>
 
     <p class="mt-5 mb-3 text-muted">&copy; SchedulerApp 2021</p>
   </form>
 </main>
+
+<script>
+  function matchPassword() {
+    var password1 = document.getElementById("password1").value;
+    var password2 = document.getElementById("password2").value;
+
+    if(password1 !== password2)
+    {
+      document.getElementById('submitButton').disabled = true;
+      document.getElementById('password1').classList.add("is-invalid");
+      document.getElementById('password2').classList.add("is-invalid");
+    } else {
+      document.getElementById('submitButton').disabled = false;
+      document.getElementById('password1').classList.remove("is-invalid");
+      document.getElementById('password2').classList.remove("is-invalid");
+    }
+  }
+
+  function validateEmail() {
+   var email =  document.getElementById('email').value;
+
+   email = email.toString();
+
+   if (/^([A-Za-z0-9_\-\.])+\@([gmail|comarch])+\.(com|pl)$/.test(email)) {
+     document.getElementById('submitButton').disabled = false;
+     document.getElementById('email').classList.remove("is-invalid");
+   }
+   else {
+     document.getElementById('submitButton').disabled = true;
+     document.getElementById('email').classList.add("is-invalid");
+   }
+
+
+  }
+</script>
+
 </body>
 </html>
 
