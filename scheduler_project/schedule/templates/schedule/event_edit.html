@@ -44,6 +44,11 @@
         <textarea class="form-control" name="description" placeholder="Opisz spotkanie" required rows="4">{{i.description}}</textarea>
     </div>
 
+    <div class="form-group">
+        <label for="link">Link do spotkania</label>
+        <input class="form-control" id="link" name="link" placeholder="Dodaj link do spotkania" type="text" value="{{i.link}}">
+    </div>
+
     {% if request.user|has_group:"admin" %}
     <div class="form-group">
 

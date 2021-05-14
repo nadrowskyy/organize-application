@@ -30,6 +30,7 @@ class Event(models.Model):
     duration = models.IntegerField()
     icon = models.FileField(upload_to='icons/', default='icons/default.png')
     attachment = models.FileField(upload_to='attachments/', blank=True)
+    link = models.CharField(max_length=150, blank=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
@@ -93,3 +94,6 @@ class Comment(models.Model):
     content = models.TextField(max_length=1000)
     if_edited = models.BooleanField(default=False)
     if_deleted = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ('-created',)

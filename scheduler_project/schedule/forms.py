@@ -6,6 +6,7 @@ from django.db import models
 from .models import Event, Subject, Comment
 import datetime
 from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
+from .decorators import unauthenticated_user, allowed_users
 
 
 class UserFullnameChoiceField(forms.ModelChoiceField):
@@ -25,10 +26,11 @@ class CreateEvent(ModelForm):
     planning_date = forms.DateTimeField(initial=datetime.date.today)
     icon = forms.FileField(required=False)
     attachment = forms.FileField(required=False)
+    link = forms.CharField(required=False)
 
     class Meta:
         model = Event
-        fields = ('title', 'description', 'organizer', 'planning_date', 'duration', 'icon', 'attachment')
+        fields = ('title', 'description', 'organizer', 'planning_date', 'duration', 'icon', 'attachment', 'link')
 
 
 class SubjectForm(ModelForm):
@@ -53,7 +55,7 @@ class ChangePassword(PasswordChangeForm):
                 )
         return new_pass
 
-
+#@allowed_users(allowed_roles=['admin', 'employee'])
 class AddComment(ModelForm):
     class Meta:
         model = Comment
