@@ -51,6 +51,14 @@
                     </div>
                     <div>
                         <br>
+                        {% if i.link %}
+                        <a href="{{i.link}}" style="font-size:25px">Link do szkolenia</a>
+                        {% else %}
+                        <h5>Link do szkolenia nie jest jeszcze dostępny</h5>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <br>
                         {% if i.attachment %}
                         <a href="/media/{{i.attachment}}">Pobierz załącznik</a>
                         <br>
@@ -76,6 +84,7 @@
     <div class="row height d-flex justify-content-center align-items-center">
 
         <div class="col-md-9">
+            {% if request.user.is_authenticated %}
             <div class="card">
                 <form action="" method="POST">
                 {% csrf_token %}
@@ -86,6 +95,7 @@
                 </div>
                 </form>
                 </div>
+            {% endif %}
             <div class="card">
                 {% for comment in comments %}
                     <div class="mt-2">

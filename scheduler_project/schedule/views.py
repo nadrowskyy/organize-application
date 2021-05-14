@@ -588,8 +588,9 @@ def event_edit(request, index):
             organizer = request.POST.get('organizer')
             planning_date = request.POST.get('planning_date')
             duration = request.POST.get('duration')
+            link = request.POST.get('link')
 
-            update_event = Event.objects.filter(id=index).update(title=title, description=description, organizer=organizer, planning_date=planning_date, duration=duration)
+            update_event = Event.objects.filter(id=index).update(title=title, description=description, organizer=organizer, planning_date=planning_date, duration=duration, link=link)
 
             new_icon = request.FILES.get('icon')
             new_attachment = request.FILES.get('attachment')
@@ -630,8 +631,9 @@ def event_edit(request, index):
                     description = request.POST.get('description')
                     planning_date = request.POST.get('planning_date')
                     duration = request.POST.get('duration')
+                    link = request.POST.get('link')
 
-                    update_event = Event.objects.filter(id=index).update(description=description, planning_date=planning_date, duration=duration)
+                    update_event = Event.objects.filter(id=index).update(description=description, planning_date=planning_date, duration=duration, link=link)
 
                     new_icon = request.FILES.get('icon')
                     new_attachment = request.FILES.get('attachment')
@@ -702,7 +704,7 @@ def my_profile(request):
     return render(request, 'schedule/my_profile.html', context)
 
 
-@allowed_users(allowed_roles=['admin', 'employee'])
+#@allowed_users(allowed_roles=['admin', 'employee'])
 def event_details(request, index):
 
     if request.method == 'GET':
