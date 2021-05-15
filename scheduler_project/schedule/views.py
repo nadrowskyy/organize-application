@@ -623,13 +623,18 @@ def event_edit(request, index):
             context = {'not_permitted': True}
             return render(request, 'schedule/event_edit.html', context)
 
+        if event[0].planning_date < datetime.today():
+            past = True
+        else:
+            past = False
+
         for i in event:
 
             if i.organizer == request.user:
 
                 if request.method == 'GET':
 
-                    context = {'event': event}
+                    context = {'event': event, 'past': past}
                     return render(request, 'schedule/event_edit.html', context)
 
                 if request.method == 'POST':

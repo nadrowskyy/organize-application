@@ -35,7 +35,8 @@
     </div>
     {% else %}
     <div class="form-group">
-        <label for="title">Temat spotkania: {{i.title}}</label>
+        <label for="title">Temat spotkania</label>
+        <input class="form-control" id="title" name="title" placeholder="Wpisz temat spotkania" required type="text" value="{{i.title}}" readonly="True">
     </div>
     {% endif %}
 
