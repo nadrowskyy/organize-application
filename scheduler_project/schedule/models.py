@@ -30,7 +30,6 @@ class Event(models.Model):
     icon = models.FileField(upload_to='icons/', default='icons/default.png')
     attachment = models.FileField(upload_to='attachments/', blank=True)
     link = models.CharField(max_length=150, blank=True)
-    poll = models.ForeignKey(Polls, blank=True, default=None)
 
     def save (self, *args, **kwargs):
         self.slug = slugify(self.title)
