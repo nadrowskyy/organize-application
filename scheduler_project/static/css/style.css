@@ -82,21 +82,23 @@
   border-radius: 4px;
   color: #fff;
   background-color: #c3a26d;
-  border-color: #c3a26d;
+
 }
-.like_btn:focus,
-.like_btn.focus {
+.like_btn:active,
+.like_btn.active {
   color: #fff;
   background-color: green;
-  border-color: #122b40;
+  border-color: darkgreen;
 }
+
 .like_btn:hover {
   color: #fff;
   background-color: green;
-  border-color: #204d74;
+  border-color: darkgreen;
 }
+
+
 .like_btn .badge {
-  color: #337ab7;
   background-color: #fff;
 }
 .like_btn.disabled {
@@ -129,19 +131,20 @@
   background-color: #c3a26d;
   border-color: #c3a26d;
 }
-.lead_btn:focus,
-.lead_btn.focus {
+
+.lead_btn:active,
+.lead_btn.active {
   color: #fff;
   background-color: green;
   border-color: #122b40;
 }
+
 .lead_btn:hover {
   color: #fff;
   background-color: green;
   border-color: #204d74;
 }
 .lead_btn .badge {
-  color: #337ab7;
   background-color: #fff;
 
 }

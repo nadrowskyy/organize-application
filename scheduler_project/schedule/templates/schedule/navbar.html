@@ -54,7 +54,7 @@
 				<button class="btn navbar-btn"><a href="{% url 'create_event' %}"><span>Utwórz spotkanie</span></a></button>
                 {% endif %}
 
-				{% if request.user|has_group:"employee" %}
+				{% if request.user|has_group:"employee" or request.user|has_group:"admin" %}
 				<button class="btn navbar-btn"><a href="{% url 'suggest_event' %}"><span>Zgłoś temat</span></a></button>
                 {% endif %}
 

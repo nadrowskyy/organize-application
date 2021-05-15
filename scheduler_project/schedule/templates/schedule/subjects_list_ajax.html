@@ -51,11 +51,14 @@
         {% if user.is_authenticated %}
 
         <div style="font-family: 'Oswald', sans-serif;">
-        <button class="like btn like_btn " data-id={{i.id}} data-action="{% if request.user in i.likes.all %}un{% endif %}like">
-            <span class="like_text">{% if request.user not in i.likes.all %}
-            Podoba mi się
+        <button class="like btn like_btn" data-id={{i.id}} data-action="{% if request.user in i.likes.all %}un{% endif %}like" id="like_btn{{i.id}}">
+            <span class="like_text">
+            {% if request.user not in i.likes.all %}
+                Podoba mi się
+                <script>$(document).ready(function () { document.getElementById('like_btn{{i.id}}').classList.remove('active'); });</script>
             {% else %}
-            Nie podoba mi się
+                Nie podoba mi się
+                <script>$(document).ready(function () { document.getElementById('like_btn{{i.id}}').classList.add('active'); });</script>
             {% endif %}&nbsp;&nbsp;&nbsp;</span>
             <span class="like_count">{{i.like_count}}</span>
         </button>
@@ -65,11 +68,14 @@
         </div>
           <div class="col-lg-6 col-md-6 col-sm-6 col-6">
 
-          <button class="lead btn lead_btn" data-id={{i.id}} data-action="{% if request.user in i.likes.all %}un{% endif %}lead">
-              <span class="lead_text">{% if request.user not in i.want_to_lead.all %}
-              Chcę poprowadzić
+          <button class="lead btn lead_btn" data-id={{i.id}} data-action="{% if request.user in i.likes.all %}un{% endif %}lead" id="lead_btn{{i.id}}">
+              <span class="lead_text">
+              {% if request.user not in i.want_to_lead.all %}
+                Chcę poprowadzić
+                  <script>$(document).ready(function () { document.getElementById('lead_btn{{i.id}}').classList.remove('active'); });</script>
               {% else %}
-              Nie chcę prowadzić
+                Nie chcę prowadzić
+                  <script>$(document).ready(function () { document.getElementById('lead_btn{{i.id}}').classList.add('active'); });</script>
               {% endif %}&nbsp;&nbsp;&nbsp;</span>
               <span class="lead_count">{{i.lead_count}}</span>
           </button>
@@ -155,6 +161,7 @@
           {% endif %}
       </ul>
     </div>
+</div>
 
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/jquery.datatables.min.js' %}"></script>
@@ -191,9 +198,11 @@
                     $(this).attr('data-action',json['action'])
                     if (json['action'] === 'unlike') {
                         $(this).find('.like_text').get(0).innerHTML = 'Podoba mi się'
+                        document.getElementById('like_btn'+postid).classList.remove('active');
                     }
                     else {
                         $(this).find('.like_text').get(0).innerHTML = 'Nie podoba mi się'
+                        document.getElementById('like_btn'+postid).classList.add('active');
                     }
                 },
                 error: function(xhr, errmsg, err) {}
@@ -217,9 +226,11 @@
                     $(this).attr('data-action',json['action'])
                     if (json['action'] === 'unlead') {
                         $(this).find('.lead_text').get(0).innerHTML = 'Chcę poprowadzić'
+                        document.getElementById('lead_btn'+postid).classList.remove('active');
                     }
                     else {
                         $(this).find('.lead_text').get(0).innerHTML = 'Nie chcę prowadzić'
+                        document.getElementById('lead_btn'+postid).classList.add('active');
                     }
                 },
                 error: function(xhr, errmsg, err) {}
@@ -227,6 +238,12 @@
         });
     });
   </script>
+
+    <script>
+
+
+
+    </script>
 
 {% endblock %}
 </body>
