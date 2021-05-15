@@ -20,6 +20,10 @@
 
 <form action="" enctype="multipart/form-data" method="POST">
     {% csrf_token %}
+    <input type="radio" onchange="hideB(this)" name="aorb" id="radio_publish" checked>
+    <label for="radio_publish">Publikuj</label>
+    <input type="radio" onchange="hideA(this)" name="aorb" id="radio_draft">
+    <label for="radio_draft">Szkic</label>
     <div class="form-group">
         <label for="title">Temat spotkania</label>
         <input class="form-control" id="title" name="title" placeholder="Wpisz temat spotkania" required type="text">
@@ -47,7 +51,7 @@ md
     </div>
 
     <div class="row">
-    <div class="col-md-12 col-lg-6">
+    <div id="planning_date_div" class="col-md-12 col-lg-6">
       <label for="planning_date">Data i godzina rozpoczęcia</label>
         <input class="form-control" id="planning_date" min="{% now 'Y-m-d\TH:i' %}" name="planning_date" required type="datetime-local"
                value="{% now 'Y-m-d\TH:i' %}">
@@ -58,6 +62,20 @@ md
     </div>
   </div>
 <br>
+    <div class="row">
+
+        <div id="poll" class="col-md-12 col-lg-6" style="display: none">
+
+            <label for="poll_avaible">Czas dostępności anikiety (dni)</label>
+                <input class="form-control" id="poll_avaible" min="1" name="poll_avaible" placeholder="1" required type="number">
+            ANKIETA - od kiedy trwa, do kiedy trwa
+            jeśli szkolenie jest szkicem to tylko tytuł pola i prowadzący są required, zwrócić uwagę na pola required
+            pod kątem bezpieczeństwa - weryfikacja powinna przebiegać w backendzie a NIE frontendzie
+
+            https://mdbootstrap.com/snippets/jquery/mateusz-lubianka/1877753?action=forum_snippet#html-tab-view
+        </div>
+
+    </div>
     <div class="row">
     <div class="col-md-12 col-lg-6">
     <div class="form-group">
@@ -87,13 +105,33 @@ md
 
     <script src="{% static 'js/jquery-3.2.1.slim.min.js' %}"></script>
     <script src="{% static 'js/popper.min.js' %}"></script>
-    <script src="{% static 'js/select2.min.js' %}"></script><script>
+    <script src="{% static 'js/select2.min.js' %}"></script>
+<script>
 
     $(document).ready(function() {
     $('.selectOrganizer').select2();
     });
 
 </script>
+
+<script>
+    function hideA(x) {
+   if (x.checked) {
+     document.getElementById("poll").style.display = "block";
+     document.getElementById("planning_date_div").style.display = "none";
+     console.log('11');
+   }
+ }
+
+ function hideB(x) {
+   if (x.checked) {
+     document.getElementById("poll").style.display = "none";
+     document.getElementById("planning_date_div").style.display = "inline-block";
+     console.log('22');
+   }
+ }
+</script>
+
 
 </body>
 </html>
