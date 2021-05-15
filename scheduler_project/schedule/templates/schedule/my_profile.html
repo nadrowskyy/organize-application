@@ -100,8 +100,12 @@
 						  <br>
 						<div class="form-group">
 							<label for="email">E-mail:</label>
-							<input class="form-control" type="email" name="email" id="email_" value="{{request.user.email}}" required>
+							<input class="form-control" type="email" name="email" id="email_" value="{{request.user.email}}" onfocusout="validateEmail()" required>
+							<div id="validationServer03Feedback" class="invalid-feedback">
+						  Wprowadź poprawny adres e-mail, zawierający suffix comarch.pl lub comarch.com
+						  </div>
 						</div>
+
 					  </div>
 						</div>
 
@@ -110,7 +114,7 @@
 					  <div class="modal-footer">
 						  <input class="form-control" type="text" name="change_profile" value="1" hidden>
 						<button type="button" class="btn btn-secondary" style="width:20%;font-family: 'Oswald', sans-serif;" data-dismiss="modal">Anuluj</button>
-						<button class="btn btn-secondary" style="width:20%;font-family: 'Oswald', sans-serif;" type="submit">Zapisz</button>
+						<button class="btn btn-secondary" id="submitButton" onclick="validateEmail()" style="width:20%;font-family: 'Oswald', sans-serif;" type="submit">Zapisz</button>
 				  </div>
 						</form>
 					  </div>
@@ -202,7 +206,14 @@
 <div class="row gutters" >
 	<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 		<div class="card">
-    		<h4 class="card-header">{{i.title}}</h4>
+    		<h4 class="card-header">{{i.title}}
+			    {% if request.user|has_group:"admin" %}
+    &nbsp;
+    <a href="{% url 'subject_edit' i.id %}"><img src="{% static 'images/icons/edit.png' %}" style="text-align:right; width:25px; height:25px;"></a>
+    &nbsp;
+    <a href="{% url 'delete_subject' i.id %}" onclick="return confirm('Czy na pewno chcesz usunąć temat {{i.title}}? Operacji nie będzie można cofnąć!');"><img src="{% static 'images/icons/delete.png' %}" style="text-align:right; width:25px; height:25px;"></a>
+    {% endif %}
+			</h4>
     		<br>
        		 <h5 class="card-text" id="like_count">Opis: {{ i.description }}</h5><br>
 		</div>
@@ -233,6 +244,24 @@
 
 	});
 </script>
+
+	<script>
+
+		function validateEmail() {
+			var email = document.getElementById('email_').value;
+
+			email = email.toString();
+
+			if ( /^([A-Za-z0-9_\-\.])+\@(comarch)+\.(com|pl)$/.test(email) || /^([A-Za-z0-9_\-\.])+\@(gmail)+\.(com)$/.test(email)) {
+				document.getElementById('submitButton').disabled = false;
+				document.getElementById('email_').classList.remove("is-invalid");
+			} else {
+				document.getElementById('submitButton').disabled = true;
+				document.getElementById('email_').classList.add("is-invalid");
+			}
+		}
+
+	</script>
 
 </body>
 </html>
