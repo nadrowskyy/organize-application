@@ -10,7 +10,6 @@ from django.contrib.auth import get_user_model
 
 
 class Event(models.Model):
-
     STATUS_CHOICES = (
         ('draft', 'Szkic'),
         ('publish', 'Opublikowano')
@@ -31,8 +30,9 @@ class Event(models.Model):
     icon = models.FileField(upload_to='icons/', default='icons/default.png')
     attachment = models.FileField(upload_to='attachments/', blank=True)
     link = models.CharField(max_length=150, blank=True)
+    poll = models.ForeignKey(Polls, blank=True, default=None)
 
-    def save(self, *args, **kwargs):
+    def save (self, *args, **kwargs):
         self.slug = slugify(self.title)
         super(Event, self).save(*args, **kwargs)
 
@@ -41,8 +41,20 @@ class Event(models.Model):
     class Meta:
         ordering = ('planning_date',)
 
-    def __str__(self):
+    def __str__ (self):
         return self.title
+
+
+class Polls(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='event', default=None, blank=True)
+    if_active = models.BooleanField(default=False)
+    days_active = models.IntegerField(blank=True)
+
+
+class Dates(models.Model):
+    poll = models.ForeignKey(Polls, on_delete=models.CASCADE)
+    date = models.DateField(blank=True)
+    users = models.ManyToManyField(User, related_name='users', default=None, blank=True)
 
 
 class Subject(models.Model):
@@ -56,12 +68,11 @@ class Subject(models.Model):
     want_to_lead = models.ManyToManyField(User, related_name='want_to_lead', default=None, blank=True)
     lead_count = models.IntegerField(default='0')
 
-
-    def save(self, *args, **kwargs):
+    def save (self, *args, **kwargs):
         self.slug = slugify(self.title)
         super(Subject, self).save(*args, **kwargs)
 
-    def __str__(self):
+    def __str__ (self):
         return self.title
 
 
