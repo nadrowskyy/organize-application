@@ -276,7 +276,15 @@ def subjects_list(request):
             }
             cnt.append(temp)
 
-    print(cnt)
+    seen = set()
+    new_l = []
+    for d in cnt:
+        t = tuple(d.items())
+        if t not in seen:
+            seen.add(t)
+            new_l.append(d)
+
+    print(new_l)
 
     # user = get_user_model()
     # users = user.objects.all()
@@ -296,7 +304,7 @@ def subjects_list(request):
     except EmptyPage:
         page = pa.page(1)
 
-    context = {"list": page, "cnt": cnt}
+    context = {"list": page, "cnt": new_l}
 
     return render(request, 'schedule/subjects_list_ajax.html', context)
 

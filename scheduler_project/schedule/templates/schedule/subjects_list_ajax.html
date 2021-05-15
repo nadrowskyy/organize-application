@@ -24,6 +24,11 @@
 
 <div class="container" style="max-width:1000px;">
 
+{% if not list %}
+    <br>
+    <errormsg>Nie znaleziono tematów</errormsg>
+{% endif %}
+
 
 {% for i in list %}
 <div class="card">
@@ -137,9 +142,11 @@
         </li>
           <li class="page-item"><a class="page-link" href="{% url 'subjects_list' %}?page={{list.previous_page_number}}">{{list.previous_page_number}}</a></li>
           {% endif %}
+          {% if list %}
         <li class="page-item active">
           <a class="page-link disabled" href="#">{{list.number}} <span class="sr-only">{{list.number}}</span></a>
         </li>
+          {% endif %}
           {% if list.has_next %}
         <li class="page-item"><a class="page-link" href="{% url 'subjects_list' %}?page={{list.next_page_number}}">{{list.next_page_number}}</a></li>
         <li class="page-item">

@@ -7,14 +7,21 @@
 
     <script>
 
+
+
+    // ODCZYTANIE PARAMETRÓW REQUESTA Z LINKU
+
     let params = new URLSearchParams(document.location.search.substring(1));
     url = window.location.href;
+
+    // JEŚLI USER WCHODZI PIERWSZY RAZ NA STRONĘ SZKOLEŃ, TO AUTOMATYCZNIE USTALANE JEST FILTROWANIE PO NADCHODZĄCYCH
 
     if (!params.has('show_historical') && !params.has('show_upcoming') && sessionStorage.getItem('show_historical') === null && !sessionStorage.getItem('show_upcoming')) {
         var initial_show = "1";
         sessionStorage.setItem("show_upcoming", initial_show);
     }
 
+    // TRYB SORTOWANIA
 
     if (params.has('sort_by') && params.get('sort_by') !== sessionStorage.getItem("sort_by")) {
         var last_sorting_order = params.get('sort_by');
@@ -33,6 +40,8 @@
         }
     }
 
+    // FILTROWANIE PO ORGANIZATORZE
+
     if (params.has('organizer') && params.get('organizer') !== sessionStorage.getItem("organizer")) {
         var last_organizer = params.get('organizer');
         sessionStorage.setItem("organizer", last_organizer);
@@ -49,6 +58,8 @@
         }
     }
 
+    // FILTROWANIE PO TYTULE
+
     if (params.has('title') && params.get('title') !== sessionStorage.getItem("title")) {
         var last_title = params.get('title');
         sessionStorage.setItem("title", last_title);
@@ -64,6 +75,8 @@
             }
         }
     }
+
+    // FILTROWANIE 'TYLKO MOJE'
 
     if (params.has('only_mine') && params.get('only_mine') !== sessionStorage.getItem("only_mine")) {
         var last_only_mine = params.get('only_mine');
@@ -82,6 +95,8 @@
         }
     }
 
+    // FILTROWANIE 'NADCHODZĄCE'
+
     if (params.has('show_upcoming') && params.get('show_upcoming') !== sessionStorage.getItem("show_upcoming")) {
         var last_show_upcoming = params.get('show_upcoming');
         sessionStorage.setItem("show_upcoming", last_show_upcoming);
@@ -99,6 +114,7 @@
         }
     }
 
+    // FILTROWANIE 'HISTORYCZNE'
 
     if (params.has('show_historical') && params.get('show_historical') !== sessionStorage.getItem("show_historical")) {
         var last_show_historical = params.get('show_historical');
@@ -117,6 +133,8 @@
         }
 
     }
+
+    // PRZEŁADOWANIE STRONY Z USTAWIONYMI PARAMETRAMI
 
     if ( url !== window.location.href ) {
         window.location.href = url;
@@ -222,7 +240,11 @@
     </div>
     <hr>
 
+{% if not list %}
+    <br>
+    <errormsg>Nie znaleziono szkoleń</errormsg>
 
+{% endif %}
 
 <div class="row">
     {% for i in list %}
@@ -263,9 +285,11 @@
     </li>
       <li class="page-item"><a class="page-link" href="{% url 'events_list' %}?page={{list.previous_page_number}}">{{list.previous_page_number}}</a></li>
       {% endif %}
+      {% if list %}
     <li class="page-item active">
       <a class="page-link disabled" href="#">{{list.number}} <span class="sr-only">{{list.number}}</span></a>
     </li>
+      {% endif %}
       {% if list.has_next %}
     <li class="page-item"><a class="page-link" href="{% url 'events_list' %}?page={{list.next_page_number}}">{{list.next_page_number}}</a></li>
     <li class="page-item">
@@ -279,7 +303,7 @@
 
 <script>
 
-    // OZNACZANIE TRYBU SORTOWANIA
+    // OZNACZANIE TRYBU SORTOWANIA (podświetla wybraną opcję na dropdownie pod przyciskiem)
 
     if (params.has('sort_by')) {
 
@@ -323,6 +347,8 @@
     };
 </script>
 <script>
+
+    // WYPEŁNIANIE ELEMENTÓW FORMULARZA, JEŚLI SĄ WŁĄCZONE FILTRY
 
     $( document ).ready(function () {
         if (params.has('organizer')) {
@@ -372,14 +398,17 @@
 
 <script>
 
+    // WYWOŁANIE SKRYPTU DLA PRZESZUKIWANEJ LISTY ORGANIZATORÓW (SELECT2)
+
     $(document).ready(function() {
     $('.selectOrganizer').select2();
     });
 
-    $(document).ready(function() {
+/*    $(document).ready(function() {
     $('.selectTitle').select2();
-    });
+    });*/
 
+    // USUWANIE SPRZECZNYCH ZMIENNYCH Z PAMIĘCI SESJI, JEŚLI USER NIE WYBRAŁ ICH JEDNOCZEŚNIE
 
     if ( params.has('show_historical') && !params.has('show_upcoming') )
     {
@@ -391,12 +420,15 @@
         sessionStorage.removeItem('show_historical')
     }
 
+    // USUWA Z PAMIĘCI ZMIENNĄ ONLY MINE PO ODZNACZENIU CHECKBOXA
+
     function setflag() {
         if (!document.getElementById('only_mine').checked) {
             sessionStorage.removeItem('only_mine')
         }
     }
 
+    // FUNKCJA RESETUJĄCA FILROWANIE - USTAWIA POLA DO WARTOŚCI DOMYŚLNYCH I CZYŚCI PAMIĘĆ SESJI
 
     function flush() {
     sessionStorage.clear();
