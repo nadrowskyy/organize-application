@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "comarch-scheduler",
+  "private_key_id": "283479230e5cb4bf38f77774228ca70609a99a38",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDnS9ehNHT5k+VM\nCwQjNLMlNERKenYw0ay79D2ulM4sKqMQil00j3Y0YVi0UzlIvuxV8PLjR+FIQxUe\nq8zew/picLUDTpVTCOevds7o251JJKOF2pQ7dPhRe8x7nKngIgrgU70RsMIJ9YMu\nCqSN5yepIVEf3EIhX/ljhgP2EKVR3Dq3Nr/QI03m/p0YAmkddmVcHPywHLejYSO2\n42i4mt5BjKqow/J3l4j2+7Iv35n9Ysf/N3hHdSoFhV2p9MQ/OhGYLWaMIXAwS2kk\nQizeWUF3Mzc1x8r3ctgXaYV3D3jEtxrVKeWMKqk1EuHrnHRKMFMDteAQF/B8IqlV\nZUuMqv8/AgMBAAECggEAIJgBdPLCy9Yu6SkMQOHQ9PHemxg9cOJl6GlMtT4Rp7ZX\nxaGZ7NQ39hMEawo8olG1VY8KIJklLV0MAYci7FQgWUrvVzNLEP507QxdsAFysrdP\ntociKGwdVMOQrJgGdafrxxzwdykPeakiqT76sryGTEEpAMe10foyV0ywC4w2SnNC\ndi33c3kK3lrr/8z2aaSelZRmJo58CSC5dgmGPgS0wf3i6dyVtBj1+C+5byiAcc9S\nQk2mJj8kWcYHAlmezLBDB6Ti1k57B26CF4eeHLdsPCzKoYFKTTPAS7NQgbuYAA39\naf56oqSJdsy+qGUou4DCogYppjVPjSsaE85/Q9tlsQKBgQD96a4MAHgqX7nNcRat\nU+PUEttQmaFjb6x2SazZU6NvDKfYAz375boTm77XRakwAb8Fiz+eFhclWocDelvr\nA97N/R/BdRvcvHlD9S04tlTz2frlgSTPY8UvJBiFilIOXbhewt17YEAHiAZzWx2X\nduofpzJeApjLVfWJEZ52EtF3AwKBgQDpMpHEiE30VE602tc7zF8O4zPbWdwcBAs9\nH14ZW8F9LSuAU4Yo9rDPOoTAe5zuo/WyZ41lekVi+1CHTZJ/Im9Sijh3tSKNW0Ys\noVTsDYxX3PJZ2NJ7Jb2oq4PQMxIwjU3Jiy1xlnmpb/eaDXqsY9Y/HHpQbJ9OeZzb\nZwnivBAUFQKBgQDhE3nS7b+XYE+lyy9c6dY1MZnzcpvbNyzblieAZmGjmMZX91fE\nqTkvFIow7XEyOvoHgg4cplxSIlM4RAii5UVlt5GkvZi7LN8Z3IX/lbDskDeVpcrp\ng/lQ9mA+UAS4817xsS7/pKxdgLinHQe4MhMLh/xf1VF4PXRv0oxzAe9n3QKBgHaS\nYvHmSJTiRT7KQ0RBj1f3iIeQ8k1AdSJ4D5WfRQvL6uGOFpo/jPlhjNx+PfZNYgF7\ni7a8bAl/NZwGgmWocagrZbjgXhg3/79zrMV1whVu3791cthxATWBOD2lqisLvjCr\nVsj5tRTFPMWU8voyrV5bsYmxIXN6fJpGkw05iIddAoGBAManLrDfoyem2UY0MU6J\n0Py5SZQvrv3uEz7wyrfQKaektjTuOlmzCXGZpBS+C6LBP3kS2bJB0A90GJgnpOu1\nazEy4uGYbWW+3l2KIJHdHS2IdUdV3VeVAkRkRrn7VNIOBRX+Hb15gdhfDgq7GXTb\nBmfoL0AmNL7QVPJISQUREFoV\n-----END PRIVATE KEY-----\n",
+  "client_email": "storage-service@comarch-scheduler.iam.gserviceaccount.com",
+  "client_id": "105305967805745921434",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/storage-service%40comarch-scheduler.iam.gserviceaccount.com"
+}

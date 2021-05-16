@@ -12,20 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-runtime: python
-env: flex
-entrypoint: python manage.py runserver 0.0.0.0:80
+from scheduler_project.wsgi import application
 
-runtime_config:
-  python_version: 3.9
-
-# This sample incurs costs to run on the App Engine flexible environment. 
-# The settings below are to reduce costs during testing and are not appropriate
-# for production use. For more information, see:
-# https://cloud.google.com/appengine/docs/flexible/python/configuring-your-app-with-app-yaml
-manual_scaling:
-  instances: 1
-resources:
-  cpu: 1
-  memory_gb: 0.5
-  disk_size_gb: 10
+# App Engine by default looks for a main.py file at the root of the app
+# directory with a WSGI-compatible object called app.
+# This file imports the WSGI-compatible object of your Django app,
+# application from mysite/wsgi.py and renames it app so it is discoverable by
+# App Engine without additional configuration.
+# Alternatively, you can add a custom entrypoint field in your app.yaml:
+# entrypoint: gunicorn -b :$PORT mysite.wsgi
+app = application

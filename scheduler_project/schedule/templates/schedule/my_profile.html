@@ -182,7 +182,7 @@
 <div class="row gutters" >
 	<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 		<div class="card">
-			<h4 class="card-header"><img class="rounded-circle" src="/media/{{i.icon}}" alt="" width="50" height="50">&nbsp;&nbsp;<a class="h4" href="{% url 'event_details' i.id %}">{{i.title}}</a>
+			<h4 class="card-header"><img class="rounded-circle" src="{{MEDIA_URL}}{{i.icon}}" alt="" width="50" height="50">&nbsp;&nbsp;<a class="h4" href="{% url 'event_details' i.id %}">{{i.title}}</a>
 				&nbsp;
 			<a href="{% url 'event_edit' i.id %}"><img src="{% static 'images/icons/edit.png' %}" style="text-align:right; width:25px; height:25px;"></a>
 				{% if request.user|has_group:"admin" %}

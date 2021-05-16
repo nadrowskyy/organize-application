@@ -24,7 +24,7 @@
 
             <div class="badge-light">
                 <br>
-                    <p style="text-align:center;"><img class="rounded-circle" src="/media/{{i.icon}}" alt="" width="140" height="140"></p>
+                    <p style="text-align:center;"><img class="rounded-circle" src="{{MEDIA_URL}}{{i.icon}}" alt="" width="140" height="140"></p>
                 <center>
                     <div class="baige_background">
                         <br>
@@ -60,7 +60,7 @@
                     <div>
                         <br>
                         {% if i.attachment %}
-                        <a href="/media/{{i.attachment}}">Pobierz załącznik</a>
+                        <a href="{{MEDIA_URL}}{{i.attachment}}">Pobierz załącznik</a>
                         <br>
                         {% endif %}
                         <br>
