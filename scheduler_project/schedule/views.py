@@ -259,6 +259,7 @@ def user_page(request):
 
 def subjects_list(request):
 
+    title = request.GET.get('title')
     all_subjects_list = Subject.objects.all()
 
     cnt = []
@@ -286,15 +287,32 @@ def subjects_list(request):
 
     print(new_l)
 
-    # user = get_user_model()
-    # users = user.objects.all()
-    #
-    # events_cnt = []
-    # subjects_cnt = []
-    #
-    # for i in users:
-    #     events_cnt.append(Event.objects.filter(organizer=i.id).count())
-    #     subjects_cnt.append(Subject.objects.filter(proposer=i.id).count())
+    if title and title != '':
+        all_subjects_list = all_subjects_list.filter(title__icontains=title)
+
+
+    sort_by = request.GET.get('sort_by')
+
+    if sort_by == 'alphabetical':
+        all_subjects_list = all_subjects_list.order_by('title')
+    elif sort_by == 'create_date':
+        all_subjects_list =all_subjects_list.order_by('-created')
+    elif sort_by == 'like_count':
+        all_subjects_list =all_subjects_list.order_by('like_count')
+    elif sort_by == 'like_count-':
+        all_subjects_list =all_subjects_list.order_by('-like_count')
+    elif sort_by == 'lead_count':
+        all_subjects_list =all_subjects_list.order_by('lead_count')
+    elif sort_by == 'lead_count-':
+        all_subjects_list =all_subjects_list.order_by('-lead_count')
+    else:
+        all_subjects_list = all_subjects_list.all()
+
+
+
+
+
+
 
     pa = Paginator(all_subjects_list, 5)
 

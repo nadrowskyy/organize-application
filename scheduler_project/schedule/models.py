@@ -64,6 +64,9 @@ class Subject(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        ordering = ('-created',)
+
 
 class EmailSet(models.Model):
     delay_leader = models.IntegerField(default=3)

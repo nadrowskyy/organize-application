@@ -4,19 +4,119 @@
 {% load auth_extras %}
 {% block content %}
 
+
 <head>
-    <meta charset="UTF-8">
-    <title>Lista tematów</title>
+
+    <script>
+
+    let params = new URLSearchParams(document.location.search.substring(1));
+    url = window.location.href;
+
+    if (params.has('sort_by') && params.get('sort_by') !== sessionStorage.getItem("sort_by")) {
+        var last_sorting_order = params.get('sort_by');
+        sessionStorage.setItem("sort_by", last_sorting_order);
+    }
+    else if (!params.has('sort_by') && sessionStorage.getItem("sort_by") != null) {
+
+        if (params.get('sort_by') !== sessionStorage.getItem("sort_by")) {
+
+            if (url.indexOf('?') > -1) {
+                    url += '&sort_by=' + sessionStorage.getItem("sort_by")
+            }
+            else {
+                    url += '?sort_by=' + sessionStorage.getItem("sort_by")
+            }
+        }
+    }
+
+    if (params.has('title') && params.get('title') !== sessionStorage.getItem("title2")) {
+        var last_title2 = params.get('title');
+        sessionStorage.setItem("title2", last_title2);
+    } else if (!params.has('title') && sessionStorage.getItem("title2") != null) {
+
+        if (params.get('title') !== sessionStorage.getItem("title2")) {
+
+            if (url.indexOf('?') > -1) {
+                    url += '&title=' + sessionStorage.getItem("title2")
+            }
+            else {
+                    url += '?title=' + sessionStorage.getItem("title2")
+            }
+        }
+    }
+
+    if ( url !== window.location.href ) {
+        window.location.href = url;
+    }
+
+  </script>
+
 
 
 </head>
 
 
-<body>
-<br>
-<h2 style="text-align:center;">LISTA TEMATÓW</h2>
 
-<br>
+
+<body>
+
+<div class="container">
+    <br>
+    <center><h2>LISTA TEMATÓW</h2></center>
+    <hr>
+    <div class="container">
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" style="max-width:40%;font-family: 'Oswald', sans-serif;" id="sortowanie" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sortowanie</button>
+        <div class="dropdown-menu" aria-labelledby="sortowanie">
+            <form method="GET" action="">
+                <button class="dropdown-item" type="submit" name="sort_by" id="sort_alphabetical" value="alphabetical">Alfabetycznie</button>
+                <button class="dropdown-item" type="submit" name="sort_by" id="sort_create_date" value="create_date">Data utworzenia</button>
+                <button class="dropdown-item" type="submit" name="sort_by" id="sort_like_count" value="like_count">Polubienia rosnąco</button>
+                <button class="dropdown-item" type="submit" name="sort_by" id="sort_like_count-" value="like_count-">Polubienia malejąco</button>
+                <button class="dropdown-item" type="submit" name="sort_by" id="sort_lead_count" value="lead_count">Chętni rosnąco</button>
+                <button class="dropdown-item" type="submit" name="sort_by" id="sort_lead_count-" value="lead_count-">Chętni malejąco</button>
+            </form>
+        </div>
+    </div>
+
+    <button class="btn btn-secondary" data-toggle="collapse" style="max-width:40%;font-family: 'Oswald', sans-serif;" data-target="#filters">Wyszukiwanie</button>
+    </div>
+        </div>
+
+
+
+    <div id="filters" class="collapse">
+        <hr>
+<div class="container">
+
+    <form method="GET" action="">
+
+</div>
+
+    <div class="container">
+    <div class="col-lg-3 col-md-3 col-sm-4 col-12">
+        <input type="text" class="form-control" name="title" id="title" placeholder="Wyszukaj temat" style="max-width: 90%">
+    </div>
+    </div>
+
+        <br><br>
+        <div class="container text-right">
+            <a class="btn btn-secondary" style="font-family: Oswald;" onclick="flush()">Wyczyść hasło wyszukiwania</a>
+            <button type="submit" class="btn btn-secondary" style="font-family: Oswald;">Szukaj</button>
+        </div>
+    </div>
+    </div>
+
+
+        <div class="row">
+
+        </div>
+
+        </form>
+</div>
+
+    </div>
+    <hr>
 
 {% for message in messages %}
     <errormsg style="text-align:center;">{{ message }}</errormsg><br><br>
@@ -163,10 +263,11 @@
     </div>
 </div>
 
-    <script src="{% static 'js/jquery.min.js' %}"></script>
-    <script src="{% static 'js/jquery.datatables.min.js' %}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2.2.1/src/js.cookie.min.js"></script>
-  <script>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/jquery.datatables.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2.2.1/src/js.cookie.min.js"></script>
+<script src="{% static 'js/select2.min.js' %}"></script>
+<script>
     var csrftoken = Cookies.get('csrftoken');
     function csrfSafeMethod(method) {
       // these HTTP methods do not require CSRF protection
@@ -237,13 +338,76 @@
             });
         });
     });
-  </script>
-
-    <script>
+</script>
 
 
+<script>
 
-    </script>
+
+    if (params.has('sort_by')) {
+
+        var current = sessionStorage.getItem("sort_by")
+
+        if (current === "alphabetical")
+        {
+            $("#sort_alphabetical").addClass("active");
+        }
+        else if (current === "like_count")
+        {
+            $("#sort_like_count").addClass("active");
+        }
+        else if (current === "like_count-")
+        {
+            $("#sort_like_count-").addClass("active");
+        }
+        else if (current === "lead_count")
+        {
+            $("#sort_lead_count").addClass("active");
+        }
+        else if (current === "lead_count-")
+        {
+            $("#sort_lead_count-").addClass("active");
+        }
+
+    }
+    else {
+        $("#sort_create_date").addClass("active");
+    }
+</script>
+
+
+<script>
+
+    // WYPEŁNIANIE ELEMENTÓW FORMULARZA, JEŚLI SĄ WŁĄCZONE FILTRY
+
+    $( document ).ready(function () {
+        if (params.has('title2')) {
+            let element = document.getElementById('title2');
+            element.value = params.get('title2')
+        }
+    });
+
+
+
+</script>
+
+
+
+<script>
+    $(document).ready(function() {
+    $('.selectTitle').select2();
+    });
+
+    function flush() {
+    sessionStorage.clear();
+
+    let title2 = document.getElementById('title2');
+    title2.value = null;
+
+    $('select').val('').trigger('change.select2');
+
+
+</script>
 
 {% endblock %}
 </body>
