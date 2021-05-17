@@ -1,0 +1,180 @@
+{% extends 'schedule/base.html' %}
+{% load static %}
+{% load auth_extras %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edycja szkicu</title>
+</head>
+<body>
+
+<br>
+<h2 style="text-align:center;">EDYCJA SZKICU</h2>
+<br>
+
+<div class="container" style="max-width:800px;">
+
+    {% if not_permitted %}
+
+    <errormsg>Nie masz uprawnień do edycji tego wydarzenia!</errormsg>
+
+    {% else %}
+
+<form action="" enctype="multipart/form-data" method="POST">
+    {% csrf_token %}
+
+    {% for i in event %}
+
+    {% if request.user|has_group:"admin" %}
+    <div class="form-group">
+        <label for="title">Temat spotkania</label>
+        <input class="form-control" id="title" name="title" placeholder="Wpisz temat spotkania" required type="text" value="{{i.title}}">
+    </div>
+    {% else %}
+    <div class="form-group">
+        <label for="title">Temat spotkania</label>
+        <input class="form-control" id="title" name="title" placeholder="Wpisz temat spotkania" required type="text" value="{{i.title}}" readonly="True">
+    </div>
+    {% endif %}
+
+    <div class="form-group">
+        <label for="description">Opis spotkania</label>
+        <textarea class="form-control" id="description" name="description" placeholder="Opisz spotkanie" required rows="4">{{i.description}}</textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="link">Link do spotkania</label>
+        <input class="form-control" id="link" name="link" placeholder="Dodaj link do spotkania" type="text" value="{{i.link}}">
+    </div>
+
+    {% if request.user|has_group:"admin" %}
+    <div class="form-group">
+
+        <label for="organizer">Organizator</label><br>
+            <select class="selectOrganizer" id="organizer" name="organizer" style="width: 100%;" value="{{i.organizer}}">
+
+                <option value="{{i.organizer.id}}">{{i.organizer.first_name}} {{i.organizer.last_name}} ({{i.organizer.username}})</option>
+                {% for j in users %}
+                    {% if not j.id == i.organizer.id %}
+                        <option value="{{j.id}}">{{j.first_name}} {{j.last_name}} ({{j.username}})</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+    </div>
+    {% else %}
+    <div class="form-group">
+        <label for="title">Organizator: {{i.organizer.first_name}} {{ i.organizer.last_name }}</label>
+    </div>
+    {% endif %}
+
+    <div class="row">
+    <div class="col-md-12 col-lg-6">
+      <label for="planning_date">Data i godzina rozpoczęcia</label>
+
+        <input class="form-control" id="planning_date" min="{% now 'Y-m-d\TH:i' %}" name="planning_date" type="datetime-local">
+    </div>
+    <div class="col-md-12 col-lg-6">
+     <label for="duration">Czas trwania (min.)</label>
+        <input class="form-control" id="duration" min="1" name="duration" placeholder="1" type="number" value="{{i.duration}}">
+    </div>
+  </div>
+    <br>
+
+
+    <div class="row">
+        SEKCJA ANKIETY, MOŻNA JAKOŚ WYRÓŻNIĆ, NP. W RAMCE
+        <div class="col-md-12 col-lg-6">
+            <label>Od kiedy ankieta ma być dostępna</label>
+                {{ poll.since_active }}
+        </div>
+        <div class="col-md-12 col-lg-6">
+        <label for="poll_avaible">Czas dostępności ankiety (dni)</label>
+            <input class="form-control" id="poll_avaible" min="1" name="poll_avaible" placeholder="1" type="number" value="{{ poll.days_active }}">
+        </div>
+        </div>
+
+        <div id="plan_container" class="row">
+        {% for date in dates %}
+        <div class="col-md-12 col-lg-6">
+            <label>Data i godzina rozpoczęcia</label>
+            <input class="form-control" name="planning_date_draft" type="datetime-local"
+                       value="{{ date.date|date:'Y-m-d\TH:i' }}">
+        </div>
+        {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-lg-6">
+                <label>Czy ankieta ma być aktywna</label><br>
+                    <input  id="active_true" name="if_active" type="radio" value="True" {% if poll.if_active == 1 %} checked {% endif %}>
+                    <label  for="active_true">Tak</label>
+                    <input  id="active_false" name="if_active" type="radio" value="False" {% if poll.if_active == 0 %} checked {% endif %}>
+                    <label  for="active_false">Nie</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-lg-6">
+                <button id="add_date" class="btn btn-secondary" style="font-family: 'Oswald', sans-serif;" type="button">Dodaj termin</button>
+            </div>
+        </div>
+
+
+
+
+    <div class="row">
+    <div class="col-md-12 col-lg-6">
+    <div class="form-group">
+        <div class="form-group files">
+            <label>Zaktualizuj ikonę (opcjonalnie)</label>
+            <input accept="image/*" id="id_icon" name="icon" type="file">
+        </div>
+    </div>
+    </div>
+
+    <div class="col-md-12 col-lg-6">
+    <div class="form-group">
+              <div class="form-group files">
+                <label>Zaktualizuj załącznik (opcjonalnie)</label>
+                <input accept="application/pdf" id="id_attachment" name="attachment" type="file">
+              </div>
+    </div>
+    </div>
+    </div>
+    <center><button name="pub_button" class="btn btn-secondary" style="width:20%;font-family: 'Oswald', sans-serif;" type="submit" value="save">Zapisz</button></center>
+    <center><button name="pub_button" class="btn btn-secondary" style="width:20%;font-family: 'Oswald', sans-serif;" type="submit" value="publish">Opublikuj</button></center>
+    {% endfor %}
+</form>
+    <br>
+    <br>
+    {% endif %}
+</div>
+
+    <script src="{% static 'js/jquery-3.2.1.slim.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/select2.min.js' %}"></script><script>
+
+    $(document).ready(function() {
+    $('.selectOrganizer').select2();
+    });
+
+</script>
+<script>
+
+    $(document).ready(function() {
+    $('.selectOrganizer').select2();
+    $('#add_date').click(function () {
+       $('#plan_container').append('<div class="col-md-12 col-lg-6"> <input class="form-control" name="planning_date_draft" type="datetime-local"><button class="remove_date btn btn-secondary" style="font-family: \'Oswald\', sans-serif;" type="button">USUN</button></div>')
+    });
+    });
+
+    $(document).on('click', '.remove_date', function () {
+     $(this).closest('div').remove();
+ });
+
+</script>
+</body>
+</html>
+
+{% endblock %}

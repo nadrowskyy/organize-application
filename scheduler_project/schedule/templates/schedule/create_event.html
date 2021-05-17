@@ -53,17 +53,17 @@ md
     <div class="row">
     <div id="planning_date_div" class="col-md-12 col-lg-6">
       <label for="planning_date">Data i godzina rozpoczęcia</label>
-        <input class="form-control" id="planning_date" min="{% now 'Y-m-d\TH:i' %}" name="planning_date" required type="datetime-local"
+        <input class="form-control" id="planning_date" min="{% now 'Y-m-d\TH:i' %}" name="planning_date" type="datetime-local"
                value="{% now 'Y-m-d\TH:i' %}">
     </div>
     <div class="col-md-12 col-lg-6">
      <label for="duration">Czas trwania (min.)</label>
-        <input class="form-control" id="duration" min="1" name="duration" placeholder="1" required type="number">
+        <input class="form-control" id="duration" min="1" name="duration" placeholder="1" type="number">
     </div>
   </div>
 <br>
     <div id="poll" style="display:none;">
-
+    SEKCJA ANKIETY, MOŻNA JAKOŚ WYRÓŻNIĆ, NP. W RAMCE
         <div class="row">
         <div class="col-md-12 col-lg-6">
             <label for="poll_avaible_since">Od kiedy ankieta ma być dostępna</label>
@@ -82,9 +82,19 @@ md
                        value="{% now 'Y-m-d\TH:i' %}">
         </div>
         <div class="col-md-12 col-lg-6">
-            <input class="form-control" min="{% now 'Y-m-d\TH:i' %}" name="planning_date_draft" type="datetime-local"
+            <input class="form-control" min="{% now 'Y-m-d\TH:i' %}" id="planning_date_draft_2" name="planning_date_draft" type="datetime-local"
                        value="{% now 'Y-m-d\TH:i' %}">
         </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12 col-lg-6">
+                <label>Czy ankieta ma być aktywna</label><br>
+                    <input  id="active_true" name="if_active" type="radio" value="True" checked>
+                    <label  for="active_true">Tak</label>
+                    <input  id="active_false" name="if_active" type="radio" value="False">
+                    <label  for="active_false">Nie</label>
+            </div>
         </div>
         <br>
         <div class="row">
@@ -92,11 +102,6 @@ md
                 <button id="add_date" class="btn btn-secondary" style="font-family: 'Oswald', sans-serif;" type="button">Dodaj termin</button>
             </div>
         </div>
-            ANKIETA - od kiedy trwa, do kiedy trwa
-            jeśli szkolenie jest szkicem to tylko tytuł pola i prowadzący są required, zwrócić uwagę na pola required
-            pod kątem bezpieczeństwa - weryfikacja powinna przebiegać w backendzie a NIE frontendzie
-
-            https://mdbootstrap.com/snippets/jquery/mateusz-lubianka/1877753?action=forum_snippet#html-tab-view
         </div>
 
     <div class="row">
@@ -148,9 +153,13 @@ md
    }
         $('#radio_publish').prop('checked',false);
      $('#radio_draft').prop('checked',true);
-   $('#description').prop('required',false);
-   $('#duration').prop('required',false);
-   $('#planning_date').prop('required',false);
+   // $('#description').prop('required',false);
+   // $('#duration').prop('required',false);
+   // $('#planning_date').prop('required',false);
+   // $('#poll_avaible_since').prop('required',true);
+   // $('#poll_avaible').prop('required',true);
+   // $('#planning_date_draft_1').prop('required',true);
+   // $('#planning_date_draft_2').prop('required',true);
  }
 
  function hideB(x) {
@@ -159,9 +168,14 @@ md
      document.getElementById("planning_date_div").style.display = "inline-block";
 
    }
-   $('#description').prop('required',true);
-   $('#duration').prop('required',true);
-   $('#planning_date').prop('required',true);
+   // $('#description').prop('required',true);
+   // $('#duration').prop('required',true);
+   // $('#planning_date').prop('required',true);
+   // $('#poll_avaible_since').prop('required',false);
+   // $('#poll_avaible').prop('required',false);
+   // $('#planning_date_draft_1').prop('required',false);
+   // $('#planning_date_draft_2').prop('required',false);
+
  }
 
  $(document).on('click', '.remove_date', function () {

@@ -128,7 +128,7 @@ def events_list(request):
     User = get_user_model()
     fullnames = User.objects.all()
 
-    all_events_list = Event.objects
+    all_events_list = Event.objects.filter(status='publish')
 
     sort_by = request.GET.get('sort_by')
 
@@ -197,23 +197,152 @@ def events_list(request):
     #               })
 
 
+def drafts_list(request):
+    all_events_list = Event.objects.filter(status='draft')
+    # wyroznic wydarzenia ktore dla ktorych ankieta jest nieaktywna
+    context = {'list': all_events_list}
+    return render(request, 'schedule/drafts_list.html', context)
+
+
+def draft_edit(request, index):
+
+    if request.user.groups.all()[0].name == 'admin':
+
+        if request.method == 'GET':
+            event = Event.objects.filter(id=index)
+            user = get_user_model()
+            users = user.objects.all()
+            poll = Polls.objects.filter(event=index)[0]
+            dates = Dates.objects.filter(poll=poll)
+            for el in dates:
+                print(el.date)
+            print('poll')
+            print(poll)
+
+            if event[0].planning_date < datetime.today():
+                past = True
+            else:
+                past = False
+
+            context = {'event': event, 'users': users, 'permitted': True, 'past': past, 'poll': poll, 'dates': dates}
+            return render(request, 'schedule/draft_edit.html', context)
+
+        if request.method == 'POST':
+
+
+            print('POSSSST PSOT')
+            print(request.POST.get('pub_button'))
+            if request.POST.get('pub_button') == 'save':
+                pass
+            if request.POST.get('pub_button') == 'publish' or request.POST.get('planning_date') == '':
+                if request.POST.get('planning_date') == '' or request.POST.get('duration') == '':
+                    # jesli te pola nie sa wypelnione wyswietlamy error message, raczej ciezko to zrobic na froncie
+                    # wiec przerzucamy na backend
+                    return render(request, 'schedule/draft_edit.html')
+                selected_event = Event.objects.get(id=index)
+
+                title = request.POST.get('title')
+                description = request.POST.get('description')
+                organizer = request.POST.get('organizer')
+                planning_date = request.POST.get('planning_date')
+                duration = request.POST.get('duration')
+                link = request.POST.get('link')
+
+                update_event = Event.objects.filter(id=index).update(title=title, description=description,
+                                                    organizer=organizer, planning_date=planning_date,
+                                                    duration=duration, link=link, status='publish',
+                                                    publish=timezone.now())
+
+                new_icon = request.FILES.get('icon')
+                new_attachment = request.FILES.get('attachment')
+
+                if new_icon:
+                    selected_event.icon = new_icon
+                    selected_event.save()
+
+                if new_attachment:
+                    selected_event.attachment = new_attachment
+                    selected_event.save()
+
+                return redirect('events_list')
+
+        return render(request, 'schedule/draft_edit.html')
+
+    elif request.user.groups.all()[0].name == 'employee':
+
+        try:
+            event = Event.objects.filter(id=index)
+        except:
+            context = {'not_permitted': True}
+            return render(request, 'schedule/draft_edit.html', context)
+
+        if event[0].planning_date < datetime.today():
+            past = True
+        else:
+            past = False
+
+        for i in event:
+
+            if i.organizer == request.user:
+
+                if request.method == 'GET':
+                    context = {'event': event, 'past': past}
+                    return render(request, 'schedule/draft_edit.html', context)
+
+                if request.method == 'POST':
+
+                    selected_event = Event.objects.get(id=index)
+
+                    description = request.POST.get('description')
+                    planning_date = request.POST.get('planning_date')
+                    duration = request.POST.get('duration')
+                    link = request.POST.get('link')
+
+                    update_event = Event.objects.filter(id=index).update(description=description,
+                                                                         planning_date=planning_date, duration=duration,
+                                                                         link=link)
+
+                    new_icon = request.FILES.get('icon')
+                    new_attachment = request.FILES.get('attachment')
+
+                    if new_icon:
+                        selected_event.icon = new_icon
+                        selected_event.save()
+
+                    if new_attachment:
+                        selected_event.attachment = new_attachment
+                        selected_event.save()
+
+                    return redirect('events_list')
+
+            else:
+                context = {'not_permitted': True}
+                return render(request, 'schedule/draft_edit.html', context)
+
+
 # pozwala wejsc na strone tworzenia eventów tylko adminom
 @allowed_users(allowed_roles=['admin'])
 def create_event(request):
     User = get_user_model()
     fullnames = User.objects.all()
-    form = CreateEvent()
     if request.method == 'POST':
-        if request.POST.get('publish') is True:
+        print('312')
+        print('publish')
+        print(type(request.POST.get('publish')))
+        if request.POST.get('publish') == 'True':
             print('publish')
             form = CreateEvent(request.POST, request.FILES)
+            print('non valid')
             if form.is_valid():
+                print('valid')
                 form.save()
                 return redirect('events_list')
-        else:
-            print('draft')
+        print('323')
+        if request.POST.get('publish') == 'False':
+            print('324')
             form = CreateEvent(request.POST, request.FILES)
             if form.is_valid():
+                print('327')
                 draft_form = form.save(commit=False)
                 draft_form.status = 'draft'
                 draft_form.save()
@@ -221,7 +350,11 @@ def create_event(request):
                 event = get_object_or_404(Event, pk=draft_form.pk)
                 since_active = request.POST.get('poll_avaible_since')
                 days_active = request.POST.get('poll_avaible')
-                poll_form = Polls(event=event, since_active=since_active, days_active=days_active)
+                if request.POST.get('if_active') == 'True':
+                    if_active = True
+                else:
+                    if_active = False
+                poll_form = Polls(event=event, since_active=since_active, days_active=days_active, if_active=if_active)
                 poll_form.save()
 
                 poll = get_object_or_404(Polls, pk=poll_form.pk)
@@ -229,9 +362,10 @@ def create_event(request):
                 for el in planning_dates:
                     dates_form = Dates(poll=poll, date=el)
                     dates_form.save()
+                print('343')
     else:
         form = CreateEvent()
-
+    form = CreateEvent()
     context = {'form': form, 'fullnames': fullnames}
 
     return render(request, 'schedule/create_event.html', context)
