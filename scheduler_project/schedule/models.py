@@ -17,21 +17,21 @@ class Event(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=250,
                             unique_for_date='planning_date', default=None)
-    description = models.TextField(verbose_name='opis wydarzenia')
+    description = models.TextField(verbose_name='opis wydarzenia', blank=True)
     created = models.DateTimeField(auto_now_add=True)
-    planning_date = models.DateTimeField()
-    publish = models.DateTimeField(default=timezone.now)
+    planning_date = models.DateTimeField(blank=True)
+    publish = models.DateTimeField(default=timezone.now, blank=True)
     organizer = models.ForeignKey(User, on_delete=models.CASCADE)
     want_to_listen = models.ManyToManyField(User, related_name='want_to_listen', default=None, blank=True)
     status = models.CharField(max_length=15,
                               choices=STATUS_CHOICES,
                               default='publish')
-    duration = models.IntegerField()
+    duration = models.IntegerField(blank=True)
     icon = models.FileField(upload_to='icons/', default='icons/default.png')
     attachment = models.FileField(upload_to='attachments/', blank=True)
     link = models.CharField(max_length=150, blank=True)
 
-    def save (self, *args, **kwargs):
+    def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super(Event, self).save(*args, **kwargs)
 
@@ -46,13 +46,14 @@ class Event(models.Model):
 
 class Polls(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='event', default=None, blank=True)
-    if_active = models.BooleanField(default=False)
+    if_active = models.BooleanField(default=True)
+    since_active = models.DateTimeField(blank=False)
     days_active = models.IntegerField(blank=True)
 
 
 class Dates(models.Model):
     poll = models.ForeignKey(Polls, on_delete=models.CASCADE)
-    date = models.DateField(blank=True)
+    date = models.DateTimeField(blank=True)
     users = models.ManyToManyField(User, related_name='users', default=None, blank=True)
 
 

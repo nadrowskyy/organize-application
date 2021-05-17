@@ -11,7 +11,7 @@ from django.contrib.auth.models import Group
 from .decorators import unauthenticated_user, allowed_users
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from .models import Event, Subject, User, EmailSet, Comment
+from .models import Event, Subject, User, EmailSet, Comment, Polls, Dates
 from django.core.mail import send_mail, get_connection, send_mass_mail
 from django.core.mail import EmailMessage
 from django.utils import timezone
@@ -202,13 +202,33 @@ def events_list(request):
 def create_event(request):
     User = get_user_model()
     fullnames = User.objects.all()
-
+    form = CreateEvent()
     if request.method == 'POST':
-        form = CreateEvent(request.POST, request.FILES)
+        if request.POST.get('publish') is True:
+            print('publish')
+            form = CreateEvent(request.POST, request.FILES)
+            if form.is_valid():
+                form.save()
+                return redirect('events_list')
+        else:
+            print('draft')
+            form = CreateEvent(request.POST, request.FILES)
+            if form.is_valid():
+                draft_form = form.save(commit=False)
+                draft_form.status = 'draft'
+                draft_form.save()
 
-        if form.is_valid():
-            form.save()
-            return redirect('events_list')
+                event = get_object_or_404(Event, pk=draft_form.pk)
+                since_active = request.POST.get('poll_avaible_since')
+                days_active = request.POST.get('poll_avaible')
+                poll_form = Polls(event=event, since_active=since_active, days_active=days_active)
+                poll_form.save()
+
+                poll = get_object_or_404(Polls, pk=poll_form.pk)
+                planning_dates = request.POST.getlist('planning_date_draft')
+                for el in planning_dates:
+                    dates_form = Dates(poll=poll, date=el)
+                    dates_form.save()
     else:
         form = CreateEvent()
 
