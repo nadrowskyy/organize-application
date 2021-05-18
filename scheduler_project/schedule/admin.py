@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Event, Subject
+from .models import Event, Subject, Polls, Dates
 
 
 @admin.register(Event)
@@ -18,3 +18,10 @@ class SubjectAdmin(admin.ModelAdmin):
     list_display = ('title', 'proposer', 'created', 'like_count', 'lead_count')
     prepopulated_fields = {'slug': ('title',)}
     raw_id_fields = ('proposer',)
+
+@admin.register(Polls)
+class PolesAdmin(admin.ModelAdmin):
+    pass
+@admin.register(Dates)
+class DatesAdmin(admin.ModelAdmin):
+    pass

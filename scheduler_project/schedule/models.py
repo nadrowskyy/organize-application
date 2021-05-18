@@ -10,7 +10,6 @@ from django.contrib.auth import get_user_model
 
 
 class Event(models.Model):
-
     STATUS_CHOICES = (
         ('draft', 'Szkic'),
         ('publish', 'Opublikowano')
@@ -18,19 +17,19 @@ class Event(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=250,
                             unique_for_date='planning_date', default=None)
-    description = models.TextField(verbose_name='opis wydarzenia')
+    description = models.TextField(verbose_name='opis wydarzenia', blank=True)
     created = models.DateTimeField(auto_now_add=True)
-    planning_date = models.DateTimeField()
+    planning_date = models.DateTimeField(blank=True, null=True)
     publish = models.DateTimeField(default=timezone.now)
     organizer = models.ForeignKey(User, on_delete=models.CASCADE)
-    want_to_listen = models.ManyToManyField(User, related_name='want_to_listen', default=None, blank=True)
+    want_to_listen = models.ManyToManyField(User, related_name='want_to_listen', default=None, blank=True, null=True)
     status = models.CharField(max_length=15,
                               choices=STATUS_CHOICES,
                               default='publish')
-    duration = models.IntegerField()
-    icon = models.FileField(upload_to='icons/', default='icons/default.png')
-    attachment = models.FileField(upload_to='attachments/', blank=True)
-    link = models.CharField(max_length=150, blank=True)
+    duration = models.IntegerField(blank=True, null=True)
+    icon = models.FileField(upload_to='icons/', default='icons/default.png', null=True)
+    attachment = models.FileField(upload_to='attachments/', blank=True, null=True)
+    link = models.CharField(max_length=150, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
@@ -41,8 +40,21 @@ class Event(models.Model):
     class Meta:
         ordering = ('planning_date',)
 
-    def __str__(self):
+    def __str__ (self):
         return self.title
+
+
+class Polls(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='event', default=None, blank=True)
+    if_active = models.BooleanField(default=False, blank=True)
+    since_active = models.DateField(blank=True, null=True)
+    till_active = models.DateField(blank=True, null=True)
+
+
+class Dates(models.Model):
+    poll = models.ForeignKey(Polls, on_delete=models.CASCADE)
+    date = models.DateTimeField(blank=True, null=True)
+    users = models.ManyToManyField(User, related_name='users', default=None, blank=True)
 
 
 class Subject(models.Model):
@@ -56,12 +68,11 @@ class Subject(models.Model):
     want_to_lead = models.ManyToManyField(User, related_name='want_to_lead', default=None, blank=True)
     lead_count = models.IntegerField(default='0')
 
-
-    def save(self, *args, **kwargs):
+    def save (self, *args, **kwargs):
         self.slug = slugify(self.title)
         super(Subject, self).save(*args, **kwargs)
 
-    def __str__(self):
+    def __str__ (self):
         return self.title
 
     class Meta:

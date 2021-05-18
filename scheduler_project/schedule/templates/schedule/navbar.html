@@ -40,6 +40,11 @@
 					<li class="nav-item">
 						<a class="nav-link" href="{% url 'subjects_list' %}">Tematy</a>
 					</li>
+					{% if request.user.is_authenticated %}
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'drafts_list' %}">Głosowanie</a>
+					</li>
+					{% endif %}
 					{% if request.user|has_group:"admin" %}
 					<li class="nav-item">
 						<a class="nav-link" href="{% url 'users_list' %}">Użytkownicy</a>

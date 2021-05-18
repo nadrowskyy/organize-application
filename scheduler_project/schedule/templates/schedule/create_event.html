@@ -20,6 +20,10 @@
 
 <form action="" enctype="multipart/form-data" method="POST">
     {% csrf_token %}
+    <input type="radio" onchange="hideB(this)" name="publish" id="radio_publish" checked value="True">
+    <label for="radio_publish">Publikuj</label>
+    <input type="radio" onchange="hideA(this)" name="publish" id="radio_draft" value="False">
+    <label for="radio_draft">Szkic</label>
     <div class="form-group">
         <label for="title">Temat spotkania</label>
         <input class="form-control" id="title" name="title" placeholder="Wpisz temat spotkania" required type="text">
@@ -27,7 +31,7 @@
 
     <div class="form-group">
         <label for="description">Opis spotkania</label>
-        <textarea class="form-control" name="description" placeholder="Opisz spotkanie" required rows="4"></textarea>
+        <textarea class="form-control" id="description" name="description" placeholder="Opisz spotkanie" required rows="4"></textarea>
     </div>
 
     <div class="form-group">
@@ -49,15 +53,68 @@ md
     <div class="row">
     <div class="col-md-12 col-lg-6">
       <label for="planning_date">Data i godzina rozpoczęcia</label>
-        <input class="form-control" id="planning_date" min="{% now 'Y-m-d\TH:i' %}" name="planning_date" required type="datetime-local"
-               value="{% now 'Y-m-d\TH:i' %}">
+        <input class="form-control" id="planning_date" min="{% now 'Y-m-d\TH:i' %}" name="planning_date" type="datetime-local"
+               value="{% now 'Y-m-d\TH:i' %}" required>
     </div>
     <div class="col-md-12 col-lg-6">
      <label for="duration">Czas trwania (min.)</label>
-        <input class="form-control" id="duration" min="1" name="duration" placeholder="1" required type="number">
+        <input class="form-control" id="duration" min="1" name="duration" placeholder="1" type="number" required>
     </div>
   </div>
 <br>
+    <div id="poll" style="display:none;">
+    <div class="row">
+            <div class="col-md-12 col-lg-6">
+                <label>Czy ankieta ma być aktywna?</label><br>
+                    <input  id="active_true" onchange="pollReqB(this)" name="if_active" type="radio" value="True">
+                    <label  for="active_true">Tak</label>
+                    <input  id="active_false" onchange="pollReqA(this)" name="if_active" type="radio" value="False" checked>
+                    <label  for="active_false">Nie</label>
+            </div>
+            <div class="col-md-12 col-lg-6">
+                JEŚLI ANKIETA MA BYĆ AKTYWNA POWINNA MIEĆ TERMINY NA, KTÓRE MOŻNA GŁOSOWAĆ, JEŚLI ICH NIE BĘDZIE
+                TO NIE BĘDZIE MOŻLIWOŚCI DODANIA SZKICU SZKOLENIA;
+                SZKIC SZKOLENIA BEZ ANKIETY WIDZI ADMIN I PROWADZĄCY(W ZAKŁADCE SZKOLENIA -> SZKICE);
+                GDY DODAJEMY ANKIETE DO SZKOLENIA Z TERMINAMI ANKIETĘ WIDZĄ WSZYSCY W ZAKŁADCE 'GŁOSOWANIE'
+            </div>
+        </div>
+        SEKCJE ANKIETY, MOŻNA JAKOŚ WYRÓŻNIĆ, NP. W RAMCE
+        <div class="row">
+        <div class="col-md-12 col-lg-6">
+            <label for="poll_avaible_since">Od kiedy ankieta ma być dostępna</label>
+                <input class="form-control" id="poll_avaible_since" min="{% now 'Y-m-d\TH:i' %}" name="poll_avaible_since" type="date">
+        </div>
+        <div class="col-md-12 col-lg-6">
+        <label for="poll_avaible">Do kiedy ankieta ma być dostępna</label>
+            <input class="form-control" id="poll_avaible" name="poll_avaible" type="date">
+        </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12 col-lg-6">
+                TERMINY:
+            </div>
+            <div class="col-md-12 col-lg-6">
+                <button id="add_date" class="btn btn-secondary" style="font-family: 'Oswald', sans-serif;" type="button">Dodaj termin</button>
+            </div>
+        </div>
+        <br>
+        <div id="plan_container" class="row">
+        <div class="col-md-12 col-lg-6">
+            <input class="form-control" id="planning_date_draft_1" min="{% now 'Y-m-d\TH:i' %}" name="planning_date_draft" type="datetime-local"
+                       value="{% now 'Y-m-d\TH:i' %}">
+        </div>
+        <div class="col-md-12 col-lg-6">
+            <input class="form-control" min="{% now 'Y-m-d\TH:i' %}" id="planning_date_draft_2" name="planning_date_draft" type="datetime-local"
+                       value="{% now 'Y-m-d\TH:i' %}">
+        </div>
+        </div>
+        <br>
+
+        <br>
+
+        </div>
+
     <div class="row">
     <div class="col-md-12 col-lg-6">
     <div class="form-group">
@@ -87,13 +144,62 @@ md
 
     <script src="{% static 'js/jquery-3.2.1.slim.min.js' %}"></script>
     <script src="{% static 'js/popper.min.js' %}"></script>
-    <script src="{% static 'js/select2.min.js' %}"></script><script>
+    <script src="{% static 'js/select2.min.js' %}"></script>
+<script>
 
     $(document).ready(function() {
     $('.selectOrganizer').select2();
+    $('#add_date').click(function () {
+       $('#plan_container').append('<div class="col-md-12 col-lg-6"> <input class="form-control" name="planning_date_draft" type="datetime-local"><button class="remove_date btn btn-secondary" style="font-family: \'Oswald\', sans-serif;" type="button">USUN</button></div>')
+    });
     });
 
 </script>
+
+<script>
+    function hideA(x) {
+   if (x.checked) {
+     document.getElementById("poll").style.display = "block";
+     //document.getElementById("planning_date_div").style.display = "none";
+   }
+        $('#radio_publish').prop('checked',false);
+     $('#radio_draft').prop('checked',true);
+   $('#description').prop('required',false);
+   $('#duration').prop('required',false);
+   $('#planning_date').prop('required',false);
+ }
+
+ function hideB(x) {
+   if (x.checked) {
+     document.getElementById("poll").style.display = "none";
+     //document.getElementById("planning_date_div").style.display = "inline-block";
+
+   }
+   $('#description').prop('required',true);
+   $('#duration').prop('required',true);
+   $('#planning_date').prop('required',true);
+ }
+
+     function pollReqA(x) {
+   $('#poll_avaible_since').prop('required',false);
+   $('#poll_avaible').prop('required',false);
+   $('#planning_date_draft_1').prop('required',false);
+   $('#planning_date_draft_2').prop('required',false);
+ }
+
+ function pollReqB(x) {
+   $('#poll_avaible').prop('required',true);
+   $('#poll_avaible_since').prop('required',true);
+   $('#planning_date_draft_1').prop('required',true);
+   $('#planning_date_draft_2').prop('required',true);
+
+ }
+
+ $(document).on('click', '.remove_date', function () {
+     $(this).closest('div').remove();
+ });
+</script>
+
 
 </body>
 </html>
