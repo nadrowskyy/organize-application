@@ -349,12 +349,12 @@ def create_event(request):
 
                 event = get_object_or_404(Event, pk=draft_form.pk)
                 since_active = request.POST.get('poll_avaible_since')
-                days_active = request.POST.get('poll_avaible')
+                till_active = request.POST.get('poll_avaible')
                 if request.POST.get('if_active') == 'True':
                     if_active = True
                 else:
                     if_active = False
-                poll_form = Polls(event=event, since_active=since_active, days_active=days_active, if_active=if_active)
+                poll_form = Polls(event=event, since_active=since_active, till_active=till_active, if_active=if_active)
                 poll_form.save()
 
                 poll = get_object_or_404(Polls, pk=poll_form.pk)
