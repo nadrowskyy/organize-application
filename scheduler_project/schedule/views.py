@@ -350,18 +350,30 @@ def create_event(request):
                 event = get_object_or_404(Event, pk=draft_form.pk)
                 since_active = request.POST.get('poll_avaible_since')
                 till_active = request.POST.get('poll_avaible')
+                print('---------')
+                print(request.POST.get('if_active'))
                 if request.POST.get('if_active') == 'True':
+                    print('356')
                     if_active = True
-                else:
-                    if_active = False
-                poll_form = Polls(event=event, since_active=since_active, till_active=till_active, if_active=if_active)
-                poll_form.save()
+                    poll_form = Polls(event=event, since_active=since_active, till_active=till_active,
+                                      if_active=if_active)
+                    poll_form.save()
 
-                poll = get_object_or_404(Polls, pk=poll_form.pk)
-                planning_dates = request.POST.getlist('planning_date_draft')
-                for el in planning_dates:
-                    dates_form = Dates(poll=poll, date=el)
+                    poll = get_object_or_404(Polls, pk=poll_form.pk)
+                    planning_dates = request.POST.getlist('planning_date_draft')
+                    for el in planning_dates:
+                        dates_form = Dates(poll=poll, date=el)
+                        dates_form.save()
+                if request.POST.get('if_active') == 'False':
+                    print('368x')
+                    if_active = False
+                    poll_form = Polls(event=event, if_active=if_active)
+                    poll_form.save()
+
+                    poll = get_object_or_404(Polls, pk=poll_form.pk)
+                    dates_form = Dates(poll=poll)
                     dates_form.save()
+
                 print('343')
     else:
         form = CreateEvent()

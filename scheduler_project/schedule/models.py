@@ -46,14 +46,14 @@ class Event(models.Model):
 
 class Polls(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='event', default=None, blank=True)
-    if_active = models.BooleanField(default=True)
-    since_active = models.DateField(blank=False)
-    till_active = models.DateField(blank=True)
+    if_active = models.BooleanField(default=False, blank=True)
+    since_active = models.DateField(blank=True, null=True)
+    till_active = models.DateField(blank=True, null=True)
 
 
 class Dates(models.Model):
     poll = models.ForeignKey(Polls, on_delete=models.CASCADE)
-    date = models.DateTimeField(blank=True)
+    date = models.DateTimeField(blank=True, null=True)
     users = models.ManyToManyField(User, related_name='users', default=None, blank=True)
 
 
