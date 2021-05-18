@@ -42,7 +42,7 @@
 
     <div class="form-group">
         <label for="description">Opis spotkania</label>
-        <textarea class="form-control" id="description" name="description" placeholder="Opisz spotkanie" required rows="4">{{i.description}}</textarea>
+        <textarea class="form-control" id="description" name="description" placeholder="Opisz spotkanie" rows="4">{{i.description}}</textarea>
     </div>
 
     <div class="form-group">
@@ -74,7 +74,7 @@
     <div class="col-md-12 col-lg-6">
       <label for="planning_date">Data i godzina rozpoczęcia</label>
 
-        <input class="form-control" id="planning_date" min="{% now 'Y-m-d\TH:i' %}" name="planning_date" type="datetime-local">
+        <input class="form-control" id="planning_date" min="{% now 'Y-m-d\TH:i' %}" name="planning_date" type="datetime-local" value="{{ i.planning_date|date:'Y-m-d\TH:i' }}">
     </div>
     <div class="col-md-12 col-lg-6">
      <label for="duration">Czas trwania (min.)</label>
@@ -84,18 +84,43 @@
     <br>
 
 
+    <div id="poll">
     <div class="row">
-        SEKCJA ANKIETY, MOŻNA JAKOŚ WYRÓŻNIĆ, NP. W RAMCE
+            <div class="col-md-12 col-lg-6">
+                <label>Czy ankieta ma być aktywna?</label><br>
+                    <input  id="active_true" onchange="pollReqB(this)" name="if_active" type="radio" value="True" {% if poll.if_active == 1 %} checked {% endif %}>
+                    <label  for="active_true">Tak</label>
+                    <input  id="active_false" onchange="pollReqA(this)" name="if_active" type="radio" value="False" checked {% if poll.if_active == 0 %} checked {% endif %}>
+                    <label  for="active_false">Nie</label>
+            </div>
+            <div class="col-md-12 col-lg-6">
+                JEŚLI ANKIETA MA BYĆ AKTYWNA POWINNA MIEĆ TERMINY NA, KTÓRE MOŻNA GŁOSOWAĆ, JEŚLI ICH NIE BĘDZIE
+                TO NIE BĘDZIE MOŻLIWOŚCI DODANIA SZKICU SZKOLENIA;
+                SZKIC SZKOLENIA BEZ ANKIETY WIDZI ADMIN I PROWADZĄCY(W ZAKŁADCE SZKOLENIA -> SZKICE);
+                GDY DODAJEMY ANKIETE DO SZKOLENIA Z TERMINAMI ANKIETĘ WIDZĄ WSZYSCY W ZAKŁADCE 'GŁOSOWANIE'
+            </div>
+        </div>
+        SEKCJE ANKIETY, MOŻNA JAKOŚ WYRÓŻNIĆ, NP. W RAMCE
+        <div class="row">
         <div class="col-md-12 col-lg-6">
-            <label>Od kiedy ankieta ma być dostępna</label>
-                {{ poll.since_active }}
+            <label for="poll_avaible_since">Od kiedy ankieta ma być dostępna</label>
+                <input class="form-control" id="poll_avaible_since" min="{% now 'Y-m-d\TH:i' %}" name="poll_avaible_since" type="date" value="{{ poll.since_active|date:'Y-m-d' }}">
         </div>
         <div class="col-md-12 col-lg-6">
-        <label for="poll_avaible">Czas dostępności ankiety (dni)</label>
-            <input class="form-control" id="poll_avaible" min="1" name="poll_avaible" placeholder="1" type="number" value="{{ poll.days_active }}">
+        <label for="poll_avaible">Do kiedy ankieta ma być dostępna</label>
+            <input class="form-control" id="poll_avaible" name="poll_avaible" type="date" value="{{ poll.till_active|date:'Y-m-d' }}">
         </div>
         </div>
-
+        <br>
+        <div class="row">
+            <div class="col-md-12 col-lg-6">
+                TERMINY:
+            </div>
+            <div class="col-md-12 col-lg-6">
+                <button id="add_date" class="btn btn-secondary" style="font-family: 'Oswald', sans-serif;" type="button">Dodaj termin</button>
+            </div>
+        </div>
+        <br>
         <div id="plan_container" class="row">
         {% for date in dates %}
         <div class="col-md-12 col-lg-6">
@@ -105,19 +130,10 @@
         </div>
         {% endfor %}
         </div>
-        <div class="row">
-            <div class="col-md-12 col-lg-6">
-                <label>Czy ankieta ma być aktywna</label><br>
-                    <input  id="active_true" name="if_active" type="radio" value="True" {% if poll.if_active == 1 %} checked {% endif %}>
-                    <label  for="active_true">Tak</label>
-                    <input  id="active_false" name="if_active" type="radio" value="False" {% if poll.if_active == 0 %} checked {% endif %}>
-                    <label  for="active_false">Nie</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-lg-6">
-                <button id="add_date" class="btn btn-secondary" style="font-family: 'Oswald', sans-serif;" type="button">Dodaj termin</button>
-            </div>
+        <br>
+
+        <br>
+
         </div>
 
 

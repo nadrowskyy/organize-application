@@ -212,7 +212,7 @@ def draft_edit(request, index):
             event = Event.objects.filter(id=index)
             user = get_user_model()
             users = user.objects.all()
-            poll = Polls.objects.filter(event=index)[0]
+            poll = Polls.objects.filter(event=index).first()
             dates = Dates.objects.filter(poll=poll)
             for el in dates:
                 print(el.date)
@@ -365,16 +365,9 @@ def create_event(request):
                         dates_form = Dates(poll=poll, date=el)
                         dates_form.save()
                 if request.POST.get('if_active') == 'False':
-                    print('368x')
-                    if_active = False
-                    poll_form = Polls(event=event, if_active=if_active)
-                    poll_form.save()
+                    pass
+                    # nie tworzymy pól w bazie jeśli przycisk tworzenia ankiety jest na false
 
-                    poll = get_object_or_404(Polls, pk=poll_form.pk)
-                    dates_form = Dates(poll=poll)
-                    dates_form.save()
-
-                print('343')
     else:
         form = CreateEvent()
     form = CreateEvent()
