@@ -51,33 +51,56 @@ md
     </div>
 
     <div class="row">
-    <div id="planning_date_div" class="col-md-12 col-lg-6">
+    <div class="col-md-12 col-lg-6">
       <label for="planning_date">Data i godzina rozpoczęcia</label>
         <input class="form-control" id="planning_date" min="{% now 'Y-m-d\TH:i' %}" name="planning_date" type="datetime-local"
-               value="{% now 'Y-m-d\TH:i' %}">
+               value="{% now 'Y-m-d\TH:i' %}" required>
     </div>
     <div class="col-md-12 col-lg-6">
      <label for="duration">Czas trwania (min.)</label>
-        <input class="form-control" id="duration" min="1" name="duration" placeholder="1" type="number">
+        <input class="form-control" id="duration" min="1" name="duration" placeholder="1" type="number" required>
     </div>
   </div>
 <br>
     <div id="poll" style="display:none;">
-    SEKCJA ANKIETY, MOŻNA JAKOŚ WYRÓŻNIĆ, NP. W RAMCE
+    <div class="row">
+            <div class="col-md-12 col-lg-6">
+                <label>Czy ankieta ma być aktywna?</label><br>
+                    <input  id="active_true" onchange="pollReqB(this)" name="if_active" type="radio" value="True">
+                    <label  for="active_true">Tak</label>
+                    <input  id="active_false" onchange="pollReqA(this)" name="if_active" type="radio" value="False" checked>
+                    <label  for="active_false">Nie</label>
+            </div>
+            <div class="col-md-12 col-lg-6">
+                JEŚLI ANKIETA MA BYĆ AKTYWNA POWINNA MIEĆ TERMINY NA, KTÓRE MOŻNA GŁOSOWAĆ, JEŚLI ICH NIE BĘDZIE
+                TO NIE BĘDZIE MOŻLIWOŚCI DODANIA SZKICU SZKOLENIA;
+                SZKIC SZKOLENIA BEZ ANKIETY WIDZI ADMIN I PROWADZĄCY(W ZAKŁADCE SZKOLENIA -> SZKICE);
+                GDY DODAJEMY ANKIETE DO SZKOLENIA Z TERMINAMI ANKIETĘ WIDZĄ WSZYSCY W ZAKŁADCE 'GŁOSOWANIE'
+            </div>
+        </div>
+        SEKCJE ANKIETY, MOŻNA JAKOŚ WYRÓŻNIĆ, NP. W RAMCE
         <div class="row">
         <div class="col-md-12 col-lg-6">
             <label for="poll_avaible_since">Od kiedy ankieta ma być dostępna</label>
-                <input class="form-control" id="poll_avaible_since" min="{% now 'Y-m-d\TH:i' %}" name="poll_avaible_since" type="datetime-local">
+                <input class="form-control" id="poll_avaible_since" min="{% now 'Y-m-d\TH:i' %}" name="poll_avaible_since" type="date">
         </div>
         <div class="col-md-12 col-lg-6">
-        <label for="poll_avaible">Czas dostępności ankiety (dni)</label>
-            <input class="form-control" id="poll_avaible" min="1" name="poll_avaible" placeholder="1" type="number">
+        <label for="poll_avaible">Do kiedy ankieta ma być dostępna</label>
+            <input class="form-control" id="poll_avaible" name="poll_avaible" placeholder="1" type="date">
         </div>
         </div>
-
+        <br>
+        <div class="row">
+            <div class="col-md-12 col-lg-6">
+                TERMINY:
+            </div>
+            <div class="col-md-12 col-lg-6">
+                <button id="add_date" class="btn btn-secondary" style="font-family: 'Oswald', sans-serif;" type="button">Dodaj termin</button>
+            </div>
+        </div>
+        <br>
         <div id="plan_container" class="row">
         <div class="col-md-12 col-lg-6">
-            <label for="planning_date_draft_1">Data i godzina rozpoczęcia</label>
             <input class="form-control" id="planning_date_draft_1" min="{% now 'Y-m-d\TH:i' %}" name="planning_date_draft" type="datetime-local"
                        value="{% now 'Y-m-d\TH:i' %}">
         </div>
@@ -87,21 +110,9 @@ md
         </div>
         </div>
         <br>
-        <div class="row">
-            <div class="col-md-12 col-lg-6">
-                <label>Czy ankieta ma być aktywna</label><br>
-                    <input  id="active_true" name="if_active" type="radio" value="True" checked>
-                    <label  for="active_true">Tak</label>
-                    <input  id="active_false" name="if_active" type="radio" value="False">
-                    <label  for="active_false">Nie</label>
-            </div>
-        </div>
+
         <br>
-        <div class="row">
-            <div class="col-md-12 col-lg-6">
-                <button id="add_date" class="btn btn-secondary" style="font-family: 'Oswald', sans-serif;" type="button">Dodaj termin</button>
-            </div>
-        </div>
+
         </div>
 
     <div class="row">
@@ -149,32 +160,38 @@ md
     function hideA(x) {
    if (x.checked) {
      document.getElementById("poll").style.display = "block";
-     document.getElementById("planning_date_div").style.display = "none";
+     //document.getElementById("planning_date_div").style.display = "none";
    }
         $('#radio_publish').prop('checked',false);
      $('#radio_draft').prop('checked',true);
-   // $('#description').prop('required',false);
-   // $('#duration').prop('required',false);
-   // $('#planning_date').prop('required',false);
-   // $('#poll_avaible_since').prop('required',true);
-   // $('#poll_avaible').prop('required',true);
-   // $('#planning_date_draft_1').prop('required',true);
-   // $('#planning_date_draft_2').prop('required',true);
+   $('#description').prop('required',false);
+   $('#duration').prop('required',false);
+   $('#planning_date').prop('required',false);
  }
 
  function hideB(x) {
    if (x.checked) {
      document.getElementById("poll").style.display = "none";
-     document.getElementById("planning_date_div").style.display = "inline-block";
+     //document.getElementById("planning_date_div").style.display = "inline-block";
 
    }
-   // $('#description').prop('required',true);
-   // $('#duration').prop('required',true);
-   // $('#planning_date').prop('required',true);
-   // $('#poll_avaible_since').prop('required',false);
-   // $('#poll_avaible').prop('required',false);
-   // $('#planning_date_draft_1').prop('required',false);
-   // $('#planning_date_draft_2').prop('required',false);
+   $('#description').prop('required',true);
+   $('#duration').prop('required',true);
+   $('#planning_date').prop('required',true);
+ }
+
+     function pollReqA(x) {
+   $('#poll_avaible_since').prop('required',false);
+   $('#poll_avaible').prop('required',false);
+   $('#planning_date_draft_1').prop('required',false);
+   $('#planning_date_draft_2').prop('required',false);
+ }
+
+ function pollReqB(x) {
+   $('#poll_avaible').prop('required',true);
+   $('#poll_avaible_since').prop('required',true);
+   $('#planning_date_draft_1').prop('required',true);
+   $('#planning_date_draft_2').prop('required',true);
 
  }
 
