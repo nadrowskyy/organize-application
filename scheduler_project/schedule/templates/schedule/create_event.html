@@ -99,15 +99,12 @@ md
             </div>
         </div>
         <br>
+        <div class="row">
+            {% for message in messages %}
+                <errormsg>{{ message }}</errormsg>
+            {% endfor %}
+        </div>
         <div id="plan_container" class="row">
-        <div class="col-md-12 col-lg-6">
-            <input class="form-control" id="planning_date_draft_1" min="{% now 'Y-m-d\TH:i' %}" name="planning_date_draft" type="datetime-local"
-                       value="{% now 'Y-m-d\TH:i' %}">
-        </div>
-        <div class="col-md-12 col-lg-6">
-            <input class="form-control" min="{% now 'Y-m-d\TH:i' %}" id="planning_date_draft_2" name="planning_date_draft" type="datetime-local"
-                       value="{% now 'Y-m-d\TH:i' %}">
-        </div>
         </div>
         <br>
 
@@ -150,7 +147,7 @@ md
     $(document).ready(function() {
     $('.selectOrganizer').select2();
     $('#add_date').click(function () {
-       $('#plan_container').append('<div class="col-md-12 col-lg-6"> <input class="form-control" name="planning_date_draft" type="datetime-local"><button class="remove_date btn btn-secondary" style="font-family: \'Oswald\', sans-serif;" type="button">USUN</button></div>')
+       $('#plan_container').append('<div class="col-md-12 col-lg-6"> <input class="form-control" name="planning_date_draft" type="datetime-local" required><button class="remove_date btn btn-secondary" style="font-family: \'Oswald\', sans-serif;" type="button">USUN</button></div>')
     });
     });
 

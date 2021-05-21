@@ -47,8 +47,8 @@ class Event(models.Model):
 class Polls(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='event', default=None, blank=True)
     if_active = models.BooleanField(default=False, blank=True)
-    since_active = models.DateField(blank=True, null=True)
-    till_active = models.DateField(blank=True, null=True)
+    since_active = models.DateField(blank=True, null=True, default=None)
+    till_active = models.DateField(blank=True, null=True, default=None)
 
 
 class Dates(models.Model):

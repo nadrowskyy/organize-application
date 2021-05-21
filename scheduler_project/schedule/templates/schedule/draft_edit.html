@@ -42,7 +42,7 @@
 
     <div class="form-group">
         <label for="description">Opis spotkania</label>
-        <textarea class="form-control" id="description" name="description" placeholder="Opisz spotkanie" rows="4">{{i.description}}</textarea>
+        <textarea class="form-control" id="desription" name="description" placeholder="Opisz spotkanie" rows="4">{{i.description}}</textarea>
     </div>
 
     <div class="form-group">
@@ -127,6 +127,7 @@
             <label>Data i godzina rozpoczęcia</label>
             <input class="form-control" name="planning_date_draft" type="datetime-local"
                        value="{{ date.date|date:'Y-m-d\TH:i' }}">
+            <button class="remove_date btn btn-secondary" style="font-family: 'Oswald', sans-serif;" type="button">USUN</button>
         </div>
         {% endfor %}
         </div>

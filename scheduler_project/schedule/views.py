@@ -237,7 +237,35 @@ def draft_edit(request, index):
             print('POSSSST PSOT')
             print(request.POST.get('pub_button'))
             if request.POST.get('pub_button') == 'save':
-                pass
+                if request.POST.get('if_active') == 'True':
+                    poll = Polls.objects.filter(event=index).first()
+                    dates = Dates.objects.filter(poll=poll)
+
+                    planning_dates = request.POST.getlist('planning_date_draft')
+                    print(planning_dates)
+                    for el in planning_dates:
+                        print(el)
+                    for el in dates:
+                        print(str(el.date.strftime("%Y-%m-%dT%H:%M")))
+
+                    # if len(planning_dates) < 2:
+                    #     messages.error(request, "Podaj co najmniej dwie proponowane daty w ankiecie")
+                    #
+                    # if_active = True
+                    # poll_form = Polls(event=event, since_active=since_active, till_active=till_active,
+                    #                   if_active=if_active)
+                    # poll_form.save()
+                    #
+                    # poll = get_object_or_404(Polls, pk=poll_form.pk)
+                    #
+                    # for el in planning_dates:
+                    #     dates_form = Dates(poll=poll, date=el)
+                    #     dates_form.save()
+                if request.POST.get('if_active') == 'False':
+                    pass
+                    # nie tworzymy pól w bazie jeśli przycisk tworzenia ankiety jest na false
+
+
             if request.POST.get('pub_button') == 'publish' or request.POST.get('planning_date') == '':
                 if request.POST.get('planning_date') == '' or request.POST.get('duration') == '':
                     # jesli te pola nie sa wypelnione wyswietlamy error message, raczej ciezko to zrobic na froncie
@@ -341,12 +369,9 @@ def create_event(request):
                 print('valid')
                 form.save()
                 return redirect('events_list')
-        print('323')
         if request.POST.get('publish') == 'False':
-            print('324')
             form = CreateEvent(request.POST, request.FILES)
             if form.is_valid():
-                print('327')
                 draft_form = form.save(commit=False)
                 draft_form.status = 'draft'
                 draft_form.save()
@@ -354,23 +379,35 @@ def create_event(request):
                 event = get_object_or_404(Event, pk=draft_form.pk)
                 since_active = request.POST.get('poll_avaible_since')
                 till_active = request.POST.get('poll_avaible')
-                print('---------')
-                print(request.POST.get('if_active'))
                 if request.POST.get('if_active') == 'True':
-                    print('356')
+
+                    planning_dates = request.POST.getlist('planning_date_draft')
+                    if len(planning_dates) < 2:
+                        messages.error(request, "Podaj co najmniej dwie proponowane daty w ankiecie")
+
                     if_active = True
                     poll_form = Polls(event=event, since_active=since_active, till_active=till_active,
                                       if_active=if_active)
                     poll_form.save()
 
                     poll = get_object_or_404(Polls, pk=poll_form.pk)
-                    planning_dates = request.POST.getlist('planning_date_draft')
+
                     for el in planning_dates:
                         dates_form = Dates(poll=poll, date=el)
                         dates_form.save()
                 if request.POST.get('if_active') == 'False':
-                    pass
-                    # nie tworzymy pól w bazie jeśli przycisk tworzenia ankiety jest na false
+
+                    planning_dates = request.POST.getlist('planning_date_draft')
+                    if_active = False
+                    poll_form = Polls(event=event, since_active=since_active, till_active=till_active,
+                                      if_active=if_active)
+                    poll_form.save()
+
+                    poll = get_object_or_404(Polls, pk=poll_form.pk)
+
+                    for el in planning_dates:
+                        dates_form = Dates(poll=poll, date=el)
+                        dates_form.save()
 
     else:
         form = CreateEvent()
