@@ -13,11 +13,11 @@ import google.auth
 from pathlib import Path
 import os
 import pymysql
+
 pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -29,7 +29,6 @@ SECRET_KEY = 'xc^gh9txa63%ha^o3k^%)q*np=gsx_e@o2@)$*&@4c$gefx441'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -78,7 +77,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'scheduler_project.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
@@ -109,10 +107,11 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'HOST': '127.0.0.1', # DB's IP address
+            'HOST': '127.0.0.1',  # DB's IP address
             'PORT': '3306',
             'NAME': 'scheduler_database',
             'USER': 'root',
+            # 'PASSWORD': 'schedulerdb', # haslo do bazy - tylko jesli laczymy sie z baza googla lokalnie przez proxy
             'OPTIONS': {
                 'autocommit': False,
             },
@@ -123,10 +122,6 @@ else:
     STATICFILES_DIRS = [
         os.path.join(BASE_DIR, "static")
     ]
-
-
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -146,7 +141,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -160,15 +154,8 @@ USE_L10N = True
 
 USE_TZ = False
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-#STATIC_ROOT = 'static'
-
-
-
-
-
-
+# STATIC_ROOT = 'static'

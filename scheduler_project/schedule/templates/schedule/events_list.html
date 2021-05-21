@@ -95,6 +95,25 @@
         }
     }
 
+    // FILTROWANIE SZKICE
+
+    if (params.has('drafts') && params.get('drafts') !== sessionStorage.getItem("drafts")) {
+        var last_drafts = params.get('drafts');
+        sessionStorage.setItem("drafts", last_drafts);
+    } else if (!params.has('drafts') && sessionStorage.getItem("drafts") != null) {
+
+        if (params.get('drafts') !== sessionStorage.getItem("drafts")) {
+
+            if (url.indexOf('?') > -1) {
+                    url += '&drafts=' + sessionStorage.getItem("drafts")
+            }
+            else {
+                    url += '?drafts=' + sessionStorage.getItem("drafts")
+            }
+
+        }
+    }
+
     // FILTROWANIE 'NADCHODZĄCE'
 
     if (params.has('show_upcoming') && params.get('show_upcoming') !== sessionStorage.getItem("show_upcoming")) {
@@ -200,6 +219,11 @@
         <div class="form-check">
             <label><input type="checkbox" name="only_mine" id="only_mine" value="1" onclick="setflag()"> Tak</label>
         </div>
+
+        <p class="font-weight-bold">Szkice szkoleń</p>
+        <div class="form-check">
+            <label><input type="checkbox" name="drafts" id="drafts" value="1" onclick="setflag2()"> Tak</label>
+        </div>
     </div>
 
         {% endif %}
@@ -253,7 +277,11 @@
             <div class="col-lg-3 col-md-4 col-sm-5">
                     <p style="text-align:center;"><img class="rounded-circle" src="{{MEDIA_URL}}{{i.icon}}" alt="" width="140" height="140"></p>
                 <center>
+                    {% if i.status == 'draft' %}
+                    <h3 class="font-italic" style="color: #a3a3a3;">{{i.title}}</h3>
+                    {% else %}
                     <h3>{{i.title}}</h3>
+                    {% endif %}
                     <h7>{{i.planning_date|date:"d.m.Y H:i"}} ({{i.planning_date|date:"l"}})</h7>
                     <br>
                     <h6>Prowadzi: {{i.organizer.first_name}} {{i.organizer.last_name}}</h6>
@@ -366,6 +394,11 @@
             element.checked = true;
         }
 
+        if (params.has('drafts') && params.get('drafts') === "1") {
+            let element = document.getElementById('drafts');
+            element.checked = true;
+        }
+
         if (params.has('show_historical') && params.get('show_historical') === "1" && !params.has('show_upcoming')) {
             let element = document.getElementById('show_historical');
             element.checked = true;
@@ -428,6 +461,12 @@
         }
     }
 
+    function setflag2() {
+        if (!document.getElementById('drafts').checked) {
+            sessionStorage.removeItem('drafts')
+        }
+    }
+
     // FUNKCJA RESETUJĄCA FILROWANIE - USTAWIA POLA DO WARTOŚCI DOMYŚLNYCH I CZYŚCI PAMIĘĆ SESJI
 
     function flush() {
@@ -449,6 +488,9 @@
 
     let only_mine = document.getElementById('only_mine');
     only_mine.checked = false;
+
+    let drafts = document.getElementById('drafts');
+    drafts.checked = true;
 
     let option = document.getElementById('option');
     option.indeterminate = true;

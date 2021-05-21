@@ -72,7 +72,7 @@
         <div class="row">
 
         {% for i in upcoming_events_list %}
-            {% if forloop.counter <= 3 %}
+            {% if forloop.counter <= 3 and i.status == 'publish' %}
               <div class="col-lg-4 col-md-4">
                   <p style="text-align:center;"><img class="rounded-circle" src="{{MEDIA_URL}}{{i.icon}}" alt="" width="140" height="140"></p>
                 <h3>{{i.title}}</h3>

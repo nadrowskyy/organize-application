@@ -12,35 +12,35 @@
     let params = new URLSearchParams(document.location.search.substring(1));
     url = window.location.href;
 
-    if (params.has('sort_by') && params.get('sort_by') !== sessionStorage.getItem("sort_by")) {
-        var last_sorting_order = params.get('sort_by');
-        sessionStorage.setItem("sort_by", last_sorting_order);
+    if (params.has('s_sort_by') && params.get('s_sort_by') !== sessionStorage.getItem("s_sort_by")) {
+        var last_sorting_order = params.get('s_sort_by');
+        sessionStorage.setItem("s_sort_by", last_sorting_order);
     }
-    else if (!params.has('sort_by') && sessionStorage.getItem("sort_by") != null) {
+    else if (!params.has('s_sort_by') && sessionStorage.getItem("s_sort_by") != null) {
 
-        if (params.get('sort_by') !== sessionStorage.getItem("sort_by")) {
+        if (params.get('s_sort_by') !== sessionStorage.getItem("s_sort_by")) {
 
             if (url.indexOf('?') > -1) {
-                    url += '&sort_by=' + sessionStorage.getItem("sort_by")
+                    url += '&s_sort_by=' + sessionStorage.getItem("s_sort_by")
             }
             else {
-                    url += '?sort_by=' + sessionStorage.getItem("sort_by")
+                    url += '?s_sort_by=' + sessionStorage.getItem("s_sort_by")
             }
         }
     }
 
-    if (params.has('title') && params.get('title') !== sessionStorage.getItem("title2")) {
-        var last_title2 = params.get('title');
-        sessionStorage.setItem("title2", last_title2);
-    } else if (!params.has('title') && sessionStorage.getItem("title2") != null) {
+    if (params.has('s_title') && params.get('s_title') !== sessionStorage.getItem("s_title")) {
+        var last_s_title = params.get('s_title');
+        sessionStorage.setItem("s_title", last_s_title);
+    } else if (!params.has('s_title') && sessionStorage.getItem("s_title") != null) {
 
-        if (params.get('title') !== sessionStorage.getItem("title2")) {
+        if (params.get('s_title') !== sessionStorage.getItem("s_title")) {
 
             if (url.indexOf('?') > -1) {
-                    url += '&title=' + sessionStorage.getItem("title2")
+                    url += '&s_title=' + sessionStorage.getItem("s_title")
             }
             else {
-                    url += '?title=' + sessionStorage.getItem("title2")
+                    url += '?s_title=' + sessionStorage.getItem("s_title")
             }
         }
     }
@@ -63,30 +63,33 @@
 <div class="container">
     <br>
     <center><h2>LISTA TEMATÓW</h2></center>
-    <hr>
+
     <div class="container">
+        <hr>
     <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" style="max-width:40%;font-family: 'Oswald', sans-serif;" id="sortowanie" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sortowanie</button>
         <div class="dropdown-menu" aria-labelledby="sortowanie">
             <form method="GET" action="">
-                <button class="dropdown-item" type="submit" name="sort_by" id="sort_alphabetical" value="alphabetical">Alfabetycznie</button>
-                <button class="dropdown-item" type="submit" name="sort_by" id="sort_create_date" value="create_date">Data utworzenia</button>
-                <button class="dropdown-item" type="submit" name="sort_by" id="sort_like_count" value="like_count">Polubienia rosnąco</button>
-                <button class="dropdown-item" type="submit" name="sort_by" id="sort_like_count-" value="like_count-">Polubienia malejąco</button>
-                <button class="dropdown-item" type="submit" name="sort_by" id="sort_lead_count" value="lead_count">Chętni rosnąco</button>
-                <button class="dropdown-item" type="submit" name="sort_by" id="sort_lead_count-" value="lead_count-">Chętni malejąco</button>
+                <button class="dropdown-item" type="submit" name="s_sort_by" id="sort_alphabetical" value="alphabetical">Alfabetycznie</button>
+                <button class="dropdown-item" type="submit" name="s_sort_by" id="sort_create_date" value="create_date">Data utworzenia</button>
+                <button class="dropdown-item" type="submit" name="s_sort_by" id="sort_like_count" value="like_count">Polubienia rosnąco</button>
+                <button class="dropdown-item" type="submit" name="s_sort_by" id="sort_like_count-" value="like_count-">Polubienia malejąco</button>
+                <button class="dropdown-item" type="submit" name="s_sort_by" id="sort_lead_count" value="lead_count">Chętni rosnąco</button>
+                <button class="dropdown-item" type="submit" name="s_sort_by" id="sort_lead_count-" value="lead_count-">Chętni malejąco</button>
             </form>
         </div>
-    </div>
+
 
     <button class="btn btn-secondary" data-toggle="collapse" style="max-width:40%;font-family: 'Oswald', sans-serif;" data-target="#filters">Wyszukiwanie</button>
+        <hr>
     </div>
+
         </div>
 
 
 
     <div id="filters" class="collapse">
-        <hr>
+
 <div class="container">
 
     <form method="GET" action="">
@@ -95,14 +98,15 @@
 
     <div class="container">
     <div class="col-lg-3 col-md-3 col-sm-4 col-12">
-        <input type="text" class="form-control" name="title" id="title" placeholder="Wyszukaj temat" style="max-width: 90%">
+        <input type="text" class="form-control" name="s_title" id="s_title" placeholder="Wyszukaj temat" style="max-width: 90%">
     </div>
     </div>
 
         <br><br>
         <div class="container text-right">
-            <a class="btn btn-secondary" style="font-family: Oswald;" onclick="flush()">Wyczyść hasło wyszukiwania</a>
+            <a class="btn btn-secondary" style="font-family: Oswald;" onclick="flush()">Resetuj</a>
             <button type="submit" class="btn btn-secondary" style="font-family: Oswald;">Szukaj</button>
+            <hr>
         </div>
     </div>
     </div>
@@ -116,7 +120,7 @@
 </div>
 
     </div>
-    <hr>
+
 
 {% for message in messages %}
     <errormsg style="text-align:center;">{{ message }}</errormsg><br><br>
@@ -202,15 +206,14 @@
       <div class="modal-body">
           <br>
         {% for j in i.want_to_lead.all %}
-        {% for k in cnt %}
-        {% if k.user == i.proposer %}
           <a class="h6" href="{% url 'user_details' j.id %}"> {{ j.first_name }} {{ j.last_name }} ({{ j.email }})</a> <br>
-
+        {% for k in cnt %}
+          {% if k.user == j %}
           <p class="font-italic" style="color: gray;">
               &emsp; Zaproponowanych tematów: {{ k.subjects }} <br>
               &emsp; Prowadzonych szkolen: {{ k.events }}
           </p>
-        {% endif %}
+          {% endif %}
         {% endfor %}
         {% endfor %}
       </div>
@@ -344,9 +347,9 @@
 <script>
 
 
-    if (params.has('sort_by')) {
+    if (params.has('s_sort_by')) {
 
-        var current = sessionStorage.getItem("sort_by")
+        var current = sessionStorage.getItem("s_sort_by")
 
         if (current === "alphabetical")
         {
@@ -381,9 +384,9 @@
     // WYPEŁNIANIE ELEMENTÓW FORMULARZA, JEŚLI SĄ WŁĄCZONE FILTRY
 
     $( document ).ready(function () {
-        if (params.has('title2')) {
-            let element = document.getElementById('title2');
-            element.value = params.get('title2')
+        if (params.has('s_title')) {
+            let element = document.getElementById('s_title');
+            element.value = params.get('s_title')
         }
     });
 
@@ -394,17 +397,15 @@
 
 
 <script>
-    $(document).ready(function() {
-    $('.selectTitle').select2();
-    });
 
     function flush() {
-    sessionStorage.clear();
+        sessionStorage.clear();
 
-    let title2 = document.getElementById('title2');
-    title2.value = null;
+        let s_title = document.getElementById('s_title');
+        s_title.value = null;
 
-    $('select').val('').trigger('change.select2');
+        $('select').val('').trigger('change.select2');
+    }
 
 
 </script>

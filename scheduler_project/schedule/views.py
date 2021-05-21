@@ -128,17 +128,17 @@ def events_list(request):
     User = get_user_model()
     fullnames = User.objects.all()
 
-    all_events_list = Event.objects.filter(status='publish')
+    all_events_list = Event.objects.filter()
 
     sort_by = request.GET.get('sort_by')
 
     show_upcoming = request.GET.get('show_upcoming')
     show_historical = request.GET.get('show_historical')
     only_mine = request.GET.get('only_mine')
+    drafts = request.GET.get('drafts')
 
     organizer = request.GET.get('organizer')
     title = request.GET.get('title')
-
 
     if show_historical and not show_upcoming:
         all_events_list = all_events_list.filter(planning_date__lte=today)
@@ -146,13 +146,17 @@ def events_list(request):
     elif not show_historical and show_upcoming:
         all_events_list = all_events_list.filter(planning_date__gte=today)
 
+    if not drafts:
+        all_events_list = all_events_list.filter(status='publish')
+
+    if not request.user.groups.all()[0].name == 'admin' and drafts:
+        all_events_list = all_events_list.filter(organizer=request.user)
 
     if organizer:
         all_events_list = all_events_list.filter(organizer=organizer)
 
     if only_mine:
         all_events_list = all_events_list.filter(organizer=request.user)
-
 
     if title and title != '':
         all_events_list = all_events_list.filter(title__icontains=title)
@@ -392,7 +396,7 @@ def suggest_event(request):
                 leader.lead_count += 1
                 leader.save()
 
-            return redirect('home')
+            return redirect('subjects_list')
     else:
         form = SubjectForm()
 
@@ -418,7 +422,7 @@ def user_page(request):
 
 def subjects_list(request):
 
-    title = request.GET.get('title')
+    title = request.GET.get('s_title')
     all_subjects_list = Subject.objects.all()
 
     cnt = []
@@ -444,13 +448,10 @@ def subjects_list(request):
             seen.add(t)
             new_l.append(d)
 
-    print(new_l)
-
     if title and title != '':
         all_subjects_list = all_subjects_list.filter(title__icontains=title)
 
-
-    sort_by = request.GET.get('sort_by')
+    sort_by = request.GET.get('s_sort_by')
 
     if sort_by == 'alphabetical':
         all_subjects_list = all_subjects_list.order_by('title')
@@ -466,8 +467,6 @@ def subjects_list(request):
         all_subjects_list =all_subjects_list.order_by('-lead_count')
     else:
         all_subjects_list = all_subjects_list.all()
-
-
 
 
 
