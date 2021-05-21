@@ -1,17 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="Google Cloud depoloyment">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/create_event.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/create_event.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/drafts_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/drafts_list.html" afterDir="false" />
+    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="Drafts filter on events_list, showing only published events on homepage, filtering improvements">
       <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/events_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/events_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/subjects_list_ajax.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/subjects_list_ajax.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/scheduler_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/scheduler_project/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,7 +118,7 @@
       <workItem from="1621169369125" duration="19000" />
       <workItem from="1621169857857" duration="13355000" />
       <workItem from="1621206508604" duration="951000" />
-      <workItem from="1621549542100" duration="6662000" />
+      <workItem from="1621549542100" duration="6972000" />
     </task>
     <task id="LOCAL-00001" summary="Test kom Bartka K">
       <created>1616441609819</created>
@@ -346,7 +337,14 @@
       <option name="project" value="LOCAL" />
       <updated>1621107610526</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Drafts filter on events_list, showing only published events on homepage, filtering improvements">
+      <created>1621556593111</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1621556593111</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -372,7 +370,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="..." />
     <MESSAGE value="Aktualizacja plików" />
     <MESSAGE value="display events in numeric date format" />
     <MESSAGE value="Aktualizacja rejestracji + ikona + kosmetyczne poprawki" />
@@ -397,6 +394,7 @@
     <MESSAGE value="Fixed event_edit - datetime and duration fields as read-only" />
     <MESSAGE value="Fixed subjects list - highlighting checked option" />
     <MESSAGE value="Email validation (my_profile/edit)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Email validation (my_profile/edit)" />
+    <MESSAGE value="Drafts filter on events_list, showing only published events on homepage, filtering improvements" />
+    <option name="LAST_COMMIT_MESSAGE" value="Drafts filter on events_list, showing only published events on homepage, filtering improvements" />
   </component>
 </project>
