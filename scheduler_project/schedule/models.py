@@ -54,6 +54,7 @@ class Polls(models.Model):
 class Dates(models.Model):
     poll = models.ForeignKey(Polls, on_delete=models.CASCADE)
     date = models.DateTimeField(blank=True, null=True)
+    count = models.IntegerField(null=True, blank=True, default=0)
     users = models.ManyToManyField(User, related_name='users', default=None, blank=True)
 
 
