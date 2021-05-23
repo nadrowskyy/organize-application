@@ -1,0 +1,124 @@
+{% extends 'schedule/base.html' %}
+{% load static %}
+{% load auth_extras %}
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Szczegóły ankiety</title>
+
+</head>
+<body>
+
+<div class="container" style="max-width:1000px">
+
+
+	{% csrf_token %}
+
+    <br>
+    <h2 style="text-align:center;">Szczegóły ankiety</h2>
+    <br>
+<div class="container">
+
+            <div class="badge-light">
+                <br>
+                    <p style="text-align:center;"><img class="rounded-circle" src="{{MEDIA_URL}}{{i.icon}}" alt="" width="140" height="140"></p>
+                <center>
+                    <div class="baige_background">
+                        <br>
+                    <h1>{{event.title}}</h1>
+                    <br>
+                        Czas aktywności ankiety<br>
+                    <h3>{{poll.since_active}} - {{poll.till_active}}</h3>
+                    {% if request.user|has_group:"admin" %}
+
+                    <h6>Prowadzi: <a class="h6" href="{% url 'user_details' event.organizer.id %}"> {{event.organizer.first_name}} {{event.organizer.last_name}}</h6></a>
+                    <br>
+                    {% else %}
+                    <h6>Prowadzi: {{event.organizer.first_name}} {{event.organizer.last_name}}</h6>
+                    <br>
+                    {% endif %}
+                    </div>
+                    <div>
+                        <br>
+                        <h5>Opis:</h5>
+                        <h6>{{event.description}}</h6>
+                    </div>
+                    <div>
+                        <br>
+                        {% if event.attachment %}
+                        <a href="{{MEDIA_URL}}{{i.attachment}}">Pobierz załącznik</a>
+                        <br>
+                        {% endif %}
+                        <br>
+                    </div>
+                </center>
+            </div>
+</div>
+</div>
+
+
+    <br>
+    <h2 style="text-align:center;" id="polls">Głosy</h2>
+<div class="container mt-5 mb-5" id="cmt_container">
+    <div class="row height d-flex justify-content-center align-items-center">
+
+        <div class="col-md-9">
+            {% if request.user.is_authenticated %}
+            <form action="" method="POST">
+                {% csrf_token %}
+                {% for date in dates %}
+                    <input type="checkbox" id="date{{ forloop.counter }}" name="dates_voted" value="{{date.date|date:'Y-m-d\TH:i'}}">
+                    <label for="date{{ forloop.counter }}">{{ date.date }}</label>
+                    <br>
+                {% endfor %}
+            {% endif %}
+            <center><button id="pub_button" name="pub_button" class="btn btn-secondary" style="width:20%;font-family: 'Oswald', sans-serif;" type="submit" value="save" onclick="return confirm('Czy chcesz zapisać głosy? Twojego wyboru nie będzie można zmienić!')">Zapisz głosy</button></center>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+    <center><a href="#" class="btn btn-secondary">Wróć na górę</a></center>
+<br>
+
+
+<script>document.getElementById("scroll").click()</script>
+<script type="text/javascript">
+$(document).ready(function () {
+    $('#pub_button').click(function() {
+      checked = $("input[type=checkbox]:checked").length;
+
+      if(!checked) {
+        alert("Musisz zaznaczyć przynajmniej jedną datę");
+        return false;
+      }
+
+    });
+});
+
+</script>
+
+<script>
+
+            document.addEventListener("DOMContentLoaded", function(event) {
+            var scrollpos = localStorage.getItem('scrollpos');
+            if (scrollpos) window.scrollTo(0, scrollpos);
+        });
+
+        window.onbeforeunload = function(e) {
+            localStorage.setItem('scrollpos', window.scrollY);
+        };
+
+</script>
+</body>
+
+
+{% endblock %}

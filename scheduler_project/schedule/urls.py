@@ -44,5 +44,6 @@ urlpatterns = [
     # path('change_password/', views.change_password, name='change_password'),
     path('event_details/<int:index>', views.event_details, name='event_details'),
     path('polls_list', views.polls_list, name='polls_list'),
+    path('poll_details/<int:index>', views.poll_details, name='poll_details'),
     path('draft_edit/<int:index>', views.draft_edit, name='draft_edit')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
