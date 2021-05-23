@@ -210,6 +210,16 @@ def polls_list(request):
     return render(request, 'schedule/polls_list.html', context)
 
 
+def poll_details(request, index):
+    if request.method == 'GET':
+        selected_event = Event.objects.filter(id=index)
+        poll = Polls.objects.filter(event=selected_event)
+        dates = Dates.objects.filter(poll=poll)
+        context = {'selected_event': selected_event}
+
+        return render(request, 'schedule/poll_details.html', context)
+
+
 def draft_edit(request, index):
 
     if request.user.groups.all()[0].name == 'admin':
