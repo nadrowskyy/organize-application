@@ -461,7 +461,7 @@ def draft_edit(request, index):
 
             else:
                 context = {'not_permitted': True}
-                return render(request, 'schedule/draft_list.html', context)
+                return render(request, 'schedule/polls_list.html', context)
 
 
 # pozwala wejsc na strone tworzenia eventów tylko adminom
