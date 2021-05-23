@@ -112,12 +112,12 @@
         SEKCJE ANKIETY, MOŻNA JAKOŚ WYRÓŻNIĆ, NP. W RAMCE
         <div class="row">
         <div class="col-md-12 col-lg-6">
-            <label for="poll_avaible_since">Od kiedy ankieta ma być dostępna</label>
-                <input class="form-control" id="poll_avaible_since" min="{% now 'Y-m-d\TH:i' %}" name="poll_avaible_since" type="date" value="{{ poll.since_active|date:'Y-m-d' }}">
+            <label for="poll_avaible_since">Od kiedy ankieta ma być dostępna**</label>
+                <input class="form-control" id="poll_avaible_since" min="{% now 'Y-m-d' %}" name="poll_avaible_since" type="date" value="{{ poll.since_active|date:'Y-m-d' }}">
         </div>
         <div class="col-md-12 col-lg-6">
-        <label for="poll_avaible">Do kiedy ankieta ma być dostępna</label>
-            <input class="form-control" id="poll_avaible" name="poll_avaible" type="date" value="{{ poll.till_active|date:'Y-m-d' }}">
+        <label for="poll_avaible">Do kiedy ankieta ma być dostępna**</label>
+            <input class="form-control" id="poll_avaible" min="{% now 'Y-m-d' %}" name="poll_avaible" type="date" value="{{ poll.till_active|date:'Y-m-d' }}">
         </div>
         </div>
         <br>
@@ -133,7 +133,7 @@
         <div id="plan_container" class="row">
         {% for date in dates %}
         <div class="col-md-12 col-lg-6">
-            <label>Data i godzina rozpoczęcia</label>
+            <label>Data i godzina rozpoczęcia**</label>
             <input class="form-control" name="planning_date_draft" type="datetime-local"
                        value="{{ date.date|date:'Y-m-d\TH:i' }}">
             <button class="remove_date btn btn-secondary" style="font-family: 'Oswald', sans-serif;" type="button">USUN</button>
@@ -171,7 +171,8 @@
     <br>
     <div class="row">
         <div class="col-md-12 col-lg-6">
-            * Pola wymagane do opublikowania szkolenia
+            * Pola wymagane do opublikowania szkolenia<br>
+            ** Pola wymagane do utworzenia aktywnej ankiety
         </div>
     </div>
     <br>
@@ -198,7 +199,7 @@
     $(document).ready(function() {
     $('.selectOrganizer').select2();
     $('#add_date').click(function () {
-       $('#plan_container').append('<div class="col-md-12 col-lg-6"><label>Data i godzina rozpoczęcia</label><input class="form-control" name="planning_date_draft" type="datetime-local" required><button class="remove_date btn btn-secondary" style="font-family: \'Oswald\', sans-serif;" type="button">USUN</button></div>')
+       $('#plan_container').append('<div class="col-md-12 col-lg-6"><label>Data i godzina rozpoczęcia**</label><input class="form-control" name="planning_date_draft" type="datetime-local" required><button class="remove_date btn btn-secondary" style="font-family: \'Oswald\', sans-serif;" type="button">USUN</button></div>')
     });
     });
 

@@ -234,8 +234,9 @@ def draft_edit(request, index):
 
                 planning_dates = request.POST.getlist('planning_date_draft')
 
-                if len(planning_dates) < 2 and request.POST.get('if_active') == 'True':
-                    messages.error(request, "Podaj co najmniej dwie proponowane daty w ankiecie")
+                if len(planning_dates) < 2 and request.POST.get('if_active') == 'True' or \
+                        request.POST.get('poll_avaible_since') or request.POST.get('poll_avaible'):
+                    messages.error(request, "Wypełnij wszystkie pola wymagane dla utworzenia aktywnej ankiety.")
                     return redirect('draft_edit', index)
                 if request.POST.get('if_active') == 'True':
                     if_active = True
@@ -357,13 +358,13 @@ def draft_edit(request, index):
 
                 if request.method == 'POST':
                     if request.POST.get('pub_button') == 'save':
-                        print('353')
                         poll = Polls.objects.filter(event=index).first()
                         dates = Dates.objects.filter(poll=poll)
 
                         planning_dates = request.POST.getlist('planning_date_draft')
-                        if len(planning_dates) < 2 and request.POST.get('if_active') == 'True':
-                            messages.error(request, "Podaj co najmniej dwie proponowane daty w ankiecie")
+                        if len(planning_dates) < 2 and request.POST.get('if_active') == 'True' or \
+                                request.POST.get('poll_avaible_since') or request.POST.get('poll_avaible'):
+                            messages.error(request, "Wypełnij wszystkie pola wymagane dla utworzenia aktywnej ankiety.")
                             return redirect('draft_edit', index)
                         if request.POST.get('if_active') == 'True':
                             if_active = True
@@ -394,12 +395,9 @@ def draft_edit(request, index):
                                 convert_to_date = datetime.strptime(el3, "%Y-%m-%dT%H:%M")
                                 date_obj = Dates.objects.filter(poll=poll, date=convert_to_date).first()
                                 date_obj.delete()
-                            print(planning_dates)
-                            print(dates_to_add)
                             for el4 in dates_to_add:
                                 convert_to_date = datetime.strptime(el4, "%Y-%m-%dT%H:%M")
                                 date_obj = Dates.objects.create(poll=poll, date=convert_to_date)
-                        print('395')
                         selected_event = Event.objects.get(id=index)
                         title = request.POST.get('title')
                         description = request.POST.get('description')
