@@ -515,15 +515,9 @@ def create_event(request):
     User = get_user_model()
     fullnames = User.objects.all()
     if request.method == 'POST':
-        print('312')
-        print('publish')
-        print(type(request.POST.get('publish')))
         if request.POST.get('publish') == 'True':
-            print('publish')
             form = CreateEvent(request.POST, request.FILES)
-            print('non valid')
             if form.is_valid():
-                print('valid')
                 form.save()
                 return redirect('events_list')
         if request.POST.get('publish') == 'False':
