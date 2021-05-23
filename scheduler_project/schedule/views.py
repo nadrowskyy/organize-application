@@ -201,11 +201,13 @@ def events_list(request):
     #               })
 
 
-def drafts_list(request):
-    all_events_list = Event.objects.filter(status='draft')
+def polls_list(request):
+    all_events_list = Event.objects.filter(polls__if_active=True, polls__since_active__lte=datetime.now(),
+                                           polls__till_active__gte=datetime.now())
+    print(all_events_list)
     # wyroznic wydarzenia ktore dla ktorych ankieta jest nieaktywna
     context = {'list': all_events_list}
-    return render(request, 'schedule/drafts_list.html', context)
+    return render(request, 'schedule/polls_list.html', context)
 
 
 def draft_edit(request, index):
