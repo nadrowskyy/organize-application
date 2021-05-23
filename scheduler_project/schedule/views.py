@@ -202,8 +202,14 @@ def events_list(request):
 
 
 def polls_list(request):
+    # trzeba odfiltrowac te ankiety gdzie user juz zaglosowal
     all_events_list = Event.objects.filter(polls__if_active=True, polls__since_active__lte=datetime.now(),
                                            polls__till_active__gte=datetime.now())
+    # ankiety gdzie user juz zaglosowal
+    curr_user_voted = set(all_events_list.filter(polls__dates__users=request.user))
+    for el in curr_user_voted:
+        all_events_list.filter(pk=el.id).delete()
+
     polls_list2 = []
     for el in all_events_list:
         polls_list2.append(get_object_or_404(Polls, event=el.id))
@@ -214,25 +220,35 @@ def polls_list(request):
 
 
 def poll_details(request, index):
+    selected_event = Event.objects.filter(polls__pk=index)[0]
+    poll = get_object_or_404(Polls, pk=index)
+    dates = Dates.objects.filter(poll=poll)
+
+    # sprawdzam czy user juz zaglosowal na ktorykolwiek z terminow
+    for el in dates:
+        if el.users.filter(id=request.user.id).exists():
+            return redirect('home')
+
     if request.method == 'GET':
-        selected_event = Event.objects.filter(polls__pk=index)
-        poll = get_object_or_404(Polls, pk=index)
-        dates = Dates.objects.filter(poll=poll)
-        context = {'selected_event': selected_event, 'dates': dates}
+        context = {'event': selected_event, 'dates': dates, 'poll': poll}
 
         return render(request, 'schedule/poll_details.html', context)
 
     if request.method == 'POST':
         dates_voted = request.POST.getlist('dates_voted')
-        # zapisac glosy
-        for el in dates_voted:
-            tmp_date = get_object_or_404(Dates, date=el)
-            if tmp_date.users.filter(id=request.user.id).exists():
-                print('Glos jest')
-            else:
-                tmp_date.users.add(request.user)
-                tmp_date.count += 1
-                tmp_date.save()
+        if poll.if_active is False:
+            messages.error(request, "Ankieta jest nieaktywna, Twoje głosy nie zostały napisane.")
+            return redirect('polls_list')
+        else:
+            for el in dates_voted:
+                tmp_date = get_object_or_404(Dates, date=el)
+                if tmp_date.users.filter(id=request.user.id).exists():
+                    # drugie sprawdzenie czy glos juz jest w bazie, na wszelki wypadek, byc moze to wywalimy
+                    pass
+                else:
+                    tmp_date.users.add(request.user)
+                    tmp_date.count += 1
+                    tmp_date.save()
 
         return redirect('polls_list')
 

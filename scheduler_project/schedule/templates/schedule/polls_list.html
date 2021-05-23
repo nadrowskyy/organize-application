@@ -9,7 +9,9 @@
     <errormsg>Nie znaleziono szkiców</errormsg>
 
 {% endif %}
-
+{% for message in messages %}
+    <errormsg>{{ message }}</errormsg>
+{% endfor %}
 <div class="container">
 
     <br>
