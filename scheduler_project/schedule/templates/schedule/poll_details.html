@@ -78,7 +78,7 @@
                     <br>
                 {% endfor %}
             {% endif %}
-            <center><button name="pub_button" class="btn btn-secondary" style="width:20%;font-family: 'Oswald', sans-serif;" type="submit" value="save" onclick="return confirm('Czy chcesz zapisać głosy? Twojego wyboru nie będzie można zmienić!')">Zapisz głosy</button></center>
+            <center><button id="pub_button" name="pub_button" class="btn btn-secondary" style="width:20%;font-family: 'Oswald', sans-serif;" type="submit" value="save" onclick="return confirm('Czy chcesz zapisać głosy? Twojego wyboru nie będzie można zmienić!')">Zapisz głosy</button></center>
             </form>
             </div>
         </div>
@@ -95,17 +95,19 @@
 
 
 <script>document.getElementById("scroll").click()</script>
+<script type="text/javascript">
+$(document).ready(function () {
+    $('#pub_button').click(function() {
+      checked = $("input[type=checkbox]:checked").length;
 
-<script>
-    $('#exampleModal').on('show.bs.modal', function (event) {
-  var button = $(event.relatedTarget) // Button that triggered the modal
-  var content = button.data('content') // Extract info from data-* attributes
-  var comment_id = button.data('commentid')
-  var modal = $(this)
-  modal.find('.modal-title').text('Edytuj swój komentarz')
-  modal.find('.modal-body #new_content').val(content)
-  modal.find('.modal-body #comment_id').val(comment_id)
-})
+      if(!checked) {
+        alert("Musisz zaznaczyć przynajmniej jedną datę");
+        return false;
+      }
+
+    });
+});
+
 </script>
 
 <script>

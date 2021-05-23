@@ -224,13 +224,17 @@ def poll_details(request, index):
 
     if request.method == 'POST':
         dates_voted = request.POST.getlist('dates_voted')
-        print(dates_voted)
-
+        # zapisac glosy
+        for el in dates_voted:
+            tmp_date = get_object_or_404(Dates, date=el)
+            if tmp_date.users.filter(id=request.user.id).exists():
+                print('Glos jest')
+            else:
+                tmp_date.users.add(request.user)
+                tmp_date.count += 1
+                tmp_date.save()
 
         return redirect('polls_list')
-
-
-
 
 
 def draft_edit(request, index):
