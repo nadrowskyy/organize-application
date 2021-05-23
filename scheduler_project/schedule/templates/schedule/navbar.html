@@ -41,9 +41,11 @@
 						<a class="nav-link" href="{% url 'subjects_list' %}">Tematy</a>
 					</li>
 					{% if request.user.is_authenticated %}
+					{% if request.user|have_polls %}
 					<li class="nav-item">
 						<a class="nav-link" href="{% url 'polls_list' %}">Głosowanie</a>
 					</li>
+					{% endif %}
 					{% endif %}
 					{% if request.user|has_group:"admin" %}
 					<li class="nav-item">
