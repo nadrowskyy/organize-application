@@ -218,10 +218,6 @@ def draft_edit(request, index):
             users = user.objects.all()
             poll = Polls.objects.filter(event=index).first()
             dates = Dates.objects.filter(poll=poll)
-            for el in dates:
-                print(el.date)
-            print('poll')
-            print(poll)
 
             if event[0].planning_date < datetime.today():
                 past = True
@@ -232,30 +228,60 @@ def draft_edit(request, index):
             return render(request, 'schedule/draft_edit.html', context)
 
         if request.method == 'POST':
-
-
-            print('POSSSST PSOT')
-            print(request.POST.get('pub_button'))
             if request.POST.get('pub_button') == 'save':
-                pass
-            if request.POST.get('pub_button') == 'publish' or request.POST.get('planning_date') == '':
-                if request.POST.get('planning_date') == '' or request.POST.get('duration') == '':
-                    # jesli te pola nie sa wypelnione wyswietlamy error message, raczej ciezko to zrobic na froncie
-                    # wiec przerzucamy na backend
-                    return render(request, 'schedule/draft_edit.html')
-                selected_event = Event.objects.get(id=index)
+                poll = Polls.objects.filter(event=index).first()
+                dates = Dates.objects.filter(poll=poll)
 
+                planning_dates = request.POST.getlist('planning_date_draft')
+
+                if len(planning_dates) < 2 and request.POST.get('if_active') == 'True' or \
+                        request.POST.get('poll_avaible_since') or request.POST.get('poll_avaible'):
+                    messages.error(request, "Wypełnij wszystkie pola wymagane dla utworzenia aktywnej ankiety.")
+                    return redirect('draft_edit', index)
+                if request.POST.get('if_active') == 'True':
+                    if_active = True
+                else:
+                    # daty beda zapisane w ankiecie ale sama ankieta bedzie nie aktywna
+                    if_active = False
+
+                since_active = request.POST.get('poll_avaible_since')
+                till_active = request.POST.get('poll_avaible')
+
+                update_poll = Polls.objects.filter(event=index).update(since_active=since_active,
+                                                                       till_active=till_active, if_active=if_active)
+
+                planning_dates_from_db = [x.date.strftime("%Y-%m-%dT%H:%M") for x in dates]
+
+                if planning_dates != planning_dates_from_db:
+                    dates_to_delete = []
+                    for el in planning_dates_from_db:
+                        if el not in planning_dates:
+                            dates_to_delete.append(el)
+                    dates_to_add = []
+                    for el2 in planning_dates:
+                        if el2 not in planning_dates_from_db:
+                            dates_to_add.append(el2)
+
+                    for el3 in dates_to_delete:
+                        convert_to_date = datetime.strptime(el3, "%Y-%m-%dT%H:%M")
+                        date_obj = Dates.objects.filter(poll=poll, date=convert_to_date).first()
+                        date_obj.delete()
+
+                    for el4 in dates_to_add:
+                        convert_to_date = datetime.strptime(el4, "%Y-%m-%dT%H:%M")
+                        date_obj = Dates.objects.create(poll=poll, date=convert_to_date)
+
+                selected_event = Event.objects.get(id=index)
                 title = request.POST.get('title')
                 description = request.POST.get('description')
                 organizer = request.POST.get('organizer')
                 planning_date = request.POST.get('planning_date')
                 duration = request.POST.get('duration')
                 link = request.POST.get('link')
-
                 update_event = Event.objects.filter(id=index).update(title=title, description=description,
-                                                    organizer=organizer, planning_date=planning_date,
-                                                    duration=duration, link=link, status='publish',
-                                                    publish=timezone.now())
+                                                                         organizer=organizer,
+                                                                         planning_date=planning_date,
+                                                                         duration=duration, link=link)
 
                 new_icon = request.FILES.get('icon')
                 new_attachment = request.FILES.get('attachment')
@@ -268,7 +294,39 @@ def draft_edit(request, index):
                     selected_event.attachment = new_attachment
                     selected_event.save()
 
-                return redirect('events_list')
+            if request.POST.get('pub_button') == 'publish':
+                if request.POST.get('description') == '' or request.POST.get('planning_date') == '' or \
+                        request.POST.get('duration') == '':
+                    messages.error(request, "Wypełnij wszystkie pola wymagane dla opublikowania szkolenia.")
+                    return redirect('draft_edit', index)
+                else:
+                    selected_event = Event.objects.get(id=index)
+                    title = request.POST.get('title')
+                    description = request.POST.get('description')
+                    organizer = request.POST.get('organizer')
+                    print('306')
+                    print(organizer)
+                    planning_date = request.POST.get('planning_date')
+                    duration = request.POST.get('duration')
+                    link = request.POST.get('link')
+
+                    update_event = Event.objects.filter(id=index).update(title=title, description=description,
+                                                        organizer=organizer, planning_date=planning_date,
+                                                        duration=duration, link=link, status='publish',
+                                                        publish=timezone.now())
+
+                    new_icon = request.FILES.get('icon')
+                    new_attachment = request.FILES.get('attachment')
+
+                    if new_icon:
+                        selected_event.icon = new_icon
+                        selected_event.save()
+
+                    if new_attachment:
+                        selected_event.attachment = new_attachment
+                        selected_event.save()
+
+                    return redirect('events_list')
 
         return render(request, 'schedule/draft_edit.html')
 
@@ -290,38 +348,118 @@ def draft_edit(request, index):
             if i.organizer == request.user:
 
                 if request.method == 'GET':
-                    context = {'event': event, 'past': past}
+                    user = get_user_model()
+                    users = user.objects.all()
+                    poll = Polls.objects.filter(event=index).first()
+                    dates = Dates.objects.filter(poll=poll)
+                    context = {'event': event, 'users': users, 'permitted': True, 'past': past, 'poll': poll,
+                               'dates': dates}
                     return render(request, 'schedule/draft_edit.html', context)
 
                 if request.method == 'POST':
+                    if request.POST.get('pub_button') == 'save':
+                        poll = Polls.objects.filter(event=index).first()
+                        dates = Dates.objects.filter(poll=poll)
 
-                    selected_event = Event.objects.get(id=index)
+                        planning_dates = request.POST.getlist('planning_date_draft')
+                        if len(planning_dates) < 2 and request.POST.get('if_active') == 'True' or \
+                                request.POST.get('poll_avaible_since') or request.POST.get('poll_avaible'):
+                            messages.error(request, "Wypełnij wszystkie pola wymagane dla utworzenia aktywnej ankiety.")
+                            return redirect('draft_edit', index)
+                        if request.POST.get('if_active') == 'True':
+                            if_active = True
+                        else:
+                            # daty beda zapisane w ankiecie ale sama ankieta bedzie nie aktywna
+                            if_active = False
 
-                    description = request.POST.get('description')
-                    planning_date = request.POST.get('planning_date')
-                    duration = request.POST.get('duration')
-                    link = request.POST.get('link')
+                        since_active = request.POST.get('poll_avaible_since')
+                        till_active = request.POST.get('poll_avaible')
 
-                    update_event = Event.objects.filter(id=index).update(description=description,
-                                                                         planning_date=planning_date, duration=duration,
-                                                                         link=link)
+                        update_poll = Polls.objects.filter(event=index).update(since_active=since_active,
+                                                                               till_active=till_active,
+                                                                               if_active=if_active)
 
-                    new_icon = request.FILES.get('icon')
-                    new_attachment = request.FILES.get('attachment')
+                        planning_dates_from_db = [x.date.strftime("%Y-%m-%dT%H:%M") for x in dates]
 
-                    if new_icon:
-                        selected_event.icon = new_icon
-                        selected_event.save()
+                        if planning_dates != planning_dates_from_db:
+                            dates_to_delete = []
+                            for el in planning_dates_from_db:
+                                if el not in planning_dates:
+                                    dates_to_delete.append(el)
+                            dates_to_add = []
+                            for el2 in planning_dates:
+                                if el2 not in planning_dates_from_db:
+                                    dates_to_add.append(el2)
 
-                    if new_attachment:
-                        selected_event.attachment = new_attachment
-                        selected_event.save()
+                            for el3 in dates_to_delete:
+                                convert_to_date = datetime.strptime(el3, "%Y-%m-%dT%H:%M")
+                                date_obj = Dates.objects.filter(poll=poll, date=convert_to_date).first()
+                                date_obj.delete()
+                            for el4 in dates_to_add:
+                                convert_to_date = datetime.strptime(el4, "%Y-%m-%dT%H:%M")
+                                date_obj = Dates.objects.create(poll=poll, date=convert_to_date)
+                        selected_event = Event.objects.get(id=index)
+                        title = request.POST.get('title')
+                        description = request.POST.get('description')
+                        organizer = request.user.id
+                        planning_date = request.POST.get('planning_date')
+                        duration = request.POST.get('duration')
+                        link = request.POST.get('link')
+                        update_event = Event.objects.filter(id=index).update(title=title, description=description,
+                                                                             organizer=organizer,
+                                                                             planning_date=planning_date,
+                                                                             duration=duration, link=link)
 
-                    return redirect('events_list')
+                        new_icon = request.FILES.get('icon')
+                        new_attachment = request.FILES.get('attachment')
+
+                        if new_icon:
+                            selected_event.icon = new_icon
+                            selected_event.save()
+
+                        if new_attachment:
+                            selected_event.attachment = new_attachment
+                            selected_event.save()
+
+                    if request.POST.get('pub_button') == 'publish':
+                        if request.POST.get('description') == '' or request.POST.get('planning_date') == '' or \
+                                request.POST.get('duration') == '':
+                            messages.error(request, "Wypełnij wszystkie pola wymagane dla opublikowania szkolenia.")
+                            return redirect('draft_edit', index)
+                        else:
+                            selected_event = Event.objects.get(id=index)
+                            title = request.POST.get('title')
+                            description = request.POST.get('description')
+                            organizer = request.user.id
+                            planning_date = request.POST.get('planning_date')
+                            duration = request.POST.get('duration')
+                            link = request.POST.get('link')
+
+                            update_event = Event.objects.filter(id=index).update(title=title, description=description,
+                                                                                 organizer=organizer,
+                                                                                 planning_date=planning_date,
+                                                                                 duration=duration, link=link,
+                                                                                 status='publish',
+                                                                                 publish=timezone.now())
+
+                            new_icon = request.FILES.get('icon')
+                            new_attachment = request.FILES.get('attachment')
+
+                            if new_icon:
+                                selected_event.icon = new_icon
+                                selected_event.save()
+
+                            if new_attachment:
+                                selected_event.attachment = new_attachment
+                                selected_event.save()
+
+                            return redirect('events_list')
+
+                return render(request, 'schedule/draft_edit.html')
 
             else:
                 context = {'not_permitted': True}
-                return render(request, 'schedule/draft_edit.html', context)
+                return render(request, 'schedule/draft_list.html', context)
 
 
 # pozwala wejsc na strone tworzenia eventów tylko adminom
@@ -341,12 +479,9 @@ def create_event(request):
                 print('valid')
                 form.save()
                 return redirect('events_list')
-        print('323')
         if request.POST.get('publish') == 'False':
-            print('324')
             form = CreateEvent(request.POST, request.FILES)
             if form.is_valid():
-                print('327')
                 draft_form = form.save(commit=False)
                 draft_form.status = 'draft'
                 draft_form.save()
@@ -354,23 +489,36 @@ def create_event(request):
                 event = get_object_or_404(Event, pk=draft_form.pk)
                 since_active = request.POST.get('poll_avaible_since')
                 till_active = request.POST.get('poll_avaible')
-                print('---------')
-                print(request.POST.get('if_active'))
                 if request.POST.get('if_active') == 'True':
-                    print('356')
+
+                    planning_dates = request.POST.getlist('planning_date_draft')
+                    if len(planning_dates) < 2:
+                        messages.error(request, "Podaj co najmniej dwie proponowane daty w ankiecie")
+
                     if_active = True
                     poll_form = Polls(event=event, since_active=since_active, till_active=till_active,
                                       if_active=if_active)
                     poll_form.save()
 
                     poll = get_object_or_404(Polls, pk=poll_form.pk)
-                    planning_dates = request.POST.getlist('planning_date_draft')
+
                     for el in planning_dates:
-                        dates_form = Dates(poll=poll, date=el)
+                        dates_form = Dates(poll=poll, date=el+':00')
                         dates_form.save()
                 if request.POST.get('if_active') == 'False':
-                    pass
-                    # nie tworzymy pól w bazie jeśli przycisk tworzenia ankiety jest na false
+
+                    planning_dates = request.POST.getlist('planning_date_draft')
+                    if_active = False
+                    poll_form = Polls(event=event, since_active=since_active, till_active=till_active,
+                                      if_active=if_active)
+                    poll_form.save()
+
+                    poll = get_object_or_404(Polls, pk=poll_form.pk)
+
+                    for el in planning_dates:
+                        dates_form = Dates(poll=poll, date=el + ':00')
+                        dates_form = Dates(poll=poll, date=el)
+                        dates_form.save()
 
     else:
         form = CreateEvent()
