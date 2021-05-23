@@ -204,20 +204,33 @@ def events_list(request):
 def polls_list(request):
     all_events_list = Event.objects.filter(polls__if_active=True, polls__since_active__lte=datetime.now(),
                                            polls__till_active__gte=datetime.now())
-    print(all_events_list)
+    polls_list2 = []
+    for el in all_events_list:
+        polls_list2.append(get_object_or_404(Polls, event=el.id))
+    events_polls_list = zip(all_events_list, polls_list2)
     # wyroznic wydarzenia ktore dla ktorych ankieta jest nieaktywna
-    context = {'list': all_events_list}
+    context = {'events_polls_list': events_polls_list}
     return render(request, 'schedule/polls_list.html', context)
 
 
 def poll_details(request, index):
     if request.method == 'GET':
-        selected_event = Event.objects.filter(id=index)
-        poll = Polls.objects.filter(event=selected_event)
+        selected_event = Event.objects.filter(polls__pk=index)
+        poll = get_object_or_404(Polls, pk=index)
         dates = Dates.objects.filter(poll=poll)
-        context = {'selected_event': selected_event}
+        context = {'selected_event': selected_event, 'dates': dates}
 
         return render(request, 'schedule/poll_details.html', context)
+
+    if request.method == 'POST':
+        dates_voted = request.POST.getlist('dates_voted')
+        print(dates_voted)
+
+
+        return redirect('polls_list')
+
+
+
 
 
 def draft_edit(request, index):
@@ -241,16 +254,18 @@ def draft_edit(request, index):
 
         if request.method == 'POST':
             if request.POST.get('pub_button') == 'save':
+                print('----------------')
+                print(request.POST.get('if_active'))
                 poll = Polls.objects.filter(event=index).first()
                 dates = Dates.objects.filter(poll=poll)
 
                 planning_dates = request.POST.getlist('planning_date_draft')
 
-                if len(planning_dates) < 2 and request.POST.get('if_active') == 'True' or \
-                        request.POST.get('poll_avaible_since') or request.POST.get('poll_avaible'):
-                    messages.error(request, "Wypełnij wszystkie pola wymagane dla utworzenia aktywnej ankiety.")
-                    return redirect('draft_edit', index)
                 if request.POST.get('if_active') == 'True':
+                    if len(planning_dates) < 2 or request.POST.get('poll_avaible_since') == '' or \
+                            request.POST.get('poll_avaible') == '':
+                        messages.error(request, "Wypełnij wszystkie pola wymagane dla utworzenia aktywnej ankiety.")
+                        return redirect('draft_edit', index)
                     if_active = True
                 else:
                     # daty beda zapisane w ankiecie ale sama ankieta bedzie nie aktywna
@@ -340,7 +355,7 @@ def draft_edit(request, index):
 
                     return redirect('events_list')
 
-        return render(request, 'schedule/draft_edit.html')
+        return redirect('events_list')
 
     elif request.user.groups.all()[0].name == 'employee':
 

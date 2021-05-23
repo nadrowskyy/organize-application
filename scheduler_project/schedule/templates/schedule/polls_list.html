@@ -4,7 +4,7 @@
 {% block content %}
 
 
-{% if not list %}
+{% if not events_polls_list %}
     <br>
     <errormsg>Nie znaleziono szkiców</errormsg>
 
@@ -17,25 +17,25 @@
     <hr>
 
 <div class="row">
-    {% for i in list %}
+    {% for event, poll in events_polls_list %}
 
 
             <div class="col-lg-3 col-md-4 col-sm-5">
                     <p style="text-align:center;"><img class="rounded-circle" src="{{MEDIA_URL}}{{i.icon}}" alt="" width="140" height="140"></p>
                 <center>
-                    <h3>{{i.title}}</h3>
-                    <h7>{{i.planning_date|date:"d.m.Y H:i"}} ({{i.planning_date|date:"l"}})</h7>
+                    <h3>{{event.title}}</h3>
+                    <h7>{{event.planning_date|date:"d.m.Y H:i"}} ({{event.planning_date|date:"l"}})</h7>
                     <br>
-                    <h6>Prowadzi: {{i.organizer.first_name}} {{i.organizer.last_name}}</h6>
-                     <p style="text-align:center;"><a class="btn btn-secondary" href="{% url 'poll_details' i.id %}" role="button">Szczegóły »</a>
+                    <h6>Prowadzi: {{event.organizer.first_name}} {{i.organizer.last_name}}</h6>
+                     <p style="text-align:center;"><a class="btn btn-secondary" href="{% url 'poll_details' poll.id %}" role="button">Szczegóły »</a>
                          {% if not request.user|has_group:"admin" %}
                             {% if request.user == i.organizer %}
-                                <a href="{% url 'draft_edit' i.id %}"><img src="{% static 'images/icons/edit.png' %}" style="text-align:right; width:25px; height:25px;"></a>
+                                <a href="{% url 'draft_edit' event.id %}"><img src="{% static 'images/icons/edit.png' %}" style="text-align:right; width:25px; height:25px;"></a>
                             {% endif %}
                          {% else %}
-                            <a href="{% url 'draft_edit' i.id %}"><img src="{% static 'images/icons/edit.png' %}" style="text-align:right; width:25px; height:25px;"></a>
+                            <a href="{% url 'draft_edit' event.id %}"><img src="{% static 'images/icons/edit.png' %}" style="text-align:right; width:25px; height:25px;"></a>
 
-                            <a href="{% url 'delete_event' i.id %}" onclick="return confirm('Czy na pewno chcesz usunąć spotkanie {{i.title}}? \n\nOperacji nie będzie można cofnąć!');"><img src="{% static 'images/icons/delete.png' %}" style="text-align:right; width:25px; height:25px;"></a>
+                            <a href="{% url 'delete_event' event.id %}" onclick="return confirm('Czy na pewno chcesz usunąć spotkanie {{i.title}}? \n\nOperacji nie będzie można cofnąć!');"><img src="{% static 'images/icons/delete.png' %}" style="text-align:right; width:25px; height:25px;"></a>
                          {% endif %}
                     <br>
                 </center>
