@@ -525,17 +525,23 @@ def create_event(request):
             if form.is_valid():
                 draft_form = form.save(commit=False)
                 draft_form.status = 'draft'
-                draft_form.save()
 
-                event = get_object_or_404(Event, pk=draft_form.pk)
                 since_active = request.POST.get('poll_avaible_since')
                 till_active = request.POST.get('poll_avaible')
+
                 if request.POST.get('if_active') == 'True':
 
                     planning_dates = request.POST.getlist('planning_date_draft')
-                    if len(planning_dates) < 2:
-                        messages.error(request, "Podaj co najmniej dwie proponowane daty w ankiecie")
 
+                    if len(planning_dates) < 2 and request.POST.get('if_active') == 'True' or \
+                            request.POST.get('poll_avaible_since') == '' or request.POST.get('poll_avaible') == '':
+                        messages.error(request, "Wypełnij wszystkie pola wymagane dla utworzenia aktywnej ankiety.")
+                        return redirect('create_event')
+
+                    # if len(planning_dates) < 2:
+                    #     messages.error(request, "Podaj co najmniej dwie proponowane daty w ankiecie")
+                    draft_form.save()
+                    event = get_object_or_404(Event, pk=draft_form.pk)
                     if_active = True
                     poll_form = Polls(event=event, since_active=since_active, till_active=till_active,
                                       if_active=if_active)
@@ -550,7 +556,11 @@ def create_event(request):
 
                     planning_dates = request.POST.getlist('planning_date_draft')
                     if_active = False
-                    poll_form = Polls(event=event, since_active=since_active, till_active=till_active,
+
+                    if since_active == '' or till_active == '':
+                        poll_form = Polls(event=event, if_active=if_active)
+                    else:
+                        poll_form = Polls(event=event, since_active=since_active, till_active=till_active,
                                       if_active=if_active)
                     poll_form.save()
 
@@ -558,7 +568,6 @@ def create_event(request):
 
                     for el in planning_dates:
                         dates_form = Dates(poll=poll, date=el + ':00')
-                        dates_form = Dates(poll=poll, date=el)
                         dates_form.save()
 
     else:
