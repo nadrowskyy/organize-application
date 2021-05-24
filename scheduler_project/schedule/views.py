@@ -161,6 +161,9 @@ def events_list(request):
     if title and title != '':
         all_events_list = all_events_list.filter(title__icontains=title)
 
+    if not request.user.is_authenticated:
+        all_events_list = all_events_list.filter(status='publish')
+
     # SORTOWANIE
 
     if sort_by == 'latest':

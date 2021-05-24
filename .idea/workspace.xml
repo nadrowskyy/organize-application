@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="Drafts filter on events_list, showing only published events on homepage, filtering improvements">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/create_event.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/create_event.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/event_details.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/event_details.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/event_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/event_edit.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/events_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/events_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/poll_details.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/poll_details.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/polls_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/polls_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/subjects_list_ajax.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/subjects_list_ajax.html" afterDir="false" />
+    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="Some front-end improvements; draft event profile; marking active polls as voted; poll's dates sorting">
       <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -128,7 +120,7 @@
       <workItem from="1621206508604" duration="951000" />
       <workItem from="1621549542100" duration="7595000" />
       <workItem from="1621782120743" duration="4782000" />
-      <workItem from="1621869348115" duration="8671000" />
+      <workItem from="1621869348115" duration="9005000" />
     </task>
     <task id="LOCAL-00001" summary="Test kom Bartka K">
       <created>1616441609819</created>
@@ -361,7 +353,14 @@
       <option name="project" value="LOCAL" />
       <updated>1621556904660</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Some front-end improvements; draft event profile; marking active polls as voted; poll's dates sorting">
+      <created>1621892238239</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1621892238239</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -387,7 +386,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Aktualizacja plików" />
     <MESSAGE value="display events in numeric date format" />
     <MESSAGE value="Aktualizacja rejestracji + ikona + kosmetyczne poprawki" />
     <MESSAGE value="Zmieniony homepage - karuzela z instrukcją, wyświetlanie trzech najbliższch eventów z datą, godziną, imieniem i nazwiskiem; miejsce na kolejne dodatki" />
@@ -412,6 +410,7 @@
     <MESSAGE value="Fixed subjects list - highlighting checked option" />
     <MESSAGE value="Email validation (my_profile/edit)" />
     <MESSAGE value="Drafts filter on events_list, showing only published events on homepage, filtering improvements" />
-    <option name="LAST_COMMIT_MESSAGE" value="Drafts filter on events_list, showing only published events on homepage, filtering improvements" />
+    <MESSAGE value="Some front-end improvements; draft event profile; marking active polls as voted; poll's dates sorting" />
+    <option name="LAST_COMMIT_MESSAGE" value="Some front-end improvements; draft event profile; marking active polls as voted; poll's dates sorting" />
   </component>
 </project>
