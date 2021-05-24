@@ -1,0 +1,13 @@
+<h3>Zagłosuj w naszych najnowszych ankietach</h3>
+<br>
+<h4>Garść informacji o szkoleniach: </h4>
+{% for event, poll in event_poll %}
+<ul>
+    <li>Tytuł szkolenia: {{ event.title }}</li>
+    <li>Organizator: {{ event.organizer.first_name }} {{ event.organizer.last_name }}</li>
+    <li>Termin głosowania: {{ poll.since_active }} - {{ poll.till_active }}</li>
+</ul>
+{% endfor %}
+<p>Ankiety są dostępne w zakładce 'Głosowanie' po zalogowaniu się do naszej aplikacji</p>
+<br><br>
+<p>Pozdrawiamy, zespół FFT.</p>

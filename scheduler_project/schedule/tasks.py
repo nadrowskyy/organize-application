@@ -170,4 +170,38 @@ def send_poll_notification(poll_pk, draft_pk):
 
 @shared_task
 def send_poll_notification_cron():
-    pass
+    all_events_list = Event.objects.filter(polls__if_active=True, polls__if_sent_notification=False,
+                                           polls__since_active__lte=datetime.now(),
+                                           polls__till_active__gte=datetime.now())
+    if len(all_events_list) == 0:
+        pass
+    else:
+        polls_list = []
+        for el in all_events_list:
+            polls_list.append(get_object_or_404(Polls, event=el.id))
+        events_polls_list = zip(all_events_list, polls_list)
+        user_mails = User.objects.all()
+        mailing_list_all = []
+        for el in user_mails:
+            mailing_list_all.append(el.email)
+        rendered_body = loader.render_to_string('schedule/poll_notification_cron.html',
+                                                {'event_poll': events_polls_list})
+        mail_settings = EmailSet.objects.filter(pk=1)[0]
+        host = mail_settings.EMAIL_HOST
+        port = mail_settings.EMAIL_PORT
+        username = mail_settings.EMAIL_HOST_USER
+        password = mail_settings.EMAIL_HOST_PASSWORD
+        use_tls = bool(mail_settings.EMAIL_USE_TLS)
+        from_email = mail_settings.EMAIL_HEADER
+        with get_connection(host=host, port=port, username=username, password=password,
+                            use_tls=use_tls) as conn:
+            msg = EmailMessage(subject='Zagłosuj w ankiecie!', body=rendered_body,
+                               from_email=from_email,
+                               to=mailing_list_all, connection=conn)
+            msg.content_subtype = "html"
+            msg.send(fail_silently=True)
+        for el in polls_list:
+            el.if_sent_notification = True
+            el.save()
+
+    return None

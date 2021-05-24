@@ -32,7 +32,7 @@ from django.http import HttpResponse
 from django.db.models import Q
 from django.core.mail import BadHeaderError, send_mail
 from .tasks import send_mail_register, send_poll_notification
-
+from django.template import loader
 
 # @login_required(login_url='login') # nie pozwala na wejscie uzytkownika na strone glowna jesli nie jest zarejestrowany
 def home_page(request):
@@ -203,6 +203,7 @@ def events_list(request):
 
 def polls_list(request):
     if request.method == 'GET':
+        send_poll_notification_cron()
         # trzeba odfiltrowac te ankiety gdzie user juz zaglosowal
         all_events_list = Event.objects.filter(polls__if_active=True, polls__since_active__lte=datetime.now(),
                                                polls__till_active__gte=datetime.now())
