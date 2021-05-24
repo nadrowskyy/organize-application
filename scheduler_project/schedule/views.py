@@ -202,28 +202,31 @@ def events_list(request):
 
 
 def polls_list(request):
-    # trzeba odfiltrowac te ankiety gdzie user juz zaglosowal
-    all_events_list = Event.objects.filter(polls__if_active=True, polls__since_active__lte=datetime.now(),
-                                           polls__till_active__gte=datetime.now())
-    # ankiety gdzie user juz zaglosowal
-    curr_user_voted = set(all_events_list.filter(polls__dates__users=request.user))
+    if request.method == 'GET':
+        # trzeba odfiltrowac te ankiety gdzie user juz zaglosowal
+        all_events_list = Event.objects.filter(polls__if_active=True, polls__since_active__lte=datetime.now(),
+                                               polls__till_active__gte=datetime.now())
+        # ankiety gdzie user juz zaglosowal
+        curr_user_voted = set(all_events_list.filter(polls__dates__users=request.user))
 
-    all_events_filtered = []
-    if len(curr_user_voted) == 0:
-        all_events_filtered = all_events_list
-    else:
-        for el in curr_user_voted:
-            if el in all_events_list:
-                pass
-            else:
-                all_events_filtered.append(el)
-    polls_list2 = []
-    for el in all_events_filtered:
-        polls_list2.append(get_object_or_404(Polls, event=el.id))
-    events_polls_list = zip(all_events_filtered, polls_list2)
-    # wyroznic wydarzenia ktore dla ktorych ankieta jest nieaktywna
-    context = {'events_polls_list': events_polls_list}
-    return render(request, 'schedule/polls_list.html', context)
+        all_events_filtered = []
+        if len(curr_user_voted) == 0:
+            all_events_filtered = all_events_list
+        else:
+            for el in curr_user_voted:
+                if el in all_events_list:
+                    pass
+                else:
+                    all_events_filtered.append(el)
+        if len(all_events_filtered) == 0:
+            return redirect('home')
+        polls_list2 = []
+        for el in all_events_filtered:
+            polls_list2.append(get_object_or_404(Polls, event=el.id))
+        events_polls_list = zip(all_events_filtered, polls_list2)
+        # wyroznic wydarzenia ktore dla ktorych ankieta jest nieaktywna
+        context = {'events_polls_list': events_polls_list}
+        return render(request, 'schedule/polls_list.html', context)
 
 
 def poll_details(request, index):
