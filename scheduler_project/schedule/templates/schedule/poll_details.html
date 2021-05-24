@@ -73,8 +73,9 @@
                     <label for="date{{ forloop.counter }}">{{ date.date }}</label>
                     {% if request.user|has_group:"admin" %}
                         <div style="display:inline; margin-left: 30px;"><label for="date{{ forloop.counter }}"> Liczba głosów: {{ date.count }}</label></div>
+                    {% elif request.user.id == event.organizer.id%}
+                        <div style="display:inline; margin-left: 30px;"><label for="date{{ forloop.counter }}"> Liczba głosów: {{ date.count }}</label></div>
                     {% endif %}
-
                     <br>
                 {% endfor %}
             {% endif %}

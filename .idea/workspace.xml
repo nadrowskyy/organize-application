@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="Drafts filter on events_list, showing only published events on homepage, filtering improvements">
+    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="admin can now see the results of every pole">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/poll_details.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/poll_details.html" afterDir="false" />
     </list>
@@ -345,7 +345,14 @@
       <option name="project" value="LOCAL" />
       <updated>1621556593111</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="admin can now see the results of every pole">
+      <created>1621877001586</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1621877001586</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -371,7 +378,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Aktualizacja plików" />
     <MESSAGE value="display events in numeric date format" />
     <MESSAGE value="Aktualizacja rejestracji + ikona + kosmetyczne poprawki" />
     <MESSAGE value="Zmieniony homepage - karuzela z instrukcją, wyświetlanie trzech najbliższch eventów z datą, godziną, imieniem i nazwiskiem; miejsce na kolejne dodatki" />
@@ -396,6 +402,7 @@
     <MESSAGE value="Fixed subjects list - highlighting checked option" />
     <MESSAGE value="Email validation (my_profile/edit)" />
     <MESSAGE value="Drafts filter on events_list, showing only published events on homepage, filtering improvements" />
-    <option name="LAST_COMMIT_MESSAGE" value="Drafts filter on events_list, showing only published events on homepage, filtering improvements" />
+    <MESSAGE value="admin can now see the results of every pole" />
+    <option name="LAST_COMMIT_MESSAGE" value="admin can now see the results of every pole" />
   </component>
 </project>
