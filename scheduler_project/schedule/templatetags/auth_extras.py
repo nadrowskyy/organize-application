@@ -18,17 +18,9 @@ def have_polls(user):
     all_events_list = Event.objects.filter(polls__if_active=True, polls__since_active__lte=datetime.now(),
                                            polls__till_active__gte=datetime.now())
     # ankiety gdzie user juz zaglosowal
-    curr_user_voted = set(all_events_list.filter(polls__dates__users=user))
+    curr_user_voted = all_events_list.filter(polls__dates__users=user)
+    all_events_filtered = set(all_events_list).difference(set(curr_user_voted))
 
-    all_events_filtered = []
-    if len(curr_user_voted) == 0:
-        all_events_filtered = all_events_list
-    else:
-        for el in curr_user_voted:
-            if el in all_events_list:
-                pass
-            else:
-                all_events_filtered.append(el)
     if len(all_events_filtered) == 0:
         return False
     else:
