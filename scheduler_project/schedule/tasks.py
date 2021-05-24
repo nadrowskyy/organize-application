@@ -205,3 +205,27 @@ def send_poll_notification_cron():
             el.save()
 
     return None
+
+
+@app.task
+def send_email_organizer(username, event_pk):
+    user = get_object_or_404(User, username=username)
+    event = get_object_or_404(Event, pk=event_pk)
+    rendered_body = loader.render_to_string('schedule/email_organizer.html',
+                                            {'event': event})
+    mail_settings = EmailSet.objects.filter(pk=1)[0]
+    host = mail_settings.EMAIL_HOST
+    port = mail_settings.EMAIL_PORT
+    username = mail_settings.EMAIL_HOST_USER
+    password = mail_settings.EMAIL_HOST_PASSWORD
+    use_tls = bool(mail_settings.EMAIL_USE_TLS)
+    from_email = mail_settings.EMAIL_HEADER
+    with get_connection(host=host, port=port, username=username, password=password,
+                        use_tls=use_tls) as conn:
+        msg = EmailMessage(subject='Zagłosuj w ankiecie!', body=rendered_body,
+                           from_email=from_email,
+                           to=[user.email], connection=conn)
+        msg.content_subtype = "html"
+        msg.send(fail_silently=True)
+
+    return None
