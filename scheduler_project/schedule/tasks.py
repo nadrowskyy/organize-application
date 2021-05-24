@@ -2,10 +2,12 @@ from celery import shared_task
 from scheduler_project.celery import app
 from django.core.mail import send_mail, get_connection, send_mass_mail
 from django.core.mail import EmailMessage
-from .models import EmailSet, Event, EventNotification
+from .models import EmailSet, Event, EventNotification, Polls
 from django.contrib.auth.models import User
 from datetime import datetime, timedelta
 from django.template.loader import render_to_string
+from django.template import loader
+from django.shortcuts import get_object_or_404
 
 
 @shared_task
@@ -134,3 +136,38 @@ def send_mail_register(email):
         msg.send(fail_silently=True)
 
     return None
+
+
+@app.task
+def send_poll_notification(poll_pk, draft_pk):
+    poll = get_object_or_404(Polls, pk=poll_pk)
+    event = get_object_or_404(Event, pk=draft_pk)
+    mailing_list_all = []
+    user_mails = User.objects.all()
+    for el in user_mails:
+        mailing_list_all.append(el.email)
+    rendered_body = loader.render_to_string('schedule/poll_notification.html',
+                                            {'poll': poll, 'event': event})
+    mail_settings = EmailSet.objects.filter(pk=1)[0]
+    host = mail_settings.EMAIL_HOST
+    port = mail_settings.EMAIL_PORT
+    username = mail_settings.EMAIL_HOST_USER
+    password = mail_settings.EMAIL_HOST_PASSWORD
+    use_tls = bool(mail_settings.EMAIL_USE_TLS)
+    from_email = mail_settings.EMAIL_HEADER
+    with get_connection(host=host, port=port, username=username, password=password,
+                        use_tls=use_tls) as conn:
+        msg = EmailMessage(subject='Zagłosuj w ankiecie!', body=rendered_body,
+                           from_email=from_email,
+                           to=mailing_list_all, connection=conn)
+        msg.content_subtype = "html"
+        msg.send(fail_silently=True)
+    poll.if_sent_notification = True
+    poll.save()
+
+    return None
+
+
+@shared_task
+def send_poll_notification_cron():
+    pass

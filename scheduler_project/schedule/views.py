@@ -31,7 +31,7 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.db.models import Q
 from django.core.mail import BadHeaderError, send_mail
-from .tasks import send_mail_register
+from .tasks import send_mail_register, send_poll_notification
 
 
 # @login_required(login_url='login') # nie pozwala na wejscie uzytkownika na strone glowna jesli nie jest zarejestrowany
@@ -553,14 +553,21 @@ def create_event(request):
                         return redirect('create_event')
 
                     draft_form.save()
-                    event = get_object_or_404(Event, pk=draft_form.pk)
+                    draft_pk = draft_form.pk
+                    event = get_object_or_404(Event, pk=draft_pk)
 
                     if_active = True
                     poll_form = Polls(event=event, since_active=since_active, till_active=till_active,
                                       if_active=if_active)
                     poll_form.save()
+                    poll_pk = poll_form.pk
+                    # wysyłanie maila o utworzeniu ankiety
+                    since_active_date = datetime.strptime(since_active, "%Y-%m-%d")
+                    till_active_date = datetime.strptime(till_active, "%Y-%m-%d")
+                    if since_active_date <= datetime.now() <= till_active_date:
+                        send_poll_notification.delay(poll_pk, draft_pk)
 
-                    poll = get_object_or_404(Polls, pk=poll_form.pk)
+                    poll = get_object_or_404(Polls, pk=poll_pk)
 
                     for el in planning_dates:
                         dates_form = Dates(poll=poll, date=el+':00')
@@ -568,7 +575,7 @@ def create_event(request):
                 if request.POST.get('if_active') == 'False':
 
                     draft_form.save()
-                    event = get_object_or_404(Event, pk=draft_form.pk)
+                    event = get_object_or_404(Event, pk=draft_pk)
 
                     planning_dates = request.POST.getlist('planning_date_draft')
                     if_active = False

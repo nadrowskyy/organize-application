@@ -49,6 +49,7 @@ class Polls(models.Model):
     if_active = models.BooleanField(default=False, blank=True)
     since_active = models.DateField(blank=True, null=True, default=None)
     till_active = models.DateField(blank=True, null=True, default=None)
+    if_sent_notification = models.BooleanField(blank=True, null=True, default=False)
 
 
 class Dates(models.Model):
