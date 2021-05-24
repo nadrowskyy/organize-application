@@ -31,7 +31,7 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.db.models import Q
 from django.core.mail import BadHeaderError, send_mail
-from .tasks import send_mail_register, send_poll_notification, send_poll_notification_cron
+from .tasks import send_mail_register, send_poll_notification, send_email_organizer
 from django.template import loader
 
 # @login_required(login_url='login') # nie pozwala na wejscie uzytkownika na strone glowna jesli nie jest zarejestrowany
@@ -206,7 +206,6 @@ def events_list(request):
 
 def polls_list(request):
     if request.method == 'GET':
-        send_poll_notification_cron()
         # trzeba odfiltrowac te ankiety gdzie user juz zaglosowal
         all_events_list = Event.objects.filter(polls__if_active=True, polls__since_active__lte=datetime.now(),
                                                polls__till_active__gte=datetime.now())
@@ -537,7 +536,10 @@ def create_event(request):
         if request.POST.get('publish') == 'True':
             form = CreateEvent(request.POST, request.FILES)
             if form.is_valid():
-                form.save()
+                organizer = form.cleaned_data.get('organizer')
+                event_form = form.save()
+                event_pk = event_form.pk
+                send_email_organizer.delay(organizer, event_pk)
                 return redirect('events_list')
         if request.POST.get('publish') == 'False':
             form = CreateEvent(request.POST, request.FILES)
