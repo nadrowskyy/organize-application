@@ -582,7 +582,7 @@ def create_event(request):
                 if request.POST.get('if_active') == 'False':
 
                     draft_form.save()
-                    event = get_object_or_404(Event, pk=draft_pk)
+                    event = get_object_or_404(Event, pk=draft_form.pk)
 
                     planning_dates = request.POST.getlist('planning_date_draft')
                     if_active = False
