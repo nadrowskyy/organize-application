@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="spinner/loader on pages (NOT WORKING YET)">
+    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="admin can now see the results of every pole">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/about.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/email_client.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/email_client.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/poll_details.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/poll_details.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -349,12 +348,12 @@
       <option name="project" value="LOCAL" />
       <updated>1621556593111</updated>
     </task>
-    <task id="LOCAL-00033" summary="spinner/loader on pages (NOT WORKING YET)">
-      <created>1621816903005</created>
+    <task id="LOCAL-00033" summary="admin can now see the results of every pole">
+      <created>1621877001586</created>
       <option name="number" value="00033" />
       <option name="presentableId" value="LOCAL-00033" />
       <option name="project" value="LOCAL" />
-      <updated>1621816903006</updated>
+      <updated>1621877001586</updated>
     </task>
     <option name="localTasksCounter" value="34" />
     <servers />
@@ -406,7 +405,7 @@
     <MESSAGE value="Fixed subjects list - highlighting checked option" />
     <MESSAGE value="Email validation (my_profile/edit)" />
     <MESSAGE value="Drafts filter on events_list, showing only published events on homepage, filtering improvements" />
-    <MESSAGE value="spinner/loader on pages (NOT WORKING YET)" />
-    <option name="LAST_COMMIT_MESSAGE" value="spinner/loader on pages (NOT WORKING YET)" />
+    <MESSAGE value="admin can now see the results of every pole" />
+    <option name="LAST_COMMIT_MESSAGE" value="admin can now see the results of every pole" />
   </component>
 </project>
