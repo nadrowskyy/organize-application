@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="Some front-end improvements; draft event profile; marking active polls as voted; poll's dates sorting">
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/views.py" afterDir="false" />
+    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="spinner/loader on pages (NOT WORKING YET)">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/about.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/email_client.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/email_client.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +45,7 @@
     </favorite-branches>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="no-events-subjects" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -118,9 +120,10 @@
       <workItem from="1621169369125" duration="19000" />
       <workItem from="1621169857857" duration="13355000" />
       <workItem from="1621206508604" duration="951000" />
-      <workItem from="1621549542100" duration="7595000" />
-      <workItem from="1621782120743" duration="4782000" />
-      <workItem from="1621869348115" duration="9005000" />
+      <workItem from="1621549542100" duration="6972000" />
+      <workItem from="1621690114553" duration="2712000" />
+      <workItem from="1621811485358" duration="3718000" />
+      <workItem from="1621870128976" duration="3769000" />
     </task>
     <task id="LOCAL-00001" summary="Test kom Bartka K">
       <created>1616441609819</created>
@@ -346,21 +349,14 @@
       <option name="project" value="LOCAL" />
       <updated>1621556593111</updated>
     </task>
-    <task id="LOCAL-00033" summary="Drafts filter on events_list, showing only published events on homepage, filtering improvements">
-      <created>1621556904660</created>
+    <task id="LOCAL-00033" summary="spinner/loader on pages (NOT WORKING YET)">
+      <created>1621816903005</created>
       <option name="number" value="00033" />
       <option name="presentableId" value="LOCAL-00033" />
       <option name="project" value="LOCAL" />
-      <updated>1621556904660</updated>
+      <updated>1621816903006</updated>
     </task>
-    <task id="LOCAL-00034" summary="Some front-end improvements; draft event profile; marking active polls as voted; poll's dates sorting">
-      <created>1621892238239</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1621892238239</updated>
-    </task>
-    <option name="localTasksCounter" value="35" />
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -410,7 +406,7 @@
     <MESSAGE value="Fixed subjects list - highlighting checked option" />
     <MESSAGE value="Email validation (my_profile/edit)" />
     <MESSAGE value="Drafts filter on events_list, showing only published events on homepage, filtering improvements" />
-    <MESSAGE value="Some front-end improvements; draft event profile; marking active polls as voted; poll's dates sorting" />
-    <option name="LAST_COMMIT_MESSAGE" value="Some front-end improvements; draft event profile; marking active polls as voted; poll's dates sorting" />
+    <MESSAGE value="spinner/loader on pages (NOT WORKING YET)" />
+    <option name="LAST_COMMIT_MESSAGE" value="spinner/loader on pages (NOT WORKING YET)" />
   </component>
 </project>
