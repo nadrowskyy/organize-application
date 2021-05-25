@@ -31,8 +31,8 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.db.models import Q
 from django.core.mail import BadHeaderError, send_mail
-from .tasks import send_mail_register
-
+from .tasks import send_mail_register, send_poll_notification, send_email_organizer
+from django.template import loader
 
 # @login_required(login_url='login') # nie pozwala na wejscie uzytkownika na strone glowna jesli nie jest zarejestrowany
 def home_page(request):
@@ -128,7 +128,7 @@ def events_list(request):
     User = get_user_model()
     fullnames = User.objects.all()
 
-    all_events_list = Event.objects.filter()
+    all_events_list = Event.objects.all()
 
     sort_by = request.GET.get('sort_by')
 
@@ -149,7 +149,7 @@ def events_list(request):
     if not drafts:
         all_events_list = all_events_list.filter(status='publish')
 
-    if not request.user.groups.all()[0].name == 'admin' and drafts:
+    if request.user.is_authenticated and not request.user.groups.all()[0].name == 'admin' and drafts:
         all_events_list = all_events_list.filter(organizer=request.user)
 
     if organizer:
@@ -160,6 +160,9 @@ def events_list(request):
 
     if title and title != '':
         all_events_list = all_events_list.filter(title__icontains=title)
+
+    if not request.user.is_authenticated:
+        all_events_list = all_events_list.filter(status='publish')
 
     # SORTOWANIE
 
@@ -202,50 +205,54 @@ def events_list(request):
 
 
 def polls_list(request):
-    # trzeba odfiltrowac te ankiety gdzie user juz zaglosowal
-    all_events_list = Event.objects.filter(polls__if_active=True, polls__since_active__lte=datetime.now(),
-                                           polls__till_active__gte=datetime.now())
-    # ankiety gdzie user juz zaglosowal
-    curr_user_voted = set(all_events_list.filter(polls__dates__users=request.user))
-    for el in curr_user_voted:
-        all_events_list.filter(pk=el.id).delete()
-
-    polls_list2 = []
-    for el in all_events_list:
-        polls_list2.append(get_object_or_404(Polls, event=el.id))
-    events_polls_list = zip(all_events_list, polls_list2)
-    # wyroznic wydarzenia ktore dla ktorych ankieta jest nieaktywna
-    context = {'events_polls_list': events_polls_list}
-    return render(request, 'schedule/polls_list.html', context)
+    if request.method == 'GET':
+        # trzeba odfiltrowac te ankiety gdzie user juz zaglosowal
+        all_events_list = Event.objects.filter(polls__if_active=True, polls__since_active__lte=datetime.now(),
+                                               polls__till_active__gte=datetime.now())
+        # ankiety gdzie user juz zaglosowal
+        curr_user_voted = all_events_list.filter(polls__dates__users=request.user)
+        all_events_filtered = set(all_events_list).difference(set(curr_user_voted))
+        if len(all_events_filtered) == 0:
+            return redirect('home')
+        polls_list2 = []
+        for el in all_events_filtered:
+            polls_list2.append(get_object_or_404(Polls, event=el.id))
+        events_polls_list = zip(all_events_filtered, polls_list2)
+        curr_user_voted = zip(curr_user_voted, polls_list2)
+        # wyroznic wydarzenia ktore dla ktorych ankieta jest nieaktywna
+        context = {'events_polls_list': events_polls_list, 'curr_user_voted': curr_user_voted}
+        return render(request, 'schedule/polls_list.html', context)
 
 
 def poll_details(request, index):
-    selected_event = Event.objects.filter(polls__pk=index)[0]
-    poll = get_object_or_404(Polls, pk=index)
-    dates = Dates.objects.filter(poll=poll)
-
-    # sprawdzam czy user juz zaglosowal na ktorykolwiek z terminow
-    for el in dates:
-        if el.users.filter(id=request.user.id).exists():
-            return redirect('home')
 
     if request.method == 'GET':
+        selected_event = Event.objects.filter(polls__pk=index)[0]
+        poll = get_object_or_404(Polls, pk=index)
+        dates = Dates.objects.filter(poll=poll).order_by('date')
+        # sprawdzam czy user juz zaglosowal na ktorykolwiek z terminow
+        for el in dates:
+            if el.users.filter(id=request.user.id).exists():
+                return redirect('home')
         context = {'event': selected_event, 'dates': dates, 'poll': poll}
 
         return render(request, 'schedule/poll_details.html', context)
 
     if request.method == 'POST':
+        poll = get_object_or_404(Polls, pk=index)
         dates_voted = request.POST.getlist('dates_voted')
         if poll.if_active is False:
             messages.error(request, "Ankieta jest nieaktywna, Twoje głosy nie zostały napisane.")
             return redirect('polls_list')
         else:
             for el in dates_voted:
+
                 tmp_date = get_object_or_404(Dates, date=el)
                 if tmp_date.users.filter(id=request.user.id).exists():
-                    # drugie sprawdzenie czy glos juz jest w bazie, na wszelki wypadek, byc moze to wywalimy
+                    # drugie sprawdzenie czy glos na daną date juz jest w bazie, na wszelki wypadek, byc moze to wywalimy
                     pass
                 else:
+                    print(request.user)
                     tmp_date.users.add(request.user)
                     tmp_date.count += 1
                     tmp_date.save()
@@ -293,6 +300,10 @@ def draft_edit(request, index):
 
                 since_active = request.POST.get('poll_avaible_since')
                 till_active = request.POST.get('poll_avaible')
+                if since_active == '':
+                    since_active = None
+                if till_active == '':
+                    till_active = None
 
                 update_poll = Polls.objects.filter(event=index).update(since_active=since_active,
                                                                        till_active=till_active, if_active=if_active)
@@ -324,6 +335,8 @@ def draft_edit(request, index):
                 organizer = request.POST.get('organizer')
                 planning_date = request.POST.get('planning_date')
                 duration = request.POST.get('duration')
+                if duration == '':
+                    duration = None
                 link = request.POST.get('link')
                 update_event = Event.objects.filter(id=index).update(title=title, description=description,
                                                                          organizer=organizer,
@@ -405,20 +418,23 @@ def draft_edit(request, index):
 
                 if request.method == 'POST':
                     if request.POST.get('pub_button') == 'save':
-                        poll = Polls.objects.filter(event=index).first()
+                        poll = get_object_or_404(Polls, event=index)
+                        # poll = Polls.objects.filter(event=index).first()
                         dates = Dates.objects.filter(poll=poll)
-
+                        print('414')
                         planning_dates = request.POST.getlist('planning_date_draft')
                         if len(planning_dates) < 2 and request.POST.get('if_active') == 'True' or \
-                                request.POST.get('poll_avaible_since') or request.POST.get('poll_avaible'):
+                                request.POST.get('poll_avaible_since') == '' or request.POST.get('poll_avaible') == '':
+                            print('418')
                             messages.error(request, "Wypełnij wszystkie pola wymagane dla utworzenia aktywnej ankiety.")
                             return redirect('draft_edit', index)
                         if request.POST.get('if_active') == 'True':
                             if_active = True
+                            print('423')
                         else:
                             # daty beda zapisane w ankiecie ale sama ankieta bedzie nie aktywna
                             if_active = False
-
+                        print('427')
                         since_active = request.POST.get('poll_avaible_since')
                         till_active = request.POST.get('poll_avaible')
 
@@ -451,6 +467,8 @@ def draft_edit(request, index):
                         organizer = request.user.id
                         planning_date = request.POST.get('planning_date')
                         duration = request.POST.get('duration')
+                        if duration == '':
+                            duration = None
                         link = request.POST.get('link')
                         update_event = Event.objects.filter(id=index).update(title=title, description=description,
                                                                              organizer=organizer,
@@ -502,7 +520,7 @@ def draft_edit(request, index):
 
                             return redirect('events_list')
 
-                return render(request, 'schedule/draft_edit.html')
+                return redirect('events_list')
 
             else:
                 context = {'not_permitted': True}
@@ -518,39 +536,61 @@ def create_event(request):
         if request.POST.get('publish') == 'True':
             form = CreateEvent(request.POST, request.FILES)
             if form.is_valid():
-                form.save()
+                organizer = form.cleaned_data.get('organizer')
+                event_form = form.save()
+                event_pk = event_form.pk
+                send_email_organizer.delay(organizer, event_pk)
                 return redirect('events_list')
         if request.POST.get('publish') == 'False':
             form = CreateEvent(request.POST, request.FILES)
             if form.is_valid():
                 draft_form = form.save(commit=False)
                 draft_form.status = 'draft'
-                draft_form.save()
 
-                event = get_object_or_404(Event, pk=draft_form.pk)
                 since_active = request.POST.get('poll_avaible_since')
                 till_active = request.POST.get('poll_avaible')
+
                 if request.POST.get('if_active') == 'True':
 
                     planning_dates = request.POST.getlist('planning_date_draft')
-                    if len(planning_dates) < 2:
-                        messages.error(request, "Podaj co najmniej dwie proponowane daty w ankiecie")
+
+                    if len(planning_dates) < 2 and request.POST.get('if_active') == 'True' or \
+                            request.POST.get('poll_avaible_since') == '' or request.POST.get('poll_avaible') == '':
+                        messages.error(request, "Wypełnij wszystkie pola wymagane dla utworzenia aktywnej ankiety.")
+                        return redirect('create_event')
+
+                    draft_form.save()
+                    draft_pk = draft_form.pk
+                    event = get_object_or_404(Event, pk=draft_pk)
 
                     if_active = True
                     poll_form = Polls(event=event, since_active=since_active, till_active=till_active,
                                       if_active=if_active)
                     poll_form.save()
+                    poll_pk = poll_form.pk
+                    # wysyłanie maila o utworzeniu ankiety
+                    since_active_date = datetime.strptime(since_active, "%Y-%m-%d")
+                    till_active_date = datetime.strptime(till_active, "%Y-%m-%d")
+                    if since_active_date <= datetime.now() <= till_active_date:
+                        send_poll_notification.delay(poll_pk, draft_pk)
 
-                    poll = get_object_or_404(Polls, pk=poll_form.pk)
+                    poll = get_object_or_404(Polls, pk=poll_pk)
 
                     for el in planning_dates:
                         dates_form = Dates(poll=poll, date=el+':00')
                         dates_form.save()
                 if request.POST.get('if_active') == 'False':
 
+                    draft_form.save()
+                    event = get_object_or_404(Event, pk=draft_pk)
+
                     planning_dates = request.POST.getlist('planning_date_draft')
                     if_active = False
-                    poll_form = Polls(event=event, since_active=since_active, till_active=till_active,
+
+                    if since_active == '' or till_active == '':
+                        poll_form = Polls(event=event, if_active=if_active)
+                    else:
+                        poll_form = Polls(event=event, since_active=since_active, till_active=till_active,
                                       if_active=if_active)
                     poll_form.save()
 
@@ -558,7 +598,6 @@ def create_event(request):
 
                     for el in planning_dates:
                         dates_form = Dates(poll=poll, date=el + ':00')
-                        dates_form = Dates(poll=poll, date=el)
                         dates_form.save()
 
     else:
@@ -877,6 +916,7 @@ def email_client(request):
             with get_connection(host=email_host, port=port, username=username, password=password, use_tls=if_tls) as conn:
                 msg = EmailMessage(subject='FFT - Wiadomość testowa', from_email=from_email, body=email_body,
                                    to=[request.user.email], connection=conn)
+
                 msg.send(fail_silently=True)
 
         except Exception as e:

@@ -315,7 +315,7 @@
     </li>
       <li class="page-item"><a class="page-link" href="{% url 'events_list' %}?page={{list.previous_page_number}}">{{list.previous_page_number}}</a></li>
       {% endif %}
-      {% if list %}
+      {% if list.number > 1 %}
     <li class="page-item active">
       <a class="page-link disabled" href="#">{{list.number}} <span class="sr-only">{{list.number}}</span></a>
     </li>

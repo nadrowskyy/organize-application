@@ -18,6 +18,10 @@ app.conf.beat_schedule = {
     'send-email-notifications-for-organizer': {
         'task': 'schedule.tasks.send_notification_organizer',
         'schedule': crontab(minute=30)
+    },
+    'send-poll-notification-cron': {
+        'task': 'schedule.tasks.send_poll_notification_cron',
+        'schedule': crontab(minute=10, hour=0)
     }
 }
 app.autodiscover_tasks()
