@@ -2,10 +2,12 @@ from celery import shared_task
 from scheduler_project.celery import app
 from django.core.mail import send_mail, get_connection, send_mass_mail
 from django.core.mail import EmailMessage
-from .models import EmailSet, Event, EventNotification
+from .models import EmailSet, Event, EventNotification, Polls
 from django.contrib.auth.models import User
 from datetime import datetime, timedelta
 from django.template.loader import render_to_string
+from django.template import loader
+from django.shortcuts import get_object_or_404
 
 
 @shared_task
@@ -131,6 +133,99 @@ def send_mail_register(email):
     with get_connection(host=host, port=port, username=username, password=password, use_tls=use_tls) as conn:
         msg = EmailMessage(subject='Witaj w serwisie FFT!', body=email_body, from_email=from_email,
                            to=[email], connection=conn)
+        msg.send(fail_silently=True)
+
+    return None
+
+
+@app.task
+def send_poll_notification(poll_pk, draft_pk):
+    poll = get_object_or_404(Polls, pk=poll_pk)
+    event = get_object_or_404(Event, pk=draft_pk)
+    mailing_list_all = []
+    user_mails = User.objects.all()
+    for el in user_mails:
+        mailing_list_all.append(el.email)
+    rendered_body = loader.render_to_string('schedule/poll_notification.html',
+                                            {'poll': poll, 'event': event})
+    mail_settings = EmailSet.objects.filter(pk=1)[0]
+    host = mail_settings.EMAIL_HOST
+    port = mail_settings.EMAIL_PORT
+    username = mail_settings.EMAIL_HOST_USER
+    password = mail_settings.EMAIL_HOST_PASSWORD
+    use_tls = bool(mail_settings.EMAIL_USE_TLS)
+    from_email = mail_settings.EMAIL_HEADER
+    with get_connection(host=host, port=port, username=username, password=password,
+                        use_tls=use_tls) as conn:
+        msg = EmailMessage(subject='Zagłosuj w ankiecie!', body=rendered_body,
+                           from_email=from_email,
+                           to=mailing_list_all, connection=conn)
+        msg.content_subtype = "html"
+        msg.send(fail_silently=True)
+    poll.if_sent_notification = True
+    poll.save()
+
+    return None
+
+
+@shared_task
+def send_poll_notification_cron():
+    all_events_list = Event.objects.filter(polls__if_active=True, polls__if_sent_notification=False,
+                                           polls__since_active__lte=datetime.now(),
+                                           polls__till_active__gte=datetime.now())
+    if len(all_events_list) == 0:
+        pass
+    else:
+        polls_list = []
+        for el in all_events_list:
+            polls_list.append(get_object_or_404(Polls, event=el.id))
+        events_polls_list = zip(all_events_list, polls_list)
+        user_mails = User.objects.all()
+        mailing_list_all = []
+        for el in user_mails:
+            mailing_list_all.append(el.email)
+        rendered_body = loader.render_to_string('schedule/poll_notification_cron.html',
+                                                {'event_poll': events_polls_list})
+        mail_settings = EmailSet.objects.filter(pk=1)[0]
+        host = mail_settings.EMAIL_HOST
+        port = mail_settings.EMAIL_PORT
+        username = mail_settings.EMAIL_HOST_USER
+        password = mail_settings.EMAIL_HOST_PASSWORD
+        use_tls = bool(mail_settings.EMAIL_USE_TLS)
+        from_email = mail_settings.EMAIL_HEADER
+        with get_connection(host=host, port=port, username=username, password=password,
+                            use_tls=use_tls) as conn:
+            msg = EmailMessage(subject='Zagłosuj w ankiecie!', body=rendered_body,
+                               from_email=from_email,
+                               to=mailing_list_all, connection=conn)
+            msg.content_subtype = "html"
+            msg.send(fail_silently=True)
+        for el in polls_list:
+            el.if_sent_notification = True
+            el.save()
+
+    return None
+
+
+@app.task
+def send_email_organizer(username, event_pk):
+    user = get_object_or_404(User, username=username)
+    event = get_object_or_404(Event, pk=event_pk)
+    rendered_body = loader.render_to_string('schedule/email_organizer.html',
+                                            {'event': event})
+    mail_settings = EmailSet.objects.filter(pk=1)[0]
+    host = mail_settings.EMAIL_HOST
+    port = mail_settings.EMAIL_PORT
+    username = mail_settings.EMAIL_HOST_USER
+    password = mail_settings.EMAIL_HOST_PASSWORD
+    use_tls = bool(mail_settings.EMAIL_USE_TLS)
+    from_email = mail_settings.EMAIL_HEADER
+    with get_connection(host=host, port=port, username=username, password=password,
+                        use_tls=use_tls) as conn:
+        msg = EmailMessage(subject='Twoje nadchodzące szkolenie!', body=rendered_body,
+                           from_email=from_email,
+                           to=[user.email], connection=conn)
+        msg.content_subtype = "html"
         msg.send(fail_silently=True)
 
     return None

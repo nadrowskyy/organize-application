@@ -18,18 +18,24 @@
     <center><h2>LISTA AKTYWNYCH ANKIET</h2></center>
     <hr>
 
+
+    {% if not events_polls_list %}
+    <br>
+    <errormsg>Nie znaleziono ankiet</errormsg>
+
+{% endif %}
+
 <div class="row">
     {% for event, poll in events_polls_list %}
-
-
             <div class="col-lg-3 col-md-4 col-sm-5">
-                    <p style="text-align:center;"><img class="rounded-circle" src="{{MEDIA_URL}}{{i.icon}}" alt="" width="140" height="140"></p>
+                    <p style="text-align:center;"><img class="rounded-circle" src="{{MEDIA_URL}}{{event.icon}}" alt="" width="140" height="140"></p>
                 <center>
                     <h3>{{event.title}}</h3>
-                    <h7>{{event.planning_date|date:"d.m.Y H:i"}} ({{event.planning_date|date:"l"}})</h7>
-                    <br>
-                    <h6>Prowadzi: {{event.organizer.first_name}} {{i.organizer.last_name}}</h6>
-                     <p style="text-align:center;"><a class="btn btn-secondary" href="{% url 'poll_details' poll.id %}" role="button">Szczegóły »</a>
+                    <h7>Ankieta aktywna do: <br>
+                        {{poll.till_active|date:"d.m.Y"}} ({{poll.till_active|date:"l"}})</h7>
+                    <h6><br>
+                    Prowadzi: {{event.organizer.first_name}} {{event.organizer.last_name}}</h6>
+                     <p style="text-align:center;"><a class="btn btn-secondary" href="{% url 'poll_details' poll.id %}" role="button">Zagłosuj »</a>
                          {% if not request.user|has_group:"admin" %}
                             {% if request.user == i.organizer %}
                                 <a href="{% url 'draft_edit' event.id %}"><img src="{% static 'images/icons/edit.png' %}" style="text-align:right; width:25px; height:25px;"></a>
@@ -37,7 +43,30 @@
                          {% else %}
                             <a href="{% url 'draft_edit' event.id %}"><img src="{% static 'images/icons/edit.png' %}" style="text-align:right; width:25px; height:25px;"></a>
 
-                            <a href="{% url 'delete_event' event.id %}" onclick="return confirm('Czy na pewno chcesz usunąć spotkanie {{i.title}}? \n\nOperacji nie będzie można cofnąć!');"><img src="{% static 'images/icons/delete.png' %}" style="text-align:right; width:25px; height:25px;"></a>
+                            <a href="{% url 'delete_event' event.id %}" onclick="return confirm('Czy na pewno chcesz usunąć spotkanie {{event.title}}? \n\nOperacji nie będzie można cofnąć!');"><img src="{% static 'images/icons/delete.png' %}" style="text-align:right; width:25px; height:25px;"></a>
+                         {% endif %}
+                    <br>
+                </center>
+            </div>
+    {% endfor %}
+    {% for event, poll in curr_user_voted %}
+    <div class="col-lg-3 col-md-4 col-sm-5">
+                    <p style="text-align:center;"><img class="rounded-circle" src="{{MEDIA_URL}}{{event.icon}}" alt="" width="140" height="140"></p>
+                <center>
+                    <h3 class="font-italic" style="color: #a3a3a3">{{event.title}}</h3>
+                    <h7>Ankieta aktywna do: <br>
+                        {{poll.till_active|date:"d.m.Y"}} ({{poll.till_active|date:"l"}})</h7>
+                    <h6><br>
+                    Prowadzi: {{event.organizer.first_name}} {{event.organizer.last_name}}</h6>
+                     <p style="text-align:center;"><a class="btn btn-outline-success active disabled">Oddano głos</a>
+                         {% if not request.user|has_group:"admin" %}
+                            {% if request.user == i.organizer %}
+                                <a href="{% url 'draft_edit' event.id %}"><img src="{% static 'images/icons/edit.png' %}" style="text-align:right; width:25px; height:25px;"></a>
+                            {% endif %}
+                         {% else %}
+                            <a href="{% url 'draft_edit' event.id %}"><img src="{% static 'images/icons/edit.png' %}" style="text-align:right; width:25px; height:25px;"></a>
+
+                            <a href="{% url 'delete_event' event.id %}" onclick="return confirm('Czy na pewno chcesz usunąć spotkanie {{event.title}}? \n\nOperacji nie będzie można cofnąć!');"><img src="{% static 'images/icons/delete.png' %}" style="text-align:right; width:25px; height:25px;"></a>
                          {% endif %}
                     <br>
                 </center>
