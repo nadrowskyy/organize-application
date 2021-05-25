@@ -222,7 +222,7 @@ def send_email_organizer(username, event_pk):
     from_email = mail_settings.EMAIL_HEADER
     with get_connection(host=host, port=port, username=username, password=password,
                         use_tls=use_tls) as conn:
-        msg = EmailMessage(subject='Zagłosuj w ankiecie!', body=rendered_body,
+        msg = EmailMessage(subject='Twoje nadchodzące szkolenie!', body=rendered_body,
                            from_email=from_email,
                            to=[user.email], connection=conn)
         msg.content_subtype = "html"
