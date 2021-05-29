@@ -30,7 +30,7 @@
                         <br>
                     <h1 {% if i.status == "draft" %} class="font-italic" style="color: #a3a3a3;" {% endif %} >{{i.title}}
                    <!-- <a href="{% url 'event_edit' i.id %}"><img src="{% static 'images/icons/edit.png' %}" style="text-align:right; width:25px; height:25px;"></a>
-                    <a href="{% url 'delete_event' i.id %}" onclick="return confirm('Czy na pewno chcesz usunąć spotkanie {{i.title}}? \n\nOperacji nie będzie można cofnąć!');"><img src="{% static 'images/icons/delete.png' %}" style="text-align:right; width:25px; height:25px;"></a>
+                    <a href="{% url 'delete_event' i.id %}" onclick="return confirm('Czy na pewno chcesz usunąć szkolenie {{i.title}}? \n\nOperacji nie będzie można cofnąć!');"><img src="{% static 'images/icons/delete.png' %}" style="text-align:right; width:25px; height:25px;"></a>
                     --></h1>
                         {% if i.status == "draft" %}
                         <p class="font-italic" style="color: #a3a3a3;">szkic</p>
@@ -57,23 +57,29 @@
                     </div>
                     <div>
                         <br>
-                        {% if i.link %}
+                        {% if "http" in i.link %}
                         <a href="{{i.link}}" style="font-size:25px">Link do szkolenia</a>
+                        <br><br>
+                        {% elif i.link %}
+                        <h5>Lokalizacja szkolenia: {{i.link}}</h5>
+                        <br>
                         {% else %}
-                        <h5>Link do szkolenia nie jest jeszcze dostępny</h5>
+                        <h6>Lokalizacja szkolenia nie jest jeszcze znana</h6>
+                        <br>
                         {% endif %}
                     </div>
+                    {% if i.attachment %}
                     <div>
                         <br>
-                        {% if i.attachment %}
                         <a href="{{MEDIA_URL}}{{i.attachment}}">Pobierz załącznik</a>
                         <br>
-                        {% endif %}
+
                         <br>
                     </div>
+                    {% endif %}
                     {% if i.duration %}
                     <div>
-                        <p>Spotkanie będzie trwało {{i.duration}} minut.</p>
+                        <p>Szkolenie będzie trwało {{i.duration}} minut.</p>
                     </div>
                     {% endif %}
                     <div>

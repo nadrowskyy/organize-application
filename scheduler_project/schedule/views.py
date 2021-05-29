@@ -146,10 +146,12 @@ def events_list(request):
     elif not show_historical and show_upcoming:
         all_events_list = all_events_list.filter(planning_date__gte=today)
 
-    if not drafts:
+    if drafts:
+        all_events_list = all_events_list.filter(status='draft')
+    else:
         all_events_list = all_events_list.filter(status='publish')
 
-    if request.user.is_authenticated and not request.user.groups.all()[0].name == 'admin' and drafts:
+    if request.user.is_authenticated and request.user.groups.all()[0].name != 'admin' and drafts:
         all_events_list = all_events_list.filter(organizer=request.user)
 
     if organizer:
@@ -218,9 +220,8 @@ def polls_list(request):
         for el in all_events_filtered:
             polls_list2.append(get_object_or_404(Polls, event=el.id))
         events_polls_list = zip(all_events_filtered, polls_list2)
-        curr_user_voted = zip(curr_user_voted, polls_list2)
         # wyroznic wydarzenia ktore dla ktorych ankieta jest nieaktywna
-        context = {'events_polls_list': events_polls_list, 'curr_user_voted': curr_user_voted}
+        context = {'events_polls_list': events_polls_list}
         return render(request, 'schedule/polls_list.html', context)
 
 

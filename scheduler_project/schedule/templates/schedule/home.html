@@ -28,24 +28,24 @@
 		    <div class="carousel-item active">
 		      <img class="carousel_resize" src="{% static 'images/carousel1.jpg' %}" alt="First slide">
                 <div class="carousel-caption d-none d-md-block">
-					<h1><a href="#">Masz pomysł na kolejne szkolenie?</a></h1>
-                 	<p>Zaloguj się i zaproponuj temat!</p>
+					<h1><a href="{% url 'suggest_event' %}">Masz pomysł na kolejne szkolenie?</h1>
+					<h6><p>Zaloguj się i zaproponuj temat!</p></h6></a>
 			    </div>
 		    </div>
 
 		    <div class="carousel-item">
 		      <img class="carousel_resize" src="{% static 'images/carousel2.jpg' %}" alt="Second slide">
 				<div class="carousel-caption d-none d-md-block">
-					<h1><a href="#">Czujesz, że mógłbyś poprowadzić szkolenie z któregoś z tematów?</a></h1>
-                  	<p>Zaloguj się i zgłoś chęć prowadzenia szkolenia!</p>
+					<h1><a href="{% url 'subjects_list' %}">Czujesz, że mógłbyś poprowadzić szkolenie z któregoś z tematów?</h1>
+					<h6><p href="{% url 'subjects_list' %}">Zaloguj się i zgłoś chęć prowadzenia szkolenia!</p></h6></a>
 			    </div>
 		    </div>
 
 		    <div class="carousel-item">
 		      <img class="carousel_resize" src="{% static 'images/carousel3.jpg' %}" alt="Third slide">
 				<div class="carousel-caption d-none d-md-block">
-					<h1> <a href="#">Chcesz wziąć udział w szkoleniu?</a></h1>
-                  	<p>Sprawdź aktualną listę szkoleń!</p>
+					<h1> <a href="{% url 'events_list' %}">Chcesz wziąć udział w szkoleniu?</h1>
+                  	<h6><p>Sprawdź aktualną listę szkoleń!</p></h6></a>
 			    </div>
 		    </div>
 

@@ -40,25 +40,28 @@
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
 					<label for="email">E-mail:</label>
-                    <input class="form-control" id="email" name="email" placeholder="E-mail" required type="email" value="{{i.email}}" >
+                    <input class="form-control" id="email_" name="email" placeholder="E-mail" required type="email" value="{{i.email}}" onfocusout="validateEmail()">
+					<div id="validationServer03Feedback" class="invalid-feedback">
+						  Wprowadź poprawny adres e-mail, zawierający suffix comarch.pl lub comarch.com
+					</div>
 				</div>
 			</div>
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
 					<label for="username">Nazwa użytkownika:</label>
-                    <input class="form-control" id="username" name="username" placeholder="Nazwa użytkownika" required type="text" value="{{i.username}}" >
+                    <input class="form-control" id="username" name="username" placeholder="Nazwa użytkownika" required type="text" value="{{i.username}}" onfocus="validateEmail()">
 				</div>
 			</div>
 
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<div class="form-group">
-                    <input  id="if_admin" name="if_admin" type="checkbox" {% if i.groups.all.0.name == "admin" %} checked {% endif %}>
-					<label  for="if_admin">&nbsp;&nbsp;Administrator</label>
+                    <input id="if_admin" name="if_admin" type="checkbox" {% if i.groups.all.0.name == "admin" %} checked {% endif %}>
+					<label class="checkbox" for="if_admin">&nbsp;&nbsp;Administrator</label>
 				</div>
 			</div>
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<div class="form-group">
-					<button class="btn btn-secondary" style="width:40%;font-family: 'Oswald', sans-serif;" type="submit">Zapisz</button>
+					<button class="btn btn-secondary" id="submitButton" style="width:40%;font-family: 'Oswald', sans-serif;" type="submit" onclick="validateEmail()">Zapisz</button>
 				</div>
 			</div>
 		</div>
@@ -66,9 +69,25 @@
 </div>
 		{% endfor %}
 </form>
-
-
 </div>
+
+<script>
+
+	function validateEmail() {
+			var email = document.getElementById('email_').value;
+
+			email = email.toString();
+
+			if ( /^([A-Za-z0-9_\-\.])+\@(comarch)+\.(com|pl)$/.test(email) || /^([A-Za-z0-9_\-\.])+\@(gmail)+\.(com)$/.test(email)) {
+				document.getElementById('submitButton').disabled = false;
+				document.getElementById('email_').classList.remove("is-invalid");
+			} else {
+				document.getElementById('submitButton').disabled = true;
+				document.getElementById('email_').classList.add("is-invalid");
+			}
+		}
+
+</script>
 
 </body>
 </html>

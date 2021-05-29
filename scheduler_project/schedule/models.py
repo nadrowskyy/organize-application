@@ -29,7 +29,7 @@ class Event(models.Model):
     duration = models.IntegerField(blank=True, null=True)
     icon = models.FileField(upload_to='icons/', default='icons/default.png', null=True)
     attachment = models.FileField(upload_to='attachments/', blank=True, null=True)
-    link = models.CharField(max_length=150, blank=True, null=True)
+    link = models.CharField(max_length=1000, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)

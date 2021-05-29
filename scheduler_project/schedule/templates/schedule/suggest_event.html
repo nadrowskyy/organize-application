@@ -29,17 +29,17 @@
        <form method="POST" action="">
            {% csrf_token %}
             <div class="form-group">
-                <label for="title">Temat spotkania</label>
-                <input type="text" class="form-control" id="title" name="title" placeholder="Wpisz temat spotkania" required>
+                <label for="title">Temat szkolenia</label>
+                <input type="text" class="form-control" id="title" name="title" placeholder="Wpisz temat szkolenia" required>
             </div>
 
             <div class="form-group">
                 <label for="description">Krótki opis</label>
-                <textarea class="form-control" name="description" rows="3" placeholder="Opisz krótko spotkanie" required></textarea>
+                <textarea class="form-control" name="description" rows="3" placeholder="Opisz krótko szkolenie" required></textarea>
             </div>
 
            <div class="form-group">
-                <label for="if_lead">Chcę poprowadzić to spotkanie</label>
+                <label for="if_lead">Chcę poprowadzić to szkolenie</label>
                 <input type="checkbox" id="if_lead" name="if_lead">
            </div>
 

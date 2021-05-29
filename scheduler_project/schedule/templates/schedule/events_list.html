@@ -215,7 +215,7 @@
         {% if request.user.is_authenticated %}
 
     <div class="col-lg-3 col-md-3 col-sm-4 col-12">
-        <p class="font-weight-bold">Tylko moje szkolenia</p>
+        <p class="font-weight-bold">Moje szkolenia</p>
         <div class="form-check">
             <label><input type="checkbox" name="only_mine" id="only_mine" value="1" onclick="setflag()"> Tak</label>
         </div>
@@ -295,7 +295,7 @@
                          {% else %}
                             <a {% if i.status == 'draft' %} href="{% url 'draft_edit' i.id %}" {% else %} href="{% url 'event_edit' i.id %}" {% endif %}><img src="{% static 'images/icons/edit.png' %}" style="text-align:right; width:25px; height:25px;"></a>
 
-                            <a href="{% url 'delete_event' i.id %}" onclick="return confirm('Czy na pewno chcesz usunąć spotkanie {{i.title}}? \n\nOperacji nie będzie można cofnąć!');"><img src="{% static 'images/icons/delete.png' %}" style="text-align:right; width:25px; height:25px;"></a>
+                            <a href="{% url 'delete_event' i.id %}" onclick="return confirm('Czy na pewno chcesz usunąć szkolenie {{i.title}}? \n\nOperacji nie będzie można cofnąć!');"><img src="{% static 'images/icons/delete.png' %}" style="text-align:right; width:25px; height:25px;"></a>
                          {% endif %}
                     <br>
                 </center>
@@ -315,7 +315,7 @@
     </li>
       <li class="page-item"><a class="page-link" href="{% url 'events_list' %}?page={{list.previous_page_number}}">{{list.previous_page_number}}</a></li>
       {% endif %}
-      {% if list.number > 1 %}
+      {% if list.number >= 1 %}
     <li class="page-item active">
       <a class="page-link disabled" href="#">{{list.number}} <span class="sr-only">{{list.number}}</span></a>
     </li>
@@ -496,6 +496,8 @@
 
     let option = document.getElementById('option');
     option.indeterminate = true;
+
+    window.location.href =  window.location.href.split("?")[0];
 
     }
 

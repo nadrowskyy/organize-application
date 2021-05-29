@@ -2751,7 +2751,6 @@ fieldset[disabled] a.btn {
 }
 
 .btn-secondary.disabled, .btn-secondary:disabled {
-  background-color: #fff;
   border-color: #ccc;
 }
 
