@@ -208,8 +208,8 @@ def send_poll_notification_cron():
 
 
 @app.task
-def send_email_organizer(username, event_pk):
-    user = get_object_or_404(User, username=username)
+def send_email_organizer(user_pk, event_pk):
+    user = get_object_or_404(User, pk=user_pk)
     event = get_object_or_404(Event, pk=event_pk)
     rendered_body = loader.render_to_string('schedule/email_organizer.html',
                                             {'event': event})

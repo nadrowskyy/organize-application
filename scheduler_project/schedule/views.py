@@ -31,7 +31,7 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.db.models import Q
 from django.core.mail import BadHeaderError, send_mail
-from .tasks import send_mail_register, send_poll_notification, send_email_organizer
+from .tasks import send_mail_register
 from django.template import loader
 
 # @login_required(login_url='login') # nie pozwala na wejscie uzytkownika na strone glowna jesli nie jest zarejestrowany
@@ -105,7 +105,7 @@ def register_page(request):
                     user.groups.add(group)
                     user = authenticate(username=username, password=raw_password)
                     login(request, user)
-                    send_mail_register.delay(email)
+                    send_mail_register(email)
                     return redirect('home')
                 else:
                     messages.error(request, "Błąd: adres e-mail znajduje się już w bazie")
@@ -538,9 +538,10 @@ def create_event(request):
             form = CreateEvent(request.POST, request.FILES)
             if form.is_valid():
                 organizer = form.cleaned_data.get('organizer')
+                organizer_obj = get_object_or_404(User, username=organizer)
                 event_form = form.save()
                 event_pk = event_form.pk
-                send_email_organizer.delay(organizer, event_pk)
+                send_email_organizer(organizer_obj.pk, event_pk)
                 return redirect('events_list')
         if request.POST.get('publish') == 'False':
             form = CreateEvent(request.POST, request.FILES)
@@ -561,21 +562,19 @@ def create_event(request):
                         return redirect('create_event')
 
                     draft_form.save()
-                    draft_pk = draft_form.pk
-                    event = get_object_or_404(Event, pk=draft_pk)
+                    event = get_object_or_404(Event, pk=draft_form.pk)
 
                     if_active = True
                     poll_form = Polls(event=event, since_active=since_active, till_active=till_active,
                                       if_active=if_active)
                     poll_form.save()
-                    poll_pk = poll_form.pk
                     # wysyłanie maila o utworzeniu ankiety
                     since_active_date = datetime.strptime(since_active, "%Y-%m-%d")
                     till_active_date = datetime.strptime(till_active, "%Y-%m-%d")
                     if since_active_date <= datetime.now() <= till_active_date:
-                        send_poll_notification.delay(poll_pk, draft_pk)
+                        send_poll_notification(poll_form.pk, draft_form.pk)
 
-                    poll = get_object_or_404(Polls, pk=poll_pk)
+                    poll = get_object_or_404(Polls, pk=poll_form.pk)
 
                     for el in planning_dates:
                         dates_form = Dates(poll=poll, date=el+':00')
@@ -1261,3 +1260,50 @@ def password_reset_request(request):
     password_reset_form = PasswordResetForm()
     return render(request=request, template_name="schedule/password_reset_form.html",
                   context={"password_reset_form": password_reset_form})
+
+
+def send_email_organizer(username, event_pk):
+    user = get_object_or_404(User, username=username)
+    event = get_object_or_404(Event, pk=event_pk)
+    rendered_body = loader.render_to_string('schedule/email_organizer.html',
+                                            {'event': event})
+    mail_settings = EmailSet.objects.filter(pk=1)[0]
+    host = mail_settings.EMAIL_HOST
+    port = mail_settings.EMAIL_PORT
+    username = mail_settings.EMAIL_HOST_USER
+    password = mail_settings.EMAIL_HOST_PASSWORD
+    use_tls = bool(mail_settings.EMAIL_USE_TLS)
+    from_email = mail_settings.EMAIL_HEADER
+    with get_connection(host=host, port=port, username=username, password=password,
+                        use_tls=use_tls) as conn:
+        msg = EmailMessage(subject='Twoje nadchodzące szkolenie!', body=rendered_body,
+                           from_email=from_email,
+                           to=[user.email], connection=conn)
+        msg.content_subtype = "html"
+        msg.send(fail_silently=True)
+
+def send_poll_notification(poll_pk, draft_pk):
+    poll = get_object_or_404(Polls, pk=poll_pk)
+    event = get_object_or_404(Event, pk=draft_pk)
+    mailing_list_all = []
+    user_mails = User.objects.all()
+    for el in user_mails:
+        mailing_list_all.append(el.email)
+    rendered_body = loader.render_to_string('schedule/poll_notification.html',
+                                            {'poll': poll, 'event': event})
+    mail_settings = EmailSet.objects.filter(pk=1)[0]
+    host = mail_settings.EMAIL_HOST
+    port = mail_settings.EMAIL_PORT
+    username = mail_settings.EMAIL_HOST_USER
+    password = mail_settings.EMAIL_HOST_PASSWORD
+    use_tls = bool(mail_settings.EMAIL_USE_TLS)
+    from_email = mail_settings.EMAIL_HEADER
+    with get_connection(host=host, port=port, username=username, password=password,
+                        use_tls=use_tls) as conn:
+        msg = EmailMessage(subject='Zagłosuj w ankiecie!', body=rendered_body,
+                           from_email=from_email,
+                           to=mailing_list_all, connection=conn)
+        msg.content_subtype = "html"
+        msg.send(fail_silently=True)
+    poll.if_sent_notification = True
+    poll.save()
