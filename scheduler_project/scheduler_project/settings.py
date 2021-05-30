@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'vote',
     'django_celery_beat',
     'crispy_forms',
+    'mathfilters'
 ]
 
 MIDDLEWARE = [

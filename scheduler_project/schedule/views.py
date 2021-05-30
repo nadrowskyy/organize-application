@@ -1131,6 +1131,33 @@ def event_details(request, index):
         comments = Comment.objects.filter(event=index)
         comments_cnt = comments.count()
         form = AddComment()
+        poll = 0
+        try:
+            poll = Polls.objects.get(event=index)
+        except:
+            pass
+
+        if poll and poll.if_active:
+
+            if poll.since_active <= date.today() < poll.till_active:
+                poll_in_progress = True
+            else:
+                poll_in_progress = False
+
+            dates = Dates.objects.filter(poll=poll).order_by('date')
+            total_votes = 0
+            if_voted = False
+            # sprawdzam czy user juz zaglosowal na ktorykolwiek z terminow
+            for el in dates:
+                if el.users.filter(id=request.user.id).exists():
+                    if_voted = True
+
+                total_votes += el.count
+
+            context = {'selected_event': selected_event, 'comments': comments, 'form': form, 'comments_cnt': comments_cnt,
+                       'poll': poll, 'dates': dates, 'if_voted': if_voted, 'poll_in_progress': poll_in_progress, 'total_votes': total_votes}
+            return render(request, 'schedule/event_details.html', context)
+
         context = {'selected_event': selected_event, 'comments': comments, 'form': form, 'comments_cnt': comments_cnt}
 
         return render(request, 'schedule/event_details.html', context)
