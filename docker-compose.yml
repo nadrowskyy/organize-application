@@ -46,7 +46,7 @@ services:
     command: sh -c "celery -A scheduler_project worker -l info --pool=solo"
     container_name: celery_worker
     depends_on:
-      - app
+      - organize-application
       - mysql
       - rabbitmq
     deploy:
@@ -70,7 +70,7 @@ services:
     command: sh -c "celery -A scheduler_project beat -l INFO"
     container_name: celery_beat
     depends_on:
-      - app
+      - organize-application
       - mysql
       - rabbitmq
     hostname: celery_beat
