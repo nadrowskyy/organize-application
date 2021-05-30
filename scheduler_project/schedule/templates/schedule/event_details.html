@@ -113,7 +113,7 @@
 
 
                 <div class="progress">
-                <div class="progress-bar" role="progressbar" style="width: {{date.count|mul:100|intdiv:total_votes}}%; {% if date.count == 0 %} color: black {% endif %}">{{ date.count }}</div>
+                <div class="progress-bar" role="progressbar" {% if total_votes != -1 %} style="width: {{date.count|mul:100|intdiv:total_votes}}%; {% endif %} {% if date.count == 0 %} color: black {% endif %}">{{ date.count }}</div>
 
                 </div>
             </div>
@@ -150,7 +150,7 @@
             <label for="date{{ forloop.counter }}">{{ date.date }}</label>
             <div style="display:inline; margin-left: 30px;">
                 <div class="progress">
-                <div class="progress-bar" role="progressbar" style="width: {{date.count|mul:100|intdiv:total_votes}}%; {% if date.count == 0 %} color: black {% endif %}">{{ date.count }}</div>
+                <div class="progress-bar" role="progressbar" {% if total_votes != -1 %} style="width: {{date.count|mul:100|intdiv:total_votes}}%; {% endif %} {% if date.count == 0 %} color: black {% endif %}">{{ date.count }}</div>
                 </div>
             </div>
     <br>

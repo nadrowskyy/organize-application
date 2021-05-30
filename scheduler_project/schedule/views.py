@@ -271,13 +271,30 @@ def draft_edit(request, index):
             users = user.objects.all()
             poll = Polls.objects.filter(event=index).first()
             dates = Dates.objects.filter(poll=poll)
+            poll_in_progress = False
 
             if event[0].planning_date < datetime.today():
                 past = True
             else:
                 past = False
 
-            context = {'event': event, 'users': users, 'permitted': True, 'past': past, 'poll': poll, 'dates': dates}
+            if poll and poll.if_active:
+
+                if poll.since_active <= date.today() < poll.till_active:
+                    poll_in_progress = True
+                else:
+                    poll_in_progress = False
+
+                total_votes = 0
+                # sprawdzam czy user juz zaglosowal na ktorykolwiek z terminow
+                for el in dates:
+                    total_votes += el.count
+
+                if total_votes == 0:
+                    total_votes = -1
+
+            context = {'event': event, 'users': users, 'permitted': True, 'past': past, 'poll': poll, 'dates': dates,
+                       'poll_in_progress': poll_in_progress, 'total_votes': total_votes}
             return render(request, 'schedule/draft_edit.html', context)
 
         if request.method == 'POST':
@@ -990,7 +1007,33 @@ def event_edit(request, index):
             else:
                 past = False
 
-            context = {'event': event, 'users': users, 'permitted': True, 'past': past}
+            poll = 0
+            dates = 0
+            total_votes = 0
+            poll_in_progress = False
+            try:
+                poll = Polls.objects.get(event=index)
+            except:
+                poll = 0
+
+            if poll and poll.if_active:
+
+                if poll.since_active <= date.today() < poll.till_active:
+                    poll_in_progress = True
+                else:
+                    poll_in_progress = False
+
+                dates = Dates.objects.filter(poll=poll).order_by('date')
+                total_votes = 0
+                # sprawdzam czy user juz zaglosowal na ktorykolwiek z terminow
+                for el in dates:
+                    total_votes += el.count
+
+                if total_votes == 0:
+                    total_votes = -1
+
+            context = {'event': event, 'users': users, 'permitted': True, 'past': past, 'poll': poll, 'dates': dates,
+                       'poll_in_progress': poll_in_progress, 'total_votes': total_votes}
             return render(request, 'schedule/event_edit.html', context)
 
         if request.method == 'POST':
@@ -1151,8 +1194,10 @@ def event_details(request, index):
             for el in dates:
                 if el.users.filter(id=request.user.id).exists():
                     if_voted = True
-
                 total_votes += el.count
+
+            if total_votes == 0:
+                total_votes = -1
 
             context = {'selected_event': selected_event, 'comments': comments, 'form': form, 'comments_cnt': comments_cnt,
                        'poll': poll, 'dates': dates, 'if_voted': if_voted, 'poll_in_progress': poll_in_progress, 'total_votes': total_votes}
