@@ -323,7 +323,7 @@
       {% if list.has_next %}
     <li class="page-item"><a class="page-link" href="{% url 'events_list' %}?page={{list.next_page_number}}">{{list.next_page_number}}</a></li>
     <li class="page-item">
-      <a class="page-link" href="{% url 'events_list' %}?page={{list.next_page_number}}" type="submit" id="next_page">Następna strona</a>
+      <a class="page-link" href="{% url 'events_list' %}?page={{list.next_page_number}}" id="next_page">Następna strona</a>
     </li>
       {% endif %}
   </ul>

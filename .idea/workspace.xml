@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="some fixes from sprint 6 - see details on Taiga">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/event_details.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/event_details.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/scheduler_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/scheduler_project/settings.py" afterDir="false" />
+    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="poll's results">
+      <change beforePath="$PROJECT_DIR$/scheduler_project/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/events_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/events_list.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +123,7 @@
       <workItem from="1621690114553" duration="2712000" />
       <workItem from="1621811485358" duration="3718000" />
       <workItem from="1621870128976" duration="3769000" />
-      <workItem from="1622320181790" duration="13536000" />
+      <workItem from="1622320181790" duration="14203000" />
     </task>
     <task id="LOCAL-00001" summary="Test kom Bartka K">
       <created>1616441609819</created>
@@ -365,7 +363,14 @@
       <option name="project" value="LOCAL" />
       <updated>1622327884825</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="poll's results">
+      <created>1622342279755</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1622342279755</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -391,7 +396,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Aktualizacja rejestracji + ikona + kosmetyczne poprawki" />
     <MESSAGE value="Zmieniony homepage - karuzela z instrukcją, wyświetlanie trzech najbliższch eventów z datą, godziną, imieniem i nazwiskiem; miejsce na kolejne dodatki" />
     <MESSAGE value="Update 1.4.1 - poprawki wizualne" />
     <MESSAGE value="Update 1.5 - ZROBIĆ MIGRACJE - admin może dodawać eventy, dodawać customowe ikony, wybierać organizatora z listy; na homepage wyświetlają się dodane ręcznie ikony lub defaultowa jeśli nie ma; nowe pliki css i js do obsługi nowych ficzerów; kosmetyczne poprawki" />
@@ -416,6 +420,7 @@
     <MESSAGE value="Drafts filter on events_list, showing only published events on homepage, filtering improvements" />
     <MESSAGE value="admin can now see the results of every pole" />
     <MESSAGE value="some fixes from sprint 6 - see details on Taiga" />
-    <option name="LAST_COMMIT_MESSAGE" value="some fixes from sprint 6 - see details on Taiga" />
+    <MESSAGE value="poll's results" />
+    <option name="LAST_COMMIT_MESSAGE" value="poll's results" />
   </component>
 </project>
