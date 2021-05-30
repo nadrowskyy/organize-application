@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="poll's results">
-      <change beforePath="$PROJECT_DIR$/scheduler_project/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/events_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/events_list.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scheduler_project/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scheduler_project/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,7 +124,8 @@
       <workItem from="1621690114553" duration="2712000" />
       <workItem from="1621811485358" duration="3718000" />
       <workItem from="1621870128976" duration="3769000" />
-      <workItem from="1622320181790" duration="14203000" />
+      <workItem from="1622320181790" duration="14331000" />
+      <workItem from="1622391379592" duration="770000" />
     </task>
     <task id="LOCAL-00001" summary="Test kom Bartka K">
       <created>1616441609819</created>
@@ -370,7 +372,14 @@
       <option name="project" value="LOCAL" />
       <updated>1622342279755</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="poll's results">
+      <created>1622343017624</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1622343017624</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

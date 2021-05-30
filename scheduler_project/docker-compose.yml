@@ -1,0 +1,83 @@
+version: '3.4'
+
+services:
+
+  rabbitmq:
+    container_name: rabbitmq
+    hostname: rabbitmq
+    image: rabbitmq:latest
+    networks:
+      - main
+    ports:
+      - "5672:5672"
+    restart: on-failure
+
+  mariadb:
+    container_name: mariadb
+    hostname: mariadb
+    image: mariadb
+    environment:
+      MYSQL_DATABASE: scheduler_database
+      MYSQL_USER: root
+    networks:
+      - main
+    ports:
+      - "3306:3306"
+    restart: on-failure
+
+  app:
+    build: .
+    command: sh -c "wait-for mariadb:3306 && python manage.py collectstatic --no-input && python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:80"
+    container_name: app
+    depends_on:
+      - mariadb
+      - rabbitmq
+    expose:
+      - "80"
+    hostname: app
+    image: app-image
+    networks:
+      - main
+    restart: on-failure
+    volumes:
+      - .:/usr/src/app
+
+  celery_worker:
+    command: sh -c "wait-for rabbitmq:5672 && wait-for app:8000 -- celery -A scheduler_project worker -l info --pool=solo"
+    container_name: celery_worker
+    depends_on:
+      - app
+      - mariadb
+      - rabbitmq
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 50M
+        reservations:
+          cpus: '0.25'
+          memory: 20M
+    hostname: celery_worker
+    image: app-image
+    networks:
+      - main
+    restart: on-failure
+
+  celery_beat:
+    command: sh -c "wait-for rabbitmq:5672 && wait-for app:80 -- celery -A scheduler_project beat -l INFO"
+    container_name: celery_beat
+    depends_on:
+      - app
+      - mariadb
+      - rabbitmq
+    hostname: celery_beat
+    image: app-image
+    networks:
+      - main
+    restart: on-failure
+
+networks:
+  main:
