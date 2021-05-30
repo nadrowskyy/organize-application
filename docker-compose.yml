@@ -27,7 +27,7 @@ services:
 
   organize-application:
     build: .
-    command: sh -c "python manage.py collectstatic --no-input && python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:80"
+    command: sh -c "python organize-application/scheduler_project/manage.py collectstatic --no-input && python organize-application/scheduler_project/manage.py makemigrations && python organize-application/scheduler_project/manage.py migrate && python organize-application/scheduler_project/manage.py runserver 0.0.0.0:80"
     container_name: organize-application
     depends_on:
       - mysql
@@ -43,7 +43,7 @@ services:
       - .:/usr/src/organize-application/scheduler_project
 
   celery_worker:
-    command: sh -c "celery -A scheduler_project worker -l info --pool=solo"
+    command: sh -c "celery -A organize-application worker -l info --pool=solo"
     container_name: celery_worker
     depends_on:
       - organize-application
@@ -67,7 +67,7 @@ services:
     restart: on-failure
 
   celery_beat:
-    command: sh -c "celery -A scheduler_project beat -l INFO"
+    command: sh -c "celery -A organize-application beat -l INFO"
     container_name: celery_beat
     depends_on:
       - organize-application
