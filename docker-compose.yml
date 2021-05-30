@@ -15,32 +15,32 @@ services:
   mariadb:
     container_name: mariadb
     hostname: mariadb
-    image: mariadb
+   image: mysql:5.7
+    ports:
+      - '3306:3306'
     environment:
-      MYSQL_DATABASE: scheduler_database
-      MYSQL_USER: root
+       MYSQL_DATABASE: 'scheduler_database'
+       MYSQL_USER: 'root'
     networks:
       - main
-    ports:
-      - "3306:3306"
     restart: on-failure
 
-  app:
-    build: scheduler_project
+  organize-application:
+    build: .
     command: sh -c "python manage.py collectstatic --no-input && python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:80"
-    container_name: app
+    container_name: organize-application
     depends_on:
-      - mariadb
+      - mysql
       - rabbitmq
     expose:
       - "80"
-    hostname: app
-    image: app-image
+    hostname: organize-application
     networks:
       - main
     restart: on-failure
+    image: app-image
     volumes:
-      - .:/usr/src/app
+      - .:/usr/src/organize-application/scheduler_project
 
   celery_worker:
     command: sh -c "celery -A scheduler_project worker -l info --pool=solo"
