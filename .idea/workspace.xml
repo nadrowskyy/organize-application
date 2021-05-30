@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="docker compose test" />
+    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="docker compose test">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -86,11 +89,11 @@
       <recent name="C:\Users\Dell Inspiron 7567\Desktop\organize-application\scheduler_project\schedule\templates\schedule" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\dinek\PycharmProjects\organize-application" />
       <recent name="C:\Users\dinek\PycharmProjects\organize-application\scheduler_project" />
       <recent name="C:\Users\dinek\PycharmProjects\organize-application\scheduler_project\scheduler_project" />
       <recent name="C:\Users\dinek\PycharmProjects\organize-application\scheduler_project\schedule" />
       <recent name="C:\Users\dinek\PycharmProjects\organize-application\scheduler_project\static\css" />
-      <recent name="C:\Users\dinek\PycharmProjects\organize-application\scheduler_project\static\images\icons" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -121,7 +124,7 @@
       <workItem from="1621811485358" duration="3718000" />
       <workItem from="1621870128976" duration="3769000" />
       <workItem from="1622320181790" duration="14331000" />
-      <workItem from="1622391379592" duration="1164000" />
+      <workItem from="1622391379592" duration="1732000" />
     </task>
     <task id="LOCAL-00001" summary="Test kom Bartka K">
       <created>1616441609819</created>
@@ -382,7 +385,14 @@
       <option name="project" value="LOCAL" />
       <updated>1622392166518</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="docker compose test">
+      <created>1622392643941</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1622392643941</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

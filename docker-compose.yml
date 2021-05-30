@@ -27,7 +27,7 @@ services:
 
   app:
     build: scheduler_project
-    command: sh -c "wait-for mariadb:3306 && python manage.py collectstatic --no-input && python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:80"
+    command: sh -c "python manage.py collectstatic --no-input && python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:80"
     container_name: app
     depends_on:
       - mariadb
@@ -43,7 +43,7 @@ services:
       - .:/usr/src/app
 
   celery_worker:
-    command: sh -c "wait-for rabbitmq:5672 && wait-for app:8000 -- celery -A scheduler_project worker -l info --pool=solo"
+    command: sh -c "celery -A scheduler_project worker -l info --pool=solo"
     container_name: celery_worker
     depends_on:
       - app
@@ -67,7 +67,7 @@ services:
     restart: on-failure
 
   celery_beat:
-    command: sh -c "wait-for rabbitmq:5672 && wait-for app:80 -- celery -A scheduler_project beat -l INFO"
+    command: sh -c "celery -A scheduler_project beat -l INFO"
     container_name: celery_beat
     depends_on:
       - app
