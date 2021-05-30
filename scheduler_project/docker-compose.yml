@@ -26,7 +26,7 @@ services:
     restart: on-failure
 
   organize-application:
-    build: .
+    build: ..
     command: sh -c "python3 organize-application/scheduler_project/manage.py collectstatic --no-input && python3 organize-application/scheduler_project/manage.py makemigrations && python3 organize-application/scheduler_project/manage.py migrate && python3 organize-application/scheduler_project/manage.py runserver 0.0.0.0:80"
     container_name: organize-application
     depends_on:
