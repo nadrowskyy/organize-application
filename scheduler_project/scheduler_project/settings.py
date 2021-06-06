@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-import google.auth
+
 from pathlib import Path
 import os
 import pymysql
@@ -81,48 +81,24 @@ WSGI_APPLICATION = 'scheduler_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-if os.getenv('GAE_APPLICATION', None):
-    # Running on production App Engine, so connect to Google Cloud SQL using
-    # the unix socket at /cloudsql/<your-cloudsql-connection string>
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'HOST': '/cloudsql/comarch-scheduler:europe-central2:scheduler-database',
-            'USER': 'root',
-            'PASSWORD': 'schedulerdb',
-            'NAME': 'scheduler_database',
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': '127.0.0.1',  # DB's IP address
+        'PORT': '3306',
+        'NAME': 'scheduler_database',
+        'USER': 'root',
+        # 'PASSWORD': 'schedulerdb',
+        'OPTIONS': {
+            'autocommit': False,
+        },
     }
-    MEDIA_ROOT = 'media'
-    MEDIA_URL = 'https://storage.googleapis.com/comarch-scheduler.appspot.com/'
-    DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
-    GS_BUCKET_NAME = 'comarch-scheduler.appspot.com'
-    GOOGLE_APPLICATION_CREDENTIALS = '/workspace/comarch-scheduler-283479230e5c.json'
-else:
-    # Running locally so connect to either a local MySQL instance or connect to
-    # Cloud SQL via the proxy. To start the proxy via command line:
-    #
-    #     $ cloud_sql_proxy -instances=[INSTANCE_CONNECTION_NAME]=tcp:3306
-    #
-    # See https://cloud.google.com/sql/docs/mysql-connect-proxy
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'HOST': '127.0.0.1',  # DB's IP address
-            'PORT': '3306',
-            'NAME': 'scheduler_database',
-            'USER': 'root',
-            # 'PASSWORD': 'schedulerdb', # haslo do bazy - tylko jesli laczymy sie z baza googla lokalnie przez proxy
-            'OPTIONS': {
-                'autocommit': False,
-            },
-        }
-    }
-    MEDIA_URL = 'media/'
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-    STATICFILES_DIRS = [
-        os.path.join(BASE_DIR, "static")
-    ]
+}
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static")
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
