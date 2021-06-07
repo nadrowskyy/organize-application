@@ -170,30 +170,32 @@
 
 <div class="container">
 
+    {% if event_success %}
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>Sukces!</strong> Szkolenie zostało dodane pomyślnie!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    {% elif draft_success %}
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>Sukces!</strong> Szkolenie zostało dodane pomyślnie!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    {% endif %}
+
     <br>
     <center><h2>LISTA SZKOLEŃ</h2></center>
     <hr>
     <div class="container">
-<div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" style="max-width:40%;font-family: 'Oswald', sans-serif;" id="sortowanie" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sortowanie</button>
-    <div class="dropdown-menu" aria-labelledby="sortowanie">
-    <form method="GET" action="">
-        <button class="dropdown-item" type="submit" name="sort_by" id="sort_latest" value="latest">Od najbliższych</button>
-        <button class="dropdown-item" type="submit" name="sort_by" id="sort_oldest" value="oldest">Od najdalszych</button>
-        <button class="dropdown-item" type="submit" name="sort_by" id="sort_alphabetical" value="alphabetical">Alfabetycznie</button>
-    </form>
-</div>
 
 
-    <button class="btn btn-secondary" data-toggle="collapse" style="max-width:40%;font-family: 'Oswald', sans-serif;" data-target="#filters">Filtrowanie</button>
-    </div>
-        </div>
-
-
-
-    <div id="filters" class="collapse">
-        <hr>
-<div class="container">
 
     <form method="GET" action="">
 
@@ -209,8 +211,19 @@
         <div class="form-check">
                 &nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" class="subOption" name="show_upcoming" id="show_upcoming" value="1"> Nadchodzące</label>
         </div>
-
+        <hr>
+        <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" style="max-width:50%;font-family: 'Oswald', sans-serif;" id="sortowanie" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sortowanie</button>
+    <div class="dropdown-menu" aria-labelledby="sortowanie">
+    <form method="GET" action="">
+        <button class="dropdown-item" type="submit" name="sort_by" id="sort_latest" value="latest">Od najbliższych</button>
+        <button class="dropdown-item" type="submit" name="sort_by" id="sort_oldest" value="oldest">Od najdalszych</button>
+        <button class="dropdown-item" type="submit" name="sort_by" id="sort_alphabetical" value="alphabetical">Alfabetycznie</button>
+    </form>
 </div>
+        </div>
+    </div>
+
 
         {% if request.user.is_authenticated %}
 
@@ -251,7 +264,7 @@
         </div>
 
     </div>
-    </div>
+
 
 
         <div class="row">
@@ -338,22 +351,27 @@
     if (params.has('sort_by')) {
 
         var current = sessionStorage.getItem("sort_by")
+        var el = document.getElementById("sortowanie")
 
         if (current === "latest")
         {
             $("#sort_latest").addClass("active");
+            el.firstChild.data = "Od najbliższych";
         }
         else if (current === "oldest")
         {
             $("#sort_oldest").addClass("active");
+            el.firstChild.data = "Od najdalszych";
         }
         else if (current === "alphabetical")
         {
             $("#sort_alphabetical").addClass("active");
+            el.firstChild.data = "Alfabetycznie";
         }
     }
     else {
         $("#sort_latest").addClass("active");
+        el.firstChild.data = "Od najbliższych";
     }
 
     // AUTOMATYCZNE ZAZNACZANIE ZAGNIEŻDŻONYCH CHECKBOXÓW
