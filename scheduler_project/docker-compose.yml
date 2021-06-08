@@ -17,8 +17,8 @@ services:
   organize-application:
     build: .
     command: >
-      sh -c "python manage.py makemigrations &&
-             python manage.py migrate &&
+      sh -c "python manage.py makemigrations schedule &&
+             python manage.py migrate schedule &&
              python manage.py runserver 0.0.0.0:80"
     container_name: organize-application
     depends_on:
