@@ -1,3 +1,4 @@
+import scheduler_project.settings
 from .forms import CreateUserForm, UserFullnameChoiceField
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
@@ -33,8 +34,10 @@ from django.db.models import Q
 from django.core.mail import BadHeaderError, send_mail
 from .tasks import send_mail_register, send_poll_notification, send_email_organizer
 from django.template import loader
+from collections import Counter
+from Crypto.Cipher import DES3
 
-# @login_required(login_url='login') # nie pozwala na wejscie uzytkownika na strone glowna jesli nie jest zarejestrowany
+
 def home_page(request):
     now = timezone.now()
     upcoming_events_list = Event.objects.filter(planning_date__gte=now)
@@ -44,13 +47,13 @@ def home_page(request):
     return render(request, 'schedule/home.html', context)
 
 
-@unauthenticated_user
 def login_page(request):
+    if request.user.is_authenticated:
+        return redirect('home')
     if request.method == 'POST':
         username = request.POST.get('username')  # html name="username"
         password = request.POST.get('password')
         remember_me = request.POST.get('remember_me')
-
         user = authenticate(request, username=username, password=password)
 
         # Sprawdzanie parametru next, by móc przekierować niezalogowanego użytkownika
@@ -72,7 +75,6 @@ def login_page(request):
     return render(request, 'schedule/login.html', context)
 
 
-# do zakladki rejestracji moga przejsc tylko niezalogowani uzytkownicy
 @unauthenticated_user
 def register_page(request):
     if request.method == 'POST':
@@ -118,9 +120,6 @@ def register_page(request):
     return render(request, 'schedule/register.html', context)
 
 
-# Tylko zalogowany użytkownik może wejśc w listę eventów. Niezalogowany zostanie przeniesiony
-# do strony odpowiedzialnej za logowanie
-#@login_required(login_url="/login")
 def events_list(request):
 
     today = datetime.today()
@@ -253,7 +252,6 @@ def poll_details(request, index):
                     # drugie sprawdzenie czy glos na daną date juz jest w bazie, na wszelki wypadek, byc moze to wywalimy
                     pass
                 else:
-                    print(request.user)
                     tmp_date.users.add(request.user)
                     tmp_date.count += 1
                     tmp_date.save()
@@ -272,6 +270,7 @@ def draft_edit(request, index):
             poll = Polls.objects.filter(event=index).first()
             dates = Dates.objects.filter(poll=poll)
             poll_in_progress = False
+            total_votes = 0
 
             if event[0].planning_date < datetime.today():
                 past = True
@@ -285,7 +284,6 @@ def draft_edit(request, index):
                 else:
                     poll_in_progress = False
 
-                total_votes = 0
                 # sprawdzam czy user juz zaglosowal na ktorykolwiek z terminow
                 for el in dates:
                     total_votes += el.count
@@ -545,7 +543,6 @@ def draft_edit(request, index):
                 return render(request, 'schedule/polls_list.html', context)
 
 
-# pozwala wejsc na strone tworzenia eventów tylko adminom
 @allowed_users(allowed_roles=['admin'])
 def create_event(request):
     User = get_user_model()
@@ -557,7 +554,9 @@ def create_event(request):
                 organizer = form.cleaned_data.get('organizer')
                 event_form = form.save()
                 event_pk = event_form.pk
-                send_email_organizer.delay(organizer, event_pk)
+                organizer_pk = get_object_or_404(User, username=organizer).pk
+                send_email_organizer.delay(organizer_pk, event_pk)
+                messages.success(request, 'Szkolenie zostało utworzone.')
                 return redirect('events_list')
         if request.POST.get('publish') == 'False':
             form = CreateEvent(request.POST, request.FILES)
@@ -571,7 +570,11 @@ def create_event(request):
                 if request.POST.get('if_active') == 'True':
 
                     planning_dates = request.POST.getlist('planning_date_draft')
-
+                    count_duplicates = Counter(planning_dates)
+                    for el in count_duplicates.values():
+                        if el > 1:
+                            messages.error(request, "Daty w ankiecie muszą być unikalne")
+                            return redirect('create_event')
                     if len(planning_dates) < 2 and request.POST.get('if_active') == 'True' or \
                             request.POST.get('poll_avaible_since') == '' or request.POST.get('poll_avaible') == '':
                         messages.error(request, "Wypełnij wszystkie pola wymagane dla utworzenia aktywnej ankiety.")
@@ -604,6 +607,11 @@ def create_event(request):
 
                     planning_dates = request.POST.getlist('planning_date_draft')
                     if_active = False
+                    count_duplicates = Counter(planning_dates)
+                    for el in count_duplicates.values():
+                        if el > 1:
+                            messages.error(request, "Daty w ankiecie muszą być unikalne")
+                            return redirect('create_event')
 
                     if since_active == '' or till_active == '':
                         poll_form = Polls(event=event, if_active=if_active)
@@ -1306,3 +1314,30 @@ def password_reset_request(request):
     password_reset_form = PasswordResetForm()
     return render(request=request, template_name="schedule/password_reset_form.html",
                   context={"password_reset_form": password_reset_form})
+
+
+def handler_403(request, exception):
+    return render(request, 'schedule/403.html')
+
+
+def handler_404(request, exception):
+    return render(request, 'schedule/403.html')
+
+
+def handler_400(request, exception):
+    return render(request, 'schedule/400.html')
+
+
+def handler_500(request):
+    return render(request, 'schedule/500.html')
+
+
+def get_password_email_set():
+    key = scheduler_project.settings.SECRET_KEY
+    mail_settings = EmailSet.objects.filter(pk=1)[0]
+    password = mail_settings.EMAIL_HOST_PASSWORD
+
+    cipher = DES3.new(key, DES3.MODE_EAX)
+    plaintext = cipher.decrypt(password)
+    return plaintext.decode('ascii')
+

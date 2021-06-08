@@ -16,6 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+handler403 = 'schedule.views.handler_403'
+handler404 = 'schedule.views.handler_404'
+handler400 = 'schedule.views.handler_400'
+handler500 = 'schedule.views.handler_500'
+
 urlpatterns = [
 
      path('', include('schedule.urls')),

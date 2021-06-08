@@ -17,7 +17,7 @@ class Event(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=250,
                             unique_for_date='planning_date', default=None)
-    description = models.TextField(verbose_name='opis wydarzenia', blank=True)
+    description = models.TextField(verbose_name='opis wydarzenia', blank=True, max_length=1000)
     created = models.DateTimeField(auto_now_add=True)
     planning_date = models.DateTimeField(blank=True, null=True)
     publish = models.DateTimeField(default=timezone.now)

@@ -173,6 +173,10 @@
     <br>
     <center><h2>LISTA SZKOLEŃ</h2></center>
     <hr>
+    {% for message in messages %}
+    {{ message }}
+        <infomsg>{{ message }}</infomsg>
+    {% endfor %}
     <div class="container">
 <div class="dropdown">
     <button class="btn btn-secondary dropdown-toggle" type="button" style="max-width:40%;font-family: 'Oswald', sans-serif;" id="sortowanie" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sortowanie</button>
