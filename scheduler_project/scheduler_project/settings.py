@@ -89,7 +89,10 @@ DATABASES = {
         'PORT': '3306',
         'NAME': 'scheduler_database',
         'USER': 'schedulerdbuser',
-        'PASSWORD': 'schedulerdbpass'
+        'PASSWORD': 'schedulerdbpass',
+        'OPTIONS': {
+            'autocommit': False,
+        },
     }
 }
 MEDIA_URL = 'media/'
