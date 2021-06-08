@@ -35,9 +35,12 @@ services:
     image: mysql
     ports:
       - '3306:3306'
+    command: --default-authentication-plugin=mysql_native_password
     environment:
-         - MYSQL_DATABASE='scheduler_database'
-         - MYSQL_ROOT_PASSWORD='schedulerdb'
+         - MYSQL_DATABASE=scheduler_database
+         - MYSQL_ROOT_PASSWORD=schedulerdbroot
+         - MYSQL_USER=schedulerdbuser
+         - MYSQL_PASSWORD=schedulerdbpass
     restart: on-failure
 
 #  celery_worker:
