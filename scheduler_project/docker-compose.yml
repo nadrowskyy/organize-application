@@ -34,7 +34,7 @@ services:
       - '3306:3306'
     environment:
          - MYSQL_DATABASE='scheduler_database'
-         - MYSQL_ROOT_PASSWORD=''
+         - MYSQL_ROOT_PASSWORD='schedulerdb'
     restart: on-failure
 
 #  celery_worker:
