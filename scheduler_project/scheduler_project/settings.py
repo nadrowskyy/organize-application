@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'scheduler_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '127.0.0.1',  # DB's IP address
+        'HOST': 'mysql',  # DB's IP address
         'PORT': '3306',
         'NAME': 'scheduler_database',
         'USER': 'root',
