@@ -19,12 +19,6 @@ def populate_models(sender, **kwargs):
                                       password='super')
 
 
-@receiver(post_migrate)
-def email_setter(sender, **kwargs):
-    email, created = EmailSet.objects.get_or_create(pk=1)
-    email.save()
-
-
 @receiver(post_save, sender=Event)
 def create_notification(sender, instance, created, **kwargs):
 
