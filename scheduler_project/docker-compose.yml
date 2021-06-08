@@ -16,7 +16,11 @@ services:
 
   organize-application:
     build: .
-    command: python manage.py runserver 0.0.0.0:80
+    command: >
+      sh -c "python manage.py collectstatic --noinput &&
+             python manage.py makemigraions &&
+             python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:80"
     container_name: organize-application
     depends_on:
       - mysql
