@@ -1,6 +1,7 @@
-FROM python:3
-ENV PYTHONBUFFERED=1
-WORKDIR /usr/src/app
-COPY requirements.txt ./
-RUN pip uninstall django
+FROM python:3.7
+ENV PYTHONUNBUFFERED 1
+WORKDIR /usr/src
+RUN sudo git clone https://github.com/nadrowskyy/organize-application/
+WORKDIR /usr/src/organize-application/scheduler_project
+ADD . /usr/src/organize-application/scheduler_project
 RUN pip install -r requirements.txt
