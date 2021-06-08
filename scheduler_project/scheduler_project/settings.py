@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'schedule',
     'schedule.apps.ScheduleConfig',
     'vote',
     'django_celery_beat',
