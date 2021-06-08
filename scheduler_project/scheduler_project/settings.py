@@ -88,7 +88,7 @@ DATABASES = {
         'PORT': '3306',
         'NAME': 'scheduler_database',
         'USER': 'root',
-        # 'PASSWORD': 'schedulerdb',
+        'PASSWORD': 'schedulerdb',
         'OPTIONS': {
             'autocommit': False,
         },
