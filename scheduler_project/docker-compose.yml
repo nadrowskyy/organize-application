@@ -41,7 +41,6 @@ services:
          - MYSQL_ROOT_PASSWORD=schedulerdbroot
          - MYSQL_USER=schedulerdbuser
          - MYSQL_PASSWORD=schedulerdbpass
-    restart: on-failure
 
 #  celery_worker:
 #    command: sh -c "celery -A organize-application worker -l info --pool=solo"
