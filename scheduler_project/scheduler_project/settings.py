@@ -88,8 +88,8 @@ DATABASES = {
         'HOST': 'mysql',  # DB's IP address
         'PORT': '3306',
         'NAME': 'scheduler_database',
-        'USER': 'root',
-        'PASSWORD': 'schedulerdb',
+        'USER': 'schedulerdbuser',
+        'PASSWORD': 'schedulerdbpass',
         'OPTIONS': {
             'autocommit': False,
         },
