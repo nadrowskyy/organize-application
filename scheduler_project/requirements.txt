@@ -24,6 +24,7 @@ idna==2.10
 kombu==5.0.2
 mysqlclient==2.0.3
 prompt-toolkit==3.0.18
+pycryptodome
 PyMySQL==1.0.2
 python-crontab==2.5.1
 python-dateutil==2.8.1
