@@ -170,21 +170,6 @@
 
 <div class="container">
 
-
-    <br>
-    <center><h2>LISTA SZKOLEŃ</h2></center>
-    <hr>
-    <div class="container">
-<div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" style="max-width:40%;font-family: 'Oswald', sans-serif;" id="sortowanie" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sortowanie</button>
-    <div class="dropdown-menu" aria-labelledby="sortowanie">
-    <form method="GET" action="">
-        <button class="dropdown-item" type="submit" name="sort_by" id="sort_latest" value="latest">Od najbliższych</button>
-        <button class="dropdown-item" type="submit" name="sort_by" id="sort_oldest" value="oldest">Od najdalszych</button>
-        <button class="dropdown-item" type="submit" name="sort_by" id="sort_alphabetical" value="alphabetical">Alfabetycznie</button>
-    </form>
-</div>
-
     {% if event_success %}
 
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -229,7 +214,7 @@
         </div>
         <hr>
         <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" style="max-width:50%;font-family: 'Oswald', sans-serif;" id="sortowanie" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sortowanie</button>
+    <button class="btn btn-secondary dropdown-toggle" type="button" style="max-width:60%;font-family: 'Oswald', sans-serif;" id="sortowanie" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sortowanie</button>
     <div class="dropdown-menu" aria-labelledby="sortowanie">
     <form method="GET" action="">
         <button class="dropdown-item" type="submit" name="sort_by" id="sort_latest" value="latest">Od najbliższych</button>
@@ -363,11 +348,11 @@
 <script>
 
     // OZNACZANIE TRYBU SORTOWANIA (podświetla wybraną opcję na dropdownie pod przyciskiem)
-
+    var el = document.getElementById("sortowanie")
     if (params.has('sort_by')) {
 
         var current = sessionStorage.getItem("sort_by")
-        var el = document.getElementById("sortowanie")
+
 
         if (current === "latest")
         {
