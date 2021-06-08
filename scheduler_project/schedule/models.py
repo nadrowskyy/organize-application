@@ -87,10 +87,10 @@ class EmailSet(models.Model):
     # USTAWIENIA SERWERA POCZTY
     EMAIL_BACKEND = models.CharField(max_length=50)
     EMAIL_HOST = models.CharField(max_length=30)
-    EMAIL_PORT = models.IntegerField()
+    EMAIL_PORT = models.IntegerField(blank=True)
     EMAIL_HOST_USER = models.CharField(max_length=50)
     EMAIL_HOST_PASSWORD = models.CharField(max_length=100)
-    EMAIL_USE_TLS = models.BooleanField()
+    EMAIL_USE_TLS = models.BooleanField(blank=True)
     DEFAULT_FROM_EMAIL = models.CharField(max_length=50)
     EMAIL_HEADER = models.CharField(max_length=50)
 
