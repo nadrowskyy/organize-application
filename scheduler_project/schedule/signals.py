@@ -1,6 +1,6 @@
 from django.dispatch import receiver
 from django.db.models.signals import post_save, pre_migrate, post_migrate
-from .models import EmailSet, Event, EventNotification
+from .models import Event, EventNotification
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import get_user_model
 
