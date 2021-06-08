@@ -23,7 +23,6 @@ services:
 #      - rabbitmq
     ports:
       - "80:80"
-    hostname: organize-application
     restart: on-failure
     volumes:
       - .:/usr/src/organize-application/scheduler_project
