@@ -23,6 +23,7 @@ htmq==1.0.0
 idna==2.10
 kombu==5.0.2
 mysqlclient==2.0.3
+mysql-connector-python==8.0.22
 prompt-toolkit==3.0.18
 pycryptodome
 PyMySQL==1.0.2
