@@ -18,7 +18,7 @@ def send_notification_all():
     for el in to_sent_1:
         to_sent_list_1.append((Event.objects.filter(id=el.event_id)[0].id))
 
-    to_sent_2 = Event.objects.filter(planning_date__date__gte=datetime.now())
+    to_sent_2 = Event.objects.filter(planning_date__date__gte=datetime.now(), status='publish')
     to_sent_list_2 = []
     for el in to_sent_2:
         to_sent_list_2.append(el.id)
@@ -67,7 +67,7 @@ def send_notification_organizer():
     for el in to_sent_1:
         to_sent_list_1.append((Event.objects.filter(id=el.event_id)[0].id))
 
-    to_sent_2 = Event.objects.filter(planning_date__date__gte=datetime.now())
+    to_sent_2 = Event.objects.filter(planning_date__date__gte=datetime.now(), status='publish')
     to_sent_list_2 = []
     for el in to_sent_2:
         to_sent_list_2.append(el.id)
@@ -208,8 +208,8 @@ def send_poll_notification_cron():
 
 
 @app.task
-def send_email_organizer(username, event_pk):
-    user = get_object_or_404(User, username=username)
+def send_email_organizer(username_pk, event_pk):
+    user = get_object_or_404(User, pk=username_pk)
     event = get_object_or_404(Event, pk=event_pk)
     rendered_body = loader.render_to_string('schedule/email_organizer.html',
                                             {'event': event})

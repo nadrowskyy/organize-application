@@ -170,6 +170,21 @@
 
 <div class="container">
 
+
+    <br>
+    <center><h2>LISTA SZKOLEŃ</h2></center>
+    <hr>
+    <div class="container">
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" style="max-width:40%;font-family: 'Oswald', sans-serif;" id="sortowanie" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sortowanie</button>
+    <div class="dropdown-menu" aria-labelledby="sortowanie">
+    <form method="GET" action="">
+        <button class="dropdown-item" type="submit" name="sort_by" id="sort_latest" value="latest">Od najbliższych</button>
+        <button class="dropdown-item" type="submit" name="sort_by" id="sort_oldest" value="oldest">Od najdalszych</button>
+        <button class="dropdown-item" type="submit" name="sort_by" id="sort_alphabetical" value="alphabetical">Alfabetycznie</button>
+    </form>
+</div>
+
     {% if event_success %}
 
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -178,6 +193,7 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
+
 
     {% elif draft_success %}
 

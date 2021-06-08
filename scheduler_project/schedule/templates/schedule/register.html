@@ -78,13 +78,13 @@
     </div>
       <br>
     <div class="form-floating">
-      <input type="password" class="form-control" id="password1" name="password1" placeholder="Hasło" required>
+      <input type="password" class="form-control" id="password1" name="password1" placeholder="Hasło" required minlength="8">
       <label for="password1">Hasło</label>
         <errormsg>{{ form.password1.errors }}</errormsg>
     </div>
       <br>
     <div class="form-floating">
-      <input type="password" class="form-control" id="password2" name="password2" placeholder="Powtórz hasło" onfocusout="matchPassword()" required>
+      <input type="password" class="form-control" id="password2" name="password2" placeholder="Powtórz hasło" onfocusout="matchPassword()" required minlength="8">
       <label for="password2">Powtórz hasło</label>
       <div id="validationServer04Feedback" class="invalid-feedback">
       Wprowadzone hasła nie są takie same
