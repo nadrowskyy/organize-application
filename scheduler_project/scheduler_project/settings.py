@@ -82,6 +82,8 @@ CELERY = {
     'CELERY_IMPORTS': ('scheduler_project.tasks', ),
 }
 
+CELERY_RESULT_BACKEND = BROKER_URL
+
 WSGI_APPLICATION = 'scheduler_project.wsgi.application'
 
 # Database
