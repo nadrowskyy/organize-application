@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'schedule.apps.ScheduleConfig',
     'vote',
+    'djcelery',
     'django_celery_beat',
     'crispy_forms',
     'mathfilters'
