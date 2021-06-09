@@ -6,9 +6,6 @@ services:
     container_name: rabbitmq
     hostname: rabbitmq
     image: rabbitmq:latest
-    environment:
-        RABBITMQ_USER: rabbituser
-        RABBITMQ_PASSWORD: rabbitpass
     ports:
       - "5672:5672"
     restart: on-failure
@@ -25,11 +22,7 @@ services:
              python manage.py runserver 0.0.0.0:80"
     container_name: organize-application
     environment:
-      #CELERY_BROKER: "amqp://rabbituser:rabbitpass@rabbitmq:5672//"
-      BROKER_HOST: rabbitmq
-      BROKER_PORT: 5672
-      BROKER_USER: rabbituser
-      BROKER_PASSWORD: rabbitpass
+      CELERY_BROKER: "amqp://guest:guest@rabbitmq:5672//"
     depends_on:
       - mysql
       - rabbitmq
@@ -70,11 +63,7 @@ services:
              celery -A scheduler_project worker -l info --pool=solo"
     container_name: celery_worker
     environment:
-      #CELERY_BROKER: "amqp://rabbituser:rabbitpass@rabbitmq:5672//"
-      BROKER_HOST: rabbitmq
-      BROKER_PORT: 5672
-      BROKER_USER: rabbituser
-      BROKER_PASSWORD: rabbitpass
+      CELERY_BROKER: "amqp://guest:guest@rabbitmq:5672//"
       MYSQL_USER: root
       MYSQL_PASSWORD: schedulerdbroot
       MYSQL_DATABASE: scheduler_database
@@ -95,11 +84,7 @@ services:
              celery -A scheduler_project beat -l INFO"
     container_name: celery_beat
     environment:
-      #CELERY_BROKER: "amqp://rabbituser:rabbitpass@rabbitmq:5672//"
-      BROKER_HOST: rabbitmq
-      BROKER_PORT: 5672
-      BROKER_USER: rabbituser
-      BROKER_PASSWORD: rabbitpass
+      CELERY_BROKER: "amqp://guest:guest@rabbitmq:5672//"
       MYSQL_USER: root
       MYSQL_PASSWORD: schedulerdbroot
       MYSQL_DATABASE: scheduler_database
