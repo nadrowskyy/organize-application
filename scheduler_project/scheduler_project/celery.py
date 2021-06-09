@@ -1,8 +1,11 @@
 from __future__ import absolute_import, unicode_literals
 import os
+import dotenv
 from celery import Celery
 from django.conf import settings
 from celery.schedules import crontab
+
+dotenv.read_dotenv()
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'scheduler_project.settings')
 
