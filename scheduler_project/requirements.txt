@@ -11,7 +11,7 @@ click-plugins==1.1.1
 click-repl==0.1.6
 Django==3.2
 django-celery
-django-celery-beat==2.2.0
+django-celery-beat
 django-crispy-forms==1.11.2
 django-timezone-field==4.1.2
 django-vote==2.2.0
@@ -22,9 +22,6 @@ gunicorn
 htmq==1.0.0
 idna==2.10
 kombu==5.0.2
-mysqlclient==2.0.3
-mysql-connector-python
-mysql-connector-python-rf
 prompt-toolkit==3.0.18
 pycryptodome
 PyMySQL==1.0.2
@@ -38,7 +35,6 @@ requests==2.25.1
 six==1.15.0
 sqlparse==0.4.1
 urllib3==1.26.4
-vine==5.0.0
 vote==1.0.2
 wcwidth==0.2.5
 zope.interface==5.3.0
