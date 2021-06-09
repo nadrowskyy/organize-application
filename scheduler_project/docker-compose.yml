@@ -22,7 +22,7 @@ services:
              python manage.py runserver 0.0.0.0:80"
     container_name: organize-application
     environment:
-      BROKER_URL: "amqp://guest:guest@rabbitmq:5672/"
+      BROKER_URL: "amqp://guest:guest@rabbitmq:5672//"
     depends_on:
       - mysql
       - rabbitmq
@@ -62,7 +62,7 @@ services:
              celery -A scheduler_project worker -l info --pool=solo"
     container_name: celery_worker
     environment:
-      BROKER_URL: "amqp://guest:guest@rabbitmq:5672/"
+      BROKER_URL: "amqp://guest:guest@rabbitmq:5672//"
     depends_on:
       - organize-application
       - mysql
@@ -79,7 +79,7 @@ services:
              celery -A scheduler_project beat -l INFO"
     container_name: celery_beat
     environment:
-      BROKER_URL: "amqp://guest:guest@rabbitmq:5672/"
+      BROKER_URL: "amqp://guest:guest@rabbitmq:5672//"
     depends_on:
       - organize-application
       - mysql
