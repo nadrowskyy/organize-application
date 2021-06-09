@@ -13,8 +13,6 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import os
 import pymysql
-import djcelery
-djcelery.setup_loader()
 
 pymysql.install_as_MySQLdb()
 
@@ -44,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'schedule.apps.ScheduleConfig',
     'vote',
-    'djcelery',
     'django_celery_beat',
     'crispy_forms',
     'mathfilters'
