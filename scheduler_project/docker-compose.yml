@@ -25,7 +25,11 @@ services:
              python manage.py runserver 0.0.0.0:80"
     container_name: organize-application
     environment:
-      CELERY_BROKER: "amqp://rabbituser:rabbitpass@rabbitmq:5672//"
+      #CELERY_BROKER: "amqp://rabbituser:rabbitpass@rabbitmq:5672//"
+      BROKER_HOST: rabbitmq
+      BROKER_PORT: 5672
+      BROKER_USER: rabbituser
+      BROKER_PASSWORD: rabbitpass
     depends_on:
       - mysql
       - rabbitmq
@@ -66,7 +70,11 @@ services:
              celery -A scheduler_project worker -l info --pool=solo"
     container_name: celery_worker
     environment:
-      CELERY_BROKER: "amqp://rabbituser:rabbitpass@rabbitmq:5672//"
+      #CELERY_BROKER: "amqp://rabbituser:rabbitpass@rabbitmq:5672//"
+      BROKER_HOST: rabbitmq
+      BROKER_PORT: 5672
+      BROKER_USER: rabbituser
+      BROKER_PASSWORD: rabbitpass
       MYSQL_USER: root
       MYSQL_PASSWORD: schedulerdbroot
       MYSQL_DATABASE: scheduler_database
@@ -87,7 +95,11 @@ services:
              celery -A scheduler_project beat -l INFO"
     container_name: celery_beat
     environment:
-      CELERY_BROKER: "amqp://rabbituser:rabbitpass@rabbitmq:5672//"
+      #CELERY_BROKER: "amqp://rabbituser:rabbitpass@rabbitmq:5672//"
+      BROKER_HOST: rabbitmq
+      BROKER_PORT: 5672
+      BROKER_USER: rabbituser
+      BROKER_PASSWORD: rabbitpass
       MYSQL_USER: root
       MYSQL_PASSWORD: schedulerdbroot
       MYSQL_DATABASE: scheduler_database
