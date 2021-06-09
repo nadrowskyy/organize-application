@@ -211,8 +211,7 @@ def send_poll_notification_cron():
 def send_email_organizer(username_pk, event_pk):
     user = get_object_or_404(User, pk=username_pk)
     event = get_object_or_404(Event, pk=event_pk)
-    rendered_body = render_to_string('schedule/email_organizer.html',
-                                            context={'event': event})
+    rendered_body = render_to_string('schedule/email_organizer.html', context={'event': event})
     mail_settings = EmailSet.objects.filter(pk=1)[0]
     host = mail_settings.EMAIL_HOST
     port = mail_settings.EMAIL_PORT
