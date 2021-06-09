@@ -21,7 +21,7 @@ services:
     container_name: organize-application
     environment:
       CELERY_BROKER: "amqp://guest:guest@rabbitmq:5672//"
-      DOCKERIZE: 1
+      DOCKERIZE: "1"
     depends_on:
       - mysql
       - rabbitmq
