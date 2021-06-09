@@ -58,7 +58,7 @@ services:
   celery_worker:
     build: .
     command: >
-      sh -c "sleep 60 &&
+      sh -c "sleep 40 &&
              celery -A scheduler_project worker -l info --pool=solo"
     container_name: celery_worker
     environment:
@@ -75,7 +75,7 @@ services:
   celery_beat:
     build: .
     command: >
-      sh -c "sleep 60 &&
+      sh -c "sleep 50 &&
              celery -A scheduler_project beat -l INFO"
     container_name: celery_beat
     environment:
