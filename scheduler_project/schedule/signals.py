@@ -28,7 +28,7 @@ def email_setter(sender, **kwargs):
 
 @receiver(post_save, sender=Event)
 def create_notification(sender, instance, created, **kwargs):
-
+    from .models import EmailSet
     if created:
         tmp = Event.objects.filter(title=instance.title)[0]
         EventNotification.objects.create(event=instance, leader=tmp.organizer)
