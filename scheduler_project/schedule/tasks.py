@@ -118,7 +118,7 @@ def send_notification_organizer():
     return None
 
 
-@schedule.task
+@app.task
 def send_mail_register(email):
     user = User.objects.filter(email=email)[0]
     mail_settings = EmailSet.objects.filter(pk=1)[0]
@@ -138,7 +138,7 @@ def send_mail_register(email):
     return None
 
 
-@schedule.task
+@app.task
 def send_poll_notification(poll_pk, draft_pk):
     poll = get_object_or_404(Polls, pk=poll_pk)
     event = get_object_or_404(Event, pk=draft_pk)
@@ -147,7 +147,7 @@ def send_poll_notification(poll_pk, draft_pk):
     for el in user_mails:
         mailing_list_all.append(el.email)
     rendered_body = loader.render_to_string('schedule/poll_notification.html',
-                                            {'poll': poll, 'event': event})
+                                            context={'poll': poll, 'event': event})
     mail_settings = EmailSet.objects.filter(pk=1)[0]
     host = mail_settings.EMAIL_HOST
     port = mail_settings.EMAIL_PORT
@@ -168,7 +168,7 @@ def send_poll_notification(poll_pk, draft_pk):
     return None
 
 
-@schedule.task
+@app.task
 def send_poll_notification_cron():
     all_events_list = Event.objects.filter(polls__if_active=True, polls__if_sent_notification=False,
                                            polls__since_active__lte=datetime.now(),
@@ -184,8 +184,8 @@ def send_poll_notification_cron():
         mailing_list_all = []
         for el in user_mails:
             mailing_list_all.append(el.email)
-        rendered_body = loader.render_to_string('schedule/poll_notification_cron.html',
-                                                {'event_poll': events_polls_list})
+        rendered_body = render_to_string('schedule/poll_notification_cron.html',
+                                                context={'event_poll': events_polls_list})
         mail_settings = EmailSet.objects.filter(pk=1)[0]
         host = mail_settings.EMAIL_HOST
         port = mail_settings.EMAIL_PORT
@@ -207,12 +207,12 @@ def send_poll_notification_cron():
     return None
 
 
-@schedule.task
+@app.task
 def send_email_organizer(username_pk, event_pk):
     user = get_object_or_404(User, pk=username_pk)
     event = get_object_or_404(Event, pk=event_pk)
-    rendered_body = loader.render_to_string('schedule/email_organizer.html',
-                                            {'event': event})
+    rendered_body = render_to_string('schedule/email_organizer.html',
+                                            context={'event': event})
     mail_settings = EmailSet.objects.filter(pk=1)[0]
     host = mail_settings.EMAIL_HOST
     port = mail_settings.EMAIL_PORT
