@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'schedule.apps.ScheduleConfig',
     'vote',
     'django_celery_beat',
+    'django_celery',
     'crispy_forms',
     'mathfilters'
 ]
@@ -80,9 +81,6 @@ TEMPLATES = [
 CELERY = {
     'BROKER_URL': os.environ['CELERY_BROKER'],
     'CELERY_IMPORTS': ('scheduler_project.tasks', ),
-    'CELERY_TASK_SERIALIZER': 'json',
-    'CELERY_RESULT_SERIALIZER': 'json',
-    'CELERY_ACCEPT_CONTENT': ['json'],
 }
 
 WSGI_APPLICATION = 'scheduler_project.wsgi.application'
