@@ -6,7 +6,7 @@ from celery.schedules import crontab
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'scheduler_project.settings')
 
-if os.environ.get('DOCKERIZE'):
+if os.environ.get('DOCKERIZE') == "1":
     app = Celery('scheduler_project', broker="amqp://rabbitmq")
 else:
     app = Celery('scheduler_project')
