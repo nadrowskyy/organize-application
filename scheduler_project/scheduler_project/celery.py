@@ -25,3 +25,4 @@ app.conf.beat_schedule = {
     }
 }
 
+app.autodiscover_tasks()
