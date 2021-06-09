@@ -57,8 +57,7 @@ services:
     build: .
     command: >
       sh -c "sleep 60 &&
-             cd /usr/src/organize-application/scheduler_project && 
-             celery -A scheduler_project worker -l info --pool=solo"
+             celery -A scheduler_project worker -l info"
     container_name: celery_worker
     depends_on:
       - organize-application
@@ -66,12 +65,13 @@ services:
       - rabbitmq
     hostname: celery_worker
     restart: on-failure
+    volumes:
+      - .:/usr/src/organize-application/scheduler_project
 
   celery_beat:
     build: .
     command: >
       sh -c "sleep 60 &&
-             cd /usr/src/organize-application/scheduler_project &&
              celery -A scheduler_project beat -l INFO"
     container_name: celery_beat
     depends_on:
@@ -80,3 +80,5 @@ services:
       - rabbitmq
     hostname: celery_beat
     restart: on-failure
+    volumes:
+      - .:/usr/src/organize-application/scheduler_project
