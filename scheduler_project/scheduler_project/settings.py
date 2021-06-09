@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'schedule.apps.ScheduleConfig',
     'vote',
     'django_celery_beat',
-    'django_celery',
     'crispy_forms',
     'mathfilters'
 ]
