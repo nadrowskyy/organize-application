@@ -102,7 +102,9 @@ services:
   flower:
     image: zoomeranalytics/flower:0.9.1-4.0.2
     restart: "no"
-    env_file: *envfile
+    environment:
+      CELERY_BROKER: "amqp://guest:guest@rabbitmq:5672//"
+      FLOWER_BROKER: "amqp://guest:guest@rabbitmq:5672//"
     ports:
       - "5555:5555"
     depends_on:
