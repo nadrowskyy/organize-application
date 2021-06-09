@@ -68,6 +68,7 @@ services:
       MYSQL_USER: root
       MYSQL_PASSWORD: schedulerdbroot
       MYSQL_DATABASE: scheduler_database
+      DOCKERIZE: "1"
     depends_on:
       - organize-application
       - mysql
@@ -89,6 +90,7 @@ services:
       MYSQL_USER: root
       MYSQL_PASSWORD: schedulerdbroot
       MYSQL_DATABASE: scheduler_database
+      DOCKERIZE: "1"
     depends_on:
       - organize-application
       - mysql
@@ -106,6 +108,7 @@ services:
       FLOWER_BROKER: "amqp://guest:guest@rabbitmq:5672//"
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
+      DOCKERIZE: "1"
     ports:
       - "5555:5555"
     depends_on:
