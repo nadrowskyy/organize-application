@@ -24,4 +24,4 @@ app.conf.beat_schedule = {
         'schedule': crontab(minute=10, hour=0)
     }
 }
-app.autodiscover_tasks()
+
