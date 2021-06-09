@@ -2,15 +2,15 @@ version: "3.3"
 
 services:
 
-#  rabbitmq:
-#    container_name: rabbitmq
-#    hostname: rabbitmq
-#    image: rabbitmq:latest
-#    networks:
-#      - main
-#    ports:
-#      - "5672:5672"
-#    restart: on-failure
+  rabbitmq:
+    container_name: rabbitmq
+    hostname: rabbitmq
+    image: rabbitmq:latest
+    networks:
+      - main
+    ports:
+      - "5672:5672"
+    restart: on-failure
 
 
 
@@ -25,7 +25,7 @@ services:
     container_name: organize-application
     depends_on:
       - mysql
-#      - rabbitmq
+      - rabbitmq
     ports:
       - "80:80"
     restart: on-failure
@@ -45,6 +45,7 @@ services:
          - MYSQL_PASSWORD=schedulerdbpass
         
   phpmyadmin:
+    container_name: phpmyadmin 
     image: phpmyadmin
     restart: always
     ports:
@@ -54,39 +55,39 @@ services:
       PMA_PORT: 3306
       MYSQL_ROOT_PASSWORD: schedulerdbroot
 
-#  celery_worker:
-#    command: sh -c "celery -A organize-application worker -l info --pool=solo"
-#    container_name: celery_worker
-#    depends_on:
-#      - organize-application
-#      - mysql
-#      - rabbitmq
-#    deploy:
-#      replicas: 2
-#      restart_policy:
-#        condition: on-failure
-#      resources:
-#        limits:
-#          cpus: '0.50'
-#          memory: 50M
-#        reservations:
-#          cpus: '0.25'
-#          memory: 20M
-#    hostname: celery_worker
-#    image: app-image
-#    networks:
-#      - main
-#    restart: on-failure
+  celery_worker:
+    command: >
+      sh -c "sleep 30 &&
+             cd /usr/src/organize-application/scheduler_project &&
+             celery -A scheduler_project worker -l info --pool=solo"
+    container_name: celery_worker
+    depends_on:
+      - organize-application
+      - mysql
+      - rabbitmq
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 50M
+        reservations:
+          cpus: '0.25'
+          memory: 20M
+    hostname: celery_worker
+    restart: on-failure
 
-#  celery_beat:
-#    command: sh -c "celery -A organize-application beat -l INFO"
-#    container_name: celery_beat
-#    depends_on:
-#      - organize-application
-#      - mysql
-#      - rabbitmq
-#    hostname: celery_beat
-#    image: app-image
-#   networks:
-#      - main
-#    restart: on-failure
+  celery_beat:
+    command: >
+      sh -c "sleep 30 &&
+             cd /usr/src/organize-application/scheduler_project &&
+             celery -A scheduler_project beat -l INFO"
+    container_name: celery_beat
+    depends_on:
+      - organize-application
+      - mysql
+      - rabbitmq
+    hostname: celery_beat
+    restart: on-failure
