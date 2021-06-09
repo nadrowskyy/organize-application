@@ -21,6 +21,8 @@ services:
              python manage.py migrate &&
              python manage.py runserver 0.0.0.0:80"
     container_name: organize-application
+    environment:
+      BROKER_URL: "amqp://guest:guest@rabbitmq:5672/"
     depends_on:
       - mysql
       - rabbitmq
