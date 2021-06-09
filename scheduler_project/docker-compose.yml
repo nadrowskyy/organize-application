@@ -105,6 +105,8 @@ services:
     environment:
       CELERY_BROKER: "amqp://guest:guest@rabbitmq:5672//"
       FLOWER_BROKER: "amqp://guest:guest@rabbitmq:5672//"
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
     ports:
       - "5555:5555"
     depends_on:
