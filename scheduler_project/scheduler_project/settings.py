@@ -106,7 +106,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'HOST': 'locahost',
+            'HOST': 'localhost',
             'PORT': '3306',
             'NAME': 'scheduler_database',
             'USER': 'root',
