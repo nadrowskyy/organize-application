@@ -56,9 +56,7 @@ services:
   celery_worker:
     build: .
     command: >
-      sh -c "sleep 60 &&
-             cd /usr/src/organize-application/scheduler_project &&
-             celery -A scheduler_project worker -l info --pool=solo"
+      sh -c "wait-for rabbitmq:5672 && wait-for organize-application:80 -- celery -A scheduler_project worker -l info"
     container_name: celery_worker
     depends_on:
       - organize-application
