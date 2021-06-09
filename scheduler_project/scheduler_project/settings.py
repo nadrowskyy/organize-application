@@ -28,6 +28,7 @@ SECRET_KEY = 'xc^gh9txa63%ha^o3k^%)q*np=gsx_e@o2@)$*&@4c$gefx441'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -81,8 +82,6 @@ WSGI_APPLICATION = 'scheduler_project.wsgi.application'
 
 if os.environ.get('DOCKERIZE'):
 
-    DEBUG = False
-
     CELERY = {
         'BROKER_URL': os.environ['CELERY_BROKER'],
         'CELERY_IMPORTS': ('scheduler_project.tasks', ),
@@ -103,7 +102,6 @@ if os.environ.get('DOCKERIZE'):
     }
 
 else:
-    DEBUG = True
 
     DATABASES = {
         'default': {
