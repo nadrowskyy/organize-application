@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="improved showing poll's results">
+    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="dockerizing celery...">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/scheduler_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/scheduler_project/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,55 +126,7 @@
       <workItem from="1622320181790" duration="14331000" />
       <workItem from="1622391379592" duration="10623000" />
       <workItem from="1622543283021" duration="680000" />
-    </task>
-    <task id="LOCAL-00001" summary="Test kom Bartka K">
-      <created>1616441609819</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1616441609819</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Dodana zakładka strony głównej (uruchamiana jako localhost:8000/)">
-      <created>1616667053251</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1616667053251</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Strona główna, navbar i wejście na stronę events_list.html (na niej kalendarz)">
-      <created>1616762849492</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1616762849492</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Strona główna, navbar i wejście na stronę events_list.html (na niej kalendarz)">
-      <created>1616765494630</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1616765494630</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Dobry merge - wszystkie podstrony, ta sama ramówka (niekompletny navbar)">
-      <created>1616772096534</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1616772096534</updated>
-    </task>
-    <task id="LOCAL-00006" summary="...">
-      <created>1616818636477</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1616818636477</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Aktualizacja plików">
-      <created>1616843960182</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1616843960182</updated>
+      <workItem from="1623249057280" duration="5119000" />
     </task>
     <task id="LOCAL-00008" summary="display events in numeric date format">
       <created>1616872183881</created>
@@ -413,7 +366,112 @@
       <option name="project" value="LOCAL" />
       <updated>1622407566558</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="improved showing poll's results">
+      <created>1623250170458</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1623250170458</updated>
+    </task>
+    <task id="LOCAL-00043" summary="improved showing poll's results">
+      <created>1623250307896</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1623250307896</updated>
+    </task>
+    <task id="LOCAL-00044" summary="improved showing poll's results">
+      <created>1623250571511</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1623250571511</updated>
+    </task>
+    <task id="LOCAL-00045" summary="improved showing poll's results">
+      <created>1623250786605</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1623250786605</updated>
+    </task>
+    <task id="LOCAL-00046" summary="improved showing poll's results">
+      <created>1623250831168</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1623250831168</updated>
+    </task>
+    <task id="LOCAL-00047" summary="improved showing poll's results">
+      <created>1623250946472</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1623250946472</updated>
+    </task>
+    <task id="LOCAL-00048" summary="dockerizing celery...">
+      <created>1623251277262</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1623251277262</updated>
+    </task>
+    <task id="LOCAL-00049" summary="dockerizing celery...">
+      <created>1623251521871</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1623251521871</updated>
+    </task>
+    <task id="LOCAL-00050" summary="dockerizing celery...">
+      <created>1623251984606</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1623251984606</updated>
+    </task>
+    <task id="LOCAL-00051" summary="dockerizing celery...">
+      <created>1623252098861</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1623252098861</updated>
+    </task>
+    <task id="LOCAL-00052" summary="dockerizing celery...">
+      <created>1623252254119</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1623252254119</updated>
+    </task>
+    <task id="LOCAL-00053" summary="dockerizing celery...">
+      <created>1623254994447</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1623254994447</updated>
+    </task>
+    <task id="LOCAL-00054" summary="dockerizing celery...">
+      <created>1623255187302</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1623255187302</updated>
+    </task>
+    <task id="LOCAL-00055" summary="dockerizing celery...">
+      <created>1623255571782</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1623255571782</updated>
+    </task>
+    <task id="LOCAL-00056" summary="dockerizing celery...">
+      <created>1623255761545</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1623255761545</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -439,7 +497,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Update 1.5 - ZROBIĆ MIGRACJE - admin może dodawać eventy, dodawać customowe ikony, wybierać organizatora z listy; na homepage wyświetlają się dodane ręcznie ikony lub defaultowa jeśli nie ma; nowe pliki css i js do obsługi nowych ficzerów; kosmetyczne poprawki" />
     <MESSAGE value="Poprawki wizualne - formularze, navbar, listy eventow i tematow." />
     <MESSAGE value="Brakujące pliki" />
     <MESSAGE value="users list (admin view) with edit(to do) and delete(ok) options, user's details (admin view), dropdown button with nickname and group-based options, some visual fixes" />
@@ -464,6 +521,7 @@
     <MESSAGE value="poll's results" />
     <MESSAGE value="docker compose test" />
     <MESSAGE value="improved showing poll's results" />
-    <option name="LAST_COMMIT_MESSAGE" value="improved showing poll's results" />
+    <MESSAGE value="dockerizing celery..." />
+    <option name="LAST_COMMIT_MESSAGE" value="dockerizing celery..." />
   </component>
 </project>

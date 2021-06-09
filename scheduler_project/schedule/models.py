@@ -85,12 +85,12 @@ class EmailSet(models.Model):
     delay_leader = models.IntegerField(default=3)
     delay_all = models.IntegerField(default=2)
     # USTAWIENIA SERWERA POCZTY
-    EMAIL_BACKEND = models.CharField(max_length=50)
+    EMAIL_BACKEND = models.CharField(max_length=50, default="django.core.mail.backends.smtp.EmailBackend")
     EMAIL_HOST = models.CharField(max_length=30)
-    EMAIL_PORT = models.IntegerField()
+    EMAIL_PORT = models.IntegerField(default=587)
     EMAIL_HOST_USER = models.CharField(max_length=50)
     EMAIL_HOST_PASSWORD = models.CharField(max_length=100)
-    EMAIL_USE_TLS = models.BooleanField()
+    EMAIL_USE_TLS = models.BooleanField(default=True)
     DEFAULT_FROM_EMAIL = models.CharField(max_length=50)
     EMAIL_HEADER = models.CharField(max_length=50)
 
