@@ -82,6 +82,8 @@ CELERY = {
     'CELERY_IMPORTS': ('scheduler_project.tasks', ),
 }
 
+CELERY_RESULT_BACKEND = os.environ['CELERY_BROKER']
+
 WSGI_APPLICATION = 'scheduler_project.wsgi.application'
 
 # Database
