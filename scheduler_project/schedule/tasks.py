@@ -118,7 +118,7 @@ def send_notification_organizer():
     return None
 
 
-@shared.task
+@shared_task
 def send_mail_register(email):
     user = User.objects.filter(email=email)[0]
     mail_settings = EmailSet.objects.filter(pk=1)[0]
@@ -138,7 +138,7 @@ def send_mail_register(email):
     return None
 
 
-@shared.task
+@shared_task
 def send_poll_notification(poll_pk, draft_pk):
     poll = get_object_or_404(Polls, pk=poll_pk)
     event = get_object_or_404(Event, pk=draft_pk)
@@ -207,7 +207,7 @@ def send_poll_notification_cron():
     return None
 
 
-@shared.task
+@shared_task
 def send_email_organizer(username_pk, event_pk):
     user = get_object_or_404(User, pk=username_pk)
     event = get_object_or_404(Event, pk=event_pk)
