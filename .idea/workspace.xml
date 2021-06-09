@@ -1,49 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="dockerizing celery...">
-      <change afterPath="$PROJECT_DIR$/prezentacje/Prezentacja spotkanie.pptx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prezentacje/Projekt_zespołowy_prezka.pptx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prezentacje/link_to_table_plan.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prezentacje/pz 2.pptx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prezentacje/pz 3.pptx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prezentacje/pz 4.pptx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prezentacje/pz 5.pptx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prezentacje/pz 6.pptx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prezentacje/pz 7.pptx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prezentacje/pz 8.pptx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prezentacje/pz 9.pptx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prezentacje/pz10.pptx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prezentacje/pz11.pptx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prezentacje/pz12.pptx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/screenshots/ankiety.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/screenshots/glosowanie.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/screenshots/lista_szkolen.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/screenshots/lista_tematow.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/screenshots/lista_userow.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/screenshots/profil_usera.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/screenshots/strona_glowna.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/screenshots/tworzenie_ankiety.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/screenshots/tworzenie_szkolenia.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/screenshots/zaproponuj_temat.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Prezentacja spotkanie.pptx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt_zespołowy_prezka.pptx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/link_to_table_plan.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pz 2.pptx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pz 3.pptx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pz 4.pptx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pz 5.pptx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pz 6.pptx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pz 7.pptx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pz 8.pptx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pz 9.pptx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pz10.pptx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pz11.pptx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pz12.pptx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/create_event.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/create_event.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/suggest_event.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/suggest_event.html" afterDir="false" />
+    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="repository organizing">
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,21 +126,7 @@
       <workItem from="1622391379592" duration="10623000" />
       <workItem from="1622543283021" duration="680000" />
       <workItem from="1623249057280" duration="5119000" />
-      <workItem from="1623256908840" duration="1850000" />
-    </task>
-    <task id="LOCAL-00008" summary="display events in numeric date format">
-      <created>1616872183881</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1616872183881</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Aktualizacja rejestracji + ikona + kosmetyczne poprawki">
-      <created>1617158601421</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1617158601421</updated>
+      <workItem from="1623256908840" duration="2167000" />
     </task>
     <task id="LOCAL-00010" summary="Zmieniony homepage - karuzela z instrukcją, wyświetlanie trzech najbliższch eventów z datą, godziną, imieniem i nazwiskiem; miejsce na kolejne dodatki">
       <created>1617207926197</created>
@@ -512,7 +457,21 @@
       <option name="project" value="LOCAL" />
       <updated>1623255761545</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="repository organizing">
+      <created>1623260647505</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1623260647506</updated>
+    </task>
+    <task id="LOCAL-00058" summary="repository organizing">
+      <created>1623260756089</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1623260756089</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -538,7 +497,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Poprawki wizualne - formularze, navbar, listy eventow i tematow." />
     <MESSAGE value="Brakujące pliki" />
     <MESSAGE value="users list (admin view) with edit(to do) and delete(ok) options, user's details (admin view), dropdown button with nickname and group-based options, some visual fixes" />
     <MESSAGE value="admin view: users list with options: show profile, edit, delete. subjects list with options: edit, delete" />
@@ -563,6 +521,7 @@
     <MESSAGE value="docker compose test" />
     <MESSAGE value="improved showing poll's results" />
     <MESSAGE value="dockerizing celery..." />
-    <option name="LAST_COMMIT_MESSAGE" value="dockerizing celery..." />
+    <MESSAGE value="repository organizing" />
+    <option name="LAST_COMMIT_MESSAGE" value="repository organizing" />
   </component>
 </project>
