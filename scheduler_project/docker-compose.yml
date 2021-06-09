@@ -64,17 +64,6 @@ services:
       - organize-application
       - mysql
       - rabbitmq
-    deploy:
-      replicas: 2
-      restart_policy:
-        condition: on-failure
-      resources:
-        limits:
-          cpus: '0.50'
-          memory: 50M
-        reservations:
-          cpus: '0.25'
-          memory: 20M
     hostname: celery_worker
     restart: on-failure
 
