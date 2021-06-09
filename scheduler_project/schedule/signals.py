@@ -1,6 +1,6 @@
 from django.dispatch import receiver
 from django.db.models.signals import post_save, pre_migrate, post_migrate
-from .models import Event, EventNotification, EmailSet
+from .models import Event, EventNotification
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import get_user_model
 
@@ -21,6 +21,7 @@ def populate_models(sender, **kwargs):
 
 @receiver(post_migrate)
 def email_setter(sender, **kwargs):
+    from .models import EmailSet
     email, created = EmailSet.objects.get_or_create(pk=1)
     email.save()
 

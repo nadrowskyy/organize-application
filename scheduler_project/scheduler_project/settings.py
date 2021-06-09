@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'xc^gh9txa63%ha^o3k^%)q*np=gsx_e@o2@)$*&@4c$gefx441'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
 
 ALLOWED_HOSTS = ['*']
 
@@ -77,29 +77,48 @@ TEMPLATES = [
     },
 ]
 
-CELERY = {
-    'BROKER_URL': os.environ['CELERY_BROKER'],
-    'CELERY_IMPORTS': ('scheduler_project.tasks', ),
-}
-
 WSGI_APPLICATION = 'scheduler_project.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+if os.environ.get('DOCKERIZE'):
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'mysql',  # DB's IP address
-        'PORT': '3306',
-        'NAME': 'scheduler_database',
-        'USER': 'root',
-        'PASSWORD': 'schedulerdbroot',
-        'OPTIONS': {
-            'autocommit': False,
-        },
+    DEBUG = False
+
+    CELERY = {
+        'BROKER_URL': os.environ['CELERY_BROKER'],
+        'CELERY_IMPORTS': ('scheduler_project.tasks', ),
     }
-}
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'HOST': 'mysql',
+            'PORT': '3306',
+            'NAME': 'scheduler_database',
+            'USER': 'root',
+            'PASSWORD': 'schedulerdbroot',
+            'OPTIONS': {
+                'autocommit': False,
+            },
+        }
+    }
+
+else:
+    DEBUG = True
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'HOST': 'locahost',
+            'PORT': '3306',
+            'NAME': 'scheduler_database',
+            'USER': 'root',
+            'OPTIONS': {
+                'autocommit': False,
+            },
+        }
+    }
+
+
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATICFILES_DIRS = [

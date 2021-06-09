@@ -6,7 +6,10 @@ from celery.schedules import crontab
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'scheduler_project.settings')
 
-app = Celery('scheduler_project', broker="amqp://rabbitmq")
+if os.environ.get('DOCKERIZE'):
+    app = Celery('scheduler_project', broker="amqp://rabbitmq")
+else:
+    app = Celery('scheduler_project')
 
 app.config_from_object('django.conf:settings', namespace='CELERY')
 app.conf.timezone = 'Europe/Warsaw'
