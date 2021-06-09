@@ -59,7 +59,7 @@ services:
     build: .
     command: >
       sh -c "sleep 60 &&
-             celery -A scheduler_project worker -l info --pool-solo"
+             celery -A scheduler_project worker -l info --pool=solo"
     container_name: celery_worker
     environment:
       BROKER_URL: "amqp://guest:guest@rabbitmq:5672/"
