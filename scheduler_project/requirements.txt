@@ -36,5 +36,6 @@ six==1.15.0
 sqlparse==0.4.1
 urllib3==1.26.4
 vote==1.0.2
+vine
 wcwidth==0.2.5
 zope.interface==5.3.0
