@@ -60,7 +60,7 @@ services:
              celery -A scheduler_project worker -l info"
     container_name: celery_worker
     environment:
-      CELERY_BROKER_URL: rabbitmq://rabbitmq:5672
+      BROKER_URL: "amqp://guest:guest@rabbitmq:5672/"
     depends_on:
       - organize-application
       - mysql
@@ -77,7 +77,7 @@ services:
              celery -A scheduler_project beat -l INFO"
     container_name: celery_beat
     environment:
-      CELERY_BROKER_URL: rabbitmq://rabbitmq:5672
+      BROKER_URL: "amqp://guest:guest@rabbitmq:5672/"
     depends_on:
       - organize-application
       - mysql
