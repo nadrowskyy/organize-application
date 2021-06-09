@@ -66,6 +66,7 @@ services:
       CELERY_BROKER: "amqp://guest:guest@rabbitmq:5672//"
       MYSQL_USER: root
       MYSQL_PASSWORD: schedulerdbroot
+      MYSQL_DATABASE: scheduler_database
     depends_on:
       - organize-application
       - mysql
@@ -86,6 +87,7 @@ services:
       CELERY_BROKER: "amqp://guest:guest@rabbitmq:5672//"
       MYSQL_USER: root
       MYSQL_PASSWORD: schedulerdbroot
+      MYSQL_DATABASE: scheduler_database
     depends_on:
       - organize-application
       - mysql
