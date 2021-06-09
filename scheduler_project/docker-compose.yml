@@ -56,6 +56,7 @@ services:
       MYSQL_ROOT_PASSWORD: schedulerdbroot
 
   celery_worker:
+    build: .
     command: >
       sh -c "sleep 30 &&
              cd /usr/src/organize-application/scheduler_project &&
@@ -80,6 +81,7 @@ services:
     restart: on-failure
 
   celery_beat:
+    build: .
     command: >
       sh -c "sleep 30 &&
              cd /usr/src/organize-application/scheduler_project &&
