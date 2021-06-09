@@ -10,7 +10,7 @@ from django.template import loader
 from django.shortcuts import get_object_or_404
 
 
-@task
+@shared_task
 def send_notification_all():
     delay_all = EmailSet.objects.filter(pk=1)[0].delay_all
     to_sent_1 = EventNotification.objects.filter(if_sent_all=False)
@@ -59,7 +59,7 @@ def send_notification_all():
     return None
 
 
-@task
+@shared_task
 def send_notification_organizer():
     delay_leader = EmailSet.objects.filter(pk=1)[0].delay_leader
     to_sent_1 = EventNotification.objects.filter(if_sent_leader=False)
@@ -118,7 +118,7 @@ def send_notification_organizer():
     return None
 
 
-@task
+@shared_task
 def send_mail_register(email):
     user = User.objects.filter(email=email)[0]
     mail_settings = EmailSet.objects.filter(pk=1)[0]
@@ -138,7 +138,7 @@ def send_mail_register(email):
     return None
 
 
-@task
+@shared_task
 def send_poll_notification(poll_pk, draft_pk):
     poll = get_object_or_404(Polls, pk=poll_pk)
     event = get_object_or_404(Event, pk=draft_pk)
@@ -168,7 +168,7 @@ def send_poll_notification(poll_pk, draft_pk):
     return None
 
 
-@task
+@shared_task
 def send_poll_notification_cron():
     all_events_list = Event.objects.filter(polls__if_active=True, polls__if_sent_notification=False,
                                            polls__since_active__lte=datetime.now(),
@@ -207,7 +207,7 @@ def send_poll_notification_cron():
     return None
 
 
-@task
+@shared_task
 def send_email_organizer(username_pk, event_pk):
     user = get_object_or_404(User, pk=username_pk)
     event = get_object_or_404(Event, pk=event_pk)
