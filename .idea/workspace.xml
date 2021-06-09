@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="dockerizing celery...">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,14 +126,7 @@
       <workItem from="1622320181790" duration="14331000" />
       <workItem from="1622391379592" duration="10623000" />
       <workItem from="1622543283021" duration="680000" />
-      <workItem from="1623249057280" duration="3371000" />
-    </task>
-    <task id="LOCAL-00004" summary="Strona główna, navbar i wejście na stronę events_list.html (na niej kalendarz)">
-      <created>1616765494630</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1616765494630</updated>
+      <workItem from="1623249057280" duration="4384000" />
     </task>
     <task id="LOCAL-00005" summary="Dobry merge - wszystkie podstrony, ta sama ramówka (niekompletny navbar)">
       <created>1616772096534</created>
@@ -470,7 +464,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623252254119</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="dockerizing celery...">
+      <created>1623254994447</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1623254994447</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
