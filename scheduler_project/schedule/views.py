@@ -555,7 +555,7 @@ def create_event(request):
                 event_form = form.save()
                 event_pk = event_form.pk
                 organizer_pk = get_object_or_404(User, username=organizer).pk
-                send_email_organizer(int(organizer_pk), int(event_pk))
+                send_email_organizer.delay(int(organizer_pk), int(event_pk))
                 messages.success(request, 'Szkolenie zostało utworzone.')
                 return redirect('events_list')
         if request.POST.get('publish') == 'False':
