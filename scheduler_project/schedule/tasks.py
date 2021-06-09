@@ -119,7 +119,7 @@ def send_notification_organizer():
 
 
 @app.task(bind=True)
-def send_mail_register(email):
+def send_mail_register(self, email):
     user = User.objects.filter(email=email)[0]
     mail_settings = EmailSet.objects.filter(pk=1)[0]
     host = mail_settings.EMAIL_HOST
@@ -139,7 +139,7 @@ def send_mail_register(email):
 
 
 @app.task(bind=True)
-def send_poll_notification(poll_pk, draft_pk):
+def send_poll_notification(self, poll_pk, draft_pk):
     poll = get_object_or_404(Polls, pk=poll_pk)
     event = get_object_or_404(Event, pk=draft_pk)
     mailing_list_all = []
@@ -208,7 +208,7 @@ def send_poll_notification_cron():
 
 
 @app.task(bind=True)
-def send_email_organizer(username_pk, event_pk):
+def send_email_organizer(self, username_pk, event_pk):
     user = get_object_or_404(User, pk=username_pk)
     event = get_object_or_404(Event, pk=event_pk)
     rendered_body = render_to_string('schedule/email_organizer.html',
