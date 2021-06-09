@@ -1,11 +1,11 @@
 # Aplikacja do organizowania szkoleń dla pracowników
 
-<br>
+
 ## Dokumentacja
 
 - Dokumentacja znajduje się w głównym katalogu repozytorium (w trakcie tworzenia)
 
-<br>
+
 ## Instalacja
 
 - Docker:
@@ -14,7 +14,7 @@
 - Lokalnie:
   - Skorzystaj z odpowiedniej instruckji w repozytorium (w trakcie tworzenia)
 
-<br>
+
 ## Screenshoty
 
 ### Strona główna
