@@ -12,7 +12,7 @@
 
 <body>
 
-<br>
+<br><br>
 <h2 style="text-align:center;">UTWÓRZ SZKOLENIE</h2>
 <br>
 
@@ -32,7 +32,7 @@
 
     <div class="form-group">
         <label>Opis szkolenia</label>
-        <textarea class="form-control" name="description" id="description" placeholder="Opisz szkolenie" required rows="4" maxlength="1000"></textarea>
+        <textarea class="form-control" name="description" id="description2" placeholder="Opisz szkolenie" required rows="4" maxlength="1000"></textarea>
     </div>
 
     <div class="form-group">
@@ -167,7 +167,7 @@ md
    }
         $('#radio_publish').prop('checked',false);
      $('#radio_draft').prop('checked',true);
-   $('#description').prop('required',false);
+   $('#description2').prop('required',false);
    $('#duration').prop('required',false);
    $('#planning_date').prop('required',false);
  }
@@ -178,7 +178,7 @@ md
      //document.getElementById("planning_date_div").style.display = "inline-block";
 
    }
-   $('#description').prop('required',true);
+   $('#description2').prop('required',true);
    $('#duration').prop('required',true);
    $('#planning_date').prop('required',true);
  }

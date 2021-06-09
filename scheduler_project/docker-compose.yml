@@ -99,17 +99,3 @@ services:
     restart: on-failure
     volumes:
       - .:/usr/src/organize-application/scheduler_project
-      
-  flower:
-    image: zoomeranalytics/flower:0.9.1-4.0.2
-    restart: "no"
-    environment:
-      CELERY_BROKER: "amqp://guest:guest@rabbitmq:5672//"
-      FLOWER_BROKER: "amqp://guest:guest@rabbitmq:5672//"
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
-      DOCKERIZE: "1"
-    ports:
-      - "5555:5555"
-    depends_on:
-      - rabbitmq
