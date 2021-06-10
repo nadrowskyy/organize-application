@@ -9,10 +9,10 @@
 ## Instalacja
 
 - Docker:
-  - Skorzystaj z odpowiedniej instrukcji w repozytorium [LINK](../blob/main/FFT_installation_docker.pdf)
+  - Skorzystaj z odpowiedniej instrukcji w repozytorium [LINK](../main/FFT_installation_docker.pdf)
 
 - Lokalnie:
-  - Skorzystaj z odpowiedniej instruckji w repozytorium [LINK](../blob/main/FFT_installation_local.pdf)
+  - Skorzystaj z odpowiedniej instruckji w repozytorium [LINK](../main/FFT_installation_local.pdf)
 
 
 ## Screenshoty
