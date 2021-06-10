@@ -18,34 +18,34 @@
 ## Screenshoty
 
 ### Strona główna
-<img src="https://github.com/nadrowskyy/organize-application/blob/main/screenshots/strona_glowna.png">
+<img src="../main/screenshots/strona_glowna.png">
 
 ### Lista szkoleń
-<img src="https://github.com/nadrowskyy/organize-application/blob/main/screenshots/lista_szkolen.png">
+<img src="../main/screenshots/lista_szkolen.png">
 
 ### Lista tematów
-<img src="https://github.com/nadrowskyy/organize-application/blob/main/screenshots/lista_tematow.png">
+<img src="../main/screenshots/lista_tematow.png">
 
 ### Tworzenie szkolenia
-<img src="https://github.com/nadrowskyy/organize-application/blob/main/screenshots/tworzenie_szkolenia.png">
+<img src="../main/screenshots/tworzenie_szkolenia.png">
 
 ### Tworzenie tematu
-<img src="https://github.com/nadrowskyy/organize-application/blob/main/screenshots/zaproponuj_temat.png">
+<img src="../main/screenshots/zaproponuj_temat.png">
 
 ### Dodawanie ankiety
-<img src="https://github.com/nadrowskyy/organize-application/blob/main/screenshots/tworzenie_ankiety.png">
+<img src="../main/screenshots/tworzenie_ankiety.png">
 
 ### Głosowanie w ankiecie
-<img src="https://github.com/nadrowskyy/organize-application/blob/main/screenshots/glosowanie.png">
+<img src="../main/screenshots/glosowanie.png">
 
 ### Wyniki ankiety
-<img src="https://github.com/nadrowskyy/organize-application/blob/main/screenshots/ankiety.png">
+<img src="../main/screenshots/ankiety.png">
 
 ### Profil użytkownika
-<img src="https://github.com/nadrowskyy/organize-application/blob/main/screenshots/profil_usera.png">
+<img src="../main/screenshots/profil_usera.png">
 
 ### Lista użytkowników
-<img src="https://github.com/nadrowskyy/organize-application/blob/main/screenshots/lista_userow.png">
+<img src="../main/screenshots/lista_userow.png">
 
 
 
