@@ -20,17 +20,21 @@
 
 <form action="" enctype="multipart/form-data" method="POST">
     {% csrf_token %}
-    <div class="row">
-    <div class="col-md-12 col-lg-6 pub-border">
+    <div class="row pub-padd">
+    <div class="col-md-12 col-lg-6 pub-text">
+        <div class="pub-border">
         <input type="radio" onchange="hideB(this)" name="publish" id="radio_publish" checked value="True">
         <label data-toggle="tooltip" data-placement="right" title="Szkolenie zostanie odrazu opublikowane
 i będzie widoczne na liście szkoleń." for="radio_publish">Publikuj</label>
-    </div>
-    <div class="col-md-12 col-lg-6 pub-border">
+        </div>
+        </div>
+    <div class="col-md-12 col-lg-6 pub-text">
+        <div class="pub-border">
             <input type="radio" onchange="hideA(this)" name="publish" id="radio_draft" value="False">
         <label data-toggle="tooltip" data-placement="right" title="Szkolenie będzie widoczne tylko dla administratora
 oraz organizatora szkolenia jako szkic w zakładce szkolenia." for="radio_draft">Szkic</label>
-    </div>
+        </div>
+        </div>
   </div>
     <br><br>
     <div class="row">
