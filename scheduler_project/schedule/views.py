@@ -205,6 +205,7 @@ def events_list(request):
     #               })
 
 
+@login_required(login_url='login')
 def polls_list(request):
     if request.method == 'GET':
         # trzeba odfiltrowac te ankiety gdzie user juz zaglosowal
@@ -224,6 +225,7 @@ def polls_list(request):
         return render(request, 'schedule/polls_list.html', context)
 
 
+@login_required(login_url='login')
 def poll_details(request, index):
 
     if request.method == 'GET':
@@ -259,6 +261,7 @@ def poll_details(request, index):
         return redirect('polls_list')
 
 
+@login_required(login_url='login')
 def draft_edit(request, index):
 
     if request.user.groups.all()[0].name == 'admin':
@@ -607,11 +610,12 @@ def create_event(request):
 
                     planning_dates = request.POST.getlist('planning_date_draft')
                     if_active = False
-                    count_duplicates = Counter(planning_dates)
-                    for el in count_duplicates.values():
-                        if el > 1:
-                            messages.error(request, "Daty w ankiecie muszą być unikalne")
-                            return redirect('create_event')
+                    if len(planning_dates) > 0:
+                        count_duplicates = Counter(planning_dates)
+                        for el in count_duplicates.values():
+                            if el > 1:
+                                messages.error(request, "Daty w ankiecie muszą być unikalne")
+                                return redirect('create_event')
 
                     if since_active == '' or till_active == '':
                         poll_form = Polls(event=event, if_active=if_active)
@@ -625,7 +629,7 @@ def create_event(request):
                     for el in planning_dates:
                         dates_form = Dates(poll=poll, date=el + ':00')
                         dates_form.save()
-
+        return redirect('events_list')
     else:
         form = CreateEvent()
     form = CreateEvent()
