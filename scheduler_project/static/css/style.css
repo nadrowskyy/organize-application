@@ -61,6 +61,9 @@
 
 }
 
+.pub-border {
+    text-align: center;
+}
 
 
 @-webkit-keyframes spin {
