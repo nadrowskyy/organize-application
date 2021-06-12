@@ -273,6 +273,7 @@ def draft_edit(request, index):
             poll = Polls.objects.filter(event=index).first()
             dates = Dates.objects.filter(poll=poll)
             poll_in_progress = False
+            poll_exist = False
             total_votes = 0
 
             if event[0].planning_date < datetime.today():
@@ -280,22 +281,37 @@ def draft_edit(request, index):
             else:
                 past = False
 
-            if poll and poll.if_active:
-
+            if poll:
+                poll_exist = True
+                # w trakcie
+                poll_status = ''
                 if poll.since_active <= date.today() < poll.till_active:
-                    poll_in_progress = True
-                else:
-                    poll_in_progress = False
-
+                    poll_status = 'in_progress'
+                    # poll_in_progress = True
+                # else:
+                #     poll_in_progress = False
+                # zakonczona
+                elif poll.till_active < date.today():
+                    # poll_ended = True
+                    poll_status = 'ended'
+                # nierozpoczeta
+                elif poll.since_active > date.today():
+                    # poll_not_started = True
+                    poll_status = 'not_started'
+                dates = Dates.objects.filter(poll=poll).order_by('date')
+                total_votes = 0
+                if_voted = False
                 # sprawdzam czy user juz zaglosowal na ktorykolwiek z terminow
                 for el in dates:
+                    if el.users.filter(id=request.user.id).exists():
+                        if_voted = True
                     total_votes += el.count
 
                 if total_votes == 0:
                     total_votes = -1
 
             context = {'event': event, 'users': users, 'permitted': True, 'past': past, 'poll': poll, 'dates': dates,
-                       'poll_in_progress': poll_in_progress, 'total_votes': total_votes}
+                       'poll_status': poll_status, 'poll_exist': poll_exist,'total_votes': total_votes}
             return render(request, 'schedule/draft_edit.html', context)
 
         if request.method == 'POST':
@@ -440,15 +456,30 @@ def draft_edit(request, index):
                 else:
                     past = False
 
-                if poll and poll.if_active:
-
+                if poll:
+                    poll_exist = True
+                    # w trakcie
+                    poll_status = ''
                     if poll.since_active <= date.today() < poll.till_active:
-                        poll_in_progress = True
-                    else:
-                        poll_in_progress = False
-
+                        poll_status = 'in_progress'
+                        # poll_in_progress = True
+                    # else:
+                    #     poll_in_progress = False
+                    # zakonczona
+                    elif poll.till_active < date.today():
+                        # poll_ended = True
+                        poll_status = 'ended'
+                    # nierozpoczeta
+                    elif poll.since_active > date.today():
+                        # poll_not_started = True
+                        poll_status = 'not_started'
+                    dates = Dates.objects.filter(poll=poll).order_by('date')
+                    total_votes = 0
+                    if_voted = False
                     # sprawdzam czy user juz zaglosowal na ktorykolwiek z terminow
                     for el in dates:
+                        if el.users.filter(id=request.user.id).exists():
+                            if_voted = True
                         total_votes += el.count
 
                     if total_votes == 0:
@@ -456,7 +487,7 @@ def draft_edit(request, index):
 
                 context = {'event': event, 'users': users, 'permitted': True, 'past': past, 'poll': poll,
                            'dates': dates,
-                           'poll_in_progress': poll_in_progress, 'total_votes': total_votes}
+                           'poll_status': poll_status, 'poll_exist': poll_exist, 'total_votes': total_votes}
                 return render(request, 'schedule/draft_edit.html', context)
 
             if request.method == 'POST':
@@ -1058,29 +1089,42 @@ def event_edit(request, index):
             dates = 0
             total_votes = 0
             poll_in_progress = False
+            poll_exist = False
             try:
                 poll = Polls.objects.get(event=index)
             except:
                 poll = 0
 
-            if poll and poll.if_active:
-
+            if poll:
+                poll_exist = True
+                # w trakcie
+                poll_status = ''
                 if poll.since_active <= date.today() < poll.till_active:
-                    poll_in_progress = True
-                else:
-                    poll_in_progress = False
-
+                    poll_status = 'in_progress'
+                    # poll_in_progress = True
+                # else:
+                #     poll_in_progress = False
+                # zakonczona
+                elif poll.till_active < date.today():
+                    # poll_ended = True
+                    poll_status = 'ended'
+                # nierozpoczeta
+                elif poll.since_active > date.today():
+                    # poll_not_started = True
+                    poll_status = 'not_started'
                 dates = Dates.objects.filter(poll=poll).order_by('date')
                 total_votes = 0
+                if_voted = False
                 # sprawdzam czy user juz zaglosowal na ktorykolwiek z terminow
                 for el in dates:
+                    if el.users.filter(id=request.user.id).exists():
+                        if_voted = True
                     total_votes += el.count
 
                 if total_votes == 0:
                     total_votes = -1
-
             context = {'event': event, 'users': users, 'permitted': True, 'past': past, 'poll': poll, 'dates': dates,
-                       'poll_in_progress': poll_in_progress, 'total_votes': total_votes}
+                       'poll_status': poll_status, 'poll_exist': poll_exist, 'total_votes': total_votes}
             return render(request, 'schedule/event_edit.html', context)
 
         if request.method == 'POST':
@@ -1129,9 +1173,59 @@ def event_edit(request, index):
             if i.organizer == request.user:
 
                 if request.method == 'GET':
+                    event = Event.objects.filter(id=index)
+                    user = get_user_model()
 
-                    context = {'event': event, 'past': past}
+                    if event[0].planning_date < datetime.today():
+                        past = True
+                    else:
+                        past = False
+
+                    poll = 0
+                    dates = 0
+                    total_votes = 0
+                    poll_in_progress = False
+                    poll_exist = False
+                    try:
+                        poll = Polls.objects.get(event=index)
+                    except:
+                        poll = 0
+
+                    if poll:
+                        poll_exist = True
+                        # w trakcie
+                        poll_status = ''
+                        if poll.since_active <= date.today() < poll.till_active:
+                            poll_status = 'in_progress'
+                            # poll_in_progress = True
+                        # else:
+                        #     poll_in_progress = False
+                        # zakonczona
+                        elif poll.till_active < date.today():
+                            # poll_ended = True
+                            poll_status = 'ended'
+                        # nierozpoczeta
+                        elif poll.since_active > date.today():
+                            # poll_not_started = True
+                            poll_status = 'not_started'
+                        dates = Dates.objects.filter(poll=poll).order_by('date')
+                        total_votes = 0
+                        if_voted = False
+                        # sprawdzam czy user juz zaglosowal na ktorykolwiek z terminow
+                        for el in dates:
+                            if el.users.filter(id=request.user.id).exists():
+                                if_voted = True
+                            total_votes += el.count
+
+                        if total_votes == 0:
+                            total_votes = -1
+                    context = {'event': event, 'past': past, 'poll': poll,
+                               'dates': dates,
+                               'poll_in_progress': poll_in_progress, 'poll_exist': poll_exist,
+                               'poll_status': poll_status, 'total_votes': total_votes}
                     return render(request, 'schedule/event_edit.html', context)
+                    # context = {'event': event, 'past': past}
+                    # return render(request, 'schedule/event_edit.html', context)
 
                 if request.method == 'POST':
 
@@ -1228,13 +1322,23 @@ def event_details(request, index):
         except:
             pass
 
-        if poll and poll.if_active:
+        if poll:
             poll_exist = True
+            # w trakcie
+            poll_status = ''
             if poll.since_active <= date.today() < poll.till_active:
-                poll_in_progress = True
-            else:
-                poll_in_progress = False
-
+                poll_status = 'in_progress'
+                # poll_in_progress = True
+            # else:
+            #     poll_in_progress = False
+            # zakonczona
+            elif poll.till_active < date.today():
+                # poll_ended = True
+                poll_status = 'ended'
+            # nierozpoczeta
+            elif poll.since_active > date.today():
+                # poll_not_started = True
+                poll_status = 'not_started'
             dates = Dates.objects.filter(poll=poll).order_by('date')
             total_votes = 0
             if_voted = False
@@ -1246,10 +1350,8 @@ def event_details(request, index):
 
             if total_votes == 0:
                 total_votes = -1
-
-
             context = {'selected_event': selected_event, 'comments': comments, 'form': form, 'comments_cnt': comments_cnt,
-                       'poll': poll, 'dates': dates, 'if_voted': if_voted, 'poll_in_progress': poll_in_progress,
+                       'poll': poll, 'dates': dates, 'if_voted': if_voted, 'poll_status': poll_status,
                        'poll_exist': poll_exist, 'total_votes': total_votes}
             return render(request, 'schedule/event_details.html', context)
 
