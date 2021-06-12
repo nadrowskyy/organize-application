@@ -25,6 +25,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'xc^gh9txa63%ha^o3k^%)q*np=gsx_e@o2@)$*&@4c$gefx441'
+# VARIABLES FOR DECODING/ENCODING EMAIL PASSWORD
+KEY = b'\xb5\xabSG\xf2~]\x99'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 

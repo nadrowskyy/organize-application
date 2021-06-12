@@ -35,7 +35,7 @@ from django.core.mail import BadHeaderError, send_mail
 from .tasks import send_mail_register, send_poll_notification, send_email_organizer
 from django.template import loader
 from collections import Counter
-from Crypto.Cipher import DES3
+from Crypto.Cipher import DES
 
 
 def home_page(request):
@@ -989,8 +989,9 @@ def delete_subject(request, index):
 def email_client(request):
 
     if request.method == 'GET':
-        settings = EmailSet.objects.filter(id=1)[0]
-        context = {'settings': settings}
+        settings_db = EmailSet.objects.filter(id=1)[0]
+        password = email_pass_dec()
+        context = {'settings': settings_db, 'password': password}
 
         return render(request, 'schedule/email_client.html', context=context)
 
@@ -1034,14 +1035,21 @@ def email_client(request):
             else:
                 error = e
 
-            settings = EmailSet.objects.filter(id=1)[0]
-            context = {'settings': settings, 'error': error}
+            settings_db = EmailSet.objects.filter(id=1)[0]
+            context = {'settings': settings_db, 'error': error}
 
             return render(request, 'schedule/email_client.html', context)
 
+        cipher = DES.new(settings.KEY, DES.MODE_EAX)
+        nonce = cipher.nonce
+        print('nonceeee')
+        print(nonce)
+        password_encrypted = cipher.encrypt(password.encode('ascii'))
+
         EmailSet.objects.filter(id=1).update(delay_leader=delay_leader, delay_all=delay_all, EMAIL_HOST=email_host,
-                                             EMAIL_PORT=port, EMAIL_HOST_USER=username, EMAIL_HOST_PASSWORD=password,
-                                             EMAIL_USE_TLS=if_tls, EMAIL_HEADER=from_email)
+                                             EMAIL_PORT=port, EMAIL_HOST_USER=username,
+                                             EMAIL_HOST_PASSWORD=password_encrypted, EMAIL_USE_TLS=if_tls,
+                                             EMAIL_HEADER=from_email, NONCE=nonce)
 
         return redirect('email_client')
 
@@ -1465,7 +1473,7 @@ def handler_403(request, exception):
 
 
 def handler_404(request, exception):
-    return render(request, 'schedule/403.html')
+    return render(request, 'schedule/404.html')
 
 
 def handler_400(request, exception):
@@ -1476,12 +1484,10 @@ def handler_500(request):
     return render(request, 'schedule/500.html')
 
 
-def get_password_email_set():
-    key = scheduler_project.settings.SECRET_KEY
-    mail_settings = EmailSet.objects.filter(pk=1)[0]
-    password = mail_settings.EMAIL_HOST_PASSWORD
-
-    cipher = DES3.new(key, DES3.MODE_EAX)
-    plaintext = cipher.decrypt(password)
-    return plaintext.decode('ascii')
-
+def email_pass_dec():
+    settings_db = EmailSet.objects.filter(id=1)[0]
+    nonce = settings_db.NONCE
+    cipher = DES.new(settings.KEY, DES.MODE_EAX, nonce=nonce)
+    enc_password = settings_db.EMAIL_HOST_PASSWORD
+    plaintext = cipher.decrypt(enc_password)
+    return plaintext.decode(encoding='ascii')

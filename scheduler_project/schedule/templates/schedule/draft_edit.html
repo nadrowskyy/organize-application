@@ -36,18 +36,18 @@
 
     {% if request.user|has_group:"admin" %}
     <div class="form-group">
-        <label for="title">Temat szkolenia*</label>
+        <label for="title">Temat szkolenia<sup>* **</sup></label>
         <input class="form-control" id="title" name="title" placeholder="Wpisz temat szkolenia" required type="text" value="{{i.title}}" maxlength="200">
     </div>
     {% else %}
     <div class="form-group">
-        <label for="title">Temat szkolenia*</label>
+        <label for="title">Temat szkolenia<sup>* **</sup></label>
         <input class="form-control" id="title" name="title" placeholder="Wpisz temat szkolenia" required type="text" value="{{i.title}}" readonly="True" maxlength="200">
     </div>
     {% endif %}
 
     <div class="form-group">
-        <label for="description">Opis szkolenia*</label>
+        <label for="description">Opis szkolenia<sup>*</sup></label>
         <textarea class="form-control" id="desription" name="description" placeholder="Opisz szkolenie" rows="4" maxlength="1000">{{i.description}}</textarea>
     </div>
 
@@ -59,7 +59,7 @@
     {% if request.user|has_group:"admin" %}
     <div class="form-group">
 
-        <label for="organizer">Organizator*</label><br>
+        <label for="organizer">Organizator<sup>* **</sup></label><br>
             <select class="selectOrganizer" id="organizer" name="organizer" style="width: 100%;" value="{{i.organizer}}">
 
                 <option value="{{i.organizer.id}}">{{i.organizer.first_name}} {{i.organizer.last_name}} ({{i.organizer.username}})</option>
@@ -78,12 +78,12 @@
 
     <div class="row">
     <div class="col-md-12 col-lg-6">
-      <label for="planning_date">Data i godzina rozpoczęcia*</label>
+      <label for="planning_date">Data i godzina rozpoczęcia<sup>* **</sup></label>
 
         <input class="form-control" id="planning_date" name="planning_date" type="datetime-local" value="{{ i.planning_date|date:'Y-m-d\TH:i' }}">
     </div>
     <div class="col-md-12 col-lg-6">
-     <label for="duration">Czas trwania (min.)*</label>
+     <label for="duration">Czas trwania (min.)<sup>*</sup></label>
         <input class="form-control" id="duration" min="1" name="duration" placeholder="1" type="number" value="{{i.duration}}">
     </div>
   </div>
@@ -97,9 +97,12 @@
             <div class="col-md-12 col-lg-6">
                 <label>Czy ankieta ma być aktywna?</label><br>
                     <input  id="active_true" onchange="pollReqB(this)" name="if_active" type="radio" value="True" {% if poll.if_active == True %} checked {% endif %}>
-                    <label  for="active_true">Tak</label>
+                    <label  data-toggle="tooltip" data-placement="right" title="Ankieta będzie widoczna w zakładce 'Głosowanie'.
+Należy podać minimum dwa unikalne terminy głosowania oraz
+daty dostępności ankiety." for="active_true">Tak</label>
                     <input  id="active_false" onchange="pollReqA(this)" name="if_active" type="radio" value="False" {% if poll.if_active == False %} checked {% endif %}>
-                    <label  for="active_false">Nie</label>
+                    <label  data-toggle="tooltip" data-placement="right" title="Ankieta nie będzie wiczona w zakładce 'Głosowanie'.
+Nie jest wymagane podawanie czasu dostępności ankiety oraz proponowanych terminów spotkań." for="active_false">Nie</label>
             </div>
 
         </div>
@@ -107,18 +110,22 @@
 
         <div class="row">
         <div class="col-md-12 col-lg-6">
-            <label for="poll_avaible_since">Od kiedy ankieta ma być dostępna**</label>
+            <label for="poll_avaible_since">Od kiedy ankieta ma być dostępna<sup>***</sup></label>
                 <input class="form-control" id="poll_avaible_since" name="poll_avaible_since" type="date" value="{{ poll.since_active|date:'Y-m-d' }}">
         </div>
         <div class="col-md-12 col-lg-6">
-        <label for="poll_avaible">Do kiedy ankieta ma być dostępna**</label>
+        <label for="poll_avaible">Do kiedy ankieta ma być dostępna<sup>***</sup></label>
             <input class="form-control" id="poll_avaible" name="poll_avaible" type="date" value="{{ poll.till_active|date:'Y-m-d' }}">
         </div>
         </div>
         <br>
         <div class="row">
             <div class="col-md-12 col-lg-6">
-                TERMINY: &nbsp; &nbsp;
+                <span data-toggle="tooltip" data-placement="down" title="Należy podać minimum dwa terminy spotkań
+dla utworzenia aktywnej ankiety. Jeśli ankieta będzie nieaktywna
+podawanie terminów nie jest konieczne ale
+jeśli będziemy chcieli dodać terminy do nieaktywnej ankiety
+to również muszą to być minimum dwa terminy.">TERMINY</span>: &nbsp; &nbsp;
                 <button id="add_date" class="btn btn-secondary" style="font-family: 'Oswald', sans-serif;" type="button">Dodaj termin</button>
             </div>
         </div>
@@ -139,7 +146,9 @@
         </div>
         </div>
         </div>
+        <sup>***</sup> Pola wymagane do utworzenia/zapisania aktywnej ankiety
     </div>
+
     </div>
     </div>
 
@@ -222,8 +231,8 @@
     <br>
     <div class="row">
         <div class="col-md-12 col-lg-6">
-            * Pola wymagane do opublikowania szkolenia<br>
-            ** Pola wymagane do utworzenia aktywnej ankiety
+            <sup>*</sup> Pola wymagane do opublikowania szkolenia<br>
+            <sup>**</sup> Pola wymagane do zapisania szkicu szkolenia
         </div>
     </div>
     <br>
@@ -250,7 +259,7 @@
     $(document).ready(function() {
     $('.selectOrganizer').select2();
     $('#add_date').click(function () {
-       $('#plan_container').append('<div class="col-md-12 col-lg-6"><label>Data i godzina rozpoczęcia**</label><input class="form-control" name="planning_date_draft" type="datetime-local" required><button class="remove_date btn btn-secondary" style="font-family: \'Oswald\', sans-serif;" type="button">Usuń termin</button></div>')
+       $('#plan_container').append('<div class="col-md-12 col-lg-6"><label>Data i godzina rozpoczęcia<sup>***</sup></label><input class="form-control" name="planning_date_draft" type="datetime-local" required><button class="remove_date btn btn-secondary" style="font-family: \'Oswald\', sans-serif;" type="button">Usuń termin</button></div>')
     });
     });
 
