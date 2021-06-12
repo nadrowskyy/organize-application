@@ -15,7 +15,7 @@
 
 
     <!-- KARUZELA -->
-<div class="container"
+<div class="container">
 	<div class="col-md-12">
 		<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
 		  <ol class="carousel-indicators">
@@ -87,11 +87,65 @@
         <p style="text-align:center;"><a class="btn btn-secondary" href="{% url 'events_list' %}" role="button">Zobacz wszystkie »</a></p>
         </div>
         <br><br><br>
-        <h1 style="text-align:center">Nagłówek</h1>
-        <hr>
-        <h4 style="text-align:center;">Tutaj jeszcze coś dodamy, żeby nie było pusto</h4>
+        <h1 style="text-align:center">Jak używać?</h1>
         <hr>
 
+		<div class="container">
+        <div class="home-manual">
+			<div class="manual-text">
+		Dzięki naszej aplikacji w zakładce Zgłoś temat możesz w wygodny sposób proponować tematy szkoleń, które
+		poprowadzisz Ty lub inny pracownicy.
+			</div>
+			<div class="manual-img">
+				<img src="{% static 'images/zaproponuj_temat.png' %}">
+			</div>
+			<div class="manual-img">
+				<img src="{% static 'images/lista_tematow.png' %}">
+			</div>
+			<div class="manual-text">
+				W zakładce Tematy można zagłosować na zgłoszone przez użytkowników tematy a jeśli
+				myślisz, że posiadasz wystarczającą wiedzę możesz zgłosić się do poprowadzenia
+				szkolenia z danego tematu.
+			</div>
+
+			<div class="manual-text">
+				Jeśli zainteresowanie tematem będzie odpowiednio duże Administrator utworzy <b>szkolenie</b> lub <b>szkic szkolenia</b> na
+				podstawie zaproponowanego tematu.
+				Opublikowane szkolenia są widoczne w zakładce Szkolenia.
+				Jeśli utworzono szkic szkolenia to jest on widoczny tylko dla organizatora oraz administratora.
+				Jako organizator możesz edytować szkolenia oraz szkice szkoleń.
+			</div>
+			<div class="manual-img">
+				<img src="{% static 'images/tworzenie_szkolenia.png' %}">
+			</div>
+
+			<div class="manual-img">
+				<img src="{% static 'images/tworzenie_ankiety.png' %}">
+			</div>
+			<div class="manual-text">
+				Jako organizator szkolenia będziesz mógł utworzyć ankiete z terminami do głosowania, podczas
+				edycji szkicu szkolenia.
+			</div>
+
+			<div class="manual-text">
+				W ankiecie dostępnej w zakładce Głosowanie użytkownicy wybiorą terminy w jakich będziesz
+				mógł poprowadzić szkolenie.
+			</div>
+			<div class="manual-img">
+				<img src="{% static 'images/glosowanie.png' %}">
+			</div>
+
+			<div class="manual-img">
+				<img src="{% static 'images/ankiety.png' %}">
+			</div>
+			<div class="manual-text">
+				Wyniki głosowania będą dostępne w zakładce Głosowanie gdy ankieta będzie aktywna. Gdy zostanie
+				zdezaktywowana lub czas głosowania minie wyniki będą dostępne w profilu szkicu lub profilu
+				szkolenia.
+			</div>
+		</div>
+        <hr>
+		</div>
 
 
 

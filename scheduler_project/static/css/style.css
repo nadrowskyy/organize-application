@@ -61,10 +61,43 @@
 
 }
 
-.pub-border {
+.pub-text {
     text-align: center;
 }
 
+.pub-border {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+    width: 40%;
+}
+
+.pub-padd {
+    padding-left: 8rem;
+}
+
+.home-manual {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+.manual-text {
+    width: 50%;
+    padding: 5px;
+    align-self: center;
+    font-size: 18px;
+    font-family: 'Oswald', sans-serif;
+}
+
+.manual-img {
+  width: 50%;
+    align-self: center;
+}
+
+.manual-img > img {
+    width: 100%;
+    border-radius: 0.3rem;
+}
 
 @-webkit-keyframes spin {
 

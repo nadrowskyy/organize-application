@@ -80,7 +80,7 @@
     <div class="col-md-12 col-lg-6">
       <label for="planning_date">Data i godzina rozpoczęcia*</label>
 
-        <input class="form-control" id="planning_date" min="{% now 'Y-m-d\TH:i' %}" name="planning_date" type="datetime-local" value="{{ i.planning_date|date:'Y-m-d\TH:i' }}">
+        <input class="form-control" id="planning_date" name="planning_date" type="datetime-local" value="{{ i.planning_date|date:'Y-m-d\TH:i' }}">
     </div>
     <div class="col-md-12 col-lg-6">
      <label for="duration">Czas trwania (min.)*</label>
@@ -146,7 +146,7 @@
 
 
 
-    {% if poll.if_active %}
+    {% if poll_exist %}
 {% if request.user|has_group:"admin" or request.user.id == i.organizer.id %}
 <br>
 <br>
@@ -170,12 +170,26 @@
     <br>
 {% endfor %}
         </div>
-        {% if not poll_in_progress %}
-        <br>
         <div class="col-md-12">
-        <p class="text-center">Ankieta została zakończona</p>
-        </div>
+        {% if poll.if_active and poll_status == 'in_progress' %}
+            <p class="text-center">Ankieta jest jeszcze aktywna</a></p>
         {% endif %}
+        {% if poll.if_active and poll_status == 'ended' %}
+            <p class="text-center">Ankieta jest aktywna ale nie można już oddawać swoich głosów.</p>
+        {% endif %}
+        {% if poll.if_active and poll_status == 'not_started' %}
+            <p class="text-center">Ankieta jest aktywna i będzie można oddać swój głow w przyszłości.</p>
+        {% endif %}
+        {% if not poll.if_active and poll_status == 'ended' %}
+            <p class="text-center">Ankieta jest nieaktywna i została zakończona.</p>
+        {% endif %}
+        {% if not poll.if_active and poll_status == 'in_progress' %}
+            <p class="text-center">Ankieta jest nieaktywna.</p>
+        {% endif %}
+        {% if not poll.if_active and poll_status == 'not_started' %}
+            <p class="text-center">Ankieta jest nieaktywna i nie została jeszcze rozpoczęta.</p>
+        {% endif %}
+        </div>
     </div>
     </div>
     </div>
