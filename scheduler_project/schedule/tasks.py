@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 from django.template.loader import render_to_string
 from django.template import loader
 from django.shortcuts import get_object_or_404
+from views import email_pass_dec
 
 
 @shared_task
@@ -41,7 +42,7 @@ def send_notification_all():
         host = mail_settings.EMAIL_HOST
         port = mail_settings.EMAIL_PORT
         username = mail_settings.EMAIL_HOST_USER
-        password = mail_settings.EMAIL_HOST_PASSWORD
+        password = email_pass_dec()
         use_tls = bool(mail_settings.EMAIL_USE_TLS)
         email_body = render_to_string('schedule/email_template.html', context={'events': events_list})
         from_email = mail_settings.EMAIL_HEADER
@@ -100,7 +101,7 @@ def send_notification_organizer():
             host = mail_settings.EMAIL_HOST
             port = mail_settings.EMAIL_PORT
             username = mail_settings.EMAIL_HOST_USER
-            password = mail_settings.EMAIL_HOST_PASSWORD
+            password = email_pass_dec()
             use_tls = bool(mail_settings.EMAIL_USE_TLS)
             email_body = render_to_string('schedule/email_template.html', context={'user': user, 'events': events})
             from_email = mail_settings.EMAIL_HEADER
@@ -125,7 +126,7 @@ def send_mail_register(email):
     host = mail_settings.EMAIL_HOST
     port = mail_settings.EMAIL_PORT
     username = mail_settings.EMAIL_HOST_USER
-    password = mail_settings.EMAIL_HOST_PASSWORD
+    password = email_pass_dec()
     use_tls = bool(mail_settings.EMAIL_USE_TLS)
     from_email = mail_settings.EMAIL_HEADER
     email_body = render_to_string('schedule/register_message.html', context={'user': user})
@@ -152,7 +153,7 @@ def send_poll_notification(poll_pk, draft_pk):
     host = mail_settings.EMAIL_HOST
     port = mail_settings.EMAIL_PORT
     username = mail_settings.EMAIL_HOST_USER
-    password = mail_settings.EMAIL_HOST_PASSWORD
+    password = email_pass_dec()
     use_tls = bool(mail_settings.EMAIL_USE_TLS)
     from_email = mail_settings.EMAIL_HEADER
     with get_connection(host=host, port=port, username=username, password=password,
@@ -190,7 +191,7 @@ def send_poll_notification_cron():
         host = mail_settings.EMAIL_HOST
         port = mail_settings.EMAIL_PORT
         username = mail_settings.EMAIL_HOST_USER
-        password = mail_settings.EMAIL_HOST_PASSWORD
+        password = email_pass_dec()
         use_tls = bool(mail_settings.EMAIL_USE_TLS)
         from_email = mail_settings.EMAIL_HEADER
         with get_connection(host=host, port=port, username=username, password=password,
@@ -216,7 +217,7 @@ def send_email_organizer(username_pk, event_pk):
     host = mail_settings.EMAIL_HOST
     port = mail_settings.EMAIL_PORT
     username = mail_settings.EMAIL_HOST_USER
-    password = mail_settings.EMAIL_HOST_PASSWORD
+    password = email_pass_dec()
     use_tls = bool(mail_settings.EMAIL_USE_TLS)
     from_email = mail_settings.EMAIL_HEADER
     with get_connection(host=host, port=port, username=username, password=password,

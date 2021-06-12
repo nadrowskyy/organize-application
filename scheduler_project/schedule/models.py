@@ -89,10 +89,11 @@ class EmailSet(models.Model):
     EMAIL_HOST = models.CharField(max_length=30)
     EMAIL_PORT = models.IntegerField(default=587)
     EMAIL_HOST_USER = models.CharField(max_length=50)
-    EMAIL_HOST_PASSWORD = models.CharField(max_length=100)
+    EMAIL_HOST_PASSWORD = models.BinaryField(max_length=100)
     EMAIL_USE_TLS = models.BooleanField(default=True)
     DEFAULT_FROM_EMAIL = models.CharField(max_length=50)
     EMAIL_HEADER = models.CharField(max_length=50)
+    NONCE = models.BinaryField(max_length=100, default=None)
 
 
 class EventNotification(models.Model):
