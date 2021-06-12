@@ -80,7 +80,7 @@
     <div class="col-md-12 col-lg-6">
       <label for="planning_date">Data i godzina rozpoczęcia*</label>
 
-        <input class="form-control" id="planning_date" min="{% now 'Y-m-d\TH:i' %}" name="planning_date" type="datetime-local" value="{{ i.planning_date|date:'Y-m-d\TH:i' }}">
+        <input class="form-control" id="planning_date" name="planning_date" type="datetime-local" value="{{ i.planning_date|date:'Y-m-d\TH:i' }}">
     </div>
     <div class="col-md-12 col-lg-6">
      <label for="duration">Czas trwania (min.)*</label>

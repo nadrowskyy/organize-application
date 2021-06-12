@@ -60,7 +60,7 @@ oraz organizatora szkolenia jako szkic w zakładce szkolenia." for="radio_draft"
 
     <div class="form-group">
 
-        <label for="organizer">Organizator<sup>*</sup></label><br>
+        <label for="organizer">Organizator<sup>* **</sup></label><br>
             <select class="selectOrganizer" id="organizer" name="organizer" style="width: 100%;">
                 {% for i in fullnames %}
                 <option value="{{i.id}}">{{i.first_name}} {{i.last_name}} ({{i.email}})</option>
@@ -114,7 +114,11 @@ Nie jest wymagane podawanie czasu dostępności ankiety oraz proponowanych termi
         <div class="row">
             <div class="col-md-12 col-lg-6">
                <br>
-                TERMINY: &nbsp; &nbsp;
+                <span data-toggle="tooltip" data-placement="down" title="Należy podać minimum dwa terminy spotkań
+dla utworzenia aktywnej ankiety. Jeśli ankieta będzie nieaktywna
+podawanie terminów nie jest konieczne ale
+jeśli będziemy chcieli dodać terminy do nieaktywnej ankiety
+to również muszą to być minimum dwa terminy.">TERMINY</span>: &nbsp; &nbsp;
                 <button id="add_date" class="btn btn-secondary" style="font-family: 'Oswald', sans-serif;" type="button">Dodaj termin</button>
             </div>
         </div>
