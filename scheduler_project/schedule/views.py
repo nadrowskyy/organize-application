@@ -1113,6 +1113,7 @@ def event_edit(request, index):
             dates = 0
             total_votes = 0
             poll_in_progress = False
+            poll_status = 0
             poll_exist = False
             try:
                 poll = Polls.objects.get(event=index)

@@ -2739,6 +2739,24 @@ fieldset[disabled] a.btn {
   border-color: #ccc;
 }
 
+.bottomdiv {
+  text-align: center;
+  position: absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+p {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .btn-secondary:hover {
   color: #292b2c;
   background-color: #743952;

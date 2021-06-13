@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="fix">
-      <change afterPath="$PROJECT_DIR$/scheduler_project/media/icons/unnamed.jpg" afterDir="false" />
+    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="improved sorting/filtering subjects">
+      <change afterPath="$PROJECT_DIR$/scheduler_project/media/icons/f2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scheduler_project/media/icons/icon-png-images-6.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/email_client.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/email_client.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/events_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/events_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/static/css/bootstrap_old.css" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/static/css/bootstrap_old.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,28 +136,7 @@
       <workItem from="1623370706055" duration="1785000" />
       <workItem from="1623372605003" duration="265000" />
       <workItem from="1623533910559" duration="2621000" />
-      <workItem from="1623595860060" duration="11928000" />
-    </task>
-    <task id="LOCAL-00015" summary="Brakujące pliki">
-      <created>1618272813877</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1618272813877</updated>
-    </task>
-    <task id="LOCAL-00016" summary="users list (admin view) with edit(to do) and delete(ok) options, user's details (admin view), dropdown button with nickname and group-based options, some visual fixes">
-      <created>1618632396164</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1618632396164</updated>
-    </task>
-    <task id="LOCAL-00017" summary="admin view: users list with options: show profile, edit, delete. subjects list with options: edit, delete">
-      <created>1618683439616</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1618683439616</updated>
+      <workItem from="1623595860060" duration="20508000" />
     </task>
     <task id="LOCAL-00018" summary="&quot;edit event&quot; and &quot;delete event&quot; buttons visible on events list (admin view); django 3.2 compatibilty fixes">
       <created>1618824649309</created>
@@ -479,7 +460,28 @@
       <option name="project" value="LOCAL" />
       <updated>1623612344648</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="email_client fix (error during initializing database)">
+      <created>1623616812711</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1623616812712</updated>
+    </task>
+    <task id="LOCAL-00065" summary="improved sorting/filtering subjects">
+      <created>1623618263036</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1623618263036</updated>
+    </task>
+    <task id="LOCAL-00066" summary="improved sorting/filtering subjects">
+      <created>1623618400146</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1623618400146</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -505,8 +507,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="-Ograniczona edycja dla organizatora eventu&#10;-Wszyscy mogą przeglądać listę szkoleń" />
-    <MESSAGE value="Disallow changing datetime for past events" />
     <MESSAGE value="User can edit his own profile (name, surname, email)" />
     <MESSAGE value="Admin can view list of leaders who decalred their participation for specified subject" />
     <MESSAGE value="Leaders list fix" />
@@ -530,6 +530,8 @@
     <MESSAGE value="improved sorting/filtering events, superuser automatically gets &quot;admin&quot; group on database initialization" />
     <MESSAGE value="updated manual" />
     <MESSAGE value="fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix" />
+    <MESSAGE value="email_client fix (error during initializing database)" />
+    <MESSAGE value="improved sorting/filtering subjects" />
+    <option name="LAST_COMMIT_MESSAGE" value="improved sorting/filtering subjects" />
   </component>
 </project>
