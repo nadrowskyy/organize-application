@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="improved sorting/filtering subjects">
-      <change afterPath="$PROJECT_DIR$/scheduler_project/media/icons/f2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scheduler_project/media/icons/icon-png-images-6.png" afterDir="false" />
+    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="fixed height of the elements on homepage (date and 'details' buttons)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/events_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/events_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/static/css/bootstrap_old.css" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/static/css/bootstrap_old.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,14 +132,7 @@
       <workItem from="1623370706055" duration="1785000" />
       <workItem from="1623372605003" duration="265000" />
       <workItem from="1623533910559" duration="2621000" />
-      <workItem from="1623595860060" duration="20508000" />
-    </task>
-    <task id="LOCAL-00018" summary="&quot;edit event&quot; and &quot;delete event&quot; buttons visible on events list (admin view); django 3.2 compatibilty fixes">
-      <created>1618824649309</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1618824649309</updated>
+      <workItem from="1623595860060" duration="22947000" />
     </task>
     <task id="LOCAL-00019" summary="-Ograniczona edycja dla organizatora eventu&#10;-Wszyscy mogą przeglądać listę szkoleń">
       <created>1619259390498</created>
@@ -481,7 +470,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623618400146</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="fixed height of the elements on homepage (date and 'details' buttons)">
+      <created>1623625934597</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1623625934597</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -507,7 +503,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="User can edit his own profile (name, surname, email)" />
     <MESSAGE value="Admin can view list of leaders who decalred their participation for specified subject" />
     <MESSAGE value="Leaders list fix" />
     <MESSAGE value="Sorting events on events list" />
@@ -532,6 +527,7 @@
     <MESSAGE value="fix" />
     <MESSAGE value="email_client fix (error during initializing database)" />
     <MESSAGE value="improved sorting/filtering subjects" />
-    <option name="LAST_COMMIT_MESSAGE" value="improved sorting/filtering subjects" />
+    <MESSAGE value="fixed height of the elements on homepage (date and 'details' buttons)" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed height of the elements on homepage (date and 'details' buttons)" />
   </component>
 </project>

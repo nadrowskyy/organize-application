@@ -179,7 +179,7 @@
     <div class="container">
         <div class="row">
 
-    <div class="col-lg-2 col-md-2 col-sm-12" style="max-width: 180px; padding-top: 13px;">
+    <div class="col-lg-2 col-md-12 col-sm-12" style="max-width: 180px; padding-top: 13px;">
         <form method="GET" action="">
         <div class="dropdown">
     <button class="btn btn-secondary dropdown-toggle" type="button" style="font-family: 'Oswald', sans-serif;" id="sortowanie" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sortowanie</button>
@@ -193,9 +193,11 @@
         </div>
     </div>
 
-        <div style="border-left:1px solid lightgray;height:70px;"></div>
+        <div class="hidden-md-down" style="border-left:1px solid lightgray;height:70px;"></div>
 
-    <div class="col-lg-2 col-md-2 col-sm-12" >
+
+    <div class="col-lg-2 col-md-12 col-sm-12" >
+        <div class="hidden-lg-up"><hr></div>
         <form method="GET" action="">
             <div class="form-check">
                 <label><input type="radio" name="show" id="show_historical" value="historical"> Historyczne</label>
@@ -204,10 +206,11 @@
                 <label><input type="radio" name="show" id="show_upcoming" value="upcoming"> Nadchodzące</label>
             </div>
         </div>
-        <div style="border-left:1px solid lightgray;height:70px;"></div>
+        <div style="border-left:1px solid lightgray;height:70px;" class="hidden-md-down"></div>
         {% if request.user.is_authenticated %}
 
-    <div class="col-lg-2 col-md-2 col-sm-12">
+    <div class="col-lg-2 col-md-12 col-sm-12">
+        <div class="hidden-lg-up"><hr></div>
         <div class="form-check">
             <label><input type="checkbox" name="only_mine" id="only_mine" value="1" onclick="setflag()"> Moje szkolenia</label>
         </div>
@@ -216,15 +219,18 @@
             <label><input type="checkbox" name="drafts" id="drafts" value="1" onclick="setflag2()"> Szkice szkoleń</label>
         </div>
     </div>
-        <div style="border-left:1px solid lightgray;height:70px;"></div>
+        <div class="hidden-md-down" style="border-left:1px solid lightgray;height:70px;"></div>
         {% endif %}
 
-    <div class="col-lg-2 col-md-2 col-sm-12" style="padding-top: 15px;">
+    <div class="col-lg-2 col-md-12 col-sm-12" style="padding-top: 15px;">
+        <div class="hidden-lg-up"><hr></div>
             <input type="text" class="form-control" name="title" id="title" placeholder="Wpisz tytuł">
+        <div class="hidden-lg-up"><hr></div>
     </div>
-<div style="border-left:1px solid lightgray;height:70px;"></div>
+<div class="hidden-md-down" style="border-left:1px solid lightgray;height:70px;"></div>
 
-    <div class="col-lg-3 col-md-3 col-sm-12" style="max-width: 250px; padding-top: 15px;">
+    <div class="col-lg-3 col-md-12 col-sm-12" style="max-width: 250px; padding-top: 15px;">
+
             <select class="selectOrganizer" id="organizer" name="organizer" style="width: 220px;">
                 <option value="" disabled selected>Wybierz prowadzącego</option>
                 {% for i in fullnames %}
@@ -232,8 +238,10 @@
                 {% endfor %}
             </select>
     </div>
-            <div style="border-left:1px solid lightgray;height:70px;"></div>
-    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1">
+            <div class="hidden-md-down" style="border-left:1px solid lightgray;height:70px;"></div>
+
+    <div class="col-xl-1 col-lg-1 col-md-12 col-sm-12">
+        <div class="hidden-lg-up"><br></div>
             <a class="btn btn-secondary" style="font-family: Oswald;" onclick="flush()">Resetuj</a>
             <button type="submit" class="btn btn-secondary" style="font-family: Oswald;">Filtruj</button>
 </form>
@@ -266,19 +274,30 @@
                     {% else %}
                     <h3>{{i.title}}</h3>
                     {% endif %}
+
+                    <h7 class="hidden">{{i.planning_date|date:"d.m.Y H:i"}} ({{i.planning_date|date:"l"}})</h7>
+                    <br>
+                    <h6 class="hidden">Prowadzi: {{i.organizer.first_name}} {{i.organizer.last_name}}</h6>
+                     <div class="hidden" style="text-align:center;"><a class="btn btn-secondary" href="{% url 'event_details' i.id %}" role="button">Szczegóły »</a>
+                     </div>
+                    <div class="bottomdiv">
                     <h7>{{i.planning_date|date:"d.m.Y H:i"}} ({{i.planning_date|date:"l"}})</h7>
                     <br>
                     <h6>Prowadzi: {{i.organizer.first_name}} {{i.organizer.last_name}}</h6>
-                     <p style="text-align:center;"><a class="btn btn-secondary" href="{% url 'event_details' i.id %}" role="button">Szczegóły »</a>
+                     <div style="text-align:center;"><a class="btn btn-secondary" href="{% url 'event_details' i.id %}" role="button">Szczegóły »</a>
+
+
                          {% if not request.user|has_group:"admin" %}
                             {% if request.user == i.organizer %}
                                 <a {% if i.status == 'draft' %} href="{% url 'draft_edit' i.id %}" {% else %} href="{% url 'event_edit' i.id %}" {% endif %}><img src="{% static 'images/icons/edit.png' %}" style="text-align:right; width:25px; height:25px;"></a>
+                         </div>
                             {% endif %}
                          {% else %}
                             <a {% if i.status == 'draft' %} href="{% url 'draft_edit' i.id %}" {% else %} href="{% url 'event_edit' i.id %}" {% endif %}><img src="{% static 'images/icons/edit.png' %}" style="text-align:right; width:25px; height:25px;"></a>
-
                             <a href="{% url 'delete_event' i.id %}" onclick="return confirm('Czy na pewno chcesz usunąć szkolenie {{i.title}}? \n\nOperacji nie będzie można cofnąć!');"><img src="{% static 'images/icons/delete.png' %}" style="text-align:right; width:25px; height:25px;"></a>
+                         </div>
                          {% endif %}
+                    </div>
                     <br>
                 </center>
             </div>
