@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 from django.template.loader import render_to_string
 from django.template import loader
 from django.shortcuts import get_object_or_404
-from views import email_pass_dec
+
 
 
 @shared_task
@@ -229,3 +229,12 @@ def send_email_organizer(username_pk, event_pk):
         msg.send(fail_silently=True)
 
     return None
+
+
+def email_pass_dec():
+    settings_db = EmailSet.objects.filter(id=1)[0]
+    nonce = settings_db.NONCE
+    cipher = DES.new(settings.KEY, DES.MODE_EAX, nonce=nonce)
+    enc_password = settings_db.EMAIL_HOST_PASSWORD
+    plaintext = cipher.decrypt(enc_password)
+    return plaintext.decode(encoding='ascii')
