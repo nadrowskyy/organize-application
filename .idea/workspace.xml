@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="updated &quot;about&quot; template">
+    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="fix">
+      <change afterPath="$PROJECT_DIR$/scheduler_project/media/icons/unnamed.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FFT_installation_local.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/FFT_installation_local.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/apps.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/signals.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/signals.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/events_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/events_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/email_client.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/email_client.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,28 +134,7 @@
       <workItem from="1623370706055" duration="1785000" />
       <workItem from="1623372605003" duration="265000" />
       <workItem from="1623533910559" duration="2621000" />
-      <workItem from="1623595860060" duration="7929000" />
-    </task>
-    <task id="LOCAL-00012" summary="Update 1.4.1 - poprawki wizualne">
-      <created>1617210864068</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1617210864068</updated>
-    </task>
-    <task id="LOCAL-00013" summary="Update 1.5 - ZROBIĆ MIGRACJE - admin może dodawać eventy, dodawać customowe ikony, wybierać organizatora z listy; na homepage wyświetlają się dodane ręcznie ikony lub defaultowa jeśli nie ma; nowe pliki css i js do obsługi nowych ficzerów; kosmetyczne poprawki">
-      <created>1617413518896</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1617413518896</updated>
-    </task>
-    <task id="LOCAL-00014" summary="Poprawki wizualne - formularze, navbar, listy eventow i tematow.">
-      <created>1618271644788</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1618271644788</updated>
+      <workItem from="1623595860060" duration="11928000" />
     </task>
     <task id="LOCAL-00015" summary="Brakujące pliki">
       <created>1618272813877</created>
@@ -480,7 +458,28 @@
       <option name="project" value="LOCAL" />
       <updated>1623372823081</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="improved sorting/filtering events, superuser automatically gets &quot;admin&quot; group on database initialization">
+      <created>1623611519839</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1623611519839</updated>
+    </task>
+    <task id="LOCAL-00062" summary="updated manual">
+      <created>1623611556035</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1623611556036</updated>
+    </task>
+    <task id="LOCAL-00063" summary="fix">
+      <created>1623612344648</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1623612344648</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -506,9 +505,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="users list (admin view) with edit(to do) and delete(ok) options, user's details (admin view), dropdown button with nickname and group-based options, some visual fixes" />
-    <MESSAGE value="admin view: users list with options: show profile, edit, delete. subjects list with options: edit, delete" />
-    <MESSAGE value="&quot;edit event&quot; and &quot;delete event&quot; buttons visible on events list (admin view); django 3.2 compatibilty fixes" />
     <MESSAGE value="-Ograniczona edycja dla organizatora eventu&#10;-Wszyscy mogą przeglądać listę szkoleń" />
     <MESSAGE value="Disallow changing datetime for past events" />
     <MESSAGE value="User can edit his own profile (name, surname, email)" />
@@ -531,6 +527,9 @@
     <MESSAGE value="dockerizing celery..." />
     <MESSAGE value="repository organizing" />
     <MESSAGE value="updated &quot;about&quot; template" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated &quot;about&quot; template" />
+    <MESSAGE value="improved sorting/filtering events, superuser automatically gets &quot;admin&quot; group on database initialization" />
+    <MESSAGE value="updated manual" />
+    <MESSAGE value="fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix" />
   </component>
 </project>

@@ -1501,9 +1501,16 @@ def handler_500(request):
 
 
 def email_pass_dec():
-    settings_db = EmailSet.objects.filter(id=1)[0]
-    nonce = settings_db.NONCE
-    cipher = DES.new(settings.KEY, DES.MODE_EAX, nonce=nonce)
-    enc_password = settings_db.EMAIL_HOST_PASSWORD
-    plaintext = cipher.decrypt(enc_password)
-    return plaintext.decode(encoding='ascii')
+
+    try:
+        settings_db = EmailSet.objects.filter(id=1)[0]
+        nonce = settings_db.NONCE
+        cipher = DES.new(settings.KEY, DES.MODE_EAX, nonce=nonce)
+        enc_password = settings_db.EMAIL_HOST_PASSWORD
+        plaintext = cipher.decrypt(enc_password)
+        return plaintext.decode(encoding='ascii')
+
+    except:
+        pass
+
+
