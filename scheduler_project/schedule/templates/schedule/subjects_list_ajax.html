@@ -5,7 +5,7 @@
 {% block content %}
 
 
-<head>
+<head xmlns="http://www.w3.org/1999/html">
 
     <script>
 
@@ -66,8 +66,11 @@
 
     <div class="container">
         <hr>
+    <div class="row">
+        <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12">
+            <form method="GET" action="">
     <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" style="max-width:40%;font-family: 'Oswald', sans-serif;" id="sortowanie" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sortowanie</button>
+        <button class="btn btn-secondary dropdown-toggle" type="button" style="font-family: 'Oswald', sans-serif;" id="sortowanie" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sortowanie</button>
         <div class="dropdown-menu" aria-labelledby="sortowanie">
             <form method="GET" action="">
                 <button class="dropdown-item" type="submit" name="s_sort_by" id="sort_alphabetical" value="alphabetical">Alfabetycznie</button>
@@ -78,45 +81,28 @@
                 <button class="dropdown-item" type="submit" name="s_sort_by" id="sort_lead_count-" value="lead_count-">Chętni malejąco</button>
             </form>
         </div>
+    </div>
+        </div>
+
+    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+        <form method="GET" action="">
+        <input type="text" class="form-control" style="margin-top: 4px;" name="s_title" id="s_title" placeholder="Wyszukaj temat">
+    </div>
 
 
-    <button class="btn btn-secondary" data-toggle="collapse" style="max-width:40%;font-family: 'Oswald', sans-serif;" data-target="#filters">Wyszukiwanie</button>
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+            <a class="btn btn-secondary" style="font-family: Oswald;" onclick="flush()">Resetuj</a>
+            <button type="submit" class="btn btn-secondary" style="font-family: Oswald;">Szukaj</button>
+        </form>
+        </div>
+    </div>
         <hr>
     </div>
 
-        </div>
-
-
-
-    <div id="filters" class="collapse">
-
-<div class="container">
-
-    <form method="GET" action="">
-
-</div>
-
-    <div class="container">
-    <div class="col-lg-3 col-md-3 col-sm-4 col-12">
-        <input type="text" class="form-control" name="s_title" id="s_title" placeholder="Wyszukaj temat" style="max-width: 90%">
     </div>
-    </div>
-
-        <br><br>
-        <div class="container text-right">
-            <a class="btn btn-secondary" style="font-family: Oswald;" onclick="flush()">Resetuj</a>
-            <button type="submit" class="btn btn-secondary" style="font-family: Oswald;">Szukaj</button>
-            <hr>
-        </div>
-    </div>
-    </div>
-
-
-        <div class="row">
 
         </div>
 
-        </form>
 </div>
 
     </div>
@@ -378,6 +364,40 @@
     }
 </script>
 
+<script>
+
+    var el = document.getElementById("sortowanie")
+
+    if (params.has('s_sort_by')) {
+
+        var current = sessionStorage.getItem("s_sort_by")
+
+        if (current === "alphabetical") {
+            $("#sort_alphabetical").addClass("active");
+            el.firstChild.data = "Alfabetycznie";
+        } else if (current === "like_count") {
+            $("#sort_like_count").addClass("active");
+            el.firstChild.data = "Polubienia rosnąco";
+        } else if (current === "like_count-") {
+            $("#sort_like_count-").addClass("active");
+            el.firstChild.data = "Polubienia malejąco";
+        } else if (current === "lead_count") {
+            $("#sort_lead_count").addClass("active");
+            el.firstChild.data = "Chętni rosnąco";
+        } else if (current === "lead_count-") {
+            $("#sort_lead_count-").addClass("active");
+            el.firstChild.data = "Chętni malejąco";
+        } else if (current === "create_date"){
+            $("#sort_create_date").addClass("active");
+            el.firstChild.data = "Data utworzenia";
+    }
+    }
+    else {
+        $("#sort_create_date").addClass("active");
+        el.firstChild.data = "Data utworzenia";
+    }
+
+</script>
 
 <script>
 
@@ -389,8 +409,6 @@
             element.value = params.get('s_title')
         }
     });
-
-
 
 </script>
 
