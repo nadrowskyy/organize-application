@@ -93,7 +93,7 @@ class EmailSet(models.Model):
     EMAIL_USE_TLS = models.BooleanField(default=True)
     DEFAULT_FROM_EMAIL = models.CharField(max_length=50)
     EMAIL_HEADER = models.CharField(max_length=50)
-    NONCE = models.BinaryField(max_length=100, blank=True)
+    NONCE = models.BinaryField(max_length=100, default=None)
 
 
 class EventNotification(models.Model):
