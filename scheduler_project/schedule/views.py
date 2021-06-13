@@ -195,27 +195,27 @@ def events_list(request):
     except EmptyPage:
         page = pa.page(1)
 
-    print(request.session.get('event_success'))
-    if request.session.get('event_success') is True:
-        event_success = True
-        request.session['event_success'] = False
-    if request.session.get('draft_success') is True:
-        draft_success = True
-        request.session['draft_success'] = False
-    if 'event_success' not in locals():
-        event_success = False
-    if 'draft_success' not in locals():
-        draft_success = False
+    # wyswietalnie informacji o dodaniu szkolenia/szkicu
+    try:
+        request.session['ref_times'] += 1
+        if request.session.get('ref_times') == 2:
+            if request.session.get('event_success') is True:
+                event_success = True
+                request.session['event_success'] = False
+                context = {'list': page, 'fullnames': fullnames, 'event_success': event_success}
+                return render(request, 'schedule/events_list.html', context)
 
-    context = {'list': page, 'fullnames': fullnames, 'event_success': event_success,
-               'draft_success': draft_success}
+            if request.session.get('draft_success') is True:
+                draft_success = True
+                request.session['draft_success'] = False
+                context = {'list': page, 'fullnames': fullnames, 'draft_success': draft_success}
+                return render(request, 'schedule/events_list.html', context)
+    except:
+        pass
+
+    context = {'list': page, 'fullnames': fullnames}
 
     return render(request, 'schedule/events_list.html', context)
-
-    # return render(request, 'schedule/events_list.html',
-    #               {
-    #                   'all_events_list': all_events_list,
-    #               })
 
 
 @login_required(login_url='login')
@@ -635,6 +635,7 @@ def create_event(request):
                 event_pk = event_form.pk
                 organizer_pk = get_object_or_404(User, username=organizer).pk
                 send_email_organizer.delay(organizer_pk, event_pk)
+                request.session['ref_times'] = 0
                 request.session['event_success'] = True
                 return redirect('events_list')
         if request.POST.get('publish') == 'False':
@@ -708,6 +709,7 @@ def create_event(request):
                     for el in planning_dates:
                         dates_form = Dates(poll=poll, date=el + ':00')
                         dates_form.save()
+        request.session['ref_times'] = 0
         request.session['draft_success'] = True
         return redirect('events_list')
     else:
