@@ -36,6 +36,7 @@ from .tasks import send_mail_register, send_poll_notification, send_email_organi
 from django.template import loader
 from collections import Counter
 from Crypto.Cipher import DES
+from django.contrib.messages import get_messages
 
 
 def home_page(request):
@@ -123,7 +124,6 @@ def register_page(request):
 def events_list(request):
 
     today = datetime.today()
-
     User = get_user_model()
     fullnames = User.objects.all()
 
@@ -195,14 +195,27 @@ def events_list(request):
     except EmptyPage:
         page = pa.page(1)
 
+    # wyswietalnie informacji o dodaniu szkolenia/szkicu
+    try:
+        request.session['ref_times'] += 1
+        if request.session.get('ref_times') == 2:
+            if request.session.get('event_success') is True:
+                event_success = True
+                request.session['event_success'] = False
+                context = {'list': page, 'fullnames': fullnames, 'event_success': event_success}
+                return render(request, 'schedule/events_list.html', context)
+
+            if request.session.get('draft_success') is True:
+                draft_success = True
+                request.session['draft_success'] = False
+                context = {'list': page, 'fullnames': fullnames, 'draft_success': draft_success}
+                return render(request, 'schedule/events_list.html', context)
+    except:
+        pass
+
     context = {'list': page, 'fullnames': fullnames}
 
     return render(request, 'schedule/events_list.html', context)
-
-    # return render(request, 'schedule/events_list.html',
-    #               {
-    #                   'all_events_list': all_events_list,
-    #               })
 
 
 @login_required(login_url='login')
@@ -622,7 +635,8 @@ def create_event(request):
                 event_pk = event_form.pk
                 organizer_pk = get_object_or_404(User, username=organizer).pk
                 send_email_organizer.delay(organizer_pk, event_pk)
-                messages.success(request, 'Szkolenie zostało utworzone.')
+                request.session['ref_times'] = 0
+                request.session['event_success'] = True
                 return redirect('events_list')
         if request.POST.get('publish') == 'False':
             form = CreateEvent(request.POST, request.FILES)
@@ -695,6 +709,8 @@ def create_event(request):
                     for el in planning_dates:
                         dates_form = Dates(poll=poll, date=el + ':00')
                         dates_form.save()
+        request.session['ref_times'] = 0
+        request.session['draft_success'] = True
         return redirect('events_list')
     else:
         form = CreateEvent()
