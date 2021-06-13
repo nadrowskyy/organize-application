@@ -55,6 +55,10 @@ def login_page(request):
         username = request.POST.get('username')  # html name="username"
         password = request.POST.get('password')
         remember_me = request.POST.get('remember_me')
+
+        if not remember_me:
+            request.session.set_expiry(0)
+
         user = authenticate(request, username=username, password=password)
 
         # Sprawdzanie parametru next, by móc przekierować niezalogowanego użytkownika
