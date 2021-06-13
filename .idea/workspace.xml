@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="repository organizing">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="updated &quot;about&quot; template">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FFT_installation_local.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/FFT_installation_local.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/apps.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/signals.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/signals.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/events_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/events_list.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,20 +132,10 @@
       <workItem from="1622543283021" duration="680000" />
       <workItem from="1623249057280" duration="5119000" />
       <workItem from="1623256908840" duration="2167000" />
-    </task>
-    <task id="LOCAL-00010" summary="Zmieniony homepage - karuzela z instrukcją, wyświetlanie trzech najbliższch eventów z datą, godziną, imieniem i nazwiskiem; miejsce na kolejne dodatki">
-      <created>1617207926197</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1617207926197</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Update 1.4.1 - poprawki wizualne">
-      <created>1617210840108</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1617210840108</updated>
+      <workItem from="1623370706055" duration="1785000" />
+      <workItem from="1623372605003" duration="265000" />
+      <workItem from="1623533910559" duration="2621000" />
+      <workItem from="1623595860060" duration="7929000" />
     </task>
     <task id="LOCAL-00012" summary="Update 1.4.1 - poprawki wizualne">
       <created>1617210864068</created>
@@ -471,7 +466,21 @@
       <option name="project" value="LOCAL" />
       <updated>1623260756089</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="updated &quot;about&quot; template">
+      <created>1623372462794</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1623372462800</updated>
+    </task>
+    <task id="LOCAL-00060" summary="updated &quot;about&quot; template">
+      <created>1623372823080</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1623372823081</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -497,7 +506,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Brakujące pliki" />
     <MESSAGE value="users list (admin view) with edit(to do) and delete(ok) options, user's details (admin view), dropdown button with nickname and group-based options, some visual fixes" />
     <MESSAGE value="admin view: users list with options: show profile, edit, delete. subjects list with options: edit, delete" />
     <MESSAGE value="&quot;edit event&quot; and &quot;delete event&quot; buttons visible on events list (admin view); django 3.2 compatibilty fixes" />
@@ -522,6 +530,7 @@
     <MESSAGE value="improved showing poll's results" />
     <MESSAGE value="dockerizing celery..." />
     <MESSAGE value="repository organizing" />
-    <option name="LAST_COMMIT_MESSAGE" value="repository organizing" />
+    <MESSAGE value="updated &quot;about&quot; template" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated &quot;about&quot; template" />
   </component>
 </project>
