@@ -1473,7 +1473,7 @@ def password_reset_request(request):
                         host = mail_settings.EMAIL_HOST
                         port = mail_settings.EMAIL_PORT
                         username = mail_settings.EMAIL_HOST_USER
-                        password = mail_settings.EMAIL_HOST_PASSWORD
+                        password = email_pass_dec()
                         use_tls = bool(mail_settings.EMAIL_USE_TLS)
                         from_email = mail_settings.EMAIL_HEADER
                         with get_connection(host=host, port=port, username=username, password=password,
