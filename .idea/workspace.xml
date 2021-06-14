@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="fixed height of the elements on homepage (date and 'details' buttons)">
+    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="fixed previous page button on subjects list">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/events_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/events_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/password_reset_done.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/password_reset_done.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -132,28 +132,7 @@
       <workItem from="1623370706055" duration="1785000" />
       <workItem from="1623372605003" duration="265000" />
       <workItem from="1623533910559" duration="2621000" />
-      <workItem from="1623595860060" duration="22947000" />
-    </task>
-    <task id="LOCAL-00019" summary="-Ograniczona edycja dla organizatora eventu&#10;-Wszyscy mogą przeglądać listę szkoleń">
-      <created>1619259390498</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1619259390498</updated>
-    </task>
-    <task id="LOCAL-00020" summary="Disallow changing datetime for past events">
-      <created>1620131951611</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1620131951611</updated>
-    </task>
-    <task id="LOCAL-00021" summary="User can edit his own profile (name, surname, email)">
-      <created>1620162135246</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1620162135246</updated>
+      <workItem from="1623595860060" duration="23864000" />
     </task>
     <task id="LOCAL-00022" summary="Admin can view list of leaders who decalred their participation for specified subject">
       <created>1620307964109</created>
@@ -477,7 +456,28 @@
       <option name="project" value="LOCAL" />
       <updated>1623625934597</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="fixed height of the elements on events_list (date and 'details' buttons)">
+      <created>1623628771608</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1623628771608</updated>
+    </task>
+    <task id="LOCAL-00069" summary="fixed &quot;remember me&quot; functionality">
+      <created>1623628795871</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1623628795871</updated>
+    </task>
+    <task id="LOCAL-00070" summary="fixed previous page button on subjects list">
+      <created>1623628959680</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1623628959680</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -503,9 +503,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Admin can view list of leaders who decalred their participation for specified subject" />
-    <MESSAGE value="Leaders list fix" />
-    <MESSAGE value="Sorting events on events list" />
     <MESSAGE value="Filter frontend (almost done)" />
     <MESSAGE value="Filtering events on events_list" />
     <MESSAGE value="Register form validation (email + confirm password)" />
@@ -528,6 +525,9 @@
     <MESSAGE value="email_client fix (error during initializing database)" />
     <MESSAGE value="improved sorting/filtering subjects" />
     <MESSAGE value="fixed height of the elements on homepage (date and 'details' buttons)" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed height of the elements on homepage (date and 'details' buttons)" />
+    <MESSAGE value="fixed height of the elements on events_list (date and 'details' buttons)" />
+    <MESSAGE value="fixed &quot;remember me&quot; functionality" />
+    <MESSAGE value="fixed previous page button on subjects list" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed previous page button on subjects list" />
   </component>
 </project>
