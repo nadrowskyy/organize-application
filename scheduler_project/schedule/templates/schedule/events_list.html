@@ -16,9 +16,9 @@
 
     // JEŚLI USER WCHODZI PIERWSZY RAZ NA STRONĘ SZKOLEŃ, TO AUTOMATYCZNIE USTALANE JEST FILTROWANIE PO NADCHODZĄCYCH
 
-    if (!params.has('show_historical') && !params.has('show_upcoming') && sessionStorage.getItem('show_historical') === null && !sessionStorage.getItem('show_upcoming')) {
-        var initial_show = "1";
-        sessionStorage.setItem("show_upcoming", initial_show);
+    if (!params.has('show') && sessionStorage.getItem('show') === null ) {
+        var initial_show = "upcoming";
+        sessionStorage.setItem("show", initial_show);
     }
 
     // TRYB SORTOWANIA
@@ -116,41 +116,21 @@
 
     // FILTROWANIE 'NADCHODZĄCE'
 
-    if (params.has('show_upcoming') && params.get('show_upcoming') !== sessionStorage.getItem("show_upcoming")) {
-        var last_show_upcoming = params.get('show_upcoming');
-        sessionStorage.setItem("show_upcoming", last_show_upcoming);
+    if (params.has('show') && params.get('show') !== sessionStorage.getItem("show")) {
+        var last_show_upcoming = params.get('show');
+        sessionStorage.setItem("show", last_show_upcoming);
 
-    } else if (!params.has('show_upcoming') && sessionStorage.getItem("show_upcoming") != null) {
+    } else if (!params.has('show') && sessionStorage.getItem("show") != null) {
 
-        if (params.get('show_upcoming') !== sessionStorage.getItem("show_upcoming") && !params.has('show_historical')) {
-
-            if (url.indexOf('?') > -1) {
-                    url += '&show_upcoming=' + sessionStorage.getItem("show_upcoming")
-            }
-            else {
-                    url += '?show_upcoming=' + sessionStorage.getItem("show_upcoming")
-            }
-        }
-    }
-
-    // FILTROWANIE 'HISTORYCZNE'
-
-    if (params.has('show_historical') && params.get('show_historical') !== sessionStorage.getItem("show_historical")) {
-        var last_show_historical = params.get('show_historical');
-        sessionStorage.setItem("show_historical", last_show_historical);
-    } else if (!params.has('show_historical') && sessionStorage.getItem("show_historical") != null) {
-
-        if (params.get('show_historical') !== sessionStorage.getItem("show_historical")) {
+        if (params.get('show') !== sessionStorage.getItem("show")) {
 
             if (url.indexOf('?') > -1) {
-                    url += '&show_historical=' + sessionStorage.getItem("show_historical")
+                    url += '&show=' + sessionStorage.getItem("show")
             }
             else {
-                    url += '?show_historical=' + sessionStorage.getItem("show_historical")
+                    url += '?show=' + sessionStorage.getItem("show")
             }
-
         }
-
     }
 
     // PRZEŁADOWANIE STRONY Z USTAWIONYMI PARAMETRAMI
@@ -172,6 +152,7 @@
 
     {% if event_success %}
 
+    <br>
     <div class="alert alert-success alert-dismissible fade show" role="alert">
     <strong>Sukces!</strong> Szkolenie zostało dodane pomyślnie!
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -182,6 +163,7 @@
 
     {% elif draft_success %}
 
+    <br>
     <div class="alert alert-success alert-dismissible fade show" role="alert">
     <strong>Sukces!</strong> Szkic został zapisany pomyślnie!
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -195,88 +177,82 @@
     <center><h2>LISTA SZKOLEŃ</h2></center>
     <hr>
     <div class="container">
+        <div class="row">
 
-
-
-    <form method="GET" action="">
-
-    <div class="row">
-    <div class="col-lg-3 col-md-3 col-sm-4 col-12">
-        <p class="font-weight-bold">Wyświetlaj</p>
-        <div class="form-check">
-            <input type="checkbox" id="option"><label for="option">&nbsp;Wszystkie</label>
-        </div>
-        <div class="form-check">
-                &nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" class="subOption" name="show_historical" id="show_historical" value="1"> Historyczne</label>
-        </div>
-        <div class="form-check">
-                &nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" class="subOption" name="show_upcoming" id="show_upcoming" value="1"> Nadchodzące</label>
-        </div>
-        <hr>
+    <div class="col-lg-2 col-md-12 col-sm-12" style="max-width: 180px; padding-top: 13px;">
+        <form method="GET" action="">
         <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" style="max-width:60%;font-family: 'Oswald', sans-serif;" id="sortowanie" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sortowanie</button>
+    <button class="btn btn-secondary dropdown-toggle" type="button" style="font-family: 'Oswald', sans-serif;" id="sortowanie" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sortowanie</button>
     <div class="dropdown-menu" aria-labelledby="sortowanie">
     <form method="GET" action="">
         <button class="dropdown-item" type="submit" name="sort_by" id="sort_latest" value="latest">Od najbliższych</button>
         <button class="dropdown-item" type="submit" name="sort_by" id="sort_oldest" value="oldest">Od najdalszych</button>
         <button class="dropdown-item" type="submit" name="sort_by" id="sort_alphabetical" value="alphabetical">Alfabetycznie</button>
     </form>
-</div>
+    </div>
         </div>
     </div>
 
+        <div class="hidden-md-down" style="border-left:1px solid lightgray;height:70px;"></div>
 
+
+    <div class="col-lg-2 col-md-12 col-sm-12" >
+        <div class="hidden-lg-up"><hr></div>
+        <form method="GET" action="">
+            <div class="form-check">
+                <label><input type="radio" name="show" id="show_historical" value="historical"> Historyczne</label>
+            </div>
+            <div class="form-check">
+                <label><input type="radio" name="show" id="show_upcoming" value="upcoming"> Nadchodzące</label>
+            </div>
+        </div>
+        <div style="border-left:1px solid lightgray;height:70px;" class="hidden-md-down"></div>
         {% if request.user.is_authenticated %}
 
-    <div class="col-lg-3 col-md-3 col-sm-4 col-12">
-        <p class="font-weight-bold">Moje szkolenia</p>
+    <div class="col-lg-2 col-md-12 col-sm-12">
+        <div class="hidden-lg-up"><hr></div>
         <div class="form-check">
-            <label><input type="checkbox" name="only_mine" id="only_mine" value="1" onclick="setflag()"> Tak</label>
+            <label><input type="checkbox" name="only_mine" id="only_mine" value="1" onclick="setflag()"> Moje szkolenia</label>
         </div>
 
-        <p class="font-weight-bold">Szkice szkoleń</p>
         <div class="form-check">
-            <label><input type="checkbox" name="drafts" id="drafts" value="1" onclick="setflag2()"> Tak</label>
+            <label><input type="checkbox" name="drafts" id="drafts" value="1" onclick="setflag2()"> Szkice szkoleń</label>
         </div>
     </div>
-
+        <div class="hidden-md-down" style="border-left:1px solid lightgray;height:70px;"></div>
         {% endif %}
 
-    <div class="col-lg-3 col-md-3 col-sm-4 col-12">
-        <p class="font-weight-bold">Wyszukaj po tytule</p>
-            <input type="text" class="form-control" name="title" id="title" placeholder="Wpisz tytuł" style="max-width: 90%">
+    <div class="col-lg-2 col-md-12 col-sm-12" style="padding-top: 15px;">
+        <div class="hidden-lg-up"><hr></div>
+            <input type="text" class="form-control" name="title" id="title" placeholder="Wpisz tytuł">
+        <div class="hidden-lg-up"><hr></div>
     </div>
+<div class="hidden-md-down" style="border-left:1px solid lightgray;height:70px;"></div>
 
-    <div class="col-lg-3 col-md-3 col-sm-4 col-12">
-        <p class="font-weight-bold">Wyszukaj po prowadzącym</p>
-        <div class="container">
-            <select class="selectOrganizer" id="organizer" name="organizer" >
-                <option value="" disabled selected>Wybierz z listy</option>
+    <div class="col-lg-3 col-md-12 col-sm-12" style="max-width: 250px; padding-top: 15px;">
+
+            <select class="selectOrganizer" id="organizer" name="organizer" style="width: 220px;">
+                <option value="" disabled selected>Wybierz prowadzącego</option>
                 {% for i in fullnames %}
                 <option value="{{i.id}}">{{i.first_name}} {{i.last_name}}</option>
                 {% endfor %}
             </select>
-        </div>
+    </div>
+            <div class="hidden-md-down" style="border-left:1px solid lightgray;height:70px;"></div>
 
-        <br><br>
-        <div class="container text-right">
+    <div class="col-xl-1 col-lg-1 col-md-12 col-sm-12">
+        <div class="hidden-lg-up"><br></div>
             <a class="btn btn-secondary" style="font-family: Oswald;" onclick="flush()">Resetuj</a>
             <button type="submit" class="btn btn-secondary" style="font-family: Oswald;">Filtruj</button>
-        </div>
-
+</form>
     </div>
-
-
-
-        <div class="row">
-
-        </div>
-
-        </form>
 </div>
 
-    </div>
-    <hr>
+
+</div>
+<hr>
+
+
 
 {% if not list %}
     <br>
@@ -298,19 +274,30 @@
                     {% else %}
                     <h3>{{i.title}}</h3>
                     {% endif %}
+
+                    <h7 class="hidden">{{i.planning_date|date:"d.m.Y H:i"}} ({{i.planning_date|date:"l"}})</h7>
+                    <br>
+                    <h6 class="hidden">Prowadzi: {{i.organizer.first_name}} {{i.organizer.last_name}}</h6>
+                     <div class="hidden" style="text-align:center;"><a class="btn btn-secondary" href="{% url 'event_details' i.id %}" role="button">Szczegóły »</a>
+                     </div>
+                    <div class="bottomdiv">
                     <h7>{{i.planning_date|date:"d.m.Y H:i"}} ({{i.planning_date|date:"l"}})</h7>
                     <br>
                     <h6>Prowadzi: {{i.organizer.first_name}} {{i.organizer.last_name}}</h6>
-                     <p style="text-align:center;"><a class="btn btn-secondary" href="{% url 'event_details' i.id %}" role="button">Szczegóły »</a>
+                     <div style="text-align:center;"><a class="btn btn-secondary" href="{% url 'event_details' i.id %}" role="button">Szczegóły »</a>
+
+
                          {% if not request.user|has_group:"admin" %}
                             {% if request.user == i.organizer %}
                                 <a {% if i.status == 'draft' %} href="{% url 'draft_edit' i.id %}" {% else %} href="{% url 'event_edit' i.id %}" {% endif %}><img src="{% static 'images/icons/edit.png' %}" style="text-align:right; width:25px; height:25px;"></a>
+                         </div>
                             {% endif %}
                          {% else %}
                             <a {% if i.status == 'draft' %} href="{% url 'draft_edit' i.id %}" {% else %} href="{% url 'event_edit' i.id %}" {% endif %}><img src="{% static 'images/icons/edit.png' %}" style="text-align:right; width:25px; height:25px;"></a>
-
                             <a href="{% url 'delete_event' i.id %}" onclick="return confirm('Czy na pewno chcesz usunąć szkolenie {{i.title}}? \n\nOperacji nie będzie można cofnąć!');"><img src="{% static 'images/icons/delete.png' %}" style="text-align:right; width:25px; height:25px;"></a>
+                         </div>
                          {% endif %}
+                    </div>
                     <br>
                 </center>
             </div>
@@ -375,25 +362,6 @@
         el.firstChild.data = "Od najbliższych";
     }
 
-    // AUTOMATYCZNE ZAZNACZANIE ZAGNIEŻDŻONYCH CHECKBOXÓW
-
-    var checkboxes = document.querySelectorAll('input.subOption'),
-    checkall = document.getElementById('option');
-
-    for(var i=0; i<checkboxes.length; i++) {
-      checkboxes[i].onclick = function() {
-        var checkedCount = document.querySelectorAll('input.subOption:checked').length;
-
-        checkall.checked = checkedCount > 0;
-        checkall.indeterminate = checkedCount > 0 && checkedCount < checkboxes.length;
-      }
-    }
-
-    checkall.onclick = function() {
-      for(var i=0; i<checkboxes.length; i++) {
-        checkboxes[i].checked = this.checked;
-      }
-    };
 </script>
 <script>
 
@@ -420,26 +388,13 @@
             element.checked = true;
         }
 
-        if (params.has('show_historical') && params.get('show_historical') === "1" && !params.has('show_upcoming')) {
-            let element = document.getElementById('show_historical');
-            element.checked = true;
-            element = document.getElementById('option');
-            element.indeterminate = true;
-        }
-
-        if (params.has('show_upcoming') && params.get('show_upcoming') === "1" && !params.has('show_historical')) {
+        if (params.has('show') && params.get('show') === "upcoming") {
             let element = document.getElementById('show_upcoming');
             element.checked = true;
-            element = document.getElementById('option');
-            element.indeterminate = true;
         }
 
-        if (params.has('show_historical') && params.get('show_historical') === "1" && params.has('show_upcoming') && params.get('show_upcoming') === "1") {
+        if (params.has('show') && params.get('show') === "historical") {
             let element = document.getElementById('show_historical');
-            element.checked = true;
-            element = document.getElementById('show_upcoming');
-            element.checked = true;
-            element = document.getElementById('option');
             element.checked = true;
         }
     });
@@ -462,18 +417,6 @@
     $('.selectTitle').select2();
     });*/
 
-    // USUWANIE SPRZECZNYCH ZMIENNYCH Z PAMIĘCI SESJI, JEŚLI USER NIE WYBRAŁ ICH JEDNOCZEŚNIE
-
-    if ( params.has('show_historical') && !params.has('show_upcoming') )
-    {
-        sessionStorage.removeItem('show_upcoming')
-    }
-
-    if ( !params.has('show_historical') && params.has('show_upcoming') )
-    {
-        sessionStorage.removeItem('show_historical')
-    }
-
     // USUWA Z PAMIĘCI ZMIENNĄ ONLY MINE PO ODZNACZENIU CHECKBOXA
 
     function setflag() {
@@ -491,33 +434,29 @@
     // FUNKCJA RESETUJĄCA FILROWANIE - USTAWIA POLA DO WARTOŚCI DOMYŚLNYCH I CZYŚCI PAMIĘĆ SESJI
 
     function flush() {
-    sessionStorage.clear();
+        sessionStorage.clear();
 
-    let title = document.getElementById('title');
-    title.value = null;
+        let title = document.getElementById('title');
+        title.value = null;
 
-    $('select').val('').trigger('change.select2');
+        $('select').val('').trigger('change.select2');
 
-    let organizer = document.getElementById('organizer');
-    organizer.value = null;
+        let organizer = document.getElementById('organizer');
+        organizer.value = null;
 
-    let show_upcoming = document.getElementById('show_upcoming');
-    show_upcoming.checked = true;
+        let show_upcoming = document.getElementById('show_upcoming');
+        show_upcoming.checked = true;
 
-    let show_historical = document.getElementById('show_historical');
-    show_historical.checked = false;
+        let show_historical = document.getElementById('show_historical');
+        show_historical.checked = false;
 
-    let only_mine = document.getElementById('only_mine');
-    only_mine.checked = false;
+        let only_mine = document.getElementById('only_mine');
+        only_mine.checked = false;
 
-    let drafts = document.getElementById('drafts');
-    drafts.checked = false;
+        let drafts = document.getElementById('drafts');
+        drafts.checked = false;
 
-    let option = document.getElementById('option');
-    option.indeterminate = true;
-
-    window.location.href =  window.location.href.split("?")[0];
-
+        window.location.href = window.location.href.split("?")[0];
     }
 
 </script>

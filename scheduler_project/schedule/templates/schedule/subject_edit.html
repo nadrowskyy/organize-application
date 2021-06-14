@@ -29,13 +29,13 @@
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<div class="form-group">
 					<label for="title">Temat szkolenia:</label>
-                    <input class="form-control" id="title" name="title" placeholder="Tytuł szkolenia" required type="text" value="{{i.title}}" >
+                    <input class="form-control" id="title" name="title" placeholder="Tytuł szkolenia" required type="text" maxlength="200" value="{{i.title}}" >
 				</div>
 			</div>
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<div class="form-group">
 					<label for="description">Krótki opis:</label>
-                    <textarea class="form-control" rows="3" name="description"  placeholder="Krótki opis" required type="text">{{i.description}}</textarea>
+                    <textarea class="form-control" rows="3" name="description"  placeholder="Krótki opis" required maxlength="400" type="text">{{i.description}}</textarea>
 				</div>
 			</div>
 

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="repository organizing">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="show &quot;password reset done&quot; even if email doesn't exist">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/subject_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/subject_edit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/suggest_event.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/suggest_event.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,97 +129,10 @@
       <workItem from="1622543283021" duration="680000" />
       <workItem from="1623249057280" duration="5119000" />
       <workItem from="1623256908840" duration="2167000" />
-    </task>
-    <task id="LOCAL-00010" summary="Zmieniony homepage - karuzela z instrukcją, wyświetlanie trzech najbliższch eventów z datą, godziną, imieniem i nazwiskiem; miejsce na kolejne dodatki">
-      <created>1617207926197</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1617207926197</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Update 1.4.1 - poprawki wizualne">
-      <created>1617210840108</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1617210840108</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Update 1.4.1 - poprawki wizualne">
-      <created>1617210864068</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1617210864068</updated>
-    </task>
-    <task id="LOCAL-00013" summary="Update 1.5 - ZROBIĆ MIGRACJE - admin może dodawać eventy, dodawać customowe ikony, wybierać organizatora z listy; na homepage wyświetlają się dodane ręcznie ikony lub defaultowa jeśli nie ma; nowe pliki css i js do obsługi nowych ficzerów; kosmetyczne poprawki">
-      <created>1617413518896</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1617413518896</updated>
-    </task>
-    <task id="LOCAL-00014" summary="Poprawki wizualne - formularze, navbar, listy eventow i tematow.">
-      <created>1618271644788</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1618271644788</updated>
-    </task>
-    <task id="LOCAL-00015" summary="Brakujące pliki">
-      <created>1618272813877</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1618272813877</updated>
-    </task>
-    <task id="LOCAL-00016" summary="users list (admin view) with edit(to do) and delete(ok) options, user's details (admin view), dropdown button with nickname and group-based options, some visual fixes">
-      <created>1618632396164</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1618632396164</updated>
-    </task>
-    <task id="LOCAL-00017" summary="admin view: users list with options: show profile, edit, delete. subjects list with options: edit, delete">
-      <created>1618683439616</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1618683439616</updated>
-    </task>
-    <task id="LOCAL-00018" summary="&quot;edit event&quot; and &quot;delete event&quot; buttons visible on events list (admin view); django 3.2 compatibilty fixes">
-      <created>1618824649309</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1618824649309</updated>
-    </task>
-    <task id="LOCAL-00019" summary="-Ograniczona edycja dla organizatora eventu&#10;-Wszyscy mogą przeglądać listę szkoleń">
-      <created>1619259390498</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1619259390498</updated>
-    </task>
-    <task id="LOCAL-00020" summary="Disallow changing datetime for past events">
-      <created>1620131951611</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1620131951611</updated>
-    </task>
-    <task id="LOCAL-00021" summary="User can edit his own profile (name, surname, email)">
-      <created>1620162135246</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1620162135246</updated>
-    </task>
-    <task id="LOCAL-00022" summary="Admin can view list of leaders who decalred their participation for specified subject">
-      <created>1620307964109</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1620307964109</updated>
+      <workItem from="1623370706055" duration="1785000" />
+      <workItem from="1623372605003" duration="265000" />
+      <workItem from="1623533910559" duration="2621000" />
+      <workItem from="1623595860060" duration="24284000" />
     </task>
     <task id="LOCAL-00023" summary="Leaders list fix">
       <created>1620309243666</created>
@@ -471,7 +386,98 @@
       <option name="project" value="LOCAL" />
       <updated>1623260756089</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="updated &quot;about&quot; template">
+      <created>1623372462794</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1623372462800</updated>
+    </task>
+    <task id="LOCAL-00060" summary="updated &quot;about&quot; template">
+      <created>1623372823080</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1623372823081</updated>
+    </task>
+    <task id="LOCAL-00061" summary="improved sorting/filtering events, superuser automatically gets &quot;admin&quot; group on database initialization">
+      <created>1623611519839</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1623611519839</updated>
+    </task>
+    <task id="LOCAL-00062" summary="updated manual">
+      <created>1623611556035</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1623611556036</updated>
+    </task>
+    <task id="LOCAL-00063" summary="fix">
+      <created>1623612344648</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1623612344648</updated>
+    </task>
+    <task id="LOCAL-00064" summary="email_client fix (error during initializing database)">
+      <created>1623616812711</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1623616812712</updated>
+    </task>
+    <task id="LOCAL-00065" summary="improved sorting/filtering subjects">
+      <created>1623618263036</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1623618263036</updated>
+    </task>
+    <task id="LOCAL-00066" summary="improved sorting/filtering subjects">
+      <created>1623618400146</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1623618400146</updated>
+    </task>
+    <task id="LOCAL-00067" summary="fixed height of the elements on homepage (date and 'details' buttons)">
+      <created>1623625934597</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1623625934597</updated>
+    </task>
+    <task id="LOCAL-00068" summary="fixed height of the elements on events_list (date and 'details' buttons)">
+      <created>1623628771608</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1623628771608</updated>
+    </task>
+    <task id="LOCAL-00069" summary="fixed &quot;remember me&quot; functionality">
+      <created>1623628795871</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1623628795871</updated>
+    </task>
+    <task id="LOCAL-00070" summary="fixed previous page button on subjects list">
+      <created>1623628959680</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1623628959680</updated>
+    </task>
+    <task id="LOCAL-00071" summary="show &quot;password reset done&quot; even if email doesn't exist">
+      <created>1623629817202</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1623629817202</updated>
+    </task>
+    <option name="localTasksCounter" value="72" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -497,17 +503,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Brakujące pliki" />
-    <MESSAGE value="users list (admin view) with edit(to do) and delete(ok) options, user's details (admin view), dropdown button with nickname and group-based options, some visual fixes" />
-    <MESSAGE value="admin view: users list with options: show profile, edit, delete. subjects list with options: edit, delete" />
-    <MESSAGE value="&quot;edit event&quot; and &quot;delete event&quot; buttons visible on events list (admin view); django 3.2 compatibilty fixes" />
-    <MESSAGE value="-Ograniczona edycja dla organizatora eventu&#10;-Wszyscy mogą przeglądać listę szkoleń" />
-    <MESSAGE value="Disallow changing datetime for past events" />
-    <MESSAGE value="User can edit his own profile (name, surname, email)" />
-    <MESSAGE value="Admin can view list of leaders who decalred their participation for specified subject" />
-    <MESSAGE value="Leaders list fix" />
-    <MESSAGE value="Sorting events on events list" />
-    <MESSAGE value="Filter frontend (almost done)" />
     <MESSAGE value="Filtering events on events_list" />
     <MESSAGE value="Register form validation (email + confirm password)" />
     <MESSAGE value="&quot;Events/subjects not found&quot; + JS comments in filtering script" />
@@ -522,6 +517,17 @@
     <MESSAGE value="improved showing poll's results" />
     <MESSAGE value="dockerizing celery..." />
     <MESSAGE value="repository organizing" />
-    <option name="LAST_COMMIT_MESSAGE" value="repository organizing" />
+    <MESSAGE value="updated &quot;about&quot; template" />
+    <MESSAGE value="improved sorting/filtering events, superuser automatically gets &quot;admin&quot; group on database initialization" />
+    <MESSAGE value="updated manual" />
+    <MESSAGE value="fix" />
+    <MESSAGE value="email_client fix (error during initializing database)" />
+    <MESSAGE value="improved sorting/filtering subjects" />
+    <MESSAGE value="fixed height of the elements on homepage (date and 'details' buttons)" />
+    <MESSAGE value="fixed height of the elements on events_list (date and 'details' buttons)" />
+    <MESSAGE value="fixed &quot;remember me&quot; functionality" />
+    <MESSAGE value="fixed previous page button on subjects list" />
+    <MESSAGE value="show &quot;password reset done&quot; even if email doesn't exist" />
+    <option name="LAST_COMMIT_MESSAGE" value="show &quot;password reset done&quot; even if email doesn't exist" />
   </component>
 </project>

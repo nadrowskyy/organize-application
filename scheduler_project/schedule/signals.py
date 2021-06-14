@@ -17,6 +17,10 @@ def populate_models(sender, **kwargs):
         User.objects.create_superuser(username='superuser',
                                       email='super@email.com',
                                       password='super')
+        suser = User.objects.get(username='superuser')
+        admin = Group.objects.get(name='admin')
+        suser.groups.add(admin)
+
 
 
 @receiver(post_migrate)

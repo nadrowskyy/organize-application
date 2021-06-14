@@ -55,6 +55,10 @@ def login_page(request):
         username = request.POST.get('username')  # html name="username"
         password = request.POST.get('password')
         remember_me = request.POST.get('remember_me')
+
+        if not remember_me:
+            request.session.set_expiry(0)
+
         user = authenticate(request, username=username, password=password)
 
         # Sprawdzanie parametru next, by móc przekierować niezalogowanego użytkownika
@@ -1116,6 +1120,7 @@ def event_edit(request, index):
             dates = 0
             total_votes = 0
             poll_in_progress = False
+            poll_status = 0
             poll_exist = False
             try:
                 poll = Polls.objects.get(event=index)
@@ -1443,42 +1448,49 @@ def password_reset_request(request):
     if request.method == "POST":
         domain = request.headers['Host']
         password_reset_form = PasswordResetForm(request.POST)
-        if password_reset_form.is_valid():
-            data = password_reset_form.cleaned_data['email']
-            associated_users = User.objects.filter(Q(email=data))
-            if associated_users.exists():
-                for user in associated_users:
-                    subject = "Password Reset Requested"
-                    email_template_name = "schedule/password_reset_email.txt"
-                    c = {
-                        "email": user.email,
-                        'domain': domain,
-                        'site_name': 'Interface',
-                        "uid": urlsafe_base64_encode(force_bytes(user.pk)),
-                        "user": user,
-                        'token': default_token_generator.make_token(user),
-                        'protocol': 'http',
-                    }
-                    email = render_to_string(email_template_name, c)
-                    try:
+
+        try:
+
+            if password_reset_form.is_valid():
+                data = password_reset_form.cleaned_data['email']
+                associated_users = User.objects.filter(Q(email=data))
+                if associated_users.exists():
+                    for user in associated_users:
+                        subject = "Password Reset Requested"
+                        email_template_name = "schedule/password_reset_email.txt"
+                        c = {
+                            "email": user.email,
+                            'domain': domain,
+                            'site_name': 'Interface',
+                            "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                            "user": user,
+                            'token': default_token_generator.make_token(user),
+                            'protocol': 'http',
+                        }
+                        email = render_to_string(email_template_name, c)
+
                         mail_settings = EmailSet.objects.filter(pk=1)[0]
                         host = mail_settings.EMAIL_HOST
                         port = mail_settings.EMAIL_PORT
                         username = mail_settings.EMAIL_HOST_USER
-                        password = mail_settings.EMAIL_HOST_PASSWORD
+                        password = email_pass_dec()
                         use_tls = bool(mail_settings.EMAIL_USE_TLS)
                         from_email = mail_settings.EMAIL_HEADER
                         with get_connection(host=host, port=port, username=username, password=password,
-                                            use_tls=use_tls) as conn:
+                                                use_tls=use_tls) as conn:
                             msg = EmailMessage(subject=subject, body=email,
-                                               from_email=from_email,
-                                               to=[user.email], connection=conn)
+                                                   from_email=from_email,
+                                                   to=[user.email], connection=conn)
                             msg.send(fail_silently=True)
 
-                        #send_mail(subject, email, settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
-                    except BadHeaderError:
-                        return HttpResponse('Invalid header found.')
+                            #send_mail(subject, email, settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
+                        return redirect("password_reset_done")
+                else:
                     return redirect("password_reset_done")
+            else:
+                return redirect("password_reset_done")
+        except:
+            return redirect("password_reset_done")
     password_reset_form = PasswordResetForm()
     return render(request=request, template_name="schedule/password_reset_form.html",
                   context={"password_reset_form": password_reset_form})
@@ -1501,9 +1513,16 @@ def handler_500(request):
 
 
 def email_pass_dec():
-    settings_db = EmailSet.objects.filter(id=1)[0]
-    nonce = settings_db.NONCE
-    cipher = DES.new(settings.KEY, DES.MODE_EAX, nonce=nonce)
-    enc_password = settings_db.EMAIL_HOST_PASSWORD
-    plaintext = cipher.decrypt(enc_password)
-    return plaintext.decode(encoding='ascii')
+
+    try:
+        settings_db = EmailSet.objects.filter(id=1)[0]
+        nonce = settings_db.NONCE
+        cipher = DES.new(settings.KEY, DES.MODE_EAX, nonce=nonce)
+        enc_password = settings_db.EMAIL_HOST_PASSWORD
+        plaintext = cipher.decrypt(enc_password)
+        return plaintext.decode(encoding='ascii')
+
+    except:
+        pass
+
+

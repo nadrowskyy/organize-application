@@ -69,19 +69,30 @@
     <h1 style="text-align:center">Nadchodzące szkolenia</h1>
     <hr>
     <div class="container">
-        <div class="row">
-
+	<div class="row">
         {% for i in upcoming_events_list %}
             {% if forloop.counter <= 3 and i.status == 'publish' %}
-              <div class="col-lg-4 col-md-4">
+
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 ">
+
                   <p style="text-align:center;"><img class="rounded-circle" src="{{MEDIA_URL}}{{i.icon}}" alt="" width="140" height="140"></p>
+
                 <h3>{{i.title}}</h3>
+
                 <p style="text-align:justify;">{{i.description}}</p>
+
+				<div class="hidden">
+				<h6>{{i.planning_date|date:"d.m.Y H:i"}} • Prowadzi: {{i.organizer.first_name}} {{i.organizer.last_name}}</h6>
+                <p style="text-align:center;"><a class="btn btn-secondary align-bottom" href="{% url 'event_details' i.id %}" role="button">Szczegóły »</a></p>
+				</div>
+				<div class="bottomdiv">
                 <h6>{{i.planning_date|date:"d.m.Y H:i"}} • Prowadzi: {{i.organizer.first_name}} {{i.organizer.last_name}}</h6>
-                <p style="text-align:center;"><a class="btn btn-secondary" href="{% url 'event_details' i.id %}" role="button">Szczegóły »</a></p>
+                <p style="text-align:center;"><a class="btn btn-secondary " href="{% url 'event_details' i.id %}" role="button">Szczegóły »</a></p>
+				</div>
               </div>
             {% endif %}
         {% endfor %}
+	</div>
         </div>
         <hr>
         <p style="text-align:center;"><a class="btn btn-secondary" href="{% url 'events_list' %}" role="button">Zobacz wszystkie »</a></p>
