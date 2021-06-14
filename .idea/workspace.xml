@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="fixed previous page button on subjects list">
+    <list default="true" id="22d303be-4e0e-4a33-9db0-11156ec052e2" name="Default Changelist" comment="show &quot;password reset done&quot; even if email doesn't exist">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/password_reset_done.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/password_reset_done.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/subject_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/subject_edit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/suggest_event.html" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler_project/schedule/templates/schedule/suggest_event.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,14 +132,7 @@
       <workItem from="1623370706055" duration="1785000" />
       <workItem from="1623372605003" duration="265000" />
       <workItem from="1623533910559" duration="2621000" />
-      <workItem from="1623595860060" duration="23864000" />
-    </task>
-    <task id="LOCAL-00022" summary="Admin can view list of leaders who decalred their participation for specified subject">
-      <created>1620307964109</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1620307964109</updated>
+      <workItem from="1623595860060" duration="24284000" />
     </task>
     <task id="LOCAL-00023" summary="Leaders list fix">
       <created>1620309243666</created>
@@ -477,7 +470,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623628959680</updated>
     </task>
-    <option name="localTasksCounter" value="71" />
+    <task id="LOCAL-00071" summary="show &quot;password reset done&quot; even if email doesn't exist">
+      <created>1623629817202</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1623629817202</updated>
+    </task>
+    <option name="localTasksCounter" value="72" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -503,7 +503,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Filter frontend (almost done)" />
     <MESSAGE value="Filtering events on events_list" />
     <MESSAGE value="Register form validation (email + confirm password)" />
     <MESSAGE value="&quot;Events/subjects not found&quot; + JS comments in filtering script" />
@@ -528,6 +527,7 @@
     <MESSAGE value="fixed height of the elements on events_list (date and 'details' buttons)" />
     <MESSAGE value="fixed &quot;remember me&quot; functionality" />
     <MESSAGE value="fixed previous page button on subjects list" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed previous page button on subjects list" />
+    <MESSAGE value="show &quot;password reset done&quot; even if email doesn't exist" />
+    <option name="LAST_COMMIT_MESSAGE" value="show &quot;password reset done&quot; even if email doesn't exist" />
   </component>
 </project>
