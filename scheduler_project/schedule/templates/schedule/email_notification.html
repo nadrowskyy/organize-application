@@ -14,7 +14,29 @@
 </head>
 
 <body>
+<div class="container" style="max-width:800px;">
 
+    <div class="form-group">
+        <label for="how-to">Ustawienia</label>
+        <p>{% load static %}</p>
+        <p>{% if user %}</p>
+Siemano {{ user.first_name }}
+W najbliższym czasie masz szkolenia do zorganizowania, oto ich lista:
+{% for event in events %}
+{{event.title}}
+{{event.planning_date}}
+{{event.description}}
+{% endfor %}
+{% else %}
+Hej! Może zainteresuą Cie nasze nadchodzące szkolenia:
+{% for event in events %}
+{{event.title}}
+{{event.planning_date}}
+{{event.description}}
+{% endfor %}
+{% endif %}
+    </div>
+<br>
 <div class="container" style="max-width:800px;">
 
 <form action="" enctype="multipart/form-data" method="POST">

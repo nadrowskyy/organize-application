@@ -427,6 +427,9 @@ def draft_edit(request, index):
                                                         organizer=organizer, planning_date=planning_date,
                                                         duration=duration, link=link, status='publish',
                                                         publish=timezone.now())
+                    poll = Polls.objects.filter(event=index).first()
+                    poll.if_active = False
+                    poll.save()
 
                     new_icon = request.FILES.get('icon')
                     new_attachment = request.FILES.get('attachment')
