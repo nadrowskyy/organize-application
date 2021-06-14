@@ -16,41 +16,81 @@
 <body>
 <div class="container" style="max-width:800px;">
 
-    <div class="form-group">
-        <label for="how-to">Ustawienia</label>
-        <p>{% load static %}</p>
-        <p>{% if user %}</p>
-Siemano {{ user.first_name }}
-W najbliższym czasie masz szkolenia do zorganizowania, oto ich lista:
-{% for event in events %}
-{{event.title}}
-{{event.planning_date}}
-{{event.description}}
-{% endfor %}
-{% else %}
-Hej! Może zainteresuą Cie nasze nadchodzące szkolenia:
-{% for event in events %}
-{{event.title}}
-{{event.planning_date}}
-{{event.description}}
-{% endfor %}
-{% endif %}
-    </div>
-<br>
-<div class="container" style="max-width:800px;">
-
 <form action="" enctype="multipart/form-data" method="POST">
     {% csrf_token %}
     <div class="form-group">
-        <label for="notification">Treść powiadomienia</label>
+        <br>
+        <label for="notification"><h3>Treść powiadomienia</h3></label>
+        <br>
         <textarea class="form-control" id="notification" name="notification" required rows="25">
             {{ notification }}
         </textarea>
     </div>
-<br>
     <center><button class="btn btn-secondary" style="width:20%;font-family: 'Oswald', sans-serif;" type="submit">Aktualizuj</button></center>
 
 </form>
+    <br><br>
+    <div class="container" style="max-width:800px;">
+
+    <div class="form-group">
+        <label for="how-to"><h3>Instrukcja</h3></label>
+        <pre>Możesz skonfigurować powiadomienia mailowe, które będą wysyłane do użytkowników.
+W ramach powiadomień możesz użyć modeli User oraz Event.
+Każdy z nich ma kilka dostępnych pól.
+    user:
+        - first_name
+        - last_name
+        - email
+        - username
+    event:
+        - title
+        - description
+        - planning_date
+        - organizer
+        - duration
+        - link
+Dostęp do zmiennej odbywa się przez podanie nazwy modelu i nazwy zmiennej
+po kropce, np. user.first_name. W ramach konfiguracji powiadomień
+możemy korzystać również z pętli oraz bloku warunkowego if else.
+Składnia pętli for:
+    &#123;% for i in loop %&#125;
+        something
+    &#123;% endfor %&#125;
+Składnia bloku warunkowego:
+    &#123;% if warunek %&#125;
+        something
+    &#123;% endif %&#125;
+
+Poniższy przykład ilustruje przykładową konfigurację powiadomień, którą
+można wykorzystać w systemie.
+
+&#123;% load static %&#125;
+&#123;% if user %&#125;
+Hej! &#123;&#123; user.first_name &#125;&#125;
+W najbliższym czasie masz szkolenia do zorganizowania, oto ich lista:
+&#123;% for event in events %&#125;
+&#123;&#123; event.title &#125;&#125;
+&#123;&#123; event.planning_date &#125;&#125;
+&#123;&#123; event.description &#125;&#125;
+&#123;% endfor %&#125;
+&#123;% else %&#125;
+Hej! Może zainteresuą Cie nasze nadchodzące szkolenia:
+&#123;% for event in events %&#125;
+&#123;&#123; event.title &#125;&#125;
+&#123;&#123; event.planning_date &#125;&#125;
+&#123;&#123; event.description &#125;&#125;
+&#123;% endfor %&#125;
+&#123;% endif %&#125;
+
+Tag &#123;% load static %&#125; jest niezbędny aby zmienne, pętle i instrukcje warunkowe
+działały prawidłowo.
+Pierwszy warunek (&#123;% if user %&#125;) pozwala określić czy wysyłamy powiadomienie do
+organizatora szkolenia, jeśli tak, wyświetlamy listę (pętla for) szkoleń, które ma do
+przeprowadzenia w najbliższym czasie.
+Jeśli mail nie jest wysyłany do organizatora (&#123;% else %&#125;) to wysyłamy go do wszystkich
+użytkowników z informacją jakie szkolenia odbędą się w najbliższym czasie.</pre>
+    </div>
+<br>
 </div>
 
 </body>
