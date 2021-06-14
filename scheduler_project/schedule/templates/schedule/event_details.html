@@ -118,6 +118,9 @@
         </div>
         <br>
         <div class="col-md-12">
+        {% if poll_status == 'not_set' %}
+            <p class="text-center">Ankieta jest nieaktywna, nie został zdefioniowany przedział dostęności ankiety.</p>
+        {% endif %}
         {% if poll.if_active and poll_status == 'in_progress' and not if_voted %}
             <p class="text-center">Ankieta jest jeszcze aktywna, swój głos możesz oddać <a href="{% url 'poll_details' poll.id %}"> tutaj</a></p>
         {% endif %}
@@ -128,7 +131,7 @@
             <p class="text-center">Ankieta jest aktywna ale nie można już oddawać swoich głosów.</p>
         {% endif %}
         {% if poll.if_active and poll_status == 'not_started' %}
-            <p class="text-center">Ankieta jest aktywna i będzie można oddać swój głow w przyszłości.</p>
+            <p class="text-center">Ankieta jest aktywna i będzie można oddać swój głos w przyszłości.</p>
         {% endif %}
         {% if not poll.if_active and poll_status == 'ended' %}
             <p class="text-center">Ankieta jest nieaktywna i została zakończona.</p>
@@ -146,6 +149,9 @@
     {% else %}
     {% if request.user.is_authenticated %}
        <div class="col-md-12">
+        {% if poll_status == 'not_set' %}
+            <p class="text-center">Ankieta jest nieaktywna</p>
+        {% endif %}
         {% if poll.if_active and poll_status == 'in_progress' and not if_voted %}
             <p class="text-center">Ankieta jest jeszcze aktywna, swój głos możesz oddać <a href="{% url 'poll_details' poll.id %}"> tutaj</a></p>
         {% endif %}
@@ -156,7 +162,7 @@
             <p class="text-center">Ankieta jest aktywna ale nie można już oddawać swoich głosów.</p>
         {% endif %}
         {% if poll.if_active and poll_status == 'not_started' %}
-            <p class="text-center">Ankieta jest aktywna i będzie można oddać swój głow w przyszłości.</p>
+            <p class="text-center">Ankieta jest aktywna i będzie można oddać swój głos w przyszłości.</p>
         {% endif %}
         {% if not poll.if_active and poll_status == 'ended' %}
             <p class="text-center">Ankieta jest nieaktywna i została zakończona.</p>

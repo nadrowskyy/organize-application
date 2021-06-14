@@ -287,6 +287,7 @@ def draft_edit(request, index):
             dates = Dates.objects.filter(poll=poll)
             poll_in_progress = False
             poll_exist = False
+            poll_status = ''
             total_votes = 0
 
             if event[0].planning_date < datetime.today():
@@ -324,7 +325,7 @@ def draft_edit(request, index):
                     total_votes = -1
 
             context = {'event': event, 'users': users, 'permitted': True, 'past': past, 'poll': poll, 'dates': dates,
-                       'poll_status': poll_status, 'poll_exist': poll_exist,'total_votes': total_votes}
+                       'poll_status': poll_status, 'poll_exist': poll_exist, 'total_votes': total_votes}
             return render(request, 'schedule/draft_edit.html', context)
 
         if request.method == 'POST':
@@ -473,7 +474,9 @@ def draft_edit(request, index):
                     poll_exist = True
                     # w trakcie
                     poll_status = ''
-                    if poll.since_active <= date.today() < poll.till_active:
+                    if poll.since_active is None or poll.till_active is None:
+                        poll_status = 'not_set'
+                    elif poll.since_active <= date.today() <= poll.till_active:
                         poll_status = 'in_progress'
                         # poll_in_progress = True
                     # else:
@@ -1350,18 +1353,15 @@ def event_details(request, index):
             poll_exist = True
             # w trakcie
             poll_status = ''
-            if poll.since_active <= date.today() < poll.till_active:
+            if poll.since_active is None or poll.till_active is None:
+                poll_status = 'not_set'
+            elif poll.since_active <= date.today() <= poll.till_active:
                 poll_status = 'in_progress'
-                # poll_in_progress = True
-            # else:
-            #     poll_in_progress = False
             # zakonczona
             elif poll.till_active < date.today():
-                # poll_ended = True
                 poll_status = 'ended'
             # nierozpoczeta
             elif poll.since_active > date.today():
-                # poll_not_started = True
                 poll_status = 'not_started'
             dates = Dates.objects.filter(poll=poll).order_by('date')
             total_votes = 0

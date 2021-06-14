@@ -180,6 +180,9 @@ to również muszą to być minimum dwa terminy.">TERMINY</span>: &nbsp; &nbsp;
 {% endfor %}
         </div>
         <div class="col-md-12">
+        {% if poll_status == 'not_set' %}
+            <p class="text-center">Ankieta jest nieaktywna, nie został zdefioniowany przedział dostęności ankiety.</p>
+        {% endif %}
         {% if poll.if_active and poll_status == 'in_progress' %}
             <p class="text-center">Ankieta jest jeszcze aktywna</a></p>
         {% endif %}
