@@ -1,6 +1,6 @@
-                                    {% load static %}
+{% load static %}
 {% if user %}
-Siemano {{ user.first_name }}
+Cześć! {{ user.first_name }}
 W najbliższym czasie masz szkolenia do zorganizowania, oto ich lista:
 {% for event in events %}
 {{event.title}}
@@ -15,3 +15,7 @@ Hej! Może zainteresuą Cie nasze nadchodzące szkolenia:
 {{event.description}}
 {% endfor %}
 {% endif %}
+
+Twój Zespół FFT.
+
+        

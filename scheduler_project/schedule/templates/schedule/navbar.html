@@ -82,6 +82,7 @@
 						  {% if request.user|has_group:"admin" %}
 
 						  <a class="dropdown-item" href="{% url 'email_client' %}">Ustawienia</a>
+						  <a class="dropdown-item" href="{% url 'email_notification' %}">Powiadomienia e-mail</a>
 
 						  {% endif %}
 						  <hr style="margin:5px;">
