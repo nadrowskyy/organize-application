@@ -282,7 +282,6 @@ def poll_details(request, index):
 def draft_edit(request, index):
 
     if request.user.groups.all()[0].name == 'admin':
-
         if request.method == 'GET':
             event = Event.objects.filter(id=index)
             user = get_user_model()
@@ -303,11 +302,10 @@ def draft_edit(request, index):
                 poll_exist = True
                 # w trakcie
                 poll_status = ''
-                if poll.since_active <= date.today() < poll.till_active:
+                if poll.since_active is None or poll.till_active is None:
+                    poll_status = 'not_set'
+                elif poll.since_active <= date.today() <= poll.till_active:
                     poll_status = 'in_progress'
-                    # poll_in_progress = True
-                # else:
-                #     poll_in_progress = False
                 # zakonczona
                 elif poll.till_active < date.today():
                     # poll_ended = True
@@ -408,8 +406,14 @@ def draft_edit(request, index):
                 if new_attachment:
                     selected_event.attachment = new_attachment
                     selected_event.save()
+                request.session['ref_times'] = 0
+                request.session['draft_success'] = True
 
             if request.POST.get('pub_button') == 'publish':
+                planning_date_to_date = datetime.strptime(request.POST.get('planning_date'), "%Y-%m-%dT%H:%M")
+                if planning_date_to_date < timezone.now():
+                    messages.error(request, "Wydarzenie nie może rozpocząć się w przeszłości")
+                    return redirect('draft_edit', index)
                 if request.POST.get('description') == '' or request.POST.get('planning_date') == '' or \
                         request.POST.get('duration') == '':
                     messages.error(request, "Wypełnij wszystkie pola wymagane dla opublikowania szkolenia.")
@@ -422,14 +426,11 @@ def draft_edit(request, index):
                     planning_date = request.POST.get('planning_date')
                     duration = request.POST.get('duration')
                     link = request.POST.get('link')
-
                     update_event = Event.objects.filter(id=index).update(title=title, description=description,
                                                         organizer=organizer, planning_date=planning_date,
                                                         duration=duration, link=link, status='publish',
                                                         publish=timezone.now())
-                    poll = Polls.objects.filter(event=index).first()
-                    poll.if_active = False
-                    poll.save()
+                    update_poll = Polls.objects.filter(event=index).update(if_active=False)
 
                     new_icon = request.FILES.get('icon')
                     new_attachment = request.FILES.get('attachment')
@@ -442,8 +443,9 @@ def draft_edit(request, index):
                         selected_event.attachment = new_attachment
                         selected_event.save()
 
-                    return redirect('events_list')
-
+                    send_email_organizer.delay(organizer, index)
+                    request.session['ref_times'] = 0
+                    request.session['event_success'] = True
         return redirect('events_list')
 
     elif request.user.groups.all()[0].name == 'employee':
@@ -485,16 +487,11 @@ def draft_edit(request, index):
                         poll_status = 'not_set'
                     elif poll.since_active <= date.today() <= poll.till_active:
                         poll_status = 'in_progress'
-                        # poll_in_progress = True
-                    # else:
-                    #     poll_in_progress = False
                     # zakonczona
                     elif poll.till_active < date.today():
-                        # poll_ended = True
                         poll_status = 'ended'
                     # nierozpoczeta
                     elif poll.since_active > date.today():
-                        # poll_not_started = True
                         poll_status = 'not_started'
                     dates = Dates.objects.filter(poll=poll).order_by('date')
                     total_votes = 0
@@ -515,30 +512,34 @@ def draft_edit(request, index):
 
             if request.method == 'POST':
                 if request.POST.get('pub_button') == 'save':
-                    poll = get_object_or_404(Polls, event=index)
-                    # poll = Polls.objects.filter(event=index).first()
+                    poll = Polls.objects.filter(event=index).first()
                     dates = Dates.objects.filter(poll=poll)
+
                     planning_dates = request.POST.getlist('planning_date_draft')
                     count_duplicates = Counter(planning_dates)
                     for el in count_duplicates.values():
                         if el > 1:
                             messages.error(request, "Daty w ankiecie muszą być unikalne")
                             return redirect('draft_edit', index)
-                    if len(planning_dates) < 2 and request.POST.get('if_active') == 'True' or \
-                            request.POST.get('poll_avaible_since') == '' or request.POST.get('poll_avaible') == '':
-                        messages.error(request, "Wypełnij wszystkie pola wymagane dla utworzenia aktywnej ankiety.")
-                        return redirect('draft_edit', index)
                     if request.POST.get('if_active') == 'True':
+                        if len(planning_dates) < 2 or request.POST.get('poll_avaible_since') == '' or \
+                                request.POST.get('poll_avaible') == '':
+                            messages.error(request, "Wypełnij wszystkie pola wymagane dla utworzenia aktywnej ankiety.")
+                            return redirect('draft_edit', index)
                         if_active = True
                     else:
                         # daty beda zapisane w ankiecie ale sama ankieta bedzie nie aktywna
                         if_active = False
+
                     since_active = request.POST.get('poll_avaible_since')
                     till_active = request.POST.get('poll_avaible')
+                    if since_active == '':
+                        since_active = None
+                    if till_active == '':
+                        till_active = None
 
                     update_poll = Polls.objects.filter(event=index).update(since_active=since_active,
-                                                                           till_active=till_active,
-                                                                           if_active=if_active)
+                                                                           till_active=till_active, if_active=if_active)
 
                     planning_dates_from_db = [x.date.strftime("%Y-%m-%dT%H:%M") for x in dates]
 
@@ -556,6 +557,7 @@ def draft_edit(request, index):
                             convert_to_date = datetime.strptime(el3, "%Y-%m-%dT%H:%M")
                             date_obj = Dates.objects.filter(poll=poll, date=convert_to_date).first()
                             date_obj.delete()
+
                         for el4 in dates_to_add:
                             convert_to_date = datetime.strptime(el4, "%Y-%m-%dT%H:%M")
                             date_obj = Dates.objects.create(poll=poll, date=convert_to_date)
@@ -583,6 +585,9 @@ def draft_edit(request, index):
                     if new_attachment:
                         selected_event.attachment = new_attachment
                         selected_event.save()
+
+                    request.session['ref_times'] = 0
+                    request.session['draft_success'] = True
 
                 if request.POST.get('pub_button') == 'publish':
 
@@ -623,7 +628,9 @@ def draft_edit(request, index):
 
                         update_poll = Polls.objects.filter(event=index).update(if_active=False)
 
-                        return redirect('events_list')
+                        send_email_organizer.delay(organizer, index)
+                        request.session['ref_times'] = 0
+                        request.session['event_success'] = True
 
             return redirect('events_list')
 
@@ -1134,7 +1141,9 @@ def event_edit(request, index):
                 poll_exist = True
                 # w trakcie
                 poll_status = ''
-                if poll.since_active <= date.today() < poll.till_active:
+                if poll.since_active is None or poll.till_active is None:
+                    poll_status = 'not_set'
+                elif poll.since_active <= date.today() <= poll.till_active:
                     poll_status = 'in_progress'
                     # poll_in_progress = True
                 # else:
