@@ -268,8 +268,6 @@
                     <p style="text-align:center;"><img class="rounded-circle" src="{{MEDIA_URL}}{{i.icon}}" alt="" width="140" height="140"></p>
                 <center>
                     {% if i.status == 'draft' %}
-                    {% endif %}
-                    {% if i.status == 'draft' %}
                     <h3 class="font-italic" style="color: #a3a3a3;">{{i.title}}</h3>
                     {% else %}
                     <h3>{{i.title}}</h3>
@@ -290,14 +288,14 @@
                          {% if not request.user|has_group:"admin" %}
                             {% if request.user == i.organizer %}
                                 <a {% if i.status == 'draft' %} href="{% url 'draft_edit' i.id %}" {% else %} href="{% url 'event_edit' i.id %}" {% endif %}><img src="{% static 'images/icons/edit.png' %}" style="text-align:right; width:25px; height:25px;"></a>
-                         </div>
+                     </div>
                             {% endif %}
                          {% else %}
                             <a {% if i.status == 'draft' %} href="{% url 'draft_edit' i.id %}" {% else %} href="{% url 'event_edit' i.id %}" {% endif %}><img src="{% static 'images/icons/edit.png' %}" style="text-align:right; width:25px; height:25px;"></a>
                             <a href="{% url 'delete_event' i.id %}" onclick="return confirm('Czy na pewno chcesz usunąć szkolenie {{i.title}}? \n\nOperacji nie będzie można cofnąć!');"><img src="{% static 'images/icons/delete.png' %}" style="text-align:right; width:25px; height:25px;"></a>
-                         </div>
+
                          {% endif %}
-                    </div>
+
                     <br>
                 </center>
             </div>
