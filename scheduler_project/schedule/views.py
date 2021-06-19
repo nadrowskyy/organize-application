@@ -1113,7 +1113,7 @@ def email_notification(request):
 
 @allowed_users(allowed_roles=['admin', 'employee'])
 def event_edit(request, index):
-
+    poll_status = 0
     if request.user.groups.all()[0].name == 'admin':
 
         if request.method == 'GET':
@@ -1130,7 +1130,7 @@ def event_edit(request, index):
             dates = 0
             total_votes = 0
             poll_in_progress = False
-            poll_status = 0
+
             poll_exist = False
             try:
                 poll = Polls.objects.get(event=index)
