@@ -1181,18 +1181,18 @@ def event_edit(request, index):
             duration = request.POST.get('duration')
             link = request.POST.get('link')
 
-            update_event = Event.objects.filter(id=index).update(title=title, description=description, organizer=organizer, planning_date=planning_date, duration=duration, link=link)
+            Event.objects.filter(id=index).update(title=title, description=description, organizer=organizer, planning_date=planning_date, duration=duration, link=link)
 
             new_icon = request.FILES.get('icon')
             new_attachment = request.FILES.get('attachment')
 
             if new_icon:
                 selected_event.icon = new_icon
-                selected_event.save()
+                selected_event.save(update_fields=["icon"])
 
             if new_attachment:
                 selected_event.attachment = new_attachment
-                selected_event.save()
+                selected_event.save(update_fields=["attachment"])
 
             return redirect('events_list')
 
@@ -1279,18 +1279,18 @@ def event_edit(request, index):
                     duration = request.POST.get('duration')
                     link = request.POST.get('link')
 
-                    update_event = Event.objects.filter(id=index).update(description=description, planning_date=planning_date, duration=duration, link=link)
+                    Event.objects.filter(id=index).update(description=description, planning_date=planning_date, duration=duration, link=link)
 
                     new_icon = request.FILES.get('icon')
                     new_attachment = request.FILES.get('attachment')
 
                     if new_icon:
                         selected_event.icon = new_icon
-                        selected_event.save()
+                        selected_event.save(update_fields=["icon"])
 
                     if new_attachment:
                         selected_event.attachment = new_attachment
-                        selected_event.save()
+                        selected_event.save(update_fields=["attachment"])
 
                     return redirect('events_list')
 
