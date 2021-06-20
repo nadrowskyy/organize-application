@@ -15,6 +15,15 @@
   - Skorzystaj z odpowiedniej instrukcji w repozytorium [LINK](../main/FFT_installation_local.pdf)
 
 
+## Instrukcja obsługi
+
+- Użytkownik:
+  - Skorzystaj z odpowiedniej instrukcji w repozytorium [LINK](../main/FFT_user_manual.pdf)
+
+- Administrator:
+  - Skorzystaj z odpowiedniej instrukcji w repozytorium [LINK](../main/FFT_admin_manual.pdf)
+
+
 ## Screenshoty
 
 ### Strona główna
