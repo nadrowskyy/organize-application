@@ -17,7 +17,7 @@ services:
              python manage.py makemigrations &&
              python manage.py makemigrations schedule &&
              python manage.py migrate &&
-             python manage.py runserver 0.0.0.0:80"
+             python manage.py runserver 0.0.0.0:80 --insecure"
     container_name: organize-application
     environment:
       CELERY_BROKER: "amqp://guest:guest@rabbitmq:5672//"
