@@ -2,8 +2,11 @@ import django.contrib.auth.views
 from django.contrib import admin
 from django.urls import path
 from . import views
+from django.views.static import serve
+
 from django.conf.urls.static import static
 from django.conf import settings
+from django.conf.urls import url
 from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, \
     PasswordResetCompleteView
 
@@ -47,4 +50,6 @@ urlpatterns = [
     path('poll_details/<int:index>', views.poll_details, name='poll_details'),
     path('draft_edit/<int:index>', views.draft_edit, name='draft_edit'),
     path('403/', views.handler_403, name='403'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
+    url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT})
+]
