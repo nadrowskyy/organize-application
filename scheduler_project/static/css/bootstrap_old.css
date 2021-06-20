@@ -2757,6 +2757,14 @@ p {
     text-overflow: ellipsis;
 }
 
+h3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .btn-secondary:hover {
   color: #292b2c;
   background-color: #743952;
