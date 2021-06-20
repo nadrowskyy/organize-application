@@ -635,7 +635,7 @@ def draft_edit(request, index):
 
         else:
             context = {'not_permitted': True}
-            return render(request, 'schedule/polls_list.html', context)
+            return render(request, 'schedule/events_list.html', context)
 
 
 @allowed_users(allowed_roles=['admin'])
@@ -1074,8 +1074,6 @@ def email_client(request):
 
         cipher = DES.new(settings.KEY, DES.MODE_EAX)
         nonce = cipher.nonce
-        print('nonceeee')
-        print(nonce)
         password_encrypted = cipher.encrypt(password.encode('ascii'))
 
         EmailSet.objects.filter(id=1).update(delay_leader=delay_leader, delay_all=delay_all, EMAIL_HOST=email_host,
@@ -1091,7 +1089,7 @@ def email_notification(request):
 
     if request.method == 'GET':
         module_dir = os.path.dirname(__file__)
-        file_path = os.path.join(module_dir, 'templates\schedule\email_template.html')
+        file_path = os.path.join(module_dir, 'templates/schedule/email_template.html')
         data_file = open(file_path, 'r', encoding='utf-8')
         data = data_file.read()
 
@@ -1101,7 +1099,7 @@ def email_notification(request):
 
         notification = request.POST.get('notification')
         module_dir = os.path.dirname(__file__)
-        file_path = os.path.join(module_dir, 'templates\schedule\email_template.html')
+        file_path = os.path.join(module_dir, 'templates/schedule/email_template.html')
         with open(file_path, 'w', encoding='utf-8') as output:
             for line in notification.splitlines():
                 output.write(line)
@@ -1352,7 +1350,11 @@ def my_profile(request):
 
 #@allowed_users(allowed_roles=['admin', 'employee'])
 def event_details(request, index):
-
+    tmp_event = Event.objects.filter(id=index)[0]
+    if request.user.groups.all()[0].name == 'admin' or tmp_event.organizer == request.user:
+        pass
+    else:
+        return redirect('events_list')
     if request.method == 'GET':
         selected_event = Event.objects.filter(id=index)
         comments = Comment.objects.filter(event=index)
@@ -1532,8 +1534,5 @@ def email_pass_dec():
         enc_password = settings_db.EMAIL_HOST_PASSWORD
         plaintext = cipher.decrypt(enc_password)
         return plaintext.decode(encoding='ascii')
-
     except:
         pass
-
-
