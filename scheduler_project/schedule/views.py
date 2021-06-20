@@ -135,18 +135,17 @@ def events_list(request):
 
     sort_by = request.GET.get('sort_by')
 
-    show_upcoming = request.GET.get('show_upcoming')
-    show_historical = request.GET.get('show_historical')
+    show = request.GET.get('show')
     only_mine = request.GET.get('only_mine')
     drafts = request.GET.get('drafts')
 
     organizer = request.GET.get('organizer')
     title = request.GET.get('title')
 
-    if show_historical and not show_upcoming:
+    if show == "historical":
         all_events_list = all_events_list.filter(planning_date__lte=today)
 
-    elif not show_historical and show_upcoming:
+    else:
         all_events_list = all_events_list.filter(planning_date__gte=today)
 
     if drafts:
