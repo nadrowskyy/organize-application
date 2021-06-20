@@ -1,8 +1,9 @@
 {% load static %}
-<h3>Wstawaj! Masz szkolenie do zorganizowania!</h3>
+<h3>Hej {{ user.first_name }}! Masz szkolenie do zorganizowania!</h3>
+<p>Zostało utworzone szkolenie, którego jesteś organizatorem, oto jego szczegóły:</p>
 <ul>
-  <li>{{ event.title }}</li>
-  <li>{{ event.planning_date }}</li>
+  <li>Tytuł szkolenia: {{ event.title }}</li>
+  <li>Data szkolenia: {{ event.planning_date }}</li>
 </ul>
-<p>Po więcej szczegółów zapraszamy na naszą stronę w zakładce 'Szkolenia'</p>
+<p>Po więcej szczegółów zapraszamy na naszą stronę w zakładce 'Szkolenia'.</p>
 <p>Twój zespół FFT</p>
