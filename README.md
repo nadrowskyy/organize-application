@@ -41,6 +41,9 @@
 ### Tworzenie tematu
 <img src="../main/screenshots/zaproponuj_temat.png">
 
+### Komentarze
+<img src="../main/screenshots/komentarze.png">
+
 ### Dodawanie ankiety
 <img src="../main/screenshots/tworzenie_ankiety.png">
 
