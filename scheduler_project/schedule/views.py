@@ -1350,12 +1350,7 @@ def my_profile(request):
 
 #@allowed_users(allowed_roles=['admin', 'employee'])
 def event_details(request, index):
-    tmp_event = Event.objects.filter(id=index)[0]
-    if request.user.is_authenticated:
-        if request.user.groups.all()[0].name == 'admin' or tmp_event.organizer == request.user:
-            pass
-        else:
-            return redirect('events_list')
+
     if request.method == 'GET':
         selected_event = Event.objects.filter(id=index)
         comments = Comment.objects.filter(event=index)
