@@ -16,7 +16,7 @@ from django.conf import settings
 @shared_task
 def send_notification_all():
     '''Powiadomienia dla wszystkich użytkowników o nadchodzących szkoleniach.
-    Wywołanie tej funkcji jest cykliczne (aktualnie co 30 minut). Funckja sprawdza czy
+    Wywołanie tej funkcji jest cykliczne (aktualnie co 5 minut). Funckja sprawdza czy
     są szkolenia, których nie wysłano powiadomienia i wysyła je.
     Jest przydatna gdy planujemy szkolenie w przyszłości.'''
     delay_all = EmailSet.objects.filter(pk=1)[0].delay_all
@@ -54,7 +54,7 @@ def send_notification_all():
         from_email = mail_settings.EMAIL_HEADER
 
         with get_connection(host=host, port=port, username=username, password=password, use_tls=use_tls) as conn:
-            msg = EmailMessage(subject='Sprawdź nadchodzące szkolenia!', body=email_body, from_email=from_email,
+            msg = EmailMessage(subject='Sprawdź nadchodzące szkolenia! - FFT', body=email_body, from_email=from_email,
                                to=mailing_list_all, connection=conn)
             msg.send(fail_silently=True)
 
@@ -69,7 +69,7 @@ def send_notification_all():
 @shared_task
 def send_notification_organizer():
     '''Powiadomienie dla organizatora szkolenia o tym, że szkolenie do przeprowadzenia.
-    Wywołanie tej funkcji jest cykliczne (aktualnie co 30 minut). Funckja sprawdza czy
+    Wywołanie tej funkcji jest cykliczne (aktualnie co 5 minut). Funckja sprawdza czy
     są szkolenia, których nie wysłano powiadomienia i wysyła je.
     Jest przydatna gdy planujemy szkolenie w przyszłości.'''
     delay_leader = EmailSet.objects.filter(pk=1)[0].delay_leader
@@ -117,7 +117,7 @@ def send_notification_organizer():
             from_email = mail_settings.EMAIL_HEADER
 
             with get_connection(host=host, port=port, username=username, password=password, use_tls=use_tls) as conn:
-                msg = EmailMessage(subject='Twoje nadchodzące szkolenia!', body=email_body, from_email=from_email,
+                msg = EmailMessage(subject='Twoje nadchodzące szkolenia! - FFT', body=email_body, from_email=from_email,
                                    to=[user.email], connection=conn)
                 msg.send(fail_silently=True)
 
@@ -176,7 +176,7 @@ def send_poll_notification(poll_pk, draft_pk):
     from_email = mail_settings.EMAIL_HEADER
     with get_connection(host=host, port=port, username=username, password=password,
                         use_tls=use_tls) as conn:
-        msg = EmailMessage(subject='Zagłosuj w ankiecie!', body=rendered_body,
+        msg = EmailMessage(subject='Zagłosuj w ankiecie! - FFT', body=rendered_body,
                            from_email=from_email,
                            to=mailing_list_all, connection=conn)
         msg.content_subtype = "html"
@@ -222,7 +222,7 @@ def send_poll_notification_cron():
         from_email = mail_settings.EMAIL_HEADER
         with get_connection(host=host, port=port, username=username, password=password,
                             use_tls=use_tls) as conn:
-            msg = EmailMessage(subject='Zagłosuj w ankiecie!', body=rendered_body,
+            msg = EmailMessage(subject='Zagłosuj w ankiecie! - FFT', body=rendered_body,
                                from_email=from_email,
                                to=mailing_list_all, connection=conn)
             msg.content_subtype = "html"
@@ -251,12 +251,27 @@ def send_email_organizer(username_pk, event_pk):
     from_email = mail_settings.EMAIL_HEADER
     with get_connection(host=host, port=port, username=username, password=password,
                         use_tls=use_tls) as conn:
-        msg = EmailMessage(subject='Twoje nadchodzące szkolenie!', body=rendered_body,
+        msg = EmailMessage(subject='Twoje nadchodzące szkolenie! - FFT', body=rendered_body,
                            from_email=from_email,
                            to=[user.email], connection=conn)
         msg.content_subtype = "html"
         msg.send(fail_silently=True)
 
+    return None
+
+
+@shared_task
+def deactive_poll():
+    '''Funkcja wywoływana cyklicznie odpowiedzialna za ustanwianie pola if_active na False.
+    Dezaktywuje ankiety na koniec dnia.
+    Powinna być uruchamiana raz dziennie w nocy np. o 23:55.'''
+    polls_list = Polls.objects.filter(if_active=True, till_active=datetime.now())
+    if len(polls_list) == 0:
+        pass
+    else:
+        for el in polls_list:
+            el.if_active = False
+            el.save()
     return None
 
 

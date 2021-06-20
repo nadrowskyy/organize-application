@@ -16,15 +16,19 @@ app.conf.timezone = 'Europe/Warsaw'
 app.conf.beat_schedule = {
     'send-email-notifications-for-all': {
         'task': 'schedule.tasks.send_notification_all',
-        'schedule': crontab(minute=30)
+        'schedule': crontab(minute='*/5')
     },
     'send-email-notifications-for-organizer': {
         'task': 'schedule.tasks.send_notification_organizer',
-        'schedule': crontab(minute=30)
+        'schedule': crontab(minute='*/5')
     },
     'send-poll-notification-cron': {
         'task': 'schedule.tasks.send_poll_notification_cron',
-        'schedule': crontab(minute=10, hour=0)
+        'schedule': crontab(minute='*/10')
+    },
+    'deactive-poll': {
+        'task': 'schedule.tasks.deactive_poll',
+        'schedule': crontab(minute=55, hour=23)
     }
 }
 
