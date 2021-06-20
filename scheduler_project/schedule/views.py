@@ -390,7 +390,7 @@ def draft_edit(request, index):
                 if duration == '':
                     duration = None
                 link = request.POST.get('link')
-                update_event = Event.objects.filter(id=index).update(title=title, description=description,
+                Event.objects.filter(id=index).update(title=title, description=description,
                                                                          organizer=organizer,
                                                                          planning_date=planning_date,
                                                                          duration=duration, link=link)
@@ -400,11 +400,11 @@ def draft_edit(request, index):
 
                 if new_icon:
                     selected_event.icon = new_icon
-                    selected_event.save()
+                    selected_event.save(update_fields=["icon"])
 
                 if new_attachment:
                     selected_event.attachment = new_attachment
-                    selected_event.save()
+                    selected_event.save(update_fields=["attachment"])
                 request.session['ref_times'] = 0
                 request.session['draft_success'] = True
 
@@ -425,7 +425,7 @@ def draft_edit(request, index):
                     planning_date = request.POST.get('planning_date')
                     duration = request.POST.get('duration')
                     link = request.POST.get('link')
-                    update_event = Event.objects.filter(id=index).update(title=title, description=description,
+                    Event.objects.filter(id=index).update(title=title, description=description,
                                                         organizer=organizer, planning_date=planning_date,
                                                         duration=duration, link=link, status='publish',
                                                         publish=timezone.now())
@@ -436,11 +436,11 @@ def draft_edit(request, index):
 
                     if new_icon:
                         selected_event.icon = new_icon
-                        selected_event.save()
+                        selected_event.save(update_fields=["icon"])
 
                     if new_attachment:
                         selected_event.attachment = new_attachment
-                        selected_event.save()
+                        selected_event.save(update_fields=["attachment"])
 
                     send_email_organizer.delay(organizer, index)
                     request.session['ref_times'] = 0
@@ -579,11 +579,11 @@ def draft_edit(request, index):
 
                     if new_icon:
                         selected_event.icon = new_icon
-                        selected_event.save()
+                        selected_event.save(update_fields=["icon"])
 
                     if new_attachment:
                         selected_event.attachment = new_attachment
-                        selected_event.save()
+                        selected_event.save(update_fields=["attachment"])
 
                     request.session['ref_times'] = 0
                     request.session['draft_success'] = True
@@ -619,11 +619,11 @@ def draft_edit(request, index):
 
                         if new_icon:
                             selected_event.icon = new_icon
-                            selected_event.save()
+                            selected_event.save(update_fields=["icon"])
 
                         if new_attachment:
                             selected_event.attachment = new_attachment
-                            selected_event.save()
+                            selected_event.save(update_fields=["attachment"])
 
                         update_poll = Polls.objects.filter(event=index).update(if_active=False)
 
