@@ -3,7 +3,7 @@
 
 ## Dokumentacja
 
-- Dokumentacja znajduje się w głównym katalogu repozytorium (w trakcie tworzenia)
+- Dokumentacja znajduje się w głównym katalogu repozytorium
 
 
 ## Instalacja
