@@ -4,7 +4,7 @@
 ## Dokumentacja
 
 - Dokumentacja znajduje się w głównym katalogu repozytorium
-
+- [Demo aplikacji w formie video](https://www.youtube.com/watch?v=87J3yUEBaRU)
 
 ## Instalacja
 
