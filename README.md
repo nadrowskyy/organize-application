@@ -4,7 +4,7 @@
 ## Dokumentacja
 
 - Dokumentacja znajduje się w głównym katalogu repozytorium
-- [Demo aplikacji w formie video](https://www.youtube.com/watch?v=87J3yUEBaRU)
+- [Demo aplikacji w formie VIDEO](https://www.youtube.com/watch?v=87J3yUEBaRU)
 - Wspomnienie na stronie [KPZ](https://kpz.pwr.edu.pl/projekty-zgloszone-na-konferencje-2021/#:~:text=Aplikacja%20do%20organizowania%20szkole%C5%84)
 
 ## Instalacja
